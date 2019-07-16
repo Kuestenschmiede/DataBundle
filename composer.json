@@ -1,0 +1,55 @@
+{
+    "name": "con4gis/map-content",
+    "type": "contao-bundle",
+    "description": "Base functionality for geo-referenced based content management.",
+    "keywords": ["con4gis", "map", "mapcontent", "contao", "c4g", "MapContentBundle"],
+    "license": "LGPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Kuestenschmiede GmbH Software & Design",
+            "homepage": "https://kuestenschmiede.de",
+            "role": "Operator"
+        },
+        {
+            "name": "con4gis community",
+            "homepage": "https://con4gis.org",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "support@con4gis.org"
+    },
+    "require": {
+        "php": "^7.1",
+        "contao/core-bundle": "^4.4",
+        "con4gis/maps": "^6.1",
+        "con4gis/projects": "^1.4"
+    },
+    "conflict": {
+        "contao/core": "*",
+        "contao/manager-plugin": "<2.0 || >=3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "con4gis\\MapContentBundle\\": ""
+        },
+        "classmap": [
+            "Resources/contao/"
+        ],
+        "exclude-from-classmap": [
+            "Resources/contao/config/",
+            "Resources/contao/dca/",
+            "Resources/contao/languages/",
+            "Resources/contao/templates/"
+        ]
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        },
+        "contao-manager-plugin": "con4gis\\MapContentBundle\\ContaoManager\\Plugin"
+    }
+}
