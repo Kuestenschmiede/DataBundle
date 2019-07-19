@@ -10,10 +10,10 @@
  * @link      https://www.kuestenschmiede.de
  */
 
-use con4gis\MapContentBundle\Classes\Contao\Callbacks\MapcontentLocationCallback;
+use con4gis\MapContentBundle\Classes\Contao\Callbacks\MapcontentElementCallback;
 
-$strName = 'tl_c4g_mapcontent_location';
-$cbClass = MapcontentLocationCallback::class;
+$strName = 'tl_c4g_mapcontent_element';
+$cbClass = MapcontentElementCallback::class;
 
 /**
  * Table tl_c4g_mapcontent_location
@@ -45,7 +45,7 @@ $GLOBALS['TL_DCA'][$strName] =
         ],
         'label' =>
         [
-            'fields' => ['name', 'geox', 'geoy'],
+            'fields' => ['name', 'location', 'type'],
             'showColumns' => true,
         ],
         'global_operations' =>
@@ -91,16 +91,7 @@ $GLOBALS['TL_DCA'][$strName] =
     // Palettes
     'palettes' =>
     [
-        '__selector__' => ['loctype'],
-        'default' => '{data_legend},name,loctype'
-    ],
-    
-    'subpalettes' =>
-    [
-        'loctype_point' => 'geox,geoy',
-        'loctype_line' => 'geoJson',
-        'loctype_circle' => 'geoJson',
-        'loctype_polygon' => 'geoJson',
+        'default' => '{data_legend},name,description,location,type,tags;'
     ],
     
     // Fields
@@ -110,10 +101,12 @@ $GLOBALS['TL_DCA'][$strName] =
         [
             'sql'                     => "int(10) unsigned NOT NULL auto_increment"
         ],
+        
         'tstamp' =>
         [
             'sql'                     => "int(10) unsigned NOT NULL default '0'"
         ],
+        
         'name' =>
         [
             'label'                   => &$GLOBALS['TL_LANG'][$strName]['name'],
@@ -123,45 +116,47 @@ $GLOBALS['TL_DCA'][$strName] =
             'eval'                    => ['tl_class'=>'clr', 'mandatory' => true],
             'sql'                     => "varchar(255) NOT NULL default ''"
         ],
-        'loctype' =>
+        
+        'description' =>
         [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['loctype'],
-            'default'                 => 'point',
-            'exclude'                 => true,
-            'inputType'               => 'select',
-            'options'                 => ['point', 'circle', 'line', 'polygon'],
-            'reference'               => $GLOBALS['TL_LANG'][$strName]['loctype_ref'],
-            'eval'                    => ['tl_class'=>'clr', 'submitOnChange'=>true],
-            'sql'                     => "varchar(20) NOT NULL default ''"
-        ],
-        'geox' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['geox'],
-            'exclude'                 => true,
-            'inputType'               => 'c4g_text',
-            'eval'                    => ['mandatory'=>true, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
-            'save_callback'           => [[$cbClass,'setLocLon']],
-            'wizard'                  => [['con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
-            'sql'                     => "varchar(20) NOT NULL default ''"
-        ],
-        'geoy' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['geoy'],
-            'exclude'                 => true,
-            'inputType'               => 'c4g_text',
-            'eval'                    => ['mandatory'=>true, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
-            'save_callback'           => [[$cbClass,'setLocLat']],
-            'wizard'                  => [['con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
-            'sql'                     => "varchar(20) NOT NULL default ''"
-        ],
-        'geoJson' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['geoJson'],
+            'label'                   => &$GLOBALS['TL_LANG'][$strName]['description'],
             'exclude'                 => true,
             'inputType'               => 'textarea',
-            'eval'                    => ['tl_class'=>'wizard', 'preserve_tags'=>true],
-            'wizard'                  => [['con4gis\EditorBundle\Classes\Contao\GeoEditor', 'getEditorLink']],
+            'eval'                    => ['tl_class'=>'clr'],
             'sql'                     => "text NULL"
         ],
+        
+        'location' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG'][$strName]['location'],
+            'default'                 => '',
+            'exclude'                 => true,
+            'inputType'               => 'select',
+            'options_callback'        => [$cbClass, 'loadLocations'],
+            'eval'                    => ['tl_class'=>'clr'],
+            'sql'                     => "varchar(20) NOT NULL default ''"
+        ],
+        
+        'type' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG'][$strName]['type'],
+            'exclude'                 => true,
+            'inputType'               => 'select',
+            'default'                 => '',
+            'options_callback'        => [$cbClass, 'loadTypes'],
+            'eval'                    => ['mandatory'=>true, 'maxlength'=>20, 'tl_class'=>'clr', 'submitOnChange' => true, 'includeBlankOption' => true],
+            'sql'                     => "varchar(20) NOT NULL default ''"
+        ],
+        
+        'tags' =>
+        [
+            'label'                   => &$GLOBALS['TL_LANG'][$strName]['tags'],
+            'exclude'                 => true,
+            'inputType'               => 'select',
+            'options_callback'        => [$cbClass, 'loadAvailableTags'],
+            'eval'                    => ['mandatory'=>false, 'tl_class'=>'clr', 'chosen' => true, 'multiple' => true],
+            'sql'                     => "varchar(20) NOT NULL default ''"
+        ],
+        
     ],
 ];
