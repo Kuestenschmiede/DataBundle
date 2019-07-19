@@ -24,6 +24,8 @@ $GLOBALS['BE_MOD']['con4gis_maps']['c4g_mapcontent_element'] = [
     'tables' => ['tl_c4g_mapcontent_element'],
 ];
 
+$GLOBALS['c4g_locationtypes'][] = 'mpCntnt';
+
 $GLOBALS['TL_MODELS']['tl_c4g_mapcontent_location'] = MapcontentLocationModel::class;
 $GLOBALS['TL_MODELS']['tl_c4g_mapcontent_tag'] = MapcontentTagModel::class;
 $GLOBALS['TL_MODELS']['tl_c4g_mapcontent_type'] = MapcontentTypeModel::class;
