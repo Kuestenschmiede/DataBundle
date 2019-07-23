@@ -151,7 +151,13 @@ class LoadLayersListener
                         $typeElement['name']
                     );
                 } else {
-                    // TODO
+                    $content = $fmClass->addMapStructureContentFromGeoJson(
+                        $type['locstyle'],
+                        $objLocation->geoJson,
+                        $typeElement['description'],
+                        $typeElement['name'],
+                        $typeElement['name']
+                    );
                 }
                 $structureElement = $fmClass->addMapStructureElementWithIdCalc(
                     $typeElement['id'],
