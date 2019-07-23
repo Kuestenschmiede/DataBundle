@@ -1,0 +1,15 @@
+services:
+  mapContent.onLoadLayersLoadTypes:
+    class: con4gis\MapContentBundle\Classes\Listener\LoadLayersListener
+    tags:
+      - { name: kernel.event_listener, event: maps.layers.load, method: onLoadLayersLoadTypes, priority: 3003 }
+
+  mapContent.onLoadLayersLoadElements:
+    class: con4gis\MapContentBundle\Classes\Listener\LoadLayersListener
+    tags:
+      - { name: kernel.event_listener, event: maps.layers.load, method: onLoadLayersLoadElements, priority: 3001 }
+
+  mapContent.onLoadLayersCreateMapStructures:
+    class: con4gis\MapContentBundle\Classes\Listener\LoadLayersListener
+    tags:
+      - { name: kernel.event_listener, event: maps.layers.load, method: onLoadLayersCreateMapStructures, priority: 3000 }
