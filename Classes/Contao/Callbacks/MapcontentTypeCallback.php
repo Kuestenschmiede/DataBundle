@@ -18,6 +18,7 @@ namespace con4gis\MapContentBundle\Classes\Contao\Callbacks;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTagModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapLocstylesModel;
 use Contao\Backend;
+use Contao\StringUtil;
 
 class MapcontentTypeCallback extends Backend
 {
@@ -40,5 +41,20 @@ class MapcontentTypeCallback extends Backend
             $arrTags[$tag->id] = $tag->name;
         }
         return $arrTags;
+    }
+
+    public function getLabel($arrRow){
+        $label['name'] = $arrRow['name'];
+        $label['type'] = $GLOBALS['con4gis']['mapcontent_types'][$arrRow['type']];
+        $label['availableTags'] = '';
+        foreach (StringUtil::deserialize($arrRow['availableTags']) as $tag) {
+            $model = MapcontentTagModel::findByPk($tag);
+            if ($label['availableTags'] === '') {
+                $label['availableTags'] = $model->name;
+            } else {
+                $label['availableTags'] .= ', ' . $model->name;
+            }
+        }
+        return $label;
     }
 }

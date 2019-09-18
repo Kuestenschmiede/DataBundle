@@ -10,109 +10,22 @@
  * @link      https://www.kuestenschmiede.de
  */
 
-use con4gis\MapContentBundle\Classes\Contao\Callbacks\MapcontentLocationCallback;
+use con4gis\CoreBundle\Classes\DCA\DCA;
+use con4gis\CoreBundle\Classes\DCA\Fields\IdField;
+use con4gis\CoreBundle\Classes\DCA\Fields\NaturalField;
+use con4gis\CoreBundle\Classes\DCA\Fields\TextField;
 
 $strName = 'tl_c4g_mapcontent_tag';
-$cbClass = MapcontentLocationCallback::class;
 
-/**
- * Table tl_c4g_mapcontent_location
- */
-$GLOBALS['TL_DCA'][$strName] =
-[
-    
-    // Config
-    'config' =>
-    [
-        'dataContainer' => 'Table',
-        'enableVersioning' => true,
-        'sql' =>
-        [
-            'keys' =>
-            [
-                'id' => 'primary',
-            ]
-        ]
-    ],
-    'list' =>
-    [
-        'sorting' =>
-        [
-            'mode' => 2,
-            'fields' => ['name'],
-            'panelLayout' => 'filter;sort,search,limit',
-            'headerFields' => [],
-        ],
-        'label' =>
-        [
-            'fields' => ['name'],
-            'showColumns' => true,
-        ],
-        'global_operations' =>
-        [
-            'all' =>
-            [
-                'label' => &$GLOBALS['TL_LANG']['MSC']['all'],
-                'href' => 'act=select',
-                'class' => 'header_edit_all',
-                'attributes' => 'onclick="Backend.getScrollOffset();" accesskey="e"'
-            ]
-        ],
-        'operations' =>
-        [
-            'edit' =>
-            [
-                'label' => &$GLOBALS['TL_LANG'][$strName]['edit'],
-                'href' => 'act=edit',
-                'icon' => 'edit.gif'
-            ],
-            'copy' =>
-            [
-                'label' => &$GLOBALS['TL_LANG'][$strName]['copy'],
-                'href' => 'act=copy',
-                'icon' => 'copy.gif'
-            ],
-            'delete' =>
-            [
-                'label' => &$GLOBALS['TL_LANG'][$strName]['delete'],
-                'href' => 'act=delete',
-                'icon' => 'delete.gif',
-                'attributes' => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"'
-            ],
-            'show' =>
-            [
-                'label' => &$GLOBALS['TL_LANG'][$strName]['show'],
-                'href' => 'act=show',
-                'icon' => 'show.gif'
-            ]
-        ]
-    ],
-    
-    // Palettes
-    'palettes' =>
-    [
-        'default' => '{data_legend},name;'
-    ],
-    
-    // Fields
-    'fields' =>
-    [
-        'id' =>
-        [
-            'sql'                     => "int(10) unsigned NOT NULL auto_increment"
-        ],
-        'tstamp' =>
-        [
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ],
-        'name' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['name'],
-            'default'                 => '',
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'eval'                    => ['tl_class'=>'clr', 'mandatory' => true],
-            'sql'                     => "varchar(255) NOT NULL default ''"
-        ]
-    ],
-];
+$dca = new DCA($strName);
+$list = $dca->list();
+$list->sorting()->fields(['name']);
+$list->sorting()->panelLayout('filter;sort,search,limit');
+$list->label()->fields(['name']);
+$list->addRegularOperations($dca);
+$dca->palette()->default('{data_legend},name;');
+
+$id = new IdField('id', $dca);
+$tStamp = new NaturalField('tstamp', $dca);
+$name = new TextField('name', $dca);
+$name->eval()->class('clr')->mandatory();

@@ -10,158 +10,60 @@
  * @link      https://www.kuestenschmiede.de
  */
 
+use con4gis\CoreBundle\Classes\DCA\DCA;
+use con4gis\CoreBundle\Classes\DCA\Fields\IdField;
+use con4gis\CoreBundle\Classes\DCA\Fields\NaturalField;
+use con4gis\CoreBundle\Classes\DCA\Fields\SelectField;
+use con4gis\CoreBundle\Classes\DCA\Fields\TextAreaField;
+use con4gis\CoreBundle\Classes\DCA\Fields\TextField;
 use con4gis\MapContentBundle\Classes\Contao\Callbacks\MapcontentLocationCallback;
 
 $strName = 'tl_c4g_mapcontent_location';
 $cbClass = MapcontentLocationCallback::class;
 
-/**
- * Table tl_c4g_mapcontent_location
- */
-$GLOBALS['TL_DCA'][$strName] =
-[
-    
-    // Config
-    'config' =>
-    [
-        'dataContainer' => 'Table',
-        'enableVersioning' => true,
-        'sql' =>
-        [
-            'keys' =>
-            [
-                'id' => 'primary',
-            ]
-        ]
-    ],
-    'list' =>
-    [
-        'sorting' =>
-        [
-            'mode' => 2,
-            'fields' => ['name'],
-            'panelLayout' => 'filter;sort,search,limit',
-            'headerFields' => [],
-        ],
-        'label' =>
-        [
-            'fields' => ['name', 'geox', 'geoy'],
-            'showColumns' => true,
-        ],
-        'global_operations' =>
-        [
-            'all' =>
-            [
-                'label' => &$GLOBALS['TL_LANG']['MSC']['all'],
-                'href' => 'act=select',
-                'class' => 'header_edit_all',
-                'attributes' => 'onclick="Backend.getScrollOffset();" accesskey="e"'
-            ]
-        ],
-        'operations' =>
-        [
-            'edit' =>
-            [
-                'label' => &$GLOBALS['TL_LANG'][$strName]['edit'],
-                'href' => 'act=edit',
-                'icon' => 'edit.gif'
-            ],
-            'copy' =>
-            [
-                'label' => &$GLOBALS['TL_LANG'][$strName]['copy'],
-                'href' => 'act=copy',
-                'icon' => 'copy.gif'
-            ],
-            'delete' =>
-            [
-                'label' => &$GLOBALS['TL_LANG'][$strName]['delete'],
-                'href' => 'act=delete',
-                'icon' => 'delete.gif',
-                'attributes' => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"'
-            ],
-            'show' =>
-            [
-                'label' => &$GLOBALS['TL_LANG'][$strName]['show'],
-                'href' => 'act=show',
-                'icon' => 'show.gif'
-            ]
-        ]
-    ],
-    
-    // Palettes
-    'palettes' =>
-    [
-        '__selector__' => ['loctype'],
-        'default' => '{data_legend},name,loctype'
-    ],
-    
-    'subpalettes' =>
-    [
-        'loctype_point' => 'geox,geoy',
-        'loctype_line' => 'geoJson',
-        'loctype_circle' => 'geoJson',
-        'loctype_polygon' => 'geoJson',
-    ],
-    
-    // Fields
-    'fields' =>
-    [
-        'id' =>
-        [
-            'sql'                     => "int(10) unsigned NOT NULL auto_increment"
-        ],
-        'tstamp' =>
-        [
-            'sql'                     => "int(10) unsigned NOT NULL default '0'"
-        ],
-        'name' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['name'],
-            'default'                 => '',
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'eval'                    => ['tl_class'=>'clr', 'mandatory' => true],
-            'sql'                     => "varchar(255) NOT NULL default ''"
-        ],
-        'loctype' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['loctype'],
-            'default'                 => 'point',
-            'exclude'                 => true,
-            'inputType'               => 'select',
-            'options'                 => ['point', 'circle', 'line', 'polygon'],
-            'reference'               => $GLOBALS['TL_LANG'][$strName]['loctype_ref'],
-            'eval'                    => ['tl_class'=>'clr', 'submitOnChange'=>true],
-            'sql'                     => "varchar(20) NOT NULL default ''"
-        ],
-        'geox' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['geox'],
-            'exclude'                 => true,
-            'inputType'               => 'c4g_text',
-            'eval'                    => ['mandatory'=>true, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
-            'save_callback'           => [[$cbClass,'setLocLon']],
-            'wizard'                  => [['con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
-            'sql'                     => "varchar(20) NOT NULL default ''"
-        ],
-        'geoy' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['geoy'],
-            'exclude'                 => true,
-            'inputType'               => 'c4g_text',
-            'eval'                    => ['mandatory'=>true, 'maxlength'=>20, 'tl_class'=>'w50 wizard'],
-            'save_callback'           => [[$cbClass,'setLocLat']],
-            'wizard'                  => [['con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink']],
-            'sql'                     => "varchar(20) NOT NULL default ''"
-        ],
-        'geoJson' =>
-        [
-            'label'                   => &$GLOBALS['TL_LANG'][$strName]['geoJson'],
-            'exclude'                 => true,
-            'inputType'               => 'textarea',
-            'eval'                    => ['tl_class'=>'wizard', 'preserve_tags'=>true],
-            'wizard'                  => [['con4gis\EditorBundle\Classes\Contao\GeoEditor', 'getEditorLink']],
-            'sql'                     => "text NULL"
-        ],
-    ],
-];
+$dca = new DCA('tl_c4g_mapcontent_location');
+$list = $dca->list();
+$list->sorting()->fields(['name']);
+$list->sorting()->panelLayout('filter;sort,search,limit');
+$list->label()->fields(['name', 'loctype',  'geox', 'geoy'])
+    ->labelCallback($cbClass, 'getLabel');
+$list->addRegularOperations($dca);
+$dca->palette()->default('{data_legend},name,loctype');
+$dca->palette()->selector(['loctype']);
+$dca->palette()->subPalette('loctype', 'point', 'geox,geoy');
+$dca->palette()->subPalette('loctype', 'line', 'geoJson');
+$dca->palette()->subPalette('loctype', 'circle', 'geoJson');
+$dca->palette()->subPalette('loctype', 'polygon', 'geoJson');
+
+$id = new IdField('id', $dca);
+$tStamp = new NaturalField('tstamp', $dca);
+$name = new TextField('name', $dca);
+$name->eval()->class('clr')->mandatory();
+$locType = new SelectField('loctype', $dca);
+$locType->default('point')
+        ->options(['point', 'circle', 'line', 'polygon'])
+        ->reference('loctype_ref')
+        ->sql("varchar(20) NOT NULL default ''")
+        ->eval()->class('clr')
+            ->submitOnChange();
+$geoX = new TextField('geox', $dca);
+$geoX->inputType('c4g_text')
+    ->sql("varchar(20) NOT NULL default ''")
+    ->wizard('con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink')
+    ->saveCallback($cbClass, 'setLocLon')
+        ->eval()->mandatory()
+            ->maxlength(20)
+            ->class('w50 wizard');
+$geoY = new TextField('geoy', $dca);
+$geoY->inputType('c4g_text')
+    ->sql("varchar(20) NOT NULL default ''")
+    ->wizard('con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink')
+    ->saveCallback($cbClass, 'setLocLat')
+        ->eval()->mandatory()
+            ->maxlength(20)
+            ->class('w50 wizard');
+$geoJson = new TextAreaField('geoJson', $dca);
+$geoJson->wizard('con4gis\EditorBundle\Classes\Contao\GeoEditor', 'getEditorLink')
+    ->eval()->class('wizard')
+        ->preserveTags();
+

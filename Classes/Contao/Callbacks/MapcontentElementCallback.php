@@ -19,6 +19,7 @@ use con4gis\MapContentBundle\Resources\contao\models\MapcontentTagModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
 use Contao\Backend;
 use Contao\DataContainer;
+use Contao\StringUtil;
 
 class MapcontentElementCallback extends Backend
 {
@@ -60,5 +61,12 @@ class MapcontentElementCallback extends Backend
             }
             return $arrTags;
         }
+    }
+
+    public function getLabel($arrRow){
+        $label['name'] = $arrRow['name'];
+        $label['location'] = MapcontentLocationModel::findByPk($arrRow['location'])->name;
+        $label['type'] = MapcontentTypeModel::findByPk($arrRow['type'])->name;
+        return $label;
     }
 }
