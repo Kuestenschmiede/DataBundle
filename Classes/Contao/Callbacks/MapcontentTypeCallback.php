@@ -45,7 +45,7 @@ class MapcontentTypeCallback extends Backend
 
     public function getLabel($arrRow){
         $label['name'] = $arrRow['name'];
-        $label['type'] = $GLOBALS['con4gis']['mapcontent_types'][$arrRow['type']];
+        $label['type'] = $GLOBALS['TL_LANG']['mapcontent_types'][$arrRow['type']];
         $label['availableTags'] = '';
         foreach (StringUtil::deserialize($arrRow['availableTags']) as $tag) {
             $model = MapcontentTagModel::findByPk($tag);
@@ -56,5 +56,13 @@ class MapcontentTypeCallback extends Backend
             }
         }
         return $label;
+    }
+
+    public function getTypeOptions($dc) {
+        $types = [];
+        foreach ($GLOBALS['con4gis']['mapcontent_types'] as $type) {
+            $types[$type] = $GLOBALS['TL_LANG']['mapcontent_types'][$type];
+        }
+        return $types;
     }
 }

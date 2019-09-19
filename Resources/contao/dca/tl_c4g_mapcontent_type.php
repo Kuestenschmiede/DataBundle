@@ -43,7 +43,7 @@ $locStyle->default('')
         ->eval()->class('clr')
             ->submitOnChange();
 $type = new SelectField('type', $dca);
-$type->options($GLOBALS['con4gis']['mapcontent_types'])
+$type->optionsCallback($cbClass, 'getTypeOptions')
     ->sql("varchar(20) NOT NULL default ''")
     ->eval()->mandatory()
         ->class('clr');

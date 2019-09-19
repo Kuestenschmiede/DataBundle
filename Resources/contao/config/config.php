@@ -5,7 +5,7 @@ use con4gis\MapContentBundle\Resources\contao\models\MapcontentTagModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentElementModel;
 
-$GLOBALS['con4gis']['mapcontent_types'] = ['default' => 'Standard'];
+$GLOBALS['con4gis']['mapcontent_types'] = ['default'];
 
 $GLOBALS['BE_MOD']['con4gis_maps']['c4g_mapcontent_location'] = [
     'tables' => ['tl_c4g_mapcontent_location'],
