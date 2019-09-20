@@ -1,0 +1,5 @@
+services:
+  mapcontent.onLoadFeatureFilterCreateTagFilter:
+    class: con4gis\MapContentBundle\Classes\Listener\LoadFeatureFilterListener
+    tags:
+      - { name: kernel.event_listener, event: con4gis\MapsBundle\Classes\Events\LoadFeatureFiltersEvent, method: onLoadFeatureFilterCreateTagFilter, priority: 1024}
