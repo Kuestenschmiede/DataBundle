@@ -15,6 +15,4 @@ $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type'] = [
     'delete' => ["Elementtyp ID %s löschen", "Elementtyp ID %s löschen"]
 ];
 
-$GLOBALS['TL_LANG']['mapcontent_types'] = [
-    'default' => 'Standard'
-];
+$GLOBALS['TL_LANG']['mapcontent_types']['default'] = 'Standard';
