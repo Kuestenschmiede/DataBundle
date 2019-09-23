@@ -28,7 +28,7 @@ $list->sorting()->panelLayout('filter;sort,search,limit');
 $list->label()->fields(['name', 'location', 'type'])
     ->labelCallback($cbClass, 'getLabel');
 $list->addRegularOperations($dca);
-$dca->palette()->default('{data_legend},name,description,location,type,tags;');
+$dca->palette()->default('{data_legend},name,description,location,tags,type;')
 
 $id = new IdField('id', $dca);
 
