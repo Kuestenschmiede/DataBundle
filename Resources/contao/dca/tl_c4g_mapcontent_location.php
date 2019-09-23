@@ -36,9 +36,12 @@ $dca->palette()->subPalette('loctype', 'circle', 'geoJson');
 $dca->palette()->subPalette('loctype', 'polygon', 'geoJson');
 
 $id = new IdField('id', $dca);
+
 $tStamp = new NaturalField('tstamp', $dca);
+
 $name = new TextField('name', $dca);
 $name->eval()->class('clr')->mandatory();
+
 $locType = new SelectField('loctype', $dca);
 $locType->default('point')
         ->options(['point', 'circle', 'line', 'polygon'])
@@ -46,6 +49,7 @@ $locType->default('point')
         ->sql("varchar(20) NOT NULL default ''")
         ->eval()->class('clr')
             ->submitOnChange();
+
 $geoX = new TextField('geox', $dca);
 $geoX->inputType('c4g_text')
     ->sql("varchar(20) NOT NULL default ''")
@@ -54,6 +58,7 @@ $geoX->inputType('c4g_text')
         ->eval()->mandatory()
             ->maxlength(20)
             ->class('w50 wizard');
+
 $geoY = new TextField('geoy', $dca);
 $geoY->inputType('c4g_text')
     ->sql("varchar(20) NOT NULL default ''")
@@ -62,6 +67,7 @@ $geoY->inputType('c4g_text')
         ->eval()->mandatory()
             ->maxlength(20)
             ->class('w50 wizard');
+
 $geoJson = new TextAreaField('geoJson', $dca);
 $geoJson->wizard('con4gis\EditorBundle\Classes\Contao\GeoEditor', 'getEditorLink')
     ->eval()->class('wizard')

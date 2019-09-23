@@ -33,20 +33,25 @@ $list->addRegularOperations($dca);
 $dca->palette()->default('{data_legend},name,locstyle,type,availableTags;');
 
 $id = new IdField('id', $dca);
+
 $tStamp = new NaturalField('tstamp', $dca);
+
 $name = new TextField('name', $dca);
 $name->eval()->class('clr')->mandatory();
+
 $locStyle = new SelectField('locstyle', $dca);
 $locStyle->default('')
         ->optionsCallback($cbClass, 'getLocstyles')
         ->sql("varchar(20) NOT NULL default ''")
         ->eval()->class('clr')
             ->submitOnChange();
+
 $type = new SelectField('type', $dca);
 $type->optionsCallback($cbClass, 'getTypeOptions')
     ->sql("varchar(20) NOT NULL default ''")
     ->eval()->mandatory()
         ->class('clr');
+
 $availableTags = new SelectField('availableTags', $dca);
 $availableTags->optionsCallback($cbClass, 'getAvailableTags')
     ->sql("blob NULL default ''")
