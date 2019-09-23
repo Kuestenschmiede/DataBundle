@@ -29,6 +29,7 @@ $list->label()->fields(['name', 'location', 'type'])
     ->labelCallback($cbClass, 'getLabel');
 $list->addRegularOperations($dca);
 $dca->palette()->default('{data_legend},name,description,location,tags,type;')
+    ->selector(['type']);
 
 $id = new IdField('id', $dca);
 
