@@ -47,17 +47,19 @@ $location->default('')
     ->sql("varchar(20) NOT NULL default ''")
     ->eval()->class('clr')
         ->mandatory();
-$type = new SelectField('type', $dca);
-$type->default('')
-    ->optionsCallback($cbClass, 'loadTypes')
-    ->sql("varchar(20) NOT NULL default ''")
-    ->eval()->mandatory()
-        ->maxlength(20)
-        ->class('clr')
-        ->submitOnChange();
+
 $tags = new SelectField('tags', $dca);
 $tags->optionsCallback($cbClass, 'loadAvailableTags')
     ->sql("varchar(20) NOT NULL default ''")
     ->eval()->class('clr')
         ->chosen()
         ->multiple();
+
+$type = new SelectField('type', $dca);
+$type->default('')
+    ->optionsCallback($cbClass, 'loadTypes')
+    ->sql("varchar(20) NOT NULL default ''")
+    ->eval()->mandatory()
+    ->maxlength(20)
+    ->class('clr')
+    ->submitOnChange();
