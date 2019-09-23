@@ -12,6 +12,7 @@
 
 use con4gis\CoreBundle\Classes\DCA\DCA;
 use con4gis\CoreBundle\Classes\DCA\Fields\IdField;
+use con4gis\CoreBundle\Classes\DCA\Fields\MultiColumnField;
 use con4gis\CoreBundle\Classes\DCA\Fields\NaturalField;
 use con4gis\CoreBundle\Classes\DCA\Fields\SelectField;
 use con4gis\CoreBundle\Classes\DCA\Fields\TextAreaField;
@@ -63,3 +64,49 @@ $type->default('')
     ->maxlength(20)
     ->class('clr')
     ->submitOnChange();
+
+/** Fields for use in child bundles */
+
+$businessHours = new MultiColumnField('businessHours', $dca);
+$businessHours->sql('text NULL');
+
+$dayFrom = new SelectField('dayFrom', $dca, $businessHours);
+$dayFrom->optionsCallback($cbClass, 'getDay')
+    ->eval()->includeBlankOption();
+$dayTo = new SelectField('dayTo', $dca, $businessHours);
+$dayTo->optionsCallback($cbClass, 'getDay')
+    ->eval()->includeBlankOption();
+$timeFrom = new TextField('timeFrom', $dca, $businessHours);
+$timeFrom->eval()->regEx('time');
+$timeTo = new TextField('timeTo', $dca, $businessHours);
+$timeTo->eval()->regEx('time');
+
+$addressName = new TextField('addressName', $dca);
+$addressName->eval()->class('w50');
+
+$addressStreet = new TextField('addressStreet', $dca);
+$addressStreet->eval()->regEx('alpha')
+        ->class('clr w50');
+
+$addressNumber = new NaturalField('addressStreetNumber', $dca);
+$addressNumber->eval()->class('w50');
+
+$addressZip = new TextField('addressZip', $dca);
+$addressZip->sql('char(5) NULL')
+    ->eval()->maxlength(5)
+        ->class('w50');
+
+$addressCity = new TextField('addressCity', $dca);
+$addressCity->eval()->class('w50');
+
+$phone = new TextField('phone', $dca);
+$phone->eval()->regEx('phone')
+        ->class('w50');
+
+$fax = new TextField('fax', $dca);
+$fax->eval()->regEx('fax')
+        ->class('w50');
+
+$email = new TextField('email', $dca);
+$email->eval()->regEx('email')
+        ->class('w50');

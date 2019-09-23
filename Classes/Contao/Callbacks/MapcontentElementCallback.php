@@ -23,6 +23,8 @@ use Contao\StringUtil;
 
 class MapcontentElementCallback extends Backend
 {
+    private $dcaName = 'tl_c4g_mapcontent_element';
+
     public function loadLocations()
     {
         $arrLocations = [];
@@ -68,5 +70,9 @@ class MapcontentElementCallback extends Backend
         $label['location'] = MapcontentLocationModel::findByPk($arrRow['location'])->name;
         $label['type'] = MapcontentTypeModel::findByPk($arrRow['type'])->name;
         return $label;
+    }
+
+    public function getDay($dc) {
+        return $GLOBALS['TL_LANG'][$this->dcaName]['day_option'];
     }
 }
