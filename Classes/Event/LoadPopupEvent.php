@@ -21,6 +21,9 @@ class LoadPopupEvent extends Event
 
     private $popup = '';
     private $showAddress = false;
+    private $showPhone = false;
+    private $showFax = false;
+    private $showEmail = false;
     private $showBusinessTimes = false;
     private $elementData = [];
 
@@ -55,6 +58,60 @@ class LoadPopupEvent extends Event
     public function setShowAddress(bool $showAddress = true): LoadPopupEvent
     {
         $this->showAddress = $showAddress;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShowPhone(): bool
+    {
+        return $this->showPhone;
+    }
+
+    /**
+     * @param bool $showPhone
+     * @return LoadPopupEvent
+     */
+    public function setShowPhone(bool $showPhone = true): LoadPopupEvent
+    {
+        $this->showPhone = $showPhone;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShowFax(): bool
+    {
+        return $this->showFax;
+    }
+
+    /**
+     * @param bool $showFax
+     * @return LoadPopupEvent
+     */
+    public function setShowFax(bool $showFax = true): LoadPopupEvent
+    {
+        $this->showFax = $showFax;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShowEmail(): bool
+    {
+        return $this->showEmail;
+    }
+
+    /**
+     * @param bool $showEmail
+     * @return LoadPopupEvent
+     */
+    public function setShowEmail(bool $showEmail = true): LoadPopupEvent
+    {
+        $this->showEmail = $showEmail;
         return $this;
     }
 
