@@ -15,6 +15,7 @@
 namespace con4gis\MapContentBundle\Classes\Listener;
 
 
+use con4gis\MapContentBundle\Classes\Event\LoadPopupEvent;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentElementModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentLocationModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTagModel;
@@ -141,12 +142,37 @@ class LoadLayersListener
             
             foreach ($elements[$type['id']] as $typeElement) {
                 $objLocation = $typeElement['objLocation'];
+
+                //ToDo add popup content
+                $popupContent = '';
+                $popupContent .= $typeElement['name'];
+                $popupContent .= $typeElement['description'];
+
+                $dispatcher = \Contao\System::getContainer()->get('event_dispatcher');
+                $popupEvent = new LoadPopupEvent();
+                $popupEvent->setElementData($typeElement);
+                $dispatcher->dispatch($popupEvent::NAME, $popupEvent);
+
+                $popupContent .= $popupEvent->getPopupString();
+
+                $tagIds = \StringUtil::deserialize($typeElement['tags']);
+                $tagModels = MapcontentTagModel::findMultipleByIds($tagIds);
+                $tags = '';
+                foreach ($tagModels as $model) {
+                    if ($tags !== '') {
+                        $tags .= ', ';
+                    }
+                    $tags .= $model->name;
+                }
+
+                $popupContent .= $tags;
+
                 if ($objLocation->loctype === 'point') {
                     $content = $fmClass->addMapStructureContent(
                         $type['locstyle'],
                         $objLocation->geox,
                         $objLocation->geoy,
-                        $typeElement['description'],
+                        $popupContent,
                         $typeElement['name'],
                         $typeElement['name']
                     );
@@ -154,7 +180,7 @@ class LoadLayersListener
                     $content = $fmClass->addMapStructureContentFromGeoJson(
                         $type['locstyle'],
                         $objLocation->geoJson,
-                        $typeElement['description'],
+                        $popupContent,
                         $typeElement['name'],
                         $typeElement['name']
                     );
