@@ -72,9 +72,11 @@ $businessHours->sql('text NULL');
 
 $dayFrom = new SelectField('dayFrom', $dca, $businessHours);
 $dayFrom->optionsCallback($cbClass, 'getDay')
+    ->reference('day_reference')
     ->eval()->includeBlankOption();
 $dayTo = new SelectField('dayTo', $dca, $businessHours);
 $dayTo->optionsCallback($cbClass, 'getDay')
+    ->reference('day_reference')
     ->eval()->includeBlankOption();
 $timeFrom = new TextField('timeFrom', $dca, $businessHours);
 $timeFrom->eval()->regEx('time');

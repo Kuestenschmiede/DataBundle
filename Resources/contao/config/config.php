@@ -7,6 +7,10 @@ use con4gis\MapContentBundle\Resources\contao\models\MapcontentElementModel;
 
 $GLOBALS['con4gis']['mapcontent_types'][] = 'default';
 
+$GLOBALS['con4gis']['map-content']['day_option'] = [
+    '0', '1', '2', '3', '4', '5', '6'
+];
+
 $GLOBALS['BE_MOD']['con4gis_maps']['c4g_mapcontent_location'] = [
     'tables' => ['tl_c4g_mapcontent_location'],
     'javascript' => ['/bundles/con4giseditor/js/c4g-backend-helper.js']

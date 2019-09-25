@@ -48,12 +48,12 @@ $GLOBALS['TL_LANG'][$strName]['edit'] = ["Element ID %s bearbeiten", "Element ID
 $GLOBALS['TL_LANG'][$strName]['copy'] = ["Element ID %s kopieren", "Element ID %s kopieren"];
 $GLOBALS['TL_LANG'][$strName]['delete'] = ["Element ID %s löschen", "Element ID %s löschen"];
 
-$GLOBALS['TL_LANG'][$strName]['day_option'] = [
-    'Montag',
-    'Dienstag',
-    'Mittwoch',
-    'Donnerstag',
-    'Freitag',
-    'Samstag',
-    'Sonntag'
+$GLOBALS['TL_LANG'][$strName]['day_reference'] = [
+    '0' => 'Montag',
+    '1' => 'Dienstag',
+    '2' => 'Mittwoch',
+    '3' => 'Donnerstag',
+    '4' => 'Freitag',
+    '5' => 'Samstag',
+    '6' => 'Sonntag'
 ];
