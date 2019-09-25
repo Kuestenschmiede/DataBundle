@@ -145,8 +145,8 @@ class LoadLayersListener
 
                 //ToDo add popup content
                 $popupContent = '';
-                $popupContent .= $typeElement['name'];
-                $popupContent .= $typeElement['description'];
+                $popupContent .= "<div>".$typeElement['name']."</div>";
+                $popupContent .= "<div>".$typeElement['description']."</div>";
 
                 $dispatcher = \Contao\System::getContainer()->get('event_dispatcher');
                 $popupEvent = new LoadPopupEvent();
@@ -154,6 +154,58 @@ class LoadLayersListener
                 $dispatcher->dispatch($popupEvent::NAME, $popupEvent);
 
                 $popupContent .= $popupEvent->getPopupString();
+
+                if ($popupEvent->isShowAddress() === true) {
+                    $address = '';
+                    if ($typeElement['addressName'] !== '') {
+                        $address .= "<span>".$typeElement['addressName']."</span>";
+                    }
+                    if ($typeElement['addressStreet'] !== '') {
+                        if ($typeElement['addressStreetNumber'] === 0) {
+                            $address .= "<span>" . $typeElement['addressStreet'] . " " .
+                                $typeElement['addressStreetNumber'] . "</span>";
+                        } else {
+                            $address .= "<span>" . $typeElement['addressStreet'] . "</span>";
+                        }
+                    }
+                    if ($typeElement['addressZip'] !== '' && $typeElement['addressCity'] !== '') {
+                        $address .= "<span>".$typeElement['addressZip']." ".$typeElement['addressCity']."</span>";
+                    }
+                    $popupContent .= "<div>".$address."</div>";
+                }
+
+                if ($popupEvent->setShowBusinessTimes() === true) {
+                    $businessTimes = \StringUtil::deserialize($typeElement['businessHours']);
+                    foreach ($businessTimes as $key => $time) {
+                        $timeString[$key] = '';
+                        if ($time['dayFrom'] !== '' && $time['timeFrom'] !== '' && $time['timeTo'] !== '') {
+                            $timeString[$key] .= $time['dayFrom'];
+                            if ($time['dayTo'] !== $time['dayFrom']) {
+                                $timeString[$key] .= " - " . $time['dayTo'];
+                            }
+                            $timeString[$key] .= ": " . $time['timeFrom'] . " - " . $time['timeTo'];
+                        }
+                    }
+                    if (isset($timeString) === true && count($timeString) > 0) {
+                        $popupContent .= "<div>";
+                        foreach ($timeString as $string) {
+                            $popupContent .= "<span>" . $string . "</span>";
+                        }
+                        $popupContent .= "</div>";
+                    }
+                }
+
+                if ($popupEvent->isShowPhone() === true && $typeElement['phone']) {
+                    $popupContent .= "<div>Tel.: ".$typeElement['phone']."</div>";
+                }
+
+                if ($popupEvent->isShowFax() === true && $typeElement['fax']) {
+                    $popupContent .= "<div>Fax: ".$typeElement['fax']."</div>";
+                }
+
+                if ($popupEvent->isShowEmail() === true && $typeElement['email']) {
+                    $popupContent .= "<div>Email: ".$typeElement['email']."</div>";
+                }
 
                 $tagIds = \StringUtil::deserialize($typeElement['tags']);
                 $tagModels = MapcontentTagModel::findMultipleByIds($tagIds);
@@ -165,7 +217,7 @@ class LoadLayersListener
                     $tags .= $model->name;
                 }
 
-                $popupContent .= $tags;
+                $popupContent .= "<div>".$tags."</div>";
 
                 if ($objLocation->loctype === 'point') {
                     $content = $fmClass->addMapStructureContent(
