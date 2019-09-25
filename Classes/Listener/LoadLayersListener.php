@@ -174,16 +174,17 @@ class LoadLayersListener
                     $popupContent .= "<div>".$address."</div>";
                 }
 
-                if ($popupEvent->setShowBusinessTimes() === true) {
+                if ($popupEvent->isShowBusinessTimes() === true) {
+                    \System::loadLanguageFile('tl_c4g_mapcontent_element');
                     $businessTimes = \StringUtil::deserialize($typeElement['businessHours']);
                     foreach ($businessTimes as $key => $time) {
                         $timeString[$key] = '';
                         if ($time['dayFrom'] !== '' && $time['timeFrom'] !== '' && $time['timeTo'] !== '') {
-                            $timeString[$key] .= $time['dayFrom'];
+                            $timeString[$key] .= $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayFrom']];
                             if ($time['dayTo'] !== $time['dayFrom']) {
-                                $timeString[$key] .= " - " . $time['dayTo'];
+                                $timeString[$key] .= " - " . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayTo']];
                             }
-                            $timeString[$key] .= ": " . $time['timeFrom'] . " - " . $time['timeTo'];
+                            $timeString[$key] .= ": " . date('H:i', $time['timeFrom']) . " - " . date('H:i', $time['timeTo']);
                         }
                     }
                     if (isset($timeString) === true && count($timeString) > 0) {
