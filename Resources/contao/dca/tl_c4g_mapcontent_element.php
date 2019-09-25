@@ -85,8 +85,7 @@ $addressName = new TextField('addressName', $dca);
 $addressName->eval()->class('w50');
 
 $addressStreet = new TextField('addressStreet', $dca);
-$addressStreet->eval()->regEx('alpha')
-        ->class('clr w50');
+$addressStreet->eval()->class('clr w50');
 
 $addressNumber = new NaturalField('addressStreetNumber', $dca);
 $addressNumber->eval()->class('w50');
