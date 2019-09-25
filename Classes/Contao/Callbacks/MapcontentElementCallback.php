@@ -73,6 +73,6 @@ class MapcontentElementCallback extends Backend
     }
 
     public function getDay($dc) {
-        return $GLOBALS['TL_LANG'][$this->dcaName]['day_option'];
+        return $GLOBALS['con4gis']['map-content']['day_option'];
     }
 }

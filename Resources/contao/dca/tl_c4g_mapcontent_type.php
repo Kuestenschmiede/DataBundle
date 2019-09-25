@@ -56,7 +56,6 @@ $availableTags = new SelectField('availableTags', $dca);
 $availableTags->optionsCallback($cbClass, 'getAvailableTags')
     ->sql("blob NULL default ''")
     ->default('')
-    ->eval()->mandatory()
-        ->class('clr')
+    ->eval()->class('clr')
         ->chosen()
         ->multiple();

@@ -146,8 +146,8 @@ class LoadLayersListener
 
                 //ToDo add popup content
                 $popupContent = '';
-                $popupContent .= $typeElement['name'];
-                $popupContent .= $typeElement['description'];
+                $popupContent .= "<div>".$typeElement['name']."</div>";
+                $popupContent .= "<div>".$typeElement['description']."</div>";
 
                 $dispatcher = \Contao\System::getContainer()->get('event_dispatcher');
                 $popupEvent = new LoadPopupEvent();
@@ -155,6 +155,59 @@ class LoadLayersListener
                 $dispatcher->dispatch($popupEvent::NAME, $popupEvent);
 
                 $popupContent .= $popupEvent->getPopupString();
+
+                if ($popupEvent->isShowAddress() === true) {
+                    $address = '';
+                    if ($typeElement['addressName'] !== '') {
+                        $address .= "<span>".$typeElement['addressName']."</span>";
+                    }
+                    if ($typeElement['addressStreet'] !== '') {
+                        if ($typeElement['addressStreetNumber'] === 0) {
+                            $address .= "<span>" . $typeElement['addressStreet'] . " " .
+                                $typeElement['addressStreetNumber'] . "</span>";
+                        } else {
+                            $address .= "<span>" . $typeElement['addressStreet'] . "</span>";
+                        }
+                    }
+                    if ($typeElement['addressZip'] !== '' && $typeElement['addressCity'] !== '') {
+                        $address .= "<span>".$typeElement['addressZip']." ".$typeElement['addressCity']."</span>";
+                    }
+                    $popupContent .= "<div>".$address."</div>";
+                }
+
+                if ($popupEvent->isShowBusinessTimes() === true) {
+                    \System::loadLanguageFile('tl_c4g_mapcontent_element');
+                    $businessTimes = \StringUtil::deserialize($typeElement['businessHours']);
+                    foreach ($businessTimes as $key => $time) {
+                        $timeString[$key] = '';
+                        if ($time['dayFrom'] !== '' && $time['timeFrom'] !== '' && $time['timeTo'] !== '') {
+                            $timeString[$key] .= $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayFrom']];
+                            if ($time['dayTo'] !== $time['dayFrom']) {
+                                $timeString[$key] .= " - " . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayTo']];
+                            }
+                            $timeString[$key] .= ": " . date('H:i', $time['timeFrom']) . " - " . date('H:i', $time['timeTo']);
+                        }
+                    }
+                    if (isset($timeString) === true && count($timeString) > 0) {
+                        $popupContent .= "<div>";
+                        foreach ($timeString as $string) {
+                            $popupContent .= "<span>" . $string . "</span>";
+                        }
+                        $popupContent .= "</div>";
+                    }
+                }
+
+                if ($popupEvent->isShowPhone() === true && $typeElement['phone']) {
+                    $popupContent .= "<div>Tel.: ".$typeElement['phone']."</div>";
+                }
+
+                if ($popupEvent->isShowFax() === true && $typeElement['fax']) {
+                    $popupContent .= "<div>Fax: ".$typeElement['fax']."</div>";
+                }
+
+                if ($popupEvent->isShowEmail() === true && $typeElement['email']) {
+                    $popupContent .= "<div>Email: ".$typeElement['email']."</div>";
+                }
 
                 $propertiesEvent = new LoadPropertiesEvent();
                 $propertiesEvent->setElementData($typeElement);
@@ -171,7 +224,7 @@ class LoadLayersListener
                     $tags .= $model->name;
                 }
 
-                $popupContent .= $tags;
+                $popupContent .= "<div>".$tags."</div>";
 
                 if ($objLocation->loctype === 'point') {
                     $content = $fmClass->addMapStructureContent(
