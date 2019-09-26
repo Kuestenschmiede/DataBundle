@@ -176,17 +176,25 @@ class LoadLayersListener
 
                 if ($popupEvent->isShowBusinessTimes() === true) {
                     $businessTimes = \StringUtil::deserialize($typeElement['businessHours']);
+                    $showBusinessTimes = false;
                     foreach ($businessTimes as $key => $time) {
                         $timeString[$key] = '';
                         if ($time['dayFrom'] !== '' && $time['timeFrom'] !== '' && $time['timeTo'] !== '') {
                             $timeString[$key] .= $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayFrom']];
                             if ($time['dayTo'] !== $time['dayFrom']) {
-                                $timeString[$key] .= " - " . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayTo']];
+                                if (abs(intval($time['dayTo']) - intval($time['dayFrom'])) > 1) {
+                                    $join = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_join']['to'];
+                                } else {
+                                    $join = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_join']['and'];
+                                }
+
+                                $timeString[$key] .= " $join " . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayTo']];
                             }
                             $timeString[$key] .= ": " . date('H:i', $time['timeFrom']) . " - " . date('H:i', $time['timeTo']);
+                            $showBusinessTimes = true;
                         }
                     }
-                    if (isset($timeString) === true && count($timeString) > 0) {
+                    if ($showBusinessTimes === true) {
                         $popupContent .= "<ul class=\"business_hours\">";
                         foreach ($timeString as $string) {
                             $popupContent .= "<li>" . $string . "</li>";
