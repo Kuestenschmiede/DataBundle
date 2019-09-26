@@ -149,7 +149,7 @@ class LoadLayersListener
                 $popupContent .= "<div class=\"description\">".$typeElement['description']."</div>";
 
                 $dispatcher = \Contao\System::getContainer()->get('event_dispatcher');
-                $popupEvent = new LoadPopupEvent();
+                $popupEvent = new LoadPopupEvent($type['type']);
                 $popupEvent->setElementData($typeElement);
                 $dispatcher->dispatch($popupEvent::NAME, $popupEvent);
 
