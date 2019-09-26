@@ -57,3 +57,9 @@ $GLOBALS['TL_LANG'][$strName]['day_reference'] = [
     '5' => 'Samstag',
     '6' => 'Sonntag'
 ];
+
+$GLOBALS['TL_LANG'][$strName]['day_join'] = [
+    'to' => 'bis',
+    'and' => 'und'
+];
+
