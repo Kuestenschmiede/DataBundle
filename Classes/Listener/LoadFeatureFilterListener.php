@@ -35,8 +35,10 @@ class LoadFeatureFilterListener
         $tags = $database->prepare("SELECT * FROM tl_c4g_mapcontent_tag")
             ->execute()->fetchAllAssoc();
         foreach ($tags as $tag) {
-            $filter->addFilterValue($tag['id']);
-            $filter->addTranslation($tag['id'], $tag['name']);
+            $filter->addFilterValue([
+                "value" => $tag['id'],
+                "translation" => $tag['name']
+            ]);
         }
         $currentFilters = $event->getFilters();
         $event->setFilters(array_merge($currentFilters, [$filter]));

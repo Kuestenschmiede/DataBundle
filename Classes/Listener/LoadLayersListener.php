@@ -16,6 +16,7 @@ namespace con4gis\MapContentBundle\Classes\Listener;
 
 
 use con4gis\MapContentBundle\Classes\Event\LoadPopupEvent;
+use con4gis\MapContentBundle\Classes\Event\LoadPropertiesEvent;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentElementModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentLocationModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTagModel;
@@ -220,6 +221,11 @@ class LoadLayersListener
                     $popupContent .= "<ul class=\"contact\">$contact</ul>";
                 }
 
+                $propertiesEvent = new LoadPropertiesEvent();
+                $propertiesEvent->setElementData($typeElement);
+                $dispatcher->dispatch($propertiesEvent::NAME, $propertiesEvent);
+                
+                $properties = $propertiesEvent->getProperties();
                 $tagIds = \StringUtil::deserialize($typeElement['tags']);
                 $tagModels = MapcontentTagModel::findMultipleByIds($tagIds);
                 $tags = '';
@@ -239,7 +245,11 @@ class LoadLayersListener
                         $objLocation->geoy,
                         $popupContent,
                         $typeElement['name'],
-                        $typeElement['name']
+                        $typeElement['name'],
+                        null,
+                        null,
+                        60000,
+                        $properties
                     );
                 } else {
                     $content = $fmClass->addMapStructureContentFromGeoJson(
@@ -247,7 +257,11 @@ class LoadLayersListener
                         $objLocation->geoJson,
                         $popupContent,
                         $typeElement['name'],
-                        $typeElement['name']
+                        $typeElement['name'],
+                        null,
+                        null,
+                        60000,
+                        $properties
                     );
                 }
                 $structureElement = $fmClass->addMapStructureElementWithIdCalc(
