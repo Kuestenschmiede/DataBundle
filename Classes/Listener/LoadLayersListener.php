@@ -143,7 +143,7 @@ class LoadLayersListener
             foreach ($elements[$type['id']] as $typeElement) {
                 $objLocation = $typeElement['objLocation'];
 
-                //ToDo add popup content
+                \System::loadLanguageFile('tl_c4g_mapcontent_element');
                 $popupContent = '';
                 $popupContent .= "<div>".$typeElement['name']."</div>";
                 $popupContent .= "<div>".$typeElement['description']."</div>";
@@ -175,7 +175,6 @@ class LoadLayersListener
                 }
 
                 if ($popupEvent->isShowBusinessTimes() === true) {
-                    \System::loadLanguageFile('tl_c4g_mapcontent_element');
                     $businessTimes = \StringUtil::deserialize($typeElement['businessHours']);
                     foreach ($businessTimes as $key => $time) {
                         $timeString[$key] = '';
