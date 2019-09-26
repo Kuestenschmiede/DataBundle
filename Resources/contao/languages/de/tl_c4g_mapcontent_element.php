@@ -23,8 +23,8 @@ $GLOBALS['TL_LANG'][$strName]['addressStreetNumber'] = ['Hausnummer', ''];
 $GLOBALS['TL_LANG'][$strName]['addressZip'] = ['Postleitzahl', ''];
 $GLOBALS['TL_LANG'][$strName]['addressCity'] = ['Ort', ''];
 
-$GLOBALS['TL_LANG'][$strName]['phoneNumber'] = ['Telefonnummer', ''];
-$GLOBALS['TL_LANG'][$strName]['faxNumber'] = ['Fax', ''];
+$GLOBALS['TL_LANG'][$strName]['phone'] = ['Telefonnummer', ''];
+$GLOBALS['TL_LANG'][$strName]['fax'] = ['Fax', ''];
 $GLOBALS['TL_LANG'][$strName]['email'] = ['Email-Adresse', ''];
 
 /**
