@@ -20,12 +20,17 @@ class LoadPopupEvent extends Event
     const NAME = "mapcontent.popup.load";
 
     private $popup = '';
+    private $type = '';
     private $showAddress = false;
     private $showPhone = false;
     private $showFax = false;
     private $showEmail = false;
     private $showBusinessTimes = false;
     private $elementData = [];
+
+    public function __construct(string $type) {
+        $this->type = $type;
+    }
 
     /**
      * @param string $string
@@ -41,6 +46,32 @@ class LoadPopupEvent extends Event
      */
     public function getPopupString() {
         return $this->popup;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPopup(): string
+    {
+        return $this->popup;
+    }
+
+    /**
+     * @param string $popup
+     * @return LoadPopupEvent
+     */
+    public function setPopup(string $popup): LoadPopupEvent
+    {
+        $this->popup = $popup;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
     }
 
     /**
