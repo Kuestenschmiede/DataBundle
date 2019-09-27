@@ -11,7 +11,7 @@ $GLOBALS['TL_LANG'][$strName]['location'] = ['Lokation des Elements', 'Wählen S
 $GLOBALS['TL_LANG'][$strName]['type'] = ['Elementtyp', 'Wählen Sie den Elementtyp aus.'];
 $GLOBALS['TL_LANG'][$strName]['tags'] = ['Tags', 'Wählen Sie die Tags aus, die Sie diesem Element zuweisen möchten.'];
 
-$GLOBALS['TL_LANG'][$strName]['businessHours'] = ['Geschäftszeiten', 'Die Geschäftszeiten in Listenform.'];
+$GLOBALS['TL_LANG'][$strName]['businessHours'] = ['Öffnungszeiten', 'Die Öffnungszeiten in Listenform.'];
 $GLOBALS['TL_LANG'][$strName]['dayFrom'] = ['Tag von', ''];
 $GLOBALS['TL_LANG'][$strName]['dayTo'] = ['Tag bis', ''];
 $GLOBALS['TL_LANG'][$strName]['timeFrom'] = ['Uhrzeit von', ''];
