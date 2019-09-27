@@ -31,7 +31,7 @@ class con4gisMapContentExtension extends Extension
             $container,
             new FileLocator(__DIR__.'/../Resources/config')
         );
-        $loader->load('listeners.yml');
+//        $loader->load('listeners.yml');
     }
     public function getAlias()
     {
