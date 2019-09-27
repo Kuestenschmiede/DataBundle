@@ -35,7 +35,7 @@ $GLOBALS['TL_LANG'][$strName]['email'] = ['Email-Adresse', ''];
  * Legends
  */
 $GLOBALS['TL_LANG'][$strName]['data_legend'] = 'Allgemeine Daten';
-$GLOBALS['TL_LANG'][$strName]['businessHours_legend'] = 'Geschäftszeiten';
+$GLOBALS['TL_LANG'][$strName]['businessHours_legend'] = 'Öffnungszeiten';
 $GLOBALS['TL_LANG'][$strName]['address_legend'] = 'Adresse';
 $GLOBALS['TL_LANG'][$strName]['contact_legend'] = 'Kontakt';
 
