@@ -31,6 +31,7 @@ class LoadFeatureFilterListener
         $database = Database::getInstance();
         $filter = new FeatureFilter();
         $filter->setFieldName("tags");
+        $filterAdded = false;
         $tags = $database->prepare("SELECT * FROM tl_c4g_mapcontent_tag")
             ->execute()->fetchAllAssoc();
         foreach ($tags as $tag) {
@@ -38,8 +39,11 @@ class LoadFeatureFilterListener
                 "value" => $tag['id'],
                 "translation" => $tag['name']
             ]);
+            $filterAdded = true;
         }
-        $currentFilters = $event->getFilters();
-        $event->setFilters(array_merge($currentFilters, [$filter]));
+        if ($filterAdded) {
+            $currentFilters = $event->getFilters();
+            $event->setFilters(array_merge($currentFilters, [$filter]));
+        }
     }
 }
