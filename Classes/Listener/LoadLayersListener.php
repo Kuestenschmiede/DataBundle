@@ -24,6 +24,7 @@ use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
 use con4gis\MapsBundle\Classes\Events\LoadLayersEvent;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\ProjectsBundle\Classes\Maps\C4GBrickMapFrontendParent;
+use Contao\FilesModel;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class LoadLayersListener
@@ -147,7 +148,6 @@ class LoadLayersListener
                 \System::loadLanguageFile('tl_c4g_mapcontent_element');
                 $popupContent = '';
                 $popupContent .= "<div class=\"name\">".$typeElement['name']."</div>";
-                $popupContent .= "<div class=\"description\">".$typeElement['description']."</div>";
 
                 $dispatcher = \Contao\System::getContainer()->get('event_dispatcher');
                 $popupEvent = new LoadPopupEvent($type['type']);
@@ -173,6 +173,16 @@ class LoadLayersListener
                         $address .= "<li>".$typeElement['addressZip']." ".$typeElement['addressCity']."</li>";
                     }
                     $popupContent .= "<ul class=\"address\">".$address."</ul>";
+                }
+
+                if ($typeElement['image'] !== '') {
+                    $fileModel = FilesModel::findByUuid($typeElement['image']);
+                    if ($fileModel !== null) {
+                        $popupContent .= "<img src=\"" . $fileModel->path . "\" " . "style=\"max-height: " .
+                            $typeElement['imageMaxHeight'] .
+                            "px;max-width: " . $typeElement['imageMaxWidth'] . "px;\">";
+                    }
+
                 }
 
                 if ($popupEvent->isShowBusinessTimes() === true) {
@@ -237,6 +247,9 @@ class LoadLayersListener
                 }
 
                 $popupContent .= "<div class=\"tags\">".$tags."</div>";
+                $popupContent .= "<div class=\"description\">".$typeElement['description']."</div>";
+
+                $label = $type['showLabels'] === '1' ? $typeElement['name'] : '';
 
                 if ($objLocation->loctype === 'point') {
                     $content = $fmClass->addMapStructureContent(
@@ -244,7 +257,7 @@ class LoadLayersListener
                         $objLocation->geox,
                         $objLocation->geoy,
                         $popupContent,
-                        $typeElement['name'],
+                        $label,
                         $typeElement['name'],
                         null,
                         null,
