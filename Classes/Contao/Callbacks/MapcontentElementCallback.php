@@ -75,4 +75,8 @@ class MapcontentElementCallback extends Backend
     public function getDay($dc) {
         return $GLOBALS['con4gis']['map-content']['day_option'];
     }
+
+    public function changeFileBinToUuid($fieldValue, DataContainer $dc) {
+        return \StringUtil::binToUuid($fieldValue);
+    }
 }

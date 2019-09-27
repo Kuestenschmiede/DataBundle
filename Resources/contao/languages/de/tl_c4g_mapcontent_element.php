@@ -11,7 +11,7 @@ $GLOBALS['TL_LANG'][$strName]['location'] = ['Lokation des Elements', 'Wählen S
 $GLOBALS['TL_LANG'][$strName]['type'] = ['Elementtyp', 'Wählen Sie den Elementtyp aus.'];
 $GLOBALS['TL_LANG'][$strName]['tags'] = ['Tags', 'Wählen Sie die Tags aus, die Sie diesem Element zuweisen möchten.'];
 
-$GLOBALS['TL_LANG'][$strName]['businessHours'] = ['Geschäftszeiten', 'Die Geschäftszeiten in Listenform.'];
+$GLOBALS['TL_LANG'][$strName]['businessHours'] = ['Öffnungszeiten', 'Die Öffnungszeiten in Listenform.'];
 $GLOBALS['TL_LANG'][$strName]['dayFrom'] = ['Tag von', ''];
 $GLOBALS['TL_LANG'][$strName]['dayTo'] = ['Tag bis', ''];
 $GLOBALS['TL_LANG'][$strName]['timeFrom'] = ['Uhrzeit von', ''];
@@ -26,6 +26,10 @@ $GLOBALS['TL_LANG'][$strName]['addressCity'] = ['Ort', ''];
 $GLOBALS['TL_LANG'][$strName]['phone'] = ['Telefonnummer', ''];
 $GLOBALS['TL_LANG'][$strName]['fax'] = ['Fax', ''];
 $GLOBALS['TL_LANG'][$strName]['email'] = ['Email-Adresse', ''];
+$GLOBALS['TL_LANG'][$strName]['website'] = ['Website', ''];
+$GLOBALS['TL_LANG'][$strName]['image'] = ['Bild', 'Ein Bild, das das Element zeigt.'];
+$GLOBALS['TL_LANG'][$strName]['imageMaxHeight'] = ['Maximale Bildhöhe (Pixel)', 'Das Seitenverhältnis wird beibehalten.'];
+$GLOBALS['TL_LANG'][$strName]['imageMaxWidth'] = ['Maximale Bildbreite (Pixel)', 'Das Seitenverhältnis wird beibehalten.'];
 
 /**
  * References
@@ -35,9 +39,11 @@ $GLOBALS['TL_LANG'][$strName]['email'] = ['Email-Adresse', ''];
  * Legends
  */
 $GLOBALS['TL_LANG'][$strName]['data_legend'] = 'Allgemeine Daten';
-$GLOBALS['TL_LANG'][$strName]['businessHours_legend'] = 'Geschäftszeiten';
+$GLOBALS['TL_LANG'][$strName]['businessHours_legend'] = 'Öffnungszeiten';
 $GLOBALS['TL_LANG'][$strName]['address_legend'] = 'Adresse';
 $GLOBALS['TL_LANG'][$strName]['contact_legend'] = 'Kontakt';
+$GLOBALS['TL_LANG'][$strName]['description_legend'] = 'Beschreibung';
+$GLOBALS['TL_LANG'][$strName]['image_legend'] = 'Bild';
 
 /**
  * Operations

@@ -17,6 +17,7 @@ use con4gis\CoreBundle\Classes\DCA\Fields\NaturalField;
 use con4gis\CoreBundle\Classes\DCA\Fields\SelectField;
 use con4gis\CoreBundle\Classes\DCA\Fields\TextAreaField;
 use con4gis\CoreBundle\Classes\DCA\Fields\TextField;
+use con4gis\CoreBundle\Classes\DCA\Fields\ImageField;
 use con4gis\MapContentBundle\Classes\Contao\Callbacks\MapcontentElementCallback;
 
 $strName = 'tl_c4g_mapcontent_element';
@@ -29,7 +30,7 @@ $list->sorting()->panelLayout('filter;sort,search,limit');
 $list->label()->fields(['name', 'location', 'type'])
     ->labelCallback($cbClass, 'getLabel');
 $list->addRegularOperations($dca);
-$dca->palette()->default('{data_legend},name,description,location,tags,type;')
+$dca->palette()->default('{data_legend},name,location,type;')
     ->selector(['type']);
 
 $id = new IdField('id', $dca);
@@ -39,14 +40,12 @@ $tStamp = new NaturalField('tstamp', $dca);
 $name = new TextField('name', $dca);
 $name->eval()->class('clr')->mandatory();
 
-$description = new TextAreaField('description', $dca);
-$description->eval()->class('clr');
-
 $location = new SelectField('location', $dca);
 $location->default('')
     ->optionsCallback($cbClass, 'loadLocations')
     ->sql("varchar(20) NOT NULL default ''")
     ->eval()->class('clr')
+        ->chosen()
         ->mandatory();
 
 $tags = new SelectField('tags', $dca);
@@ -111,3 +110,21 @@ $fax->eval()->regEx('fax')
 $email = new TextField('email', $dca);
 $email->eval()->regEx('email')
         ->class('w50');
+
+$email = new TextField('website', $dca);
+$email->eval()->regEx('url')
+        ->class('w50');
+
+$description = new TextAreaField('description', $dca);
+$description->eval()->class('clr')
+    ->rte('tinyMCE');
+
+$image = new ImageField('image', $dca);
+$image->saveCallback($cbClass, 'changeFileBinToUuid');
+
+$imageMaxHeight = new NaturalField('imageMaxHeight', $dca);
+$imageMaxHeight->default('200')->sql("int(10) unsigned NOT NULL default '200'")
+    ->eval()->maxlength(10)->class('w50');
+$imageMaxWidth = new NaturalField('imageMaxWidth', $dca);
+$imageMaxWidth->default('200')->sql("int(10) unsigned NOT NULL default '200'")
+    ->eval()->maxlength(10)->class('w50');
