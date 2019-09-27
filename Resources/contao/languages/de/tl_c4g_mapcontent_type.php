@@ -16,3 +16,5 @@ $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type'] = [
 ];
 
 $GLOBALS['TL_LANG']['mapcontent_types']['default'] = 'Standard';
+
+$GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['showLabels'] = ['Namen anzeigen', 'Zeigt die Namen der Elemente dieses Typs in der Karte an.'];

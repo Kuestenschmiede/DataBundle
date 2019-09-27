@@ -18,6 +18,7 @@ use con4gis\CoreBundle\Classes\DCA\Fields\IdField;
 use con4gis\CoreBundle\Classes\DCA\Fields\NaturalField;
 use con4gis\CoreBundle\Classes\DCA\Fields\SelectField;
 use con4gis\CoreBundle\Classes\DCA\Fields\TextField;
+use con4gis\CoreBundle\Classes\DCA\Fields\CheckboxField;
 use con4gis\MapContentBundle\Classes\Contao\Callbacks\MapcontentTypeCallback;
 
 $strName = 'tl_c4g_mapcontent_type';
@@ -30,7 +31,7 @@ $list->sorting()->panelLayout('filter;sort,search,limit');
 $list->label()->fields(['name', 'type', 'availableTags'])
     ->labelCallback($cbClass, 'getLabel');
 $list->addRegularOperations($dca);
-$dca->palette()->default('{data_legend},name,locstyle,type,availableTags;');
+$dca->palette()->default('{data_legend},name,locstyle,type,availableTags,showLabels;');
 
 $id = new IdField('id', $dca);
 
@@ -59,3 +60,6 @@ $availableTags->optionsCallback($cbClass, 'getAvailableTags')
     ->eval()->class('clr')
         ->chosen()
         ->multiple();
+
+$showLabels = new CheckboxField('showLabels', $dca);
+$showLabels->default(false);
