@@ -17,7 +17,6 @@ namespace con4gis\MapContentBundle\Classes\Listener;
 
 use con4gis\MapsBundle\Classes\Events\LoadFeatureFiltersEvent;
 use con4gis\MapsBundle\Classes\Filter\FeatureFilter;
-use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use Contao\Database;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
