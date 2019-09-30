@@ -17,6 +17,7 @@ namespace con4gis\MapContentBundle\Classes\Listener;
 
 use con4gis\MapContentBundle\Classes\Event\LoadPopupEvent;
 use con4gis\MapContentBundle\Classes\Event\LoadPropertiesEvent;
+use con4gis\MapContentBundle\Classes\Popup\Popup;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentElementModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentLocationModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTagModel;
@@ -130,7 +131,7 @@ class LoadLayersListener
         $elements = $addData['elements'];
         foreach ($types as $type) {
             $structureElems = [];
-            $structureType = $fmClass->addMapStructureElementWithIdCalc(
+            $structureType = $fmClass->createMapStructureElementWithIdCalc(
                 $type['id'],
                 $mapContentLayer['id'],
                 $mapContentLayer['pid'],
@@ -145,44 +146,38 @@ class LoadLayersListener
             foreach ($elements[$type['id']] as $typeElement) {
                 $objLocation = $typeElement['objLocation'];
 
+                $popup = new Popup();
+
                 \System::loadLanguageFile('tl_c4g_mapcontent_element');
-                $popupContent = '';
-                $popupContent .= "<div class=\"name\">".$typeElement['name']."</div>";
+                $popup->addName($typeElement['name']);
 
                 $dispatcher = \Contao\System::getContainer()->get('event_dispatcher');
-                $popupEvent = new LoadPopupEvent($type['type']);
+                $popupEvent = new LoadPopupEvent($type['type'], $popup);
                 $popupEvent->setElementData($typeElement);
                 $dispatcher->dispatch($popupEvent::NAME, $popupEvent);
 
-                $popupContent .= $popupEvent->getPopupString();
-
                 if ($popupEvent->isShowAddress() === true) {
-                    $address = '';
+                    $address = [];
                     if ($typeElement['addressName'] !== '') {
-                        $address .= "<li>".$typeElement['addressName']."</li>";
+                        $address[] = $typeElement['addressName'];
                     }
                     if ($typeElement['addressStreet'] !== '') {
                         if ($typeElement['addressStreetNumber'] === 0) {
-                            $address .= "<li>" . $typeElement['addressStreet'] . " " .
-                                $typeElement['addressStreetNumber'] . "</li>";
+                            $address[] = $typeElement['addressStreet'] . " " .
+                                $typeElement['addressStreetNumber'];
                         } else {
-                            $address .= "<li>" . $typeElement['addressStreet'] . "</li>";
+                            $address[] = $typeElement['addressStreet'];
                         }
                     }
                     if ($typeElement['addressZip'] !== '' && $typeElement['addressCity'] !== '') {
-                        $address .= "<li>".$typeElement['addressZip']." ".$typeElement['addressCity']."</li>";
+                        $address[] = $typeElement['addressZip'] . " " . $typeElement['addressCity'];
                     }
-                    $popupContent .= "<ul class=\"address\">".$address."</ul>";
+                    $popup->addAddress($address);
                 }
 
-                if ($typeElement['image'] !== '') {
+                if ($typeElement['image'] !== '' && is_string($typeElement['image'])) {
                     $fileModel = FilesModel::findByUuid($typeElement['image']);
-                    if ($fileModel !== null) {
-                        $popupContent .= "<img src=\"" . $fileModel->path . "\" " . "style=\"max-height: " .
-                            $typeElement['imageMaxHeight'] .
-                            "px;max-width: " . $typeElement['imageMaxWidth'] . "px;\">";
-                    }
-
+                    $popup->addImage($fileModel->path, $typeElement['imageMaxHeight'], $typeElement['imageMaxWidth']);
                 }
 
                 if ($popupEvent->isShowBusinessTimes() === true) {
@@ -206,31 +201,11 @@ class LoadLayersListener
                         }
                     }
                     if ($showBusinessTimes === true) {
-                        $popupContent .= "<ul class=\"business_hours\">";
-                        foreach ($timeString as $string) {
-                            $popupContent .= "<li>" . $string . "</li>";
-                        }
-                        $popupContent .= "</ul>";
+                        $popup->addBusinessHours($timeString);
                     }
                 }
 
-                $contact = '';
-                if ($popupEvent->isShowPhone() === true && $typeElement['phone']) {
-                    $contact .= "<li>Tel.: ".$typeElement['phone']."</li>";
-                }
-
-                if ($popupEvent->isShowFax() === true && $typeElement['fax']) {
-                    $contact .= "<li>Fax: ".$typeElement['fax']."</li>";
-                }
-
-                if ($popupEvent->isShowEmail() === true && $typeElement['email']) {
-                    $contact .= "<li>Email: ".$typeElement['email']."</li>";
-                }
-
-                if ($contact !== '') {
-                    $popupContent .= "<ul class=\"contact\">$contact</ul>";
-                }
-
+                $popup->addContactInfo('Tel.: '.$typeElement['phone'], 'Fax: '.$typeElement['fax'], $typeElement['email']);
                 $propertiesEvent = new LoadPropertiesEvent();
                 $propertiesEvent->setElementData($typeElement);
                 $dispatcher->dispatch($propertiesEvent::NAME, $propertiesEvent);
@@ -238,25 +213,22 @@ class LoadLayersListener
                 $properties = $propertiesEvent->getProperties();
                 $tagIds = \StringUtil::deserialize($typeElement['tags']);
                 $tagModels = MapcontentTagModel::findMultipleByIds($tagIds);
-                $tags = '';
+                $tags = [];
                 foreach ($tagModels as $model) {
-                    if ($tags !== '') {
-                        $tags .= ', ';
-                    }
-                    $tags .= $model->name;
+                    $tags[] = $model->name;
                 }
 
-                $popupContent .= "<div class=\"tags\">".$tags."</div>";
-                $popupContent .= "<div class=\"description\">".$typeElement['description']."</div>";
+                $popup->addTags($tags);
+                $popup->addDescription(strval($typeElement['description']));
 
                 $label = $type['showLabels'] === '1' ? $typeElement['name'] : '';
 
                 if ($objLocation->loctype === 'point') {
-                    $content = $fmClass->addMapStructureContent(
+                    $content = $fmClass->createMapStructureContent(
                         $type['locstyle'],
                         $objLocation->geox,
                         $objLocation->geoy,
-                        $popupContent,
+                        $popup->getPopupString(),
                         $label,
                         $typeElement['name'],
                         null,
@@ -265,10 +237,10 @@ class LoadLayersListener
                         $properties
                     );
                 } else {
-                    $content = $fmClass->addMapStructureContentFromGeoJson(
+                    $content = $fmClass->createMapStructureContentFromGeoJson(
                         $type['locstyle'],
                         $objLocation->geoJson,
-                        $popupContent,
+                        $popup->getPopupString(),
                         $typeElement['name'],
                         $typeElement['name'],
                         null,
@@ -277,7 +249,7 @@ class LoadLayersListener
                         $properties
                     );
                 }
-                $structureElement = $fmClass->addMapStructureElementWithIdCalc(
+                $structureElement = $fmClass->createMapStructureElementWithIdCalc(
                     $typeElement['id'],
                     $structureType['id'],
                     $structureType['pid'],
@@ -294,11 +266,11 @@ class LoadLayersListener
                 $structureElems[] = $structureElement;
             }
     
-            $structureType = $fmClass->addMapStructureChilds($structureType, $structureElems);
+            $structureType = $fmClass->createMapStructureChilds($structureType, $structureElems);
     
             $structureTypes[] = $structureType;
         }
-        $mapContentLayer = $fmClass->addMapStructureChilds($mapContentLayer, $structureTypes);
+        $mapContentLayer = $fmClass->createMapStructureChilds($mapContentLayer, $structureTypes);
         $event->setLayerData($mapContentLayer);
     }
 }
