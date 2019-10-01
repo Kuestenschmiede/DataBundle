@@ -13,13 +13,14 @@
 namespace con4gis\MapContentBundle\Classes\Event;
 
 
+use con4gis\MapContentBundle\Classes\Popup\Popup;
 use Symfony\Component\EventDispatcher\Event;
 
 class LoadPopupEvent extends Event
 {
     const NAME = "mapcontent.popup.load";
 
-    private $popup = '';
+    private $popup;
     private $type = '';
     private $showAddress = false;
     private $showPhone = false;
@@ -28,39 +29,24 @@ class LoadPopupEvent extends Event
     private $showBusinessTimes = false;
     private $elementData = [];
 
-    public function __construct(string $type) {
+    public function __construct(string $type, Popup $popup) {
         $this->type = $type;
+        $this->popup = $popup;
     }
 
     /**
-     * @param string $string
-     * @return $this
+     * @return Popup
      */
-    public function addPopupString(string $string) {
-        $this->popup .= $string;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPopupString() {
-        return $this->popup;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPopup(): string
+    public function getPopup(): Popup
     {
         return $this->popup;
     }
 
     /**
-     * @param string $popup
+     * @param Popup $popup
      * @return LoadPopupEvent
      */
-    public function setPopup(string $popup): LoadPopupEvent
+    public function setPopup(Popup $popup): LoadPopupEvent
     {
         $this->popup = $popup;
         return $this;
