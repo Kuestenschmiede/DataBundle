@@ -39,7 +39,7 @@ $dca->palette()->default('{data_legend},name,type;')
 
 $types = \con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel::findAll();
 foreach ($types as $type) {
-    $dca->palette()->subPalette("type", $type->id, "{location_legend},loctype;");
+    $dca->palette()->subPalette("type", $type->id, ";{location_legend},loctype;");
 }
 
 $id = new IdField('id', $dca);
