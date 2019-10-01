@@ -63,6 +63,7 @@ $type->default('')
     ->eval()->mandatory()
     ->maxlength(20)
     ->class('clr')
+    ->includeBlankOption()
     ->submitOnChange();
 
 $locType = new SelectField('loctype', $dca);
