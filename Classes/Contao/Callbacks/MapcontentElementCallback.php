@@ -17,6 +17,7 @@ namespace con4gis\MapContentBundle\Classes\Contao\Callbacks;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentLocationModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTagModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
+use con4gis\MapsBundle\Resources\contao\classes\Utils;
 use Contao\Backend;
 use Contao\DataContainer;
 use Contao\StringUtil;
@@ -24,16 +25,6 @@ use Contao\StringUtil;
 class MapcontentElementCallback extends Backend
 {
     private $dcaName = 'tl_c4g_mapcontent_element';
-
-    public function loadLocations()
-    {
-        $arrLocations = [];
-        $locations = MapcontentLocationModel::findAll();
-        foreach ($locations as $location) {
-            $arrLocations[$location->id] = $location->name;
-        }
-        return $arrLocations;
-    }
     
     public function loadTypes()
     {
@@ -67,7 +58,7 @@ class MapcontentElementCallback extends Backend
 
     public function getLabel($arrRow){
         $label['name'] = $arrRow['name'];
-        $label['location'] = MapcontentLocationModel::findByPk($arrRow['location'])->name;
+//        $label['location'] = MapcontentLocationModel::findByPk($arrRow['location'])->name;
         $label['type'] = MapcontentTypeModel::findByPk($arrRow['type'])->name;
         return $label;
     }
@@ -78,5 +69,27 @@ class MapcontentElementCallback extends Backend
 
     public function changeFileBinToUuid($fieldValue, DataContainer $dc) {
         return \StringUtil::binToUuid($fieldValue);
+    }
+    
+    /**
+     * Validate Location Lon
+     */
+    public function setLocLon($varValue, DataContainer $dc)
+    {
+        if (!Utils::validateLon($varValue)) {
+            throw new \Exception($GLOBALS['TL_LANG']['c4g_maps']['geox_invalid']);
+        }
+        return $varValue;
+    }
+    
+    /**
+     * Validate Location Lat
+     */
+    public function setLocLat($varValue, DataContainer $dc)
+    {
+        if (!Utils::validateLat($varValue)) {
+            throw new \Exception($GLOBALS['TL_LANG']['c4g_maps']['geoy_invalid']);
+        }
+        return $varValue;
     }
 }
