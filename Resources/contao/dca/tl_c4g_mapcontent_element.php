@@ -30,13 +30,17 @@ $list->sorting()->panelLayout('filter;sort,search,limit');
 $list->label()->fields(['name', 'type'])
     ->labelCallback($cbClass, 'getLabel');
 $list->addRegularOperations($dca);
-$dca->palette()->default('{data_legend},name,type;{location_legend},loctype;')
+$dca->palette()->default('{data_legend},name,type;')
     ->selector(['type', 'loctype'])
     ->subPalette("loctype", "point", "geox,geoy")
     ->subPalette("loctype", "circle", "geoJson")
     ->subPalette("loctype", "line", "geoJson")
     ->subPalette("loctype", "polygon", "geoJson");
 
+$types = \con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel::findAll();
+foreach ($types as $type) {
+    $dca->palette()->subPalette("type", $type->id, "{location_legend},loctype;");
+}
 
 $id = new IdField('id', $dca);
 
