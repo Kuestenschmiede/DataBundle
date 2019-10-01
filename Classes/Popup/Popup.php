@@ -12,7 +12,7 @@ class Popup
     }
 
     public function addAddress(array $entries, string $class = 'address') {
-        return $this->addList($entries, '', $class);
+        return $this->addStringFromArray($entries, $class);
     }
 
     public function addBusinessHours(array $entries, string $class = 'business_hours') {
@@ -39,8 +39,9 @@ class Popup
         return $this;
     }
 
-    public function addFilter(array $entries, string $class = 'filter') {
-        return $this->addList($entries, '', $class);
+    public function addFilter(array $entries, string $title = '', string $class = 'filter') {
+        $entries[0] = $title.': '.$entries[0];
+        return $this->addStringFromArray($entries, $class);
     }
 
     public function addTags(array $entries, string $class = 'tags') {
