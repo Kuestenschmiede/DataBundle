@@ -30,10 +30,18 @@ $GLOBALS['TL_LANG'][$strName]['website'] = ['Website', ''];
 $GLOBALS['TL_LANG'][$strName]['image'] = ['Bild', 'Ein Bild, das das Element zeigt.'];
 $GLOBALS['TL_LANG'][$strName]['imageMaxHeight'] = ['Maximale Bildhöhe (Pixel)', 'Das Seitenverhältnis wird beibehalten.'];
 $GLOBALS['TL_LANG'][$strName]['imageMaxWidth'] = ['Maximale Bildbreite (Pixel)', 'Das Seitenverhältnis wird beibehalten.'];
+$GLOBALS['TL_LANG'][$strName]['loctype'] = ['Lokationstyp', 'Wählen Sie die Art der Lokation aus.'];
+$GLOBALS['TL_LANG'][$strName]['geox'] = ['Geo-X-Koordinate', 'Wählen Sie die X-Koordinate aus. Mit Verwendung des Geopickers werden beide Felder automatisch befüllt.'];
+$GLOBALS['TL_LANG'][$strName]['geoy'] = ['Geo-Y-Koordinate', 'Wählen Sie die Y-Koordinate aus. Mit Verwendung des Geopickers werden beide Felder automatisch befüllt.'];
+$GLOBALS['TL_LANG'][$strName]['geoJson'] = ['Geo-JSON', 'Geben Sie das GeoJSON an. Wenn Sie den Editor verwenden, wird das GeoJSON automatisch erzeugt und hier eingetragen.'];
 
 /**
  * References
  */
+$GLOBALS['TL_LANG'][$strName]['loctype_ref']['point'] = "Punkt";
+$GLOBALS['TL_LANG'][$strName]['loctype_ref']['line'] = "Strecke";
+$GLOBALS['TL_LANG'][$strName]['loctype_ref']['circle'] = "Kreis";
+$GLOBALS['TL_LANG'][$strName]['loctype_ref']['polygon'] = "Polygon";
 
 /**
  * Legends
@@ -44,6 +52,7 @@ $GLOBALS['TL_LANG'][$strName]['address_legend'] = 'Adresse';
 $GLOBALS['TL_LANG'][$strName]['contact_legend'] = 'Kontakt';
 $GLOBALS['TL_LANG'][$strName]['description_legend'] = 'Beschreibung';
 $GLOBALS['TL_LANG'][$strName]['image_legend'] = 'Bild';
+$GLOBALS['TL_LANG'][$strName]['location_legend'] = 'Koordinaten';
 
 /**
  * Operations

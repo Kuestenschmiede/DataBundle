@@ -51,37 +51,7 @@ class LoadLayersListener
         $addData['mapContentLayer'] = $mapContentLayer;
         $event->setAdditionalData($addData);
     }
-    
-//    /**
-//     * Loads the available tags for the types and stores them in the types array.
-//     * @param LoadLayersEvent $event
-//     * @param $eventName
-//     * @param EventDispatcherInterface $eventDispatcher
-//     */
-//    public function onLoadLayersLoadTags(
-//        LoadLayersEvent $event,
-//        $eventName,
-//        EventDispatcherInterface $eventDispatcher
-//    ) {
-//        $types = $event->getAdditionalData()[''];
-//        $resTagIds = [];
-//        foreach ($types as $key => $type) {
-//            // load tags and store them to the current type
-//            $arrTagIds = unserialize($type['typeSelection']);
-//            foreach ($arrTagIds as $tagId) {
-//                if (!in_array($tagId, $resTagIds[$type['id']])) {
-//                    $resTagIds[$type['id']][] = $tagId;
-//                }
-//            }
-//            $objTags = MapcontentTagModel::findMultipleByIds($resTagIds);
-//            $type['tags'] = $objTags->fetchAll();
-//            $types[$key] = $type;
-//        }
-//        $addData = $event->getAdditionalData();
-//        $addData['types'] = $types;
-//        $event->setAdditionalData($addData);
-//    }
-    
+
     public function onLoadLayersLoadElements(
         LoadLayersEvent $event,
         $eventName,
@@ -99,10 +69,10 @@ class LoadLayersListener
             $elements = MapcontentElementModel::findBy('type', $typeId)->fetchAll();
             foreach ($elements as $key => $element) {
                 $element['tags'] = unserialize($element['tags']);
-                if (!$objLocations[$element['location']]) {
-                    $objLocations[$element['location']] = MapcontentLocationModel::findByPk($element['location']);
-                }
-                $element['objLocation'] = $objLocations[$element['location']];
+//                if (!$objLocations[$element['location']]) {
+//                    $objLocations[$element['location']] = MapcontentLocationModel::findByPk($element['location']);
+//                }
+//                $element['objLocation'] = $objLocations[$element['location']];
                 $elements[$key] = $element;
             }
             $arrElements[$typeId] = $elements;
@@ -143,8 +113,6 @@ class LoadLayersListener
             );
             
             foreach ($elements[$type['id']] as $typeElement) {
-                $objLocation = $typeElement['objLocation'];
-
                 \System::loadLanguageFile('tl_c4g_mapcontent_element');
                 $popupContent = '';
                 $popupContent .= "<div class=\"name\">".$typeElement['name']."</div>";
@@ -251,11 +219,11 @@ class LoadLayersListener
 
                 $label = $type['showLabels'] === '1' ? $typeElement['name'] : '';
 
-                if ($objLocation->loctype === 'point') {
-                    $content = $fmClass->addMapStructureContent(
+                if ($typeElement['loctype'] === 'point') {
+                    $content = $fmClass->createMapStructureContent(
                         $type['locstyle'],
-                        $objLocation->geox,
-                        $objLocation->geoy,
+                        $typeElement['geox'],
+                        $typeElement['geoy'],
                         $popupContent,
                         $label,
                         $typeElement['name'],
@@ -265,9 +233,9 @@ class LoadLayersListener
                         $properties
                     );
                 } else {
-                    $content = $fmClass->addMapStructureContentFromGeoJson(
+                    $content = $fmClass->createMapStructureContentFromGeoJson(
                         $type['locstyle'],
-                        $objLocation->geoJson,
+                        $typeElement['geoJson'],
                         $popupContent,
                         $typeElement['name'],
                         $typeElement['name'],
@@ -277,7 +245,7 @@ class LoadLayersListener
                         $properties
                     );
                 }
-                $structureElement = $fmClass->addMapStructureElementWithIdCalc(
+                $structureElement = $fmClass->createMapStructureElementWithIdCalc(
                     $typeElement['id'],
                     $structureType['id'],
                     $structureType['pid'],
@@ -294,11 +262,11 @@ class LoadLayersListener
                 $structureElems[] = $structureElement;
             }
     
-            $structureType = $fmClass->addMapStructureChilds($structureType, $structureElems);
+            $structureType = $fmClass->createMapStructureChilds($structureType, $structureElems);
     
             $structureTypes[] = $structureType;
         }
-        $mapContentLayer = $fmClass->addMapStructureChilds($mapContentLayer, $structureTypes);
+        $mapContentLayer = $fmClass->createMapStructureChilds($mapContentLayer, $structureTypes);
         $event->setLayerData($mapContentLayer);
     }
 }

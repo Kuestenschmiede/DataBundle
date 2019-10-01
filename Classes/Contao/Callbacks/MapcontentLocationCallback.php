@@ -24,27 +24,7 @@ use Exception;
 
 class MapcontentLocationCallback extends Backend
 {
-    /**
-     * Validate Location Lon
-     */
-    public function setLocLon($varValue, DataContainer $dc)
-    {
-        if (!Utils::validateLon($varValue)) {
-            throw new Exception($GLOBALS['TL_LANG']['c4g_maps']['geox_invalid']);
-        }
-        return $varValue;
-    }
     
-    /**
-     * Validate Location Lat
-     */
-    public function setLocLat($varValue, DataContainer $dc)
-    {
-        if (!Utils::validateLat($varValue)) {
-            throw new Exception($GLOBALS['TL_LANG']['c4g_maps']['geoy_invalid']);
-        }
-        return $varValue;
-    }
 
     public function getLabel($arrRow){
         $label['name'] = $arrRow['name'];

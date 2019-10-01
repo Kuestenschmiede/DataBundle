@@ -27,11 +27,16 @@ $dca = new DCA($strName);
 $list = $dca->list();
 $list->sorting()->fields(['name']);
 $list->sorting()->panelLayout('filter;sort,search,limit');
-$list->label()->fields(['name', 'location', 'type'])
+$list->label()->fields(['name', 'type'])
     ->labelCallback($cbClass, 'getLabel');
 $list->addRegularOperations($dca);
-$dca->palette()->default('{data_legend},name,location,type;')
-    ->selector(['type']);
+$dca->palette()->default('{data_legend},name,type;{location_legend},loctype;')
+    ->selector(['type', 'loctype'])
+    ->subPalette("loctype", "point", "geox,geoy")
+    ->subPalette("loctype", "circle", "geoJson")
+    ->subPalette("loctype", "line", "geoJson")
+    ->subPalette("loctype", "polygon", "geoJson");
+
 
 $id = new IdField('id', $dca);
 
@@ -39,14 +44,6 @@ $tStamp = new NaturalField('tstamp', $dca);
 
 $name = new TextField('name', $dca);
 $name->eval()->class('clr')->mandatory();
-
-$location = new SelectField('location', $dca);
-$location->default('')
-    ->optionsCallback($cbClass, 'loadLocations')
-    ->sql("varchar(20) NOT NULL default ''")
-    ->eval()->class('clr')
-        ->chosen()
-        ->mandatory();
 
 $tags = new SelectField('tags', $dca);
 $tags->optionsCallback($cbClass, 'loadAvailableTags')
@@ -63,6 +60,38 @@ $type->default('')
     ->maxlength(20)
     ->class('clr')
     ->submitOnChange();
+
+$locType = new SelectField('loctype', $dca);
+$locType->default('point')
+    ->options(['point', 'circle', 'line', 'polygon'])
+    ->reference('loctype_ref')
+    ->sql("varchar(20) NOT NULL default ''")
+    ->eval()->class('clr')
+    ->includeBlankOption()
+    ->submitOnChange();
+
+$geoX = new TextField('geox', $dca);
+$geoX->inputType('c4g_text')
+    ->sql("varchar(20) NOT NULL default ''")
+    ->wizard('con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink')
+    ->saveCallback($cbClass, 'setLocLon')
+    ->eval()->mandatory()
+    ->maxlength(20)
+    ->class('w50 wizard');
+
+$geoY = new TextField('geoy', $dca);
+$geoY->inputType('c4g_text')
+    ->sql("varchar(20) NOT NULL default ''")
+    ->wizard('con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink')
+    ->saveCallback($cbClass, 'setLocLat')
+    ->eval()->mandatory()
+    ->maxlength(20)
+    ->class('w50 wizard');
+
+$geoJson = new TextAreaField('geoJson', $dca);
+$geoJson->wizard('con4gis\EditorBundle\Classes\Contao\GeoEditor', 'getEditorLink')
+    ->eval()->class('wizard')
+    ->preserveTags();
 
 /** Fields for use in child bundles */
 
