@@ -40,8 +40,11 @@ class Popup
     }
 
     public function addFilter(array $entries, string $title = '', string $class = 'filter') {
-        $entries[0] = $title.': '.$entries[0];
-        return $this->addStringFromArray($entries, $class);
+        if (!empty($entries)) {
+            $entries[0] = $title . ': ' . $entries[0];
+            return $this->addStringFromArray($entries, $class);
+        }
+        return $this;
     }
 
     public function addTags(array $entries, string $class = 'tags') {
