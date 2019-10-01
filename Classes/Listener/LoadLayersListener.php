@@ -205,7 +205,7 @@ class LoadLayersListener
                     }
                 }
 
-                $popup->addContactInfo('Tel.: '.$typeElement['phone'], 'Fax: '.$typeElement['fax'], $typeElement['email']);
+                $popup->addContactInfo($typeElement['phone'], $typeElement['fax'], $typeElement['email']);
                 $propertiesEvent = new LoadPropertiesEvent();
                 $propertiesEvent->setElementData($typeElement);
                 $dispatcher->dispatch($propertiesEvent::NAME, $propertiesEvent);

@@ -20,8 +20,21 @@ class Popup
     }
 
     public function addContactInfo(string $phone, string $fax, string $email, string $class = 'contact') {
-        if ($phone !== '' || $fax !== '' || $email !== '') {
-            return $this->addList([$phone, $fax, $email], '', $class);
+        $list = [];
+        if ($phone !== '') {
+            $list[] = 'Tel.: '.$phone;
+        }
+
+        if ($fax !== '') {
+            $list[] = 'Fax: '.$fax;
+        }
+
+        if ($email !== '') {
+            $list[] = $email;
+        }
+
+        if ($list !== []) {
+            return $this->addList($list, '', $class);
         }
         return $this;
     }
