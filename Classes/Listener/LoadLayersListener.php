@@ -67,16 +67,15 @@ class LoadLayersListener
         $typeIds = $event->getAdditionalData()['typeIds'];
         $arrElements = [];
         foreach ($typeIds as $typeId) {
-            $elements = MapcontentElementModel::findBy('type', $typeId)->fetchAll();
-            foreach ($elements as $key => $element) {
-                $element['tags'] = unserialize($element['tags']);
-//                if (!$objLocations[$element['location']]) {
-//                    $objLocations[$element['location']] = MapcontentLocationModel::findByPk($element['location']);
-//                }
-//                $element['objLocation'] = $objLocations[$element['location']];
-                $elements[$key] = $element;
+            $elements = MapcontentElementModel::findBy('type', $typeId);
+            if ($elements !== null) {
+                $elements = $elements->fetchAll();
+                foreach ($elements as $key => $element) {
+                    $element['tags'] = unserialize($element['tags']);
+                    $elements[$key] = $element;
+                }
+                $arrElements[$typeId] = $elements;
             }
-            $arrElements[$typeId] = $elements;
         }
         
         $addData = $event->getAdditionalData();
