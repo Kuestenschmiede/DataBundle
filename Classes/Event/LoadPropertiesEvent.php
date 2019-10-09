@@ -36,7 +36,7 @@ class LoadPropertiesEvent extends Event
 
     /**
      * @param array $elementData
-     * @return LoadPopupEvent
+     * @return LoadPropertiesEvent
      */
     public function setElementData(array $elementData): LoadPropertiesEvent
     {
