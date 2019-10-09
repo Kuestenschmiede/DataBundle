@@ -1,7 +1,5 @@
 <?php
 
-$strName = '';
-
 $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type'] = [
     'name' => ['Name des Elementtyps', 'Geben Sie einen Namen für den Elementtyp ein.'],
     'locstyle' => ['Lokationsstil', 'Wählen Sie einen Lokationsstil aus, in dem Elemente dieses Typs dargestellt werden sollen.'],
@@ -16,5 +14,6 @@ $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type'] = [
 ];
 
 $GLOBALS['TL_LANG']['mapcontent_types']['default'] = 'Standard';
+$GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['data_legend'] = 'Allgemeine Daten';
 
 $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['showLabels'] = ['Namen anzeigen', 'Zeigt die Namen der Elemente dieses Typs in der Karte an.'];
