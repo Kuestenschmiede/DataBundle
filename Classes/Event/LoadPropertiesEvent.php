@@ -10,7 +10,8 @@ class LoadPropertiesEvent extends Event
 {
     const NAME = "mapcontent.properties.load";
 
-    private $properties =[];
+    private $properties = [];
+    private $elementData = [];
 
     /**
      * @param array $properties
@@ -36,7 +37,7 @@ class LoadPropertiesEvent extends Event
 
     /**
      * @param array $elementData
-     * @return LoadPopupEvent
+     * @return LoadPropertiesEvent
      */
     public function setElementData(array $elementData): LoadPropertiesEvent
     {

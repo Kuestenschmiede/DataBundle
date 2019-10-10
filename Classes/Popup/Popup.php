@@ -62,6 +62,10 @@ class Popup
         return $this;
     }
 
+    public function addString(string $string, string $class = '') {
+        $this->popupString .= "<div class=\"$class\">$string</div>";
+    }
+
     protected function addList(array $entries, string $title = '', string $class = 'list') {
         if (!empty($entries)) {
             $this->popupString .= "<div class=\"$class\">$title<ul>";
