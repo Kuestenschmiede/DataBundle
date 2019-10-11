@@ -33,8 +33,8 @@ class LoadFeatureFilterListener
         $eventName,
         EventDispatcherInterface $eventDispatcher
     ) {
-        $layerId = $event->getLayerId();
-        $layers = C4gMapsModel::findPublishedByPid($layerId);
+        $profileId = $event->getProfileId();
+        $layers = C4gMapsModel::findPublishedByPid($profileId);
         if ($layers !== null) {
             $typeIds = $this->loadTypeIds($layers);
             $typeIds = array_unique($typeIds);
