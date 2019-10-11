@@ -82,7 +82,10 @@ class LoadFeatureFilterListener
     private function loadTypeIds(Collection $mapCollection) : array {
         $typeIds = [];
         foreach ($mapCollection as $map) {
-            $typeIds = array_merge($typeIds, StringUtil::deserialize($map->typeSelection));
+            $typeSelection = StringUtil::deserialize($map->typeSelection);
+            if (is_array($typeSelection) === true) {
+                $typeIds = array_merge($typeIds, $typeSelection);
+            }
             $children = C4gMapsModel::findPublishedByPid($map->id);
             if ($children !== null) {
                 $typeIds = array_merge($typeIds, $this->loadTypeIds($children));
