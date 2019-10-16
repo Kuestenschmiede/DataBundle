@@ -68,7 +68,7 @@ class LoadFeatureFilterListener
                     $filterObject->setFieldName($filterKey);
                     foreach ($filter as $key => $value) {
                         $filterObject->addFilterValue([
-                            "value" => $key,
+                            "identifier" => $key,
                             "translation" => $value
                         ]);
                     }
