@@ -40,7 +40,7 @@ $dca->palette()->default('{data_legend},name,type;')
 $types = \con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel::findAll();
 if ($types !== null) {
     foreach ($types as $type) {
-        $dca->palette()->subPalette("type", $type->id, ";{location_legend},loctype;");
+        $dca->palette()->subPalette("type", $type->id, ";{location_legend},loctype;{description_legend},description;");
     }
 }
 
@@ -100,6 +100,10 @@ $geoJson->wizard('con4gis\EditorBundle\Classes\Contao\GeoEditor', 'getEditorLink
     ->eval()->class('wizard')
     ->preserveTags();
 
+$description = new TextAreaField('description', $dca);
+$description->eval()->class('clr')
+    ->rte('tinyMCE');
+
 /** Fields for use in child bundles */
 
 $businessHours = new MultiColumnField('businessHours', $dca);
@@ -150,10 +154,6 @@ $email->eval()->regEx('email')
 $email = new TextField('website', $dca);
 $email->eval()->regEx('url')
         ->class('w50');
-
-$description = new TextAreaField('description', $dca);
-$description->eval()->class('clr')
-    ->rte('tinyMCE');
 
 $image = new ImageField('image', $dca);
 $image->saveCallback($cbClass, 'changeFileBinToUuid');
