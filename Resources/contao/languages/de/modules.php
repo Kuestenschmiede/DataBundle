@@ -16,3 +16,7 @@ $GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_location'] = ['Kartenelemente: Lokati
 $GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_tag'] = ['Kartenelemente: Tags', 'Tags bearbeiten'];
 $GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_type'] = ['Kartenelemente: Elementtypen', 'Elementtypen bearbeiten'];
 $GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_element'] = ['Kartenelemente: Elemente', 'Elemente bearbeiten'];
+
+$GLOBALS['TL_LANG']['FMD']['con4gis_mapcontent'] = 'con4gis MapContent';
+
+$GLOBALS['TL_LANG']['FMD']['public_noneditable'] = ['Darstellung der Kartenelemente ohne Schreibzugriff', ''];

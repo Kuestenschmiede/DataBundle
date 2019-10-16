@@ -78,3 +78,5 @@ $GLOBALS['TL_LANG'][$strName]['day_join'] = [
     'and' => 'und'
 ];
 
+/** Frontend */
+$GLOBALS['TL_LANG'][$strName]['address'] = ['Adresse', ''];
