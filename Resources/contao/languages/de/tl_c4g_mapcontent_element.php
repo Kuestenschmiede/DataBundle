@@ -17,7 +17,7 @@ $GLOBALS['TL_LANG'][$strName]['dayTo'] = ['Tag bis', ''];
 $GLOBALS['TL_LANG'][$strName]['timeFrom'] = ['Uhrzeit von', ''];
 $GLOBALS['TL_LANG'][$strName]['timeTo'] = ['Uhrzeit bis', ''];
 
-$GLOBALS['TL_LANG'][$strName]['addressName'] = ['Name', 'Firma, Inhaber, etc.'];
+$GLOBALS['TL_LANG'][$strName]['addressName'] = ['Name', 'Namensbestandteil der Adresse (Firma, Inhaber, etc.)'];
 $GLOBALS['TL_LANG'][$strName]['addressStreet'] = ['Straße', 'Straße ohne Hausnummer.'];
 $GLOBALS['TL_LANG'][$strName]['addressStreetNumber'] = ['Hausnummer', ''];
 $GLOBALS['TL_LANG'][$strName]['addressZip'] = ['Postleitzahl', ''];
