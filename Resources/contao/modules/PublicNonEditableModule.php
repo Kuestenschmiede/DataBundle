@@ -110,37 +110,35 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             }
         }
 
-        foreach ($conditions as $condition) {
-            $fieldList[] = C4GTextField::create('addressName',
-                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressName'][0],
-                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressName'][1],
-                true, false, true, true)
-                ->setCondition($condition);
+        $fieldList[] = C4GTextField::create('addressName',
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressName'][0],
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressName'][1],
+            true, false, true, true)
+            ->setCondition($conditions);
 
-            $fieldList[] = C4GTextField::create('addressStreet',
-                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressStreet'][0],
-                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressStreet'][1],
-                true, false, true, true)
-                ->setCondition($condition);
+        $fieldList[] = C4GTextField::create('addressStreet',
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressStreet'][0],
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressStreet'][1],
+            true, false, true, true)
+            ->setCondition($conditions);
 
-            $fieldList[] = C4GTextField::create('addressStreetNumber',
-                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressStreetNumber'][0],
-                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressStreetNumber'][1],
-                true, false, true, true)
-                ->setCondition($condition);
+        $fieldList[] = C4GTextField::create('addressStreetNumber',
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressStreetNumber'][0],
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressStreetNumber'][1],
+            true, false, true, true)
+            ->setCondition($conditions);
 
-            $fieldList[] = C4GTextField::create('addressZip',
-                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressZip'][0],
-                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressZip'][1],
-                true, false, true, true)
-                ->setCondition($condition);
+        $fieldList[] = C4GTextField::create('addressZip',
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressZip'][0],
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressZip'][1],
+            true, false, true, true)
+            ->setCondition($conditions);
 
-            $fieldList[] = C4GTextField::create('addressCity',
-                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressCity'][0],
-                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressCity'][1],
-                true, false, true, true)
-                ->setCondition($condition);
-        }
+        $fieldList[] = C4GTextField::create('addressCity',
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressCity'][0],
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressCity'][1],
+            true, false, true, true)
+            ->setCondition($conditions);
 
         $conditions = [];
         foreach ($typeModels as $model) {
@@ -153,31 +151,29 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             }
         }
 
-        foreach ($conditions as $condition) {
-            $fieldList[] = C4GTextField::create('phone',
-                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['phone'][0],
-                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['phone'][1],
-                true, false, true, true)
-                ->setCondition($condition);
+        $fieldList[] = C4GTextField::create('phone',
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['phone'][0],
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['phone'][1],
+            true, false, true, true)
+            ->setCondition($conditions);
 
-            $fieldList[] = C4GTextField::create('fax',
-                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['fax'][0],
-                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['fax'][1],
-                true, false, true, true)
-                ->setCondition($condition);
+        $fieldList[] = C4GTextField::create('fax',
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['fax'][0],
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['fax'][1],
+            true, false, true, true)
+            ->setCondition($conditions);
 
-            $fieldList[] = C4GTextField::create('email',
-                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['email'][0],
-                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['email'][1],
-                true, false, true, true)
-                ->setCondition($condition);
+        $fieldList[] = C4GTextField::create('email',
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['email'][0],
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['email'][1],
+            true, false, true, true)
+            ->setCondition($conditions);
 
-            $fieldList[] = C4GTextField::create('website',
-                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['website'][0],
-                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['website'][1],
-                true, false, true, true)
-                ->setCondition($condition);
-        }
+        $fieldList[] = C4GTextField::create('website',
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['website'][0],
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['website'][1],
+            true, false, true, true)
+            ->setCondition($conditions);
 
         $fieldList[] = C4GHeadlineField::create('location_legend',
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['location_legend'],
