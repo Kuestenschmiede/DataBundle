@@ -15,12 +15,14 @@ use con4gis\ProjectsBundle\Classes\Common\C4GBrickConst;
 use con4gis\ProjectsBundle\Classes\Conditions\C4GBrickCondition;
 use con4gis\ProjectsBundle\Classes\Conditions\C4GBrickConditionType;
 use con4gis\ProjectsBundle\Classes\Database\C4GBrickDatabaseType;
+use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GCheckboxField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GCKEditor5Field;
+use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GFileField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GGeopickerField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GHeadlineField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GKeyField;
+use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GMultiCheckboxField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GSelectField;
-use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GTextareaField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GTextField;
 use con4gis\ProjectsBundle\Classes\Framework\C4GBrickModuleParent;
 use con4gis\ProjectsBundle\Classes\Lists\C4GBrickRenderMode;
@@ -172,6 +174,64 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         $fieldList[] = C4GTextField::create('website',
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['website'][0],
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['website'][1],
+            true, false, true, true)
+            ->setCondition($conditions);
+
+        foreach ($typeModels as $model) {
+            if ($GLOBALS['con4gis']['mapcontent_type_filters'][$model->type] !== null) {
+                $condition = new C4GBrickCondition(
+                    C4GBrickConditionType::VALUESWITCH,
+                    'type',
+                    $model->id
+                );
+                foreach ($GLOBALS['con4gis']['mapcontent_type_filters'][$model->type] as $filter) {
+                    $options = [];
+                    foreach ($GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$filter.'_option'] as $key => $value) {
+                        $options[] = ['id' => $key, 'name' => $value];
+                    }
+                    $fieldList[] = C4GMultiCheckboxField::create($filter,
+                        $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$filter][0],
+                        $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$filter][1],
+                        true, false, true, true)
+                        ->setCondition($condition)
+                        ->setOptions($options);
+
+                }
+            }
+        }
+
+        $conditions = [];
+        foreach ($typeModels as $model) {
+            if ($GLOBALS['con4gis']['map-content']['frontend']['image'][$model->type]) {
+                $conditions[] = new C4GBrickCondition(
+                    C4GBrickConditionType::VALUESWITCH,
+                    'type',
+                    $model->id
+                );
+            }
+        }
+
+        $fieldList[] = C4GFileField::create('image',
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['image'][0],
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['image'][1],
+            true, false, true, true)
+            ->setCondition($conditions)
+            ->setLinkType(C4GFileField::LINK_TYPE_IMAGE);
+
+        $conditions = [];
+        foreach ($typeModels as $model) {
+            if ($GLOBALS['con4gis']['map-content']['frontend']['accessibility'][$model->type]) {
+                $conditions[] = new C4GBrickCondition(
+                    C4GBrickConditionType::VALUESWITCH,
+                    'type',
+                    $model->id
+                );
+            }
+        }
+
+        $fieldList[] = C4GCheckboxField::create('accessibility',
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['accessibility'][0],
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['accessibility'][1],
             true, false, true, true)
             ->setCondition($conditions);
 
