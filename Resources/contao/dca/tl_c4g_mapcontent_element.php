@@ -19,6 +19,7 @@ use con4gis\CoreBundle\Classes\DCA\Fields\TextAreaField;
 use con4gis\CoreBundle\Classes\DCA\Fields\TextField;
 use con4gis\CoreBundle\Classes\DCA\Fields\ImageField;
 use con4gis\MapContentBundle\Classes\Contao\Callbacks\MapcontentElementCallback;
+use con4gis\CoreBundle\Classes\DCA\Fields\CheckboxField;
 
 $strName = 'tl_c4g_mapcontent_element';
 $cbClass = MapcontentElementCallback::class;
@@ -164,3 +165,5 @@ $imageMaxHeight->default('200')->sql("int(10) unsigned NOT NULL default '200'")
 $imageMaxWidth = new NaturalField('imageMaxWidth', $dca);
 $imageMaxWidth->default('200')->sql("int(10) unsigned NOT NULL default '200'")
     ->eval()->maxlength(10)->class('w50');
+
+$accessibility = new CheckboxField('accessibility', $dca);
