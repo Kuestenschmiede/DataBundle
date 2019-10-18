@@ -1,3 +1,8 @@
-#c4g_condition {
-    margin-top: 20px;
+#c4g_condition input {
+    margin-bottom: 20px;
+}
+
+.c4g_multicheckbox span input {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
