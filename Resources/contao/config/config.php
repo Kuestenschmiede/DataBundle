@@ -11,9 +11,10 @@ $GLOBALS['con4gis']['map-content']['day_option'] = [
     '0', '1', '2', '3', '4', '5', '6'
 ];
 
-$GLOBALS['con4gis']['map-content']['frontend']['description']['default'] = false;
 $GLOBALS['con4gis']['map-content']['frontend']['address']['default'] = false;
 $GLOBALS['con4gis']['map-content']['frontend']['contact']['default'] = false;
+$GLOBALS['con4gis']['map-content']['frontend']['accessibility']['default'] = false;
+$GLOBALS['con4gis']['map-content']['frontend']['image']['default'] = false;
 
 $GLOBALS['BE_MOD']['con4gis_maps']['c4g_mapcontent_tag'] = [
     'tables' => ['tl_c4g_mapcontent_tag'],
