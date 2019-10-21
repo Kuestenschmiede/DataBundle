@@ -128,7 +128,7 @@ class LoadLayersListener
                         $address[] = $typeElement['addressName'];
                     }
                     if ($typeElement['addressStreet'] !== '') {
-                        if ($typeElement['addressStreetNumber'] === 0) {
+                        if ($typeElement['addressStreetNumber'] !== '0') {
                             $address[] = $typeElement['addressStreet'] . " " .
                                 $typeElement['addressStreetNumber'];
                         } else {
