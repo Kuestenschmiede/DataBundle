@@ -22,6 +22,7 @@ use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GGeopickerField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GHeadlineField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GKeyField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GMultiCheckboxField;
+use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GMultiColumnField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GSelectField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GTextField;
 use con4gis\ProjectsBundle\Classes\Framework\C4GBrickModuleParent;
@@ -73,10 +74,6 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         $fieldList = [];
 
         $fieldList[] = C4GKeyField::create('id', '', '', false);
-
-        $fieldList[] = C4GHeadlineField::create('data_legend',
-            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['data_legend'],
-            '', true, false);
 
         $fieldList[] = C4GTextField::create('name',
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['name'][0],
@@ -235,9 +232,13 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             true, false, true, true)
             ->setCondition($conditions);
 
-        $fieldList[] = C4GHeadlineField::create('location_legend',
-            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['location_legend'],
-            '', true, false);
+        $fieldList[] = C4GMultiColumnField::create('businessHours',
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['businessHours'][0],
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['businessHours'][1],
+            true, false, true, true)
+            ->addInputField('foo', 'text', 'Foo')
+            ->addInputField('bar', 'text', 'Bar');
+//            ->setCondition($conditions);
 
         $fieldList[] = C4GGeopickerField::create('geo',
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['location'][0],
