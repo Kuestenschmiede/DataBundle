@@ -246,7 +246,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['location'][1],
             true, false, true, true)
             ->setLocGeoxFieldname('geox')
-            ->setLocGeoyFieldname('geoy');
+            ->setLocGeoyFieldname('geoy')
+            ->setWithoutAddressRow(true);
 
         return $fieldList;
     }
