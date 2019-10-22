@@ -50,6 +50,7 @@ $id = new IdField('id', $dca);
 $tStamp = new NaturalField('tstamp', $dca);
 
 $name = new TextField('name', $dca);
+$name->filter()->search();
 $name->eval()->class('clr')->mandatory();
 
 $tags = new SelectField('tags', $dca);
@@ -63,6 +64,7 @@ $type = new SelectField('type', $dca);
 $type->default('')
     ->optionsCallback($cbClass, 'loadTypes')
     ->sql("varchar(20) NOT NULL default ''")
+    ->filter()->search()
     ->eval()->mandatory()
     ->maxlength(20)
     ->class('clr')
