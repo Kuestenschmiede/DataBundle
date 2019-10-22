@@ -44,7 +44,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
     protected $loadConditionalFieldDisplayResources = false;
     protected $loadTriggerSearchFromOtherModuleResources = false;
     protected $loadMoreButtonResources = true;
-    protected $jQueryUseMaps = false;
+    protected $jQueryUseMaps = true;
+    protected $jQueryUseMapsEditor = true;
     protected $loadCkEditor5Resources = true;
 
     public function initBrickModule($id)
