@@ -12,6 +12,7 @@ $GLOBALS['TL_LANG'][$strName]['type'] = ['Elementtyp', 'Wählen Sie den Elementt
 $GLOBALS['TL_LANG'][$strName]['tags'] = ['Tags', 'Wählen Sie die Tags aus, die Sie diesem Element zuweisen möchten.'];
 
 $GLOBALS['TL_LANG'][$strName]['businessHours'] = ['Öffnungszeiten', 'Die Öffnungszeiten in Listenform.'];
+$GLOBALS['TL_LANG'][$strName]['businessHoursAdditionalInfo'] = ['Zusätzliche Angaben', 'Weitere Angaben zu den Öffnungszeiten.'];
 $GLOBALS['TL_LANG'][$strName]['dayFrom'] = ['Tag von', ''];
 $GLOBALS['TL_LANG'][$strName]['dayTo'] = ['Tag bis', ''];
 $GLOBALS['TL_LANG'][$strName]['timeFrom'] = ['Uhrzeit von', ''];
@@ -24,6 +25,7 @@ $GLOBALS['TL_LANG'][$strName]['addressZip'] = ['Postleitzahl', ''];
 $GLOBALS['TL_LANG'][$strName]['addressCity'] = ['Ort', ''];
 
 $GLOBALS['TL_LANG'][$strName]['phone'] = ['Telefonnummer', ''];
+$GLOBALS['TL_LANG'][$strName]['mobile'] = ['Mobiltelefonnummer', ''];
 $GLOBALS['TL_LANG'][$strName]['fax'] = ['Fax', ''];
 $GLOBALS['TL_LANG'][$strName]['email'] = ['Email-Adresse', ''];
 $GLOBALS['TL_LANG'][$strName]['website'] = ['Website', ''];
@@ -53,6 +55,7 @@ $GLOBALS['TL_LANG'][$strName]['contact_legend'] = 'Kontakt';
 $GLOBALS['TL_LANG'][$strName]['description_legend'] = 'Beschreibung';
 $GLOBALS['TL_LANG'][$strName]['image_legend'] = 'Bild';
 $GLOBALS['TL_LANG'][$strName]['location_legend'] = 'Koordinaten';
+$GLOBALS['TL_LANG'][$strName]['filter_legend'] = 'Filterdaten';
 
 /**
  * Operations

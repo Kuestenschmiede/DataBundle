@@ -112,6 +112,9 @@ $description->eval()->class('clr')
 $businessHours = new MultiColumnField('businessHours', $dca);
 $businessHours->sql('text NULL');
 
+$businessHoursAdditionalInfo = new TextAreaField('businessHoursAdditionalInfo', $dca);
+$businessHoursAdditionalInfo->eval()->class('clr');
+
 $dayFrom = new SelectField('dayFrom', $dca, $businessHours);
 $dayFrom->optionsCallback($cbClass, 'getDay')
     ->reference('day_reference')
@@ -143,6 +146,10 @@ $addressCity = new TextField('addressCity', $dca);
 $addressCity->eval()->class('w50');
 
 $phone = new TextField('phone', $dca);
+$phone->eval()->regEx('phone')
+        ->class('w50');
+
+$phone = new TextField('mobile', $dca);
 $phone->eval()->regEx('phone')
         ->class('w50');
 
