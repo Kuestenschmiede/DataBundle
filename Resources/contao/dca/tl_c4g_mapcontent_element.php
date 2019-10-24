@@ -134,8 +134,8 @@ $addressName->eval()->class('w50');
 $addressStreet = new TextField('addressStreet', $dca);
 $addressStreet->eval()->class('clr w50');
 
-$addressNumber = new NaturalField('addressStreetNumber', $dca);
-$addressNumber->eval()->class('w50');
+$addressNumber = new TextField('addressStreetNumber', $dca);
+$addressNumber->sql("varchar(5) NOT NULL default ''")->eval()->class('w50');
 
 $addressZip = new TextField('addressZip', $dca);
 $addressZip->sql('char(5) NULL')
