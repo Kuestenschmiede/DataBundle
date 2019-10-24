@@ -5,7 +5,7 @@ $strName = 'tl_c4g_mapcontent_element';
 /**
  * Fields
  */
-$GLOBALS['TL_LANG'][$strName]['name'] = ['Name des Elements', 'Geben Sie einen Namen für dieses Element ein.'];
+$GLOBALS['TL_LANG'][$strName]['name'] = ['Bezeichnung', 'Geben Sie die Bezeichnung für dieses Element ein.'];
 $GLOBALS['TL_LANG'][$strName]['description'] = ['Beschreibung', 'Geben Sie einen Beschreibungstext für dieses Element ein.'];
 $GLOBALS['TL_LANG'][$strName]['location'] = ['Lokation des Elements', 'Wählen Sie die Lokation aus, in der das Element liegt.'];
 $GLOBALS['TL_LANG'][$strName]['type'] = ['Elementtyp', 'Wählen Sie den Elementtyp aus.'];
@@ -33,8 +33,8 @@ $GLOBALS['TL_LANG'][$strName]['image'] = ['Bild', 'Ein Bild, das das Element zei
 $GLOBALS['TL_LANG'][$strName]['imageMaxHeight'] = ['Maximale Bildhöhe (Pixel)', 'Das Seitenverhältnis wird beibehalten.'];
 $GLOBALS['TL_LANG'][$strName]['imageMaxWidth'] = ['Maximale Bildbreite (Pixel)', 'Das Seitenverhältnis wird beibehalten.'];
 $GLOBALS['TL_LANG'][$strName]['loctype'] = ['Lokationstyp', 'Wählen Sie die Art der Lokation aus.'];
-$GLOBALS['TL_LANG'][$strName]['geox'] = ['Geo-X-Koordinate', 'Wählen Sie die X-Koordinate aus. Mit Verwendung des Geopickers werden beide Felder automatisch befüllt.'];
-$GLOBALS['TL_LANG'][$strName]['geoy'] = ['Geo-Y-Koordinate', 'Wählen Sie die Y-Koordinate aus. Mit Verwendung des Geopickers werden beide Felder automatisch befüllt.'];
+$GLOBALS['TL_LANG'][$strName]['geox'] = ['Geo-X-Koordinate', 'Wählen Sie die X-Koordinate (Longitude) aus. Mit Verwendung des Geopickers werden beide Felder automatisch befüllt.'];
+$GLOBALS['TL_LANG'][$strName]['geoy'] = ['Geo-Y-Koordinate', 'Wählen Sie die Y-Koordinate (Latitude) aus. Mit Verwendung des Geopickers werden beide Felder automatisch befüllt.'];
 $GLOBALS['TL_LANG'][$strName]['geoJson'] = ['Geo-JSON', 'Geben Sie das GeoJSON an. Wenn Sie den Editor verwenden, wird das GeoJSON automatisch erzeugt und hier eingetragen.'];
 
 /**

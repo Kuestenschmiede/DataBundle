@@ -1,5 +1,4 @@
-<?php
-/**
+/*
  * This file is part of con4gis,
  * the gis-kit for Contao CMS.
  *
@@ -12,5 +11,11 @@
  *
  */
 
-$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['mpCntnt']  = 'Kartenelemente';
-$GLOBALS['TL_LANG']['tl_c4g_maps']['typeSelection'] = ['Anzuzeigende Kategorien von Kartenelementen', ''];
+/*
+#header {
+  background-color: #2C3E50;
+}*/
+
+#tl_navigation .tl_level_1_group .group-con4gis_mapcontent {
+  background: url("../../con4giscore/images/con4gis.svg") 7px center no-repeat;
+}

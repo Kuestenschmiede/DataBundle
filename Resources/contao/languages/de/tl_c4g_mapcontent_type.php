@@ -1,19 +1,19 @@
 <?php
 
 $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type'] = [
-    'name' => ['Name des Elementtyps', 'Geben Sie einen Namen für den Elementtyp ein.'],
-    'locstyle' => ['Lokationsstil', 'Wählen Sie einen Lokationsstil aus, in dem Elemente dieses Typs dargestellt werden sollen.'],
-    'type' => ['Art des Elementtyps', 'Wählen Sie die Art des Elementtyps aus.'],
-    'availableTags' => ['Verfügbare Tags', 'Wählen Sie die Tags aus, die für Elemente dieses Typs zur Auswahl stehen sollen.'],
+    'name' => ['Name der Kategorie', 'Geben Sie einen Namen für die Elementkategorie ein.'],
+    'locstyle' => ['Lokationsstil', 'Wählen Sie einen Lokationsstil aus, in dem Elemente dieser Kategorie dargestellt werden sollen.'],
+    'type' => ['Elementtyp', 'Wählen Sie die Art der Elementkategorie aus.'],
+    'availableTags' => ['Verfügbare Tags', 'Wählen Sie die Tags aus, die für Elemente dieser Kategorie zur Auswahl stehen sollen.'],
 
-    'new' => ["Neuen Elementtyp erstellen", "Neuen Elementtyp erstellen"],
-    'show' => ["Elementtyp ID %s anzeigen", "Elementtyp ID %s anzeigen"],
-    'edit' => ["Elementtyp ID %s bearbeiten", "Elementtyp ID %s bearbeiten"],
-    'copy' => ["Elementtyp ID %s kopieren", "Elementtyp ID %s kopieren"],
-    'delete' => ["Elementtyp ID %s löschen", "Elementtyp ID %s löschen"]
+    'new' => ["Neuer Elementkategorie erstellen", "Neue Elementkategorie erstellen"],
+    'show' => ["Elementkategorie ID %s anzeigen", "Elementkategorie ID %s anzeigen"],
+    'edit' => ["Elementkategorie ID %s bearbeiten", "Elementkategorie ID %s bearbeiten"],
+    'copy' => ["Elementkategorie ID %s kopieren", "Elementkategorie ID %s kopieren"],
+    'delete' => ["Elementkategorie ID %s löschen", "Elementkategorie ID %s löschen"]
 ];
 
 $GLOBALS['TL_LANG']['mapcontent_types']['default'] = 'Standard';
 $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['data_legend'] = 'Allgemeine Daten';
 
-$GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['showLabels'] = ['Namen anzeigen', 'Zeigt die Namen der Elemente dieses Typs in der Karte an.'];
+$GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['showLabels'] = ['Label anzeigen', 'Zeigt die Namen der Elemente dieser Kategorie in der Karte an.'];

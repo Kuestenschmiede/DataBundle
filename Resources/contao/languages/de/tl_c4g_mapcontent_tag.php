@@ -17,7 +17,7 @@ $strName = 'tl_c4g_mapcontent_tag';
 /**
  * Fields
  */
-$GLOBALS['TL_LANG'][$strName]['name'] = ['Name des Tags', 'Geben Sie einen Namen für den Tag ein.'];
+$GLOBALS['TL_LANG'][$strName]['name'] = ['Bezeichnung', 'Geben Sie einen Namen für die Auszeichnung (Tag) ein.'];
 
 /**
  * References

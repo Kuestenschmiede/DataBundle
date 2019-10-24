@@ -17,18 +17,21 @@ $GLOBALS['con4gis']['map-content']['frontend']['contact']['default'] = false;
 $GLOBALS['con4gis']['map-content']['frontend']['accessibility']['default'] = false;
 $GLOBALS['con4gis']['map-content']['frontend']['image']['default'] = false;
 
-$GLOBALS['BE_MOD']['con4gis_maps']['c4g_mapcontent_tag'] = [
-    'tables' => ['tl_c4g_mapcontent_tag'],
-];
+array_insert($GLOBALS['BE_MOD'], array_search('content', array_keys($GLOBALS['BE_MOD'])) + 3,
+    ['con4gis_mapcontent' => [
+        'c4g_mapcontent_type' => [
+            'tables' => ['tl_c4g_mapcontent_type']],
+        'c4g_mapcontent_element' => [
+            'tables' => ['tl_c4g_mapcontent_element'],
+            'javascript' => '/bundles/con4giseditor/js/c4g-backend-helper.js'],
+        'c4g_mapcontent_tag' => [
+            'tables' => ['tl_c4g_mapcontent_tag']]
+    ]
+]);
 
-$GLOBALS['BE_MOD']['con4gis_maps']['c4g_mapcontent_type'] = [
-    'tables' => ['tl_c4g_mapcontent_type'],
-];
-
-$GLOBALS['BE_MOD']['con4gis_maps']['c4g_mapcontent_element'] = [
-    'tables' => ['tl_c4g_mapcontent_element'],
-    'javascript' => ['/bundles/con4giseditor/js/c4g-backend-helper.js']
-];
+if(TL_MODE == "BE") {
+    $GLOBALS['TL_CSS'][] = '/bundles/con4gismapcontent/css/con4gis.css';
+}
 
 $GLOBALS['c4g_locationtypes'][] = 'mpCntnt';
 

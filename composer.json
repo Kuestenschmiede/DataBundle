@@ -23,7 +23,8 @@
         "php": "^7.1",
         "contao/core-bundle": "^4.4",
         "con4gis/maps": "^6.1",
-        "con4gis/projects": "^1.4"
+        "con4gis/projects": "^1.4",
+        "con4gis/editor": "^1.2"
     },
     "conflict": {
         "contao/core": "*",
