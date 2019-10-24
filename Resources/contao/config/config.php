@@ -3,6 +3,7 @@
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTagModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentElementModel;
+use con4gis\MapContentBundle\Resources\contao\modules\PublicEditableModule;
 use con4gis\MapContentBundle\Resources\contao\modules\PublicNonEditableModule;
 
 $GLOBALS['con4gis']['mapcontent_types'][] = 'default';
@@ -34,6 +35,10 @@ $GLOBALS['c4g_locationtypes'][] = 'mpCntnt';
 $GLOBALS['TL_MODELS']['tl_c4g_mapcontent_tag'] = MapcontentTagModel::class;
 $GLOBALS['TL_MODELS']['tl_c4g_mapcontent_type'] = MapcontentTypeModel::class;
 $GLOBALS['TL_MODELS']['tl_c4g_mapcontent_element'] = MapcontentElementModel::class;
+
+array_insert($GLOBALS['FE_MOD']['con4gis_mapcontent'], 1,
+    ['public_editable' => PublicEditableModule::class]
+);
 
 array_insert($GLOBALS['FE_MOD']['con4gis_mapcontent'], 1,
     ['public_noneditable' => PublicNonEditableModule::class]

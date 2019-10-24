@@ -6,3 +6,32 @@
     margin-top: 0 !important;
     margin-bottom: 0 !important;
 }
+
+select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+input, select {
+    background: transparent !important;
+    border: none !important;
+    margin-bottom: 0 !important;
+    color: inherit;
+}
+
+.c4g_brick_list_header {
+    display: none !important;
+}
+
+.c4g_brick_list_row {
+    display: initial !important;
+}
+
+.c4g_multicheckbox span {
+    display: block !important;
+    margin-top: 5px;
+}

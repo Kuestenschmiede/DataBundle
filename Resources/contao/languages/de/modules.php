@@ -20,3 +20,4 @@ $GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_element'] = ['Kartenelemente: Element
 $GLOBALS['TL_LANG']['FMD']['con4gis_mapcontent'] = 'con4gis MapContent';
 
 $GLOBALS['TL_LANG']['FMD']['public_noneditable'] = ['Darstellung der Kartenelemente ohne Schreibzugriff', ''];
+$GLOBALS['TL_LANG']['FMD']['public_editable'] = ['Darstellung der Kartenelemente mit Schreibzugriff', ''];
