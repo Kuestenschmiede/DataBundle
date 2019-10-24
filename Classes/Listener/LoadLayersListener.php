@@ -166,6 +166,10 @@ class LoadLayersListener
                             $showBusinessTimes = true;
                         }
                     }
+                    if ($typeElement['businessHoursAdditionalInfo'] !== '') {
+                        $timeString[] = $typeElement['businessHoursAdditionalInfo'];
+                        $showBusinessTimes = true;
+                    }
                     if ($showBusinessTimes === true) {
                         $popup->addBusinessHours($timeString);
                     }
