@@ -2,6 +2,8 @@
 
 namespace con4gis\MapContentBundle\Classes\Popup;
 
+use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
+
 class Popup
 {
     protected $popupString = '';
@@ -19,10 +21,14 @@ class Popup
         return $this->addList($entries, '', $class);
     }
 
-    public function addContactInfo(string $phone, string $fax, string $email, string $class = 'contact') {
+    public function addContactInfo(string $phone, string $mobile, string $fax, string $email, string $website, string $class = 'contact') {
         $list = [];
         if ($phone !== '') {
             $list[] = 'Tel.: '.$phone;
+        }
+
+        if ($mobile !== '') {
+            $list[] = 'Mobil: '.$mobile;
         }
 
         if ($fax !== '') {
@@ -30,7 +36,17 @@ class Popup
         }
 
         if ($email !== '') {
-            $list[] = $email;
+            $href = 'mailto:'.$email;
+            $list[] = "<a href=\"$href\">$email</a>";
+        }
+
+        if ($website !== '') {
+            if (!C4GUtils::startsWith($website, 'http')) {
+                $href = 'http://'.$website;
+            } else {
+                $href = $website;
+            }
+            $list[] = "<a href=\"$href\">$website</a>";
         }
 
         if ($list !== []) {
