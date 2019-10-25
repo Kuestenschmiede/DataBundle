@@ -154,7 +154,7 @@ class LoadLayersListener
                         $timeString[$key] = '';
                         if ($time['dayFrom'] !== '' && $time['timeFrom'] !== '' && $time['timeTo'] !== '') {
                             $timeString[$key] .= $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayFrom']];
-                            if ($time['dayTo'] !== $time['dayFrom']) {
+                            if ($time['dayTo'] !== $time['dayFrom'] && $time['dayTo'] !== '') {
                                 if (abs(intval($time['dayTo']) - intval($time['dayFrom'])) > 1) {
                                     $join = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_join']['to'];
                                 } else {
