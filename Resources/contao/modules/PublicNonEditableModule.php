@@ -17,6 +17,7 @@ use con4gis\ProjectsBundle\Classes\Database\C4GBrickDatabaseType;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GHeadlineField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GImageField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GKeyField;
+use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GMapLinkButtonField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GMultiCheckboxField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GSelectField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GTextField;
@@ -234,12 +235,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             true, false, false, false);
 
         foreach ($typeModels as $model) {
-            if ($GLOBALS['con4gis']['mapcontent_type_filters'][$model->type] !== null) {
-                $condition = new C4GBrickCondition(
-                    C4GBrickConditionType::VALUESWITCH,
-                    'type',
-                    $model->id
-                );
+            if ($this->c4g_mapcontent_type === $model->id && $GLOBALS['con4gis']['mapcontent_type_filters'][$model->type] !== null) {
                 foreach ($GLOBALS['con4gis']['mapcontent_type_filters'][$model->type] as $filter) {
                     $options = [];
                     foreach ($GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$filter.'_option'] as $key => $value) {
@@ -250,7 +246,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                         $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$filter][1],
                         true, false, true, false)
                         ->setShowAsCsv()
-                        ->setCondition($condition)
+                        ->setShowIfEmpty(false)
                         ->setOptions($options);
 
                 }
