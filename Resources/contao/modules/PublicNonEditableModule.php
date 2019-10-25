@@ -92,7 +92,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         $fieldList[] = C4GSelectField::create('type',
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['type'][0],
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['type'][1],
-            true, true, true, false)
+            false, false, true, false)
             ->setOptions(MapcontentTypeModel::findAll()->fetchAll());
 
         $fieldList[] = C4GTextField::create('description',
