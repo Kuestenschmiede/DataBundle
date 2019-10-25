@@ -147,6 +147,7 @@ class LoadLayersListener
                 }
 
                 if ($popupEvent->isShowBusinessTimes() === true) {
+                    $timeString = [];
                     $businessTimes = \StringUtil::deserialize($typeElement['businessHours']);
                     $showBusinessTimes = false;
                     foreach ($businessTimes as $key => $time) {
