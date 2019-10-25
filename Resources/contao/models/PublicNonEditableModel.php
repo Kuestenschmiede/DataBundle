@@ -19,8 +19,8 @@ class PublicNonEditableModel
             $types[$rt['id']] = $rt['name'];
         }
 
-        $stmtElements = $db->prepare("SELECT * FROM tl_c4g_mapcontent_element WHERE name != '' ORDER BY name ASC");
-        $resultElements = $stmtElements->execute()->fetchAllAssoc();
+        $stmtElements = $db->prepare("SELECT * FROM tl_c4g_mapcontent_element WHERE name != '' AND type = ? ORDER BY name ASC");
+        $resultElements = $stmtElements->execute(PublicNonEditableModule::$type)->fetchAllAssoc();
 
         foreach ($resultElements as $key => $re) {
             $resultElements[$key]['type'] = $types[$re['type']];
