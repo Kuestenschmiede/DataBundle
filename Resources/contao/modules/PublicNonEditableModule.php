@@ -44,6 +44,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
     protected $loadCkEditor5Resources = true;
     protected $loadMultiColumnResources = true;
 
+    public static $type = 0;
+
     public function initBrickModule($id)
     {
         parent::initBrickModule($id);
@@ -61,6 +63,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         $this->dialogParams->setTabContent(false);
         $this->dialogParams->setWithLabels(false);
         $this->dialogParams->setWithDescriptions(false);
+        static::$type = $this->c4g_mapcontent_type;
     }
 
     protected function compileCss()
@@ -253,6 +256,12 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                 }
             }
         }
+
+        $fieldList[] = C4GMapLinkButtonField::create('maplink')
+            ->setTargetPageId($this->mapPage)
+            ->setButtonLabel('zur Karte')
+            ->setLongitudeField('geox')
+            ->setLatitudeField('geoy');
 
         return $fieldList;
     }

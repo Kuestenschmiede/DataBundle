@@ -27,3 +27,9 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['mapPage'] =
         'inputType'               => 'pageTree',
         'sql'                     => "int(10) unsigned NOT NULL default '0'"
     ];
+
+$GLOBALS['TL_LANG']['tl_module']['c4g_mapcontent_type'] = ['Kategorie', ''];
+$GLOBALS['TL_LANG']['tl_module']['mapPage'] = ['Kartenseite', ''];
+
+$GLOBALS['TL_LANG']['tl_module']['c4g_mapcontent_type_legend'] = 'Kategorie';
+$GLOBALS['TL_LANG']['tl_module']['mapPage_legend'] = 'Kartenseite';
