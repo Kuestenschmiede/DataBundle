@@ -17,6 +17,7 @@ use con4gis\ProjectsBundle\Classes\Database\C4GBrickDatabaseType;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GHeadlineField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GImageField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GKeyField;
+use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GMapLinkButtonField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GMultiCheckboxField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GSelectField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GTextField;
@@ -44,6 +45,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
     protected $loadCkEditor5Resources = true;
     protected $loadMultiColumnResources = true;
 
+    public static $type = 0;
+
     public function initBrickModule($id)
     {
         parent::initBrickModule($id);
@@ -61,6 +64,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         $this->dialogParams->setTabContent(false);
         $this->dialogParams->setWithLabels(false);
         $this->dialogParams->setWithDescriptions(false);
+        static::$type = $this->c4g_mapcontent_type;
     }
 
     protected function compileCss()
@@ -89,7 +93,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         $fieldList[] = C4GSelectField::create('type',
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['type'][0],
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['type'][1],
-            true, true, true, false)
+            false, false, true, false)
             ->setOptions(MapcontentTypeModel::findAll()->fetchAll());
 
         $fieldList[] = C4GTextField::create('description',
@@ -169,6 +173,10 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             true, true, true, false)
             ->setCondition($conditions);
 
+//        $fieldList[] = C4GTextField::create('businessHours',
+//            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['businessHours'][0],
+//            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['businessHours'][1],
+//            true, true, true, false);
 
         $conditions = [];
         foreach ($typeModels as $model) {
@@ -232,12 +240,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             true, false, false, false);
 
         foreach ($typeModels as $model) {
-            if ($GLOBALS['con4gis']['mapcontent_type_filters'][$model->type] !== null) {
-                $condition = new C4GBrickCondition(
-                    C4GBrickConditionType::VALUESWITCH,
-                    'type',
-                    $model->id
-                );
+            if ($this->c4g_mapcontent_type === $model->id && $GLOBALS['con4gis']['mapcontent_type_filters'][$model->type] !== null) {
                 foreach ($GLOBALS['con4gis']['mapcontent_type_filters'][$model->type] as $filter) {
                     $options = [];
                     foreach ($GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$filter.'_option'] as $key => $value) {
@@ -248,12 +251,18 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                         $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$filter][1],
                         true, false, true, false)
                         ->setShowAsCsv()
-                        ->setCondition($condition)
+                        ->setShowIfEmpty(false)
                         ->setOptions($options);
 
                 }
             }
         }
+
+        $fieldList[] = C4GMapLinkButtonField::create('maplink')
+            ->setTargetPageId($this->mapPage)
+            ->setButtonLabel('zur Karte')
+            ->setLongitudeField('geox')
+            ->setLatitudeField('geoy');
 
         return $fieldList;
     }
