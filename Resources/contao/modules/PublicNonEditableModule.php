@@ -131,7 +131,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['accessibility'][0],
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['accessibility'][1],
             true, false, true, false)
-            ->setCondition($conditions);
+            ->setCondition($conditions)
+            ->setShowIfEmpty(false);
 
         $conditions = [];
         foreach ($typeModels as $model) {
