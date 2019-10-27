@@ -163,7 +163,10 @@ class LoadLayersListener
 
                                 $timeString[$key] .= " $join " . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayTo']];
                             }
-                            $timeString[$key] .= ": " . date('H:i', $time['timeFrom']) . " - " . date('H:i', $time['timeTo']);
+                            $timeString[$key] .= ": " . date('H:i', $time['timeFrom']) .
+                                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['timeCaption'] .
+                                " - " . date('H:i', $time['timeTo']) .
+                                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['timeCaption'];
                             $showBusinessTimes = true;
                         }
                     }
