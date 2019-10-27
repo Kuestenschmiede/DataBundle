@@ -23,7 +23,11 @@ class MapsCallback extends Backend
     public function getConfiguredTypes()
     {
         $arrTypes = [];
-        $types = MapcontentTypeModel::findAll();
+        $t = "tl_c4g_mapcontent_type";
+        $arrOptions = array(
+            'order' => "$t.categorySort ASC"
+        );
+        $types = MapcontentTypeModel::findAll($arrOptions);
         foreach ($types as $type) {
             $arrTypes[$type->id] = $type->name;
         }

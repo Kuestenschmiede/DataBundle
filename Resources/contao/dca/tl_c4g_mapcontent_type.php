@@ -28,10 +28,10 @@ $dca = new DCA('tl_c4g_mapcontent_type');
 $list = $dca->list();
 $list->sorting()->fields(['name', 'type', 'availableTags']);
 $list->sorting()->panelLayout('filter;sort,search,limit');
-$list->label()->fields(['name', 'type', 'availableTags'])
+$list->label()->fields(['name', 'type', 'availableTags', 'categorySort'])
     ->labelCallback($cbClass, 'getLabel');
 $list->addRegularOperations($dca);
-$dca->palette()->default('{data_legend},name,locstyle,type,availableTags,showLabels;');
+$dca->palette()->default('{data_legend},name,locstyle,type,availableTags,showLabels,categorySort;');
 
 $id = new IdField('id', $dca);
 
@@ -63,3 +63,5 @@ $availableTags->optionsCallback($cbClass, 'getAvailableTags')
 
 $showLabels = new CheckboxField('showLabels', $dca);
 $showLabels->default(false);
+
+$categorySort = new NaturalField('categorySort', $dca);
