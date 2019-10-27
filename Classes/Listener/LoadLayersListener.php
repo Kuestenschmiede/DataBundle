@@ -172,11 +172,12 @@ class LoadLayersListener
                         $showBusinessTimes = true;
                     }
                     if ($showBusinessTimes === true) {
-                        $popup->addBusinessHours($timeString);
+                        $popup->addBusinessHours($timeString, $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['businessHours'][0].':');
                     }
                 }
 
-                $popup->addContactInfo($typeElement['phone'], $typeElement['mobile'], $typeElement['fax'], $typeElement['email'], $typeElement['website']);
+                $popup->addContactInfo($typeElement['phone'], $typeElement['mobile'], $typeElement['fax'], $typeElement['email'], $typeElement['website'],
+                    $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['contactData'][0].':');
                 $propertiesEvent = new LoadPropertiesEvent();
                 $propertiesEvent->setElementData($typeElement);
                 $dispatcher->dispatch($propertiesEvent::NAME, $propertiesEvent);
