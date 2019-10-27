@@ -34,7 +34,9 @@ class LoadFeatureFilterListener
         EventDispatcherInterface $eventDispatcher
     ) {
         $profileId = $event->getProfileId();
-        $layers = C4gMapsModel::findPublishedByPid($profileId);
+
+        //ToDo Warum hier eine profileId und keine layerId???
+        $layers = C4gMapsModel::findPublishedByProfile($profileId);
         if ($layers !== null) {
             $typeIds = $this->loadTypeIds($layers);
             $typeIds = array_unique($typeIds);
