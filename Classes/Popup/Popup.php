@@ -17,11 +17,11 @@ class Popup
         return $this->addStringFromArray($entries, $class);
     }
 
-    public function addBusinessHours(array $entries, string $class = 'business_hours') {
-        return $this->addList($entries, '', $class);
+    public function addBusinessHours(array $entries, string $title = '', string $class = 'business_hours') {
+        return $this->addList($entries, $title, $class);
     }
 
-    public function addContactInfo(string $phone, string $mobile, string $fax, string $email, string $website, string $class = 'contact') {
+    public function addContactInfo(string $phone, string $mobile, string $fax, string $email, string $website, string $title = '', string $class = 'contact') {
         $list = [];
         if ($phone !== '') {
             $list[] = 'Tel.: '.$phone;
@@ -50,7 +50,7 @@ class Popup
         }
 
         if ($list !== []) {
-            return $this->addList($list, '', $class);
+            return $this->addList($list, $title, $class);
         }
         return $this;
     }
@@ -84,13 +84,17 @@ class Popup
 
     protected function addList(array $entries, string $title = '', string $class = 'list') {
         if (!empty($entries)) {
-            $this->popupString .= "<div class=\"$class\">$title<ul>";
             foreach($entries as $entry) {
-                if ($entry !== '') {
-                    $this->popupString .= "<li>$entry</li>";
+                if (trim($entry) !== '') {
+                    $popupString .= "<li>$entry</li>";
                 }
             }
-            $this->popupString .= "</ul></div>";
+
+            if ($popupString) {
+                $this->popupString .= "<div class=\"$class\">$title<ul>";
+                $this->popupString .= $popupString;
+                $this->popupString .= "</ul></div>";
+            }
         }
         return $this;
     }
