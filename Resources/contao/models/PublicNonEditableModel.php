@@ -12,7 +12,6 @@ class PublicNonEditableModel
     public static function find() {
 
         $db = \Database::getInstance();
-
         $stmtTypes = $db->prepare("SELECT * FROM tl_c4g_mapcontent_type");
         $resultTypes = $stmtTypes->execute()->fetchAllAssoc();
         $types = [];
@@ -20,8 +19,13 @@ class PublicNonEditableModel
             $types[$rt['id']] = $rt['name'];
         }
 
-        $stmtElements = $db->prepare("SELECT * FROM tl_c4g_mapcontent_element WHERE name != '' AND type = ? ORDER BY name ASC");
-        $resultElements = $stmtElements->execute(PublicNonEditableModule::$type)->fetchAllAssoc();
+        if (PublicNonEditableModule::$type) {
+            $stmtElements = $db->prepare("SELECT * FROM tl_c4g_mapcontent_element WHERE name != '' AND type = ? ORDER BY name ASC");
+            $resultElements = $stmtElements->execute(PublicNonEditableModule::$type)->fetchAllAssoc();
+        } else {
+            $stmtElements = $db->prepare("SELECT * FROM tl_c4g_mapcontent_element WHERE name != '' ORDER BY name ASC");
+            $resultElements = $stmtElements->execute()->fetchAllAssoc();
+        }
 
         foreach ($resultElements as $key => $re) {
             $resultElements[$key]['type'] = $types[$re['type']];

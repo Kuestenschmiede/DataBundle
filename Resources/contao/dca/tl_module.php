@@ -18,6 +18,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_mapcontent_type'] =
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_mapcontent_type'],
         'inputType'               => 'select',
         'foreignKey'              => 'tl_c4g_mapcontent_type.name',
+        'eval'                    => ['includeBlankOption' => true],
         'sql'                     => "int(10) unsigned NOT NULL default '0'"
     ];
 
