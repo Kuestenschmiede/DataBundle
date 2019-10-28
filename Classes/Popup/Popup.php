@@ -84,15 +84,16 @@ class Popup
 
     protected function addList(array $entries, string $title = '', string $class = 'list') {
         if (!empty($entries)) {
+            $listString = '';
             foreach($entries as $entry) {
                 if (trim($entry) !== '') {
-                    $popupString .= "<li>$entry</li>";
+                    $listString .= "<li>$entry</li>";
                 }
             }
 
-            if ($popupString) {
+            if ($listString !== '') {
                 $this->popupString .= "<div class=\"$class\">$title<ul>";
-                $this->popupString .= $popupString;
+                $this->popupString .= $listString;
                 $this->popupString .= "</ul></div>";
             }
         }
