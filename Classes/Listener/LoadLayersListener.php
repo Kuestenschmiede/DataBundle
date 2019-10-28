@@ -180,7 +180,7 @@ class LoadLayersListener
                 }
 
                 $popup->addContactInfo($typeElement['phone'], $typeElement['mobile'], $typeElement['fax'], $typeElement['email'], $typeElement['website'],
-                    $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['contactData'][0].':');
+                    $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['contactData'][0].':', 'contact', true);
                 $propertiesEvent = new LoadPropertiesEvent();
                 $propertiesEvent->setElementData($typeElement);
                 $dispatcher->dispatch($propertiesEvent::NAME, $propertiesEvent);
