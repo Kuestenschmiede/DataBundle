@@ -261,8 +261,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         $fieldList[] = C4GMapLinkButtonField::create('maplink')
             ->setTargetPageId($this->mapPage)
             ->setButtonLabel('zur Karte')
-            ->setLongitudeField('geox')
-            ->setLatitudeField('geoy');
+            ->setLongitudeColumn('geox')
+            ->setLatitudeColumn('geoy');
 
         return $fieldList;
     }
