@@ -32,11 +32,13 @@ class Popup
     ) {
         $list = [];
         if ($phone !== '') {
-            $list[] = 'Tel.: '.$phone;
+            $href = 'tel:'.$phone;
+            $list[] = "<a href=\"$href\">Tel.: $phone</a>";
         }
 
         if ($mobile !== '') {
-            $list[] = 'Mobil: '.$mobile;
+            $href = 'tel:'.$mobile;
+            $list[] = "<a href=\"$href\">Mobil: $mobile</a>";
         }
 
         if ($fax !== '') {
