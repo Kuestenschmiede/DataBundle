@@ -204,6 +204,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             ->setAddStrBeforeValue('Tel.: ')
             ->setShowIfEmpty(false)
             ->setLinkType(C4GLinkField::LINK_TYPE_PHONE)
+            ->setNewTab()
             ->setCondition($conditions);
 
         $fieldList[] = C4GLinkField::create('mobile',
@@ -213,6 +214,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             ->setAddStrBeforeValue('Mobil: ')
             ->setShowIfEmpty(false)
             ->setLinkType(C4GLinkField::LINK_TYPE_PHONE)
+            ->setNewTab()
             ->setCondition($conditions);
 
         $fieldList[] = C4GTextField::create('fax',
@@ -230,6 +232,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             ->setAddStrBeforeValue('Email: ')
             ->setShowIfEmpty(false)
             ->setLinkType(C4GLinkField::LINK_TYPE_EMAIL)
+            ->setNewTab()
             ->setCondition($conditions);
 
         $fieldList[] = C4GLinkField::create('website',
@@ -239,6 +242,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             ->setAddStrBeforeValue('Website: ')
             ->setShowIfEmpty(false)
             ->setLinkType(C4GLinkField::LINK_TYPE_DEFAULT)
+            ->setNewTab()
             ->setCondition($conditions);
 
         $fieldList[] = C4GHeadlineField::create('filter',
