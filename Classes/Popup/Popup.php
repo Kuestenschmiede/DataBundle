@@ -21,7 +21,15 @@ class Popup
         return $this->addList($entries, $title, $class);
     }
 
-    public function addContactInfo(string $phone, string $mobile, string $fax, string $email, string $website, string $title = '', string $class = 'contact') {
+    public function addContactInfo(string $phone,
+                                   string $mobile,
+                                   string $fax,
+                                   string $email,
+                                   string $website,
+                                   string $title = '',
+                                   string $class = 'contact',
+                                   bool $newTab = false
+    ) {
         $list = [];
         if ($phone !== '') {
             $list[] = 'Tel.: '.$phone;
@@ -46,7 +54,14 @@ class Popup
             } else {
                 $href = $website;
             }
-            $list[] = "<a href=\"$href\">$website</a>";
+
+            if ($newTab) {
+                $rel = "target=\"_blank\" rel=\"noopener noreferrer\" ";
+            } else {
+                $rel = '';
+            }
+
+            $list[] = "<a $rel href=\"$href\">$website</a>";
         }
 
         if ($list !== []) {
