@@ -17,6 +17,7 @@ use con4gis\ProjectsBundle\Classes\Database\C4GBrickDatabaseType;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GHeadlineField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GImageField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GKeyField;
+use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GLinkField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GMapLinkButtonField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GMultiCheckboxField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GSelectField;
@@ -196,20 +197,22 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             '',
             true, false, false, false);
 
-        $fieldList[] = C4GTextField::create('phone',
+        $fieldList[] = C4GLinkField::create('phone',
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['phone'][0],
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['phone'][1],
             true, true, true, false)
             ->setAddStrBeforeValue('Tel.: ')
             ->setShowIfEmpty(false)
+            ->setLinkType(C4GLinkField::LINK_TYPE_PHONE)
             ->setCondition($conditions);
 
-        $fieldList[] = C4GTextField::create('mobile',
+        $fieldList[] = C4GLinkField::create('mobile',
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['mobile'][0],
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['mobile'][1],
             true, true, true, false)
             ->setAddStrBeforeValue('Mobil: ')
             ->setShowIfEmpty(false)
+            ->setLinkType(C4GLinkField::LINK_TYPE_PHONE)
             ->setCondition($conditions);
 
         $fieldList[] = C4GTextField::create('fax',
@@ -220,20 +223,22 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             ->setShowIfEmpty(false)
             ->setCondition($conditions);
 
-        $fieldList[] = C4GTextField::create('email',
+        $fieldList[] = C4GLinkField::create('email',
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['email'][0],
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['email'][1],
             true, true, true, false)
             ->setAddStrBeforeValue('Email: ')
             ->setShowIfEmpty(false)
+            ->setLinkType(C4GLinkField::LINK_TYPE_EMAIL)
             ->setCondition($conditions);
 
-        $fieldList[] = C4GTextField::create('website',
+        $fieldList[] = C4GLinkField::create('website',
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['website'][0],
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['website'][1],
             true, true, true, false)
             ->setAddStrBeforeValue('Website: ')
             ->setShowIfEmpty(false)
+            ->setLinkType(C4GLinkField::LINK_TYPE_DEFAULT)
             ->setCondition($conditions);
 
         $fieldList[] = C4GHeadlineField::create('filter',
