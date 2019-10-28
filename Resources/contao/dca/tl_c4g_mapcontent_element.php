@@ -118,10 +118,14 @@ $businessHoursAdditionalInfo->eval()->class('clr');
 $dayFrom = new SelectField('dayFrom', $dca, $businessHours);
 $dayFrom->optionsCallback($cbClass, 'getDay')
     ->reference('day_reference')
+    ->default('')
+    ->sql("char(1) NOT NULL default ''")
     ->eval()->includeBlankOption();
 $dayTo = new SelectField('dayTo', $dca, $businessHours);
 $dayTo->optionsCallback($cbClass, 'getDay')
     ->reference('day_reference')
+    ->default('')
+    ->sql("char(1) NOT NULL default ''")
     ->eval()->includeBlankOption();
 $timeFrom = new TextField('timeFrom', $dca, $businessHours);
 $timeFrom->eval()->regEx('time');
