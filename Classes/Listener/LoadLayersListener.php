@@ -175,7 +175,21 @@ class LoadLayersListener
                         $showBusinessTimes = true;
                     }
                     if ($showBusinessTimes === true) {
-                        $popup->addBusinessHours($timeString, $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['businessHours'][0].':');
+                        $bH = [];
+                        $entries = [];
+                        foreach ($timeString as $string) {
+                            $explode = explode(': ', $string);
+                            $key = $explode[0];
+                            if (isset($bH[$key]) === true) {
+                                $bH[$key] .= ', '.$explode[1];
+                            } else {
+                                $bH[$key] = $explode[1];
+                            }
+                        }
+                        foreach ($bH as $k => $v) {
+                            $entries[] = $k.': '.$v;
+                        }
+                        $popup->addBusinessHours($entries, $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['businessHours'][0].':');
                     }
                 }
 
