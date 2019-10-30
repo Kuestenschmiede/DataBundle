@@ -143,7 +143,9 @@ class LoadLayersListener
 
                 if ($typeElement['image'] !== '' && is_string($typeElement['image'])) {
                     $fileModel = FilesModel::findByUuid($typeElement['image']);
-                    $popup->addImage($fileModel->path, $typeElement['imageMaxHeight'], $typeElement['imageMaxWidth']);
+                    if ($fileModel !== null) {
+                        $popup->addImage($fileModel->path, $typeElement['imageMaxHeight'], $typeElement['imageMaxWidth']);
+                    }
                 }
 
                 if ($popupEvent->isShowBusinessTimes() === true) {
