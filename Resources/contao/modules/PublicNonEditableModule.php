@@ -270,7 +270,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             ->setTargetPageId($this->mapPage)
             ->setButtonLabel('zur Karte')
             ->setLongitudeColumn('geox')
-            ->setLatitudeColumn('geoy');
+            ->setLatitudeColumn('geoy')
+            ->setnewTab();
 
         return $fieldList;
     }
