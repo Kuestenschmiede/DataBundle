@@ -15,6 +15,7 @@
 namespace con4gis\MapContentBundle\Classes\Listener;
 
 
+use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\MapContentBundle\Classes\Event\LoadPopupEvent;
 use con4gis\MapContentBundle\Classes\Event\LoadPropertiesEvent;
 use con4gis\MapContentBundle\Classes\Popup\Popup;
@@ -145,6 +146,8 @@ class LoadLayersListener
                     $fileModel = FilesModel::findByUuid($typeElement['image']);
                     if ($fileModel !== null) {
                         $popup->addImage($fileModel->path, $typeElement['imageMaxHeight'], $typeElement['imageMaxWidth']);
+                    } else {
+                        C4gLogModel::addLogEntry('map-content', 'Popupimage of element '.$typeElement['id'].' with uuid '.$typeElement['image'].' not found.');
                     }
                 }
 
