@@ -176,6 +176,11 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             true, true, true, false)
             ->setCondition($conditions);
 
+        $fieldList[] = C4GHeadlineField::create('businessHours_headline',
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['businessHours_legend'],
+            '',
+            true, false, false, false);
+
         $fieldList[] = C4GTextField::create('businessHours',
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['businessHours'][0],
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['businessHours'][1],
