@@ -37,32 +37,54 @@ class PublicNonEditableModel
             }
             $resultElements[$key]['addressCity'] = $re['addressZip'] . ' ' . $re['addressCity'];
 
-//            $businessTimes = \StringUtil::deserialize($re['businessHours']);
-//            $re['businessHours'] = '';
-//            foreach ($businessTimes as $k => $time) {
-//                $timeString[$k] = '';
-//                if ($time['dayFrom'] !== '' && $time['timeFrom'] !== '' && $time['timeTo'] !== '') {
-//                    $timeString[$k] .= $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayFrom']];
-//                    if ($time['dayTo'] !== $time['dayFrom'] && $time['dayTo'] !== '') {
-//                        if (abs(intval($time['dayTo']) - intval($time['dayFrom'])) > 1) {
-//                            $join = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_join']['to'];
-//                        } else {
-//                            $join = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_join']['and'];
-//                        }
-//
-//                        $timeString[] .= " $join " . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayTo']];
-//                    }
-//                    $timeString[$k] .= ": " . date('H:i', $time['timeFrom']) . " - " . date('H:i', $time['timeTo']);
-//                }
-//            }
-//
-//            if ($re['businessHoursAdditionalInfo'] !== '') {
-//                $timeString[] = $re['businessHoursAdditionalInfo'];
-//            }
-//
-//            foreach ($timeString as $string) {
-//                $re['businessHours'] = "<li class=\"c4g_brick_list_column c4g_brick_list_row_column fax\">$string</li>";
-//            }
+            $timeString = [];
+            $businessTimes = \StringUtil::deserialize($re['businessHours']);
+            $resultElements[$key]['businessHours'] = '';
+            foreach ($businessTimes as $k => $time) {
+                $timeString[$k] = '';
+                if ($time['dayFrom'] !== '' && $time['timeFrom'] !== '' && $time['timeTo'] !== '') {
+                    $timeString[$k] .= $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayFrom']];
+                    if ($time['dayTo'] !== $time['dayFrom'] && $time['dayTo'] !== '') {
+                        if (abs(intval($time['dayTo']) - intval($time['dayFrom'])) > 1) {
+                            $join = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_join']['to'];
+                        } else {
+                            $join = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_join']['and'];
+                        }
+
+                        $timeString[$k] .= " $join " . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayTo']];
+                    }
+                    $timeString[$k] .= ": " . date('H:i', $time['timeFrom']) .
+                        $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['timeCaption'] .
+                        " - " . date('H:i', $time['timeTo']) .
+                        $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['timeCaption'];
+                }
+            }
+            if ($re['businessHoursAdditionalInfo'] !== '') {
+                $timeString[] = $re['businessHoursAdditionalInfo'];
+            }
+
+            $bH = [];
+            $entries = [];
+            foreach ($timeString as $string) {
+                $explode = explode(': ', $string);
+                $k = $explode[0];
+                if (isset($bH[$k]) === true) {
+                    $bH[$k] .= ', '.$explode[1];
+                } else {
+                    $bH[$k] = $explode[1];
+                }
+            }
+            foreach ($bH as $k => $v) {
+                if (!empty($v)) {
+                    $entries[] = $k.': '.$v;
+                } else {
+                    $entries[] = $k;
+                }
+            }
+
+            foreach ($entries as $entry) {
+                $resultElements[$key]['businessHours'] .= "<li class=\"c4g_brick_list_column c4g_brick_list_row_column businessHours\">$entry</li>";
+            }
         }
 
         return C4GBrickCommon::arrayToObject($resultElements);
@@ -80,12 +102,13 @@ class PublicNonEditableModel
         }
         $array['address'] = implode(', ',  $address);
 
+        $timeString = [];
         $businessTimes = \StringUtil::deserialize($array['businessHours']);
         $array['businessHours'] = '';
         foreach ($businessTimes as $k => $time) {
-            $timeString[] = '';
+            $timeString[$k] = '';
             if ($time['dayFrom'] !== '' && $time['timeFrom'] !== '' && $time['timeTo'] !== '') {
-                $timeString[] .= $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayFrom']];
+                $timeString[$k] .= $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayFrom']];
                 if ($time['dayTo'] !== $time['dayFrom'] && $time['dayTo'] !== '') {
                     if (abs(intval($time['dayTo']) - intval($time['dayFrom'])) > 1) {
                         $join = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_join']['to'];
@@ -93,18 +116,39 @@ class PublicNonEditableModel
                         $join = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_join']['and'];
                     }
 
-                    $timeString[] .= " $join " . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayTo']];
+                    $timeString[$k] .= " $join " . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayTo']];
                 }
-                $timeString[] .= ": " . date('H:i', $time['timeFrom']) . " - " . date('H:i', $time['timeTo']);
+                $timeString[$k] .= ": " . date('H:i', $time['timeFrom']) .
+                    $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['timeCaption'] .
+                    " - " . date('H:i', $time['timeTo']) .
+                    $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['timeCaption'];
             }
         }
-
         if ($array['businessHoursAdditionalInfo'] !== '') {
             $timeString[] = $array['businessHoursAdditionalInfo'];
         }
 
+        $bH = [];
+        $entries = [];
         foreach ($timeString as $string) {
-            $re['businessHours'] = "<li class=\"c4g_brick_list_column c4g_brick_list_row_column fax\">$string</li>";
+            $explode = explode(': ', $string);
+            $k = $explode[0];
+            if (isset($bH[$k]) === true) {
+                $bH[$k] .= ', '.$explode[1];
+            } else {
+                $bH[$k] = $explode[1];
+            }
+        }
+        foreach ($bH as $k => $v) {
+            if (!empty($v)) {
+                $entries[] = $k.': '.$v;
+            } else {
+                $entries[] = $k;
+            }
+        }
+
+        foreach ($entries as $entry) {
+            $array['businessHours'] .= "<li class=\"c4g_brick_list_column c4g_brick_list_row_column businessHours\">$entry</li>";
         }
 
         return C4GBrickCommon::arrayToObject($array);
