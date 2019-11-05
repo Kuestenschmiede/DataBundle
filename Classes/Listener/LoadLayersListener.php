@@ -192,7 +192,11 @@ class LoadLayersListener
                             }
                         }
                         foreach ($bH as $k => $v) {
-                            $entries[] = $k.': '.$v;
+                            if (!empty($v)) {
+                                $entries[] = $k.': '.$v;
+                            } else {
+                                $entries[] = $k;
+                            }
                         }
                         $popup->addBusinessHours($entries, $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['businessHours'][0].':');
                     }
