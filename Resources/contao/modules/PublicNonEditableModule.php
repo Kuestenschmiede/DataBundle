@@ -249,14 +249,18 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             ->setNewTab()
             ->setCondition($conditions);
 
-        $fieldList[] = C4GHeadlineField::create('filter',
-            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['filter_legend'],
-            '',
-            true, false, false, false);
 
+        $foundFilter = false;
         foreach ($typeModels as $model) {
-            if ($this->c4g_mapcontent_type === $model->id && $GLOBALS['con4gis']['mapcontent_type_filters'][$model->type] !== null) {
+            if ((!$this->c4g_mapcontent_type || ($this->c4g_mapcontent_type === $model->id)) && $GLOBALS['con4gis']['mapcontent_type_filters'][$model->type] !== null) {
                 foreach ($GLOBALS['con4gis']['mapcontent_type_filters'][$model->type] as $filter) {
+                    if (!$foundFilter) {
+                        $foundFilter = true;
+                        $fieldList[] = C4GHeadlineField::create('filter',
+                            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['filter_legend'],
+                            '',
+                            true, false, false, false);
+                    }
                     $options = [];
                     foreach ($GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$filter.'_option'] as $key => $value) {
                         $options[] = ['id' => $key, 'name' => $value];
