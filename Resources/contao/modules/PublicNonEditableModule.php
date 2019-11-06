@@ -45,6 +45,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
     protected $jQueryUseMapsEditor = true;
     protected $loadCkEditor5Resources = true;
     protected $loadMultiColumnResources = true;
+    protected $loadMiniSearchResources = true;
 
     public static $type = 0;
 
@@ -60,8 +61,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         $this->listParams->setPaginate(true);
 
         $this->listParams->setWithDetails(true);
-//        $this->dialogParams->deleteButton(C4GBrickConst::BUTTON_DELETE);
-//        $this->dialogParams->deleteButton(C4GBrickConst::BUTTON_SAVE);
+        $this->listParams->setShowFullTextSearchInHeadline();
         $this->dialogParams->setTabContent(false);
         $this->dialogParams->setWithLabels(false);
         $this->dialogParams->setWithDescriptions(false);
