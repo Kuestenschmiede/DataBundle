@@ -27,7 +27,7 @@ input, select {
     display: none !important;
 }
 
-.c4g_brick_list_row {
+.c4g_brick_list_row:not(.c4g_list_search_hide) {
     display: initial !important;
 }
 
