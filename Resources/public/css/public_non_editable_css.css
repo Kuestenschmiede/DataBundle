@@ -7,20 +7,19 @@
     margin-bottom: 0 !important;
 }
 
-select {
+#c4g_brick select {
     -moz-appearance: none;
     -webkit-appearance: none;
 }
 
-select::-ms-expand {
+#c4g_brick select::-ms-expand {
     display: none;
 }
 
-input, select {
+#c4g_brick input, #c4g_brick select {
     background: transparent !important;
     border: none !important;
     margin-bottom: 0 !important;
-    color: inherit;
 }
 
 .c4g_brick_list_header {

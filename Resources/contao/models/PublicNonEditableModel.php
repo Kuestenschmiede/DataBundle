@@ -83,7 +83,7 @@ class PublicNonEditableModel
             }
 
             foreach ($entries as $entry) {
-                $resultElements[$key]['businessHours'] .= "<li class=\"c4g_brick_list_column c4g_brick_list_row_column businessHours\">$entry</li>";
+                $resultElements[$key]['businessHours'] .= '<li class="c4g_brick_list_column c4g_brick_list_row_column businessHours">'.$entry.'</li>';
             }
         }
 
@@ -148,7 +148,7 @@ class PublicNonEditableModel
         }
 
         foreach ($entries as $entry) {
-            $array['businessHours'] .= "<li class=\"c4g_brick_list_column c4g_brick_list_row_column businessHours\">$entry</li>";
+            $array['businessHours'] .= '<li class="c4g_brick_list_column c4g_brick_list_row_column businessHours">'.$entry.'</li>';
         }
 
         return C4GBrickCommon::arrayToObject($array);
