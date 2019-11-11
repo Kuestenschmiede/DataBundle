@@ -94,7 +94,7 @@ $geoX->inputType('c4g_text')
     ->sql("varchar(20) NOT NULL default ''")
     ->wizard('con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink')
     ->saveCallback($cbClass, 'setLocLon')
-    ->eval()->mandatory()
+    ->eval()
     ->maxlength(20)
     ->class('w50 wizard');
 
@@ -103,7 +103,7 @@ $geoY->inputType('c4g_text')
     ->sql("varchar(20) NOT NULL default ''")
     ->wizard('con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink')
     ->saveCallback($cbClass, 'setLocLat')
-    ->eval()->mandatory()
+    ->eval()
     ->maxlength(20)
     ->class('w50 wizard');
 
