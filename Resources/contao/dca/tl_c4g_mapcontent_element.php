@@ -73,7 +73,7 @@ $type->default('')
 $parent = new SelectField('parentElement', $dca);
 $parent->optionsCallback($cbClass, 'loadParentOptions')
     ->sql("int(10) NOT NULL default 0")
-    ->default('')
+    ->default('0')
     ->eval()
         ->class('clr')
         ->chosen()
