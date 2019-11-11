@@ -31,7 +31,7 @@ $list->sorting()->panelLayout('filter;sort,search,limit');
 $list->label()->fields(['name', 'type'])
     ->labelCallback($cbClass, 'getLabel');
 $list->addRegularOperations($dca);
-$dca->palette()->default('{data_legend},name,type;')
+$dca->palette()->default('{data_legend},name,type')
     ->selector(['type', 'loctype'])
     ->subPalette("loctype", "point", "geox,geoy")
     ->subPalette("loctype", "circle", "geoJson")
@@ -41,7 +41,7 @@ $dca->palette()->default('{data_legend},name,type;')
 $types = \con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel::findAll();
 if ($types !== null) {
     foreach ($types as $type) {
-        $dca->palette()->subPalette("type", $type->id, ";{location_legend},loctype;{description_legend},description;");
+        $dca->palette()->subPalette("type", $type->id, ",parentElement;{location_legend},loctype;{description_legend},description;");
     }
 }
 
@@ -70,6 +70,15 @@ $type->default('')
     ->class('clr')
     ->includeBlankOption()
     ->submitOnChange();
+
+$parent = new SelectField('parentElement', $dca);
+$parent->optionsCallback($cbClass, 'loadParentOptions')
+    ->sql("int(10) NOT NULL default 0")
+    ->default('')
+    ->eval()
+        ->class('clr')
+        ->chosen()
+        ->includeBlankOption();
 
 $locType = new SelectField('loctype', $dca);
 $locType->default('point')
