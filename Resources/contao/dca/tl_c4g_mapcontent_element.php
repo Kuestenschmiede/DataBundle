@@ -68,7 +68,6 @@ $type->default('')
     ->eval()->mandatory()
     ->maxlength(20)
     ->class('clr')
-    ->includeBlankOption()
     ->submitOnChange();
 
 $parent = new SelectField('parentElement', $dca);
