@@ -27,6 +27,7 @@ use con4gis\MapsBundle\Classes\Events\LoadLayersEvent;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\ProjectsBundle\Classes\Maps\C4GBrickMapFrontendParent;
 use Contao\FilesModel;
+use Contao\StringUtil;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class LoadLayersListener
@@ -114,6 +115,41 @@ class LoadLayersListener
             );
             
             foreach ($elements[$type['id']] as $typeElement) {
+
+                $toMerge = [
+                    $typeElement
+                ];
+                while (intval($toMerge[0]['parentElement']) > 0) {
+                    array_unshift($toMerge, MapcontentElementModel::findByPk([$toMerge[0]['parentElement']])->row());
+                }
+
+                $merge = [];
+                foreach ($toMerge as $merging) {
+                    foreach ($merging as $k => $v) {
+                        switch ($k) {
+                            case 'businessHours':
+                                $businessTimes = StringUtil::deserialize($v);
+                                foreach ($businessTimes as $entry) {
+                                    foreach ($entry as $item) {
+                                        if ($item !== '') {
+                                            $merge[$k] = $v;
+                                            break 2;
+                                        }
+                                    }
+                                }
+                                break;
+                            default:
+                                $merge[$k] = $v ? $v : $merge[$k];
+                                if ($merge[$k] === null) {
+                                    $merge[$k] = '';
+                                }
+                        }
+                    }
+                }
+                if (!empty($merge)) {
+                    $typeElement = $merge;
+                }
+
                 $popup = new Popup();
                 \System::loadLanguageFile('tl_c4g_mapcontent_element');
                 $popup->addName($typeElement['name']);
