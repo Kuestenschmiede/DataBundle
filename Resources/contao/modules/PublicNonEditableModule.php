@@ -162,6 +162,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressName'][1],
             true, true, true, false)
             ->setShowIfEmpty(false)
+            ->setSimpleTextWithoutEditing()
             ->setCondition($conditions);
 
         $fieldList[] = C4GTextField::create('addressStreet',
