@@ -129,8 +129,9 @@ class LoadLayersListener
                         foreach ($merging as $k => $v) {
                             switch ($k) {
                                 case 'businessHours':
-                                    $businessTimes = StringUtil::deserialize($v);
-                                    foreach ($businessTimes as $entry) {
+                                case 'linkWizard':
+                                    $array = StringUtil::deserialize($v);
+                                    foreach ($array as $entry) {
                                         foreach ($entry as $item) {
                                             if ($item !== '') {
                                                 $merge[$k] = $v;
@@ -254,6 +255,9 @@ class LoadLayersListener
                     $tags[] = $model->name;
                 }
 
+                if ($typeElement['linkWizard']) {
+                    $popup->addLinks(StringUtil::deserialize($typeElement['linkWizard']));
+                }
                 $popup->addTags($tags);
                 $popup->addDescription(strval($typeElement['description']));
 

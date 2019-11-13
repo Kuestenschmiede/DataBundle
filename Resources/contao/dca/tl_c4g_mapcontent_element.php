@@ -188,3 +188,15 @@ $imageMaxWidth->default('200')->sql("int(10) unsigned NOT NULL default '200'")
     ->eval()->maxlength(10)->class('w50');
 
 $accessibility = new CheckboxField('accessibility', $dca);
+
+$linkWizard = new MultiColumnField('linkWizard', $dca);
+$linkWizard->sql('text NULL')
+    ->eval()
+    ->class('clr');
+
+$linkTitle = new TextField('linkTitle', $dca, $linkWizard);
+$linkTitle->eval()
+    ->preserveTags()
+    ->allowHtml();
+$linkHref = new TextField('linkHref', $dca, $linkWizard);
+$linkNewTab = new CheckboxField('linkNewTab', $dca, $linkWizard);

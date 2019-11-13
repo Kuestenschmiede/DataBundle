@@ -95,6 +95,19 @@ class Popup
         return $this;
     }
 
+    public function addLinks(array $links, string $class = 'links') {
+        $this->popupString .= "<div class=\"$class\"><ul>";
+        foreach ($links as $link) {
+            if ($link['linkNewTab']) {
+                $rel = " target=\"_blank\" rel=\"noopener noreferrer\"";
+            } else {
+                $rel = '';
+            }
+            $this->popupString .= "<li><a href=\"" . $link['linkHref'] . "\"$rel>" . $link['linkTitle'] . "</a></li>";
+        }
+        $this->popupString .= "</ul></div>";
+    }
+
     public function addString(string $string, string $class = '') {
         $this->popupString .= "<div class=\"$class\">$string</div>";
     }

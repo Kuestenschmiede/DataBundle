@@ -11,6 +11,10 @@ $GLOBALS['TL_LANG'][$strName]['location'] = ['Lokation des Elements', 'Wählen S
 $GLOBALS['TL_LANG'][$strName]['type'] = ['Kategorie', 'Die Kategorie wird im Frontend dargestellt und bestimmt, welche Felder zur Verfügung stehen.'];
 $GLOBALS['TL_LANG'][$strName]['parentElement'] = ['Elternelement', 'Hurra!'];
 $GLOBALS['TL_LANG'][$strName]['tags'] = ['Tags', 'Wählen Sie die Tags aus, die Sie diesem Element zuweisen möchten.'];
+$GLOBALS['TL_LANG'][$strName]['linkWizard'] = ['Weitere Links', 'Weitere Links, die generiert werden sollen. Das Titelfeld akzeptiert HTML.'];
+$GLOBALS['TL_LANG'][$strName]['linkTitle'] = ['Titel', 'Der sichtbare Text. Akzeptiert HTML.'];
+$GLOBALS['TL_LANG'][$strName]['linkHref'] = ['Adresse / URL', 'Die Adresse bzw. URL, auf die der Link zeigt.'];
+$GLOBALS['TL_LANG'][$strName]['linkNewTab'] = ['Neuer Tab', 'Falls gesetzt, wird der Link in einem neuen Tab geöffnet.'];
 
 $GLOBALS['TL_LANG'][$strName]['businessHours'] = ['Öffnungszeiten', 'Die Öffnungszeiten in Listenform.'];
 $GLOBALS['TL_LANG'][$strName]['businessHoursAdditionalInfo'] = ['Zusätzliche Angaben', 'Weitere Angaben zu den Öffnungszeiten.'];
@@ -62,6 +66,7 @@ $GLOBALS['TL_LANG'][$strName]['image_legend'] = 'Bild';
 $GLOBALS['TL_LANG'][$strName]['location_legend'] = 'Koordinaten';
 $GLOBALS['TL_LANG'][$strName]['filter_legend'] = 'Filterdaten';
 $GLOBALS['TL_LANG'][$strName]['accessibility_legend'] = 'Barrierefreiheit';
+$GLOBALS['TL_LANG'][$strName]['linkWizard_legend'] = 'Weitere Links';
 
 /**
  * Operations
