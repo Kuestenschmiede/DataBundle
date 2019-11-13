@@ -8,7 +8,7 @@ $strName = 'tl_c4g_mapcontent_element';
 $GLOBALS['TL_LANG'][$strName]['name'] = ['Bezeichnung', 'Geben Sie die Bezeichnung für dieses Element ein.'];
 $GLOBALS['TL_LANG'][$strName]['description'] = ['Beschreibung', 'Geben Sie einen Beschreibungstext für dieses Element ein.'];
 $GLOBALS['TL_LANG'][$strName]['location'] = ['Lokation des Elements', 'Wählen Sie die Lokation aus, in der das Element liegt.'];
-$GLOBALS['TL_LANG'][$strName]['type'] = ['Elementtyp', 'Wählen Sie den Elementtyp aus.'];
+$GLOBALS['TL_LANG'][$strName]['type'] = ['Kategorie', 'Die Kategorie wird im Frontend dargestellt und bestimmt, welche Felder zur Verfügung stehen.'];
 $GLOBALS['TL_LANG'][$strName]['parentElement'] = ['Elternelement', 'Hurra!'];
 $GLOBALS['TL_LANG'][$strName]['tags'] = ['Tags', 'Wählen Sie die Tags aus, die Sie diesem Element zuweisen möchten.'];
 
