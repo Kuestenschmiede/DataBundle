@@ -116,38 +116,40 @@ class LoadLayersListener
             
             foreach ($elements[$type['id']] as $typeElement) {
 
-                $toMerge = [
-                    $typeElement
-                ];
-                while (intval($toMerge[0]['parentElement']) > 0) {
-                    array_unshift($toMerge, MapcontentElementModel::findByPk([$toMerge[0]['parentElement']])->row());
-                }
+                if (intval($typeElement['parentElement']) > 0) {
+                    $toMerge = [
+                        $typeElement
+                    ];
+                    while (intval($toMerge[0]['parentElement']) > 0) {
+                        array_unshift($toMerge, MapcontentElementModel::findByPk([$toMerge[0]['parentElement']])->row());
+                    }
 
-                $merge = [];
-                foreach ($toMerge as $merging) {
-                    foreach ($merging as $k => $v) {
-                        switch ($k) {
-                            case 'businessHours':
-                                $businessTimes = StringUtil::deserialize($v);
-                                foreach ($businessTimes as $entry) {
-                                    foreach ($entry as $item) {
-                                        if ($item !== '') {
-                                            $merge[$k] = $v;
-                                            break 2;
+                    $merge = [];
+                    foreach ($toMerge as $merging) {
+                        foreach ($merging as $k => $v) {
+                            switch ($k) {
+                                case 'businessHours':
+                                    $businessTimes = StringUtil::deserialize($v);
+                                    foreach ($businessTimes as $entry) {
+                                        foreach ($entry as $item) {
+                                            if ($item !== '') {
+                                                $merge[$k] = $v;
+                                                break 2;
+                                            }
                                         }
                                     }
-                                }
-                                break;
-                            default:
-                                $merge[$k] = $v ? $v : $merge[$k];
-                                if ($merge[$k] === null) {
-                                    $merge[$k] = '';
-                                }
+                                    break;
+                                default:
+                                    $merge[$k] = $v ? $v : $merge[$k];
+                                    if ($merge[$k] === null) {
+                                        $merge[$k] = '';
+                                    }
+                            }
                         }
                     }
-                }
-                if (!empty($merge)) {
-                    $typeElement = $merge;
+                    if (!empty($merge)) {
+                        $typeElement = $merge;
+                    }
                 }
 
                 $popup = new Popup();
