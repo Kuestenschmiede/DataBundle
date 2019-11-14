@@ -28,6 +28,7 @@ class MapcontentElementCallback extends Backend
     public function loadTypes()
     {
         $arrTypes = [];
+        $arrTypes[''] = '-';
         $types = MapcontentTypeModel::findAll();
         foreach ($types as $type) {
             $arrTypes[$type->id] = $type->name;
