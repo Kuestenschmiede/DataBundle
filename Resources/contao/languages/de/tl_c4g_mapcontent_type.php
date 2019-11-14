@@ -14,7 +14,7 @@ $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type'] = [
     'delete' => ["Elementkategorie ID %s löschen", "Elementkategorie ID %s löschen"]
 ];
 
-$GLOBALS['TL_LANG']['mapcontent_types']['default'] = 'Standard';
+$GLOBALS['TL_LANG']['mapcontent_types']['default'] = 'Benutzerdefiniert';
 $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['data_legend'] = 'Allgemeine Daten';
 
 $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['showLabels'] = ['Label anzeigen', 'Zeigt die Namen der Elemente dieser Kategorie in der Karte an.'];
