@@ -4,6 +4,7 @@ $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type'] = [
     'name' => ['Name der Kategorie', 'Geben Sie einen Namen für die Elementkategorie ein.'],
     'locstyle' => ['Lokationsstil', 'Wählen Sie einen Lokationsstil aus, in dem Elemente dieser Kategorie dargestellt werden sollen.'],
     'type' => ['Typ', 'Der Typ bestimmt, welche Felder den einzelnen Elementen zur Verfügung stehen.'],
+    'availableFields' => ['Verfügbare Felder', 'Diese Felder stehen den Elementen dieser Kategorie zur Verfügung.'],
     'availableTags' => ['Verfügbare Tags', 'Wählen Sie die Tags aus, die für Elemente dieser Kategorie zur Auswahl stehen sollen.'],
     'categorySort' => ['Sortierung', 'Geben Sie hier die Sortierung für die Filterdarstellung an.'],
     'new' => ["Neuer Elementkategorie erstellen", "Neue Elementkategorie erstellen"],

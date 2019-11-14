@@ -43,6 +43,75 @@ if ($types !== null) {
     foreach ($types as $type) {
         $dca->palette()->subPalette("type", $type->id, ",parentElement;{location_legend},loctype;{description_legend},description;");
     }
+
+    if ($type->type === 'default' && $type->availableFields !== null) {
+        $availableFields = array_flip(StringUtil::deserialize($type->availableFields));
+        $fields = '';
+
+        if (isset($availableFields['businessHours'])) {
+            $fields .= ';{businessHours_legend},businessHours,businessHoursAdditionalInfo';
+        }
+
+        if (isset($availableFields['addressName'])
+            || isset($availableFields['addressStreet'])
+            || isset($availableFields['addressStreetNumber'])
+            || isset($availableFields['addressZip'])
+            || isset($availableFields['addressCity'])
+        ) {
+            $fields .= ';{address_legend}';
+
+            if (isset($availableFields['addressName'])) {
+                $fields .= ',addressName';
+            }
+            if (isset($availableFields['addressStreet'])) {
+                $fields .= ',addressStreet';
+            }
+            if (isset($availableFields['addressStreetNumber'])) {
+                $fields .= ',addressStreetNumber';
+            }
+            if (isset($availableFields['addressZip'])) {
+                $fields .= ',addressZip';
+            }
+            if (isset($availableFields['addressCity'])) {
+                $fields .= ',addressCity';
+            }
+        }
+
+        if (isset($availableFields['phone'])
+            || isset($availableFields['mobile'])
+            || isset($availableFields['fax'])
+            || isset($availableFields['email'])
+            || isset($availableFields['website'])
+        ) {
+            $fields .= ';{contact_legend}';
+
+            if (isset($availableFields['phone'])) {
+                $fields .= ',phone';
+            }
+            if (isset($availableFields['mobile'])) {
+                $fields .= ',mobile';
+            }
+            if (isset($availableFields['fax'])) {
+                $fields .= ',fax';
+            }
+            if (isset($availableFields['email'])) {
+                $fields .= ',email';
+            }
+            if (isset($availableFields['website'])) {
+                $fields .= ',website';
+            }
+        }
+
+        if (isset($availableFields['linkWizard'])) {
+            $fields .= ';{linkWizard_legend},linkWizard';
+        }
+
+        if (isset($availableFields['image'])) {
+            $fields .= ';{image_legend},image,imageMaxHeight,imageMaxWidth';
+        }
+
+        $dca->palette()->subPalette("type", $type->id, $fields);
+    }
 }
 
 $id = new IdField('id', $dca);

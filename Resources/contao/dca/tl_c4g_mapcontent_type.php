@@ -19,6 +19,7 @@ use con4gis\CoreBundle\Classes\DCA\Fields\NaturalField;
 use con4gis\CoreBundle\Classes\DCA\Fields\SelectField;
 use con4gis\CoreBundle\Classes\DCA\Fields\TextField;
 use con4gis\CoreBundle\Classes\DCA\Fields\CheckboxField;
+use con4gis\CoreBundle\Classes\DCA\Fields\MultiCheckboxField;
 use con4gis\MapContentBundle\Classes\Contao\Callbacks\MapcontentTypeCallback;
 
 $strName = 'tl_c4g_mapcontent_type';
@@ -31,7 +32,9 @@ $list->sorting()->panelLayout('filter;sort,search,limit');
 $list->label()->fields(['name', 'type', 'availableTags', 'categorySort'])
     ->labelCallback($cbClass, 'getLabel');
 $list->addRegularOperations($dca);
-$dca->palette()->default('{data_legend},name,locstyle,type,availableTags,showLabels,categorySort;');
+$dca->palette()->default('{data_legend},name,locstyle,type,availableTags,showLabels,categorySort;')
+    ->selector(['type'])
+    ->subPalette('type', 'default', 'availableFields,');
 
 $id = new IdField('id', $dca);
 
@@ -49,9 +52,11 @@ $locStyle->default('')
 
 $type = new SelectField('type', $dca);
 $type->optionsCallback($cbClass, 'getTypeOptions')
-    ->sql("varchar(20) NOT NULL default ''")
+    ->sql("varchar(20) NOT NULL default 'default'")
+    ->default('default')
     ->eval()->mandatory()
-        ->class('clr');
+        ->class('clr')
+        ->submitOnChange();
 
 $availableTags = new SelectField('availableTags', $dca);
 $availableTags->optionsCallback($cbClass, 'getAvailableTags')
@@ -65,3 +70,6 @@ $showLabels = new CheckboxField('showLabels', $dca);
 $showLabels->default(false);
 
 $categorySort = new NaturalField('categorySort', $dca);
+
+$availableFields = new MultiCheckboxField('availableFields', $dca);
+$availableFields->optionsCallback($cbClass, 'loadAvailableFieldsOptions');
