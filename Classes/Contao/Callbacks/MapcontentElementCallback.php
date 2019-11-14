@@ -31,7 +31,9 @@ class MapcontentElementCallback extends Backend
         $arrTypes[''] = '-';
         $types = MapcontentTypeModel::findAll();
         foreach ($types as $type) {
-            $arrTypes[$type->id] = $type->name;
+            if ($type->name !== '') {
+                $arrTypes[$type->id] = $type->name;
+            }
         }
         return $arrTypes;
     }
