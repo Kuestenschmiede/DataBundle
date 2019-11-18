@@ -39,7 +39,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
     protected $tableName            = 'tl_c4g_mapcontent_element';
 
     protected $loadConditionalFieldDisplayResources = false;
-    protected $loadTriggerSearchFromOtherModuleResources = false;
+    protected $loadTriggerSearchFromOtherModuleResources = true;
     protected $loadMoreButtonResources = true;
     protected $jQueryUseMaps = true;
     protected $jQueryUseMapsEditor = true;
