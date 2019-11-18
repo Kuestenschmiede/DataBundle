@@ -76,7 +76,6 @@ class MapcontentElementCallback extends Backend
 
     public function getLabel($arrRow){
         $label['name'] = $arrRow['name'];
-//        $label['location'] = MapcontentLocationModel::findByPk($arrRow['location'])->name;
         $label['type'] = MapcontentTypeModel::findByPk($arrRow['type'])->name;
         return $label;
     }
