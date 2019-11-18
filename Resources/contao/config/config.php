@@ -23,7 +23,9 @@ array_insert($GLOBALS['BE_MOD'], array_search('content', array_keys($GLOBALS['BE
             'tables' => ['tl_c4g_mapcontent_type']],
         'c4g_mapcontent_element' => [
             'tables' => ['tl_c4g_mapcontent_element'],
-            'javascript' => '/bundles/con4giseditor/js/c4g-backend-helper.js'],
+            'javascript' => '/bundles/con4giseditor/js/c4g-backend-helper.js',
+            'stylesheet' => 'bundles/con4gismapcontent/css/backend_map_content_element.css'
+        ],
         'c4g_mapcontent_tag' => [
             'tables' => ['tl_c4g_mapcontent_tag']]
     ]

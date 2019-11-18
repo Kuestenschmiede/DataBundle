@@ -6,6 +6,7 @@ namespace con4gis\MapContentBundle\Resources\contao\models;
 
 use con4gis\MapContentBundle\Resources\contao\modules\PublicNonEditableModule;
 use con4gis\ProjectsBundle\Classes\Common\C4GBrickCommon;
+use Contao\StringUtil;
 
 class PublicNonEditableModel
 {
@@ -28,6 +29,45 @@ class PublicNonEditableModel
         }
 
         foreach ($resultElements as $key => $re) {
+
+            if (intval($re['parentElement']) > 0) {
+                $toMerge = [
+                    $re
+                ];
+                while (intval($toMerge[0]['parentElement']) > 0) {
+                    array_unshift($toMerge, MapcontentElementModel::findByPk([$toMerge[0]['parentElement']])->row());
+                }
+
+                $merge = [];
+                foreach ($toMerge as $merging) {
+                    foreach ($merging as $k => $v) {
+                        switch ($k) {
+                            case 'businessHours':
+                            case 'linkWizard':
+                                $array = StringUtil::deserialize($v);
+                                foreach ($array as $entry) {
+                                    foreach ($entry as $item) {
+                                        if ($item !== '') {
+                                            $merge[$k] = $v;
+                                            break 2;
+                                        }
+                                    }
+                                }
+                                break;
+                            default:
+                                $merge[$k] = $v ? $v : $merge[$k];
+                                if ($merge[$k] === null) {
+                                    $merge[$k] = '';
+                                }
+                        }
+                    }
+                }
+                if (!empty($merge)) {
+                    $re = $merge;
+                    $resultElements[$key] = $merge;
+                }
+            }
+
             $resultElements[$key]['type'] = $types[$re['type']];
             $resultElements[$key]['addressName'] = $re['addressName'];
             if ($re['addressStreetNumber'] !== '0') {
@@ -83,7 +123,7 @@ class PublicNonEditableModel
             }
 
             foreach ($entries as $entry) {
-                $resultElements[$key]['businessHours'] .= "<li class=\"c4g_brick_list_column c4g_brick_list_row_column businessHours\">$entry</li>";
+                $resultElements[$key]['businessHours'] .= '<li class="c4g_brick_list_column c4g_brick_list_row_column businessHours">'.$entry.'</li>';
             }
         }
 
@@ -93,6 +133,44 @@ class PublicNonEditableModel
     public static function findByPk($pk) {
         $model = MapcontentElementModel::findByPk($pk);
         $array = $model->row();
+
+        if (intval($array['parentElement']) > 0) {
+            $toMerge = [
+                $array
+            ];
+            while (intval($toMerge[0]['parentElement']) > 0) {
+                array_unshift($toMerge, MapcontentElementModel::findByPk([$toMerge[0]['parentElement']])->row());
+            }
+
+            $merge = [];
+            foreach ($toMerge as $merging) {
+                foreach ($merging as $k => $v) {
+                    switch ($k) {
+                        case 'businessHours':
+                        case 'linkWizard':
+                            $arr = StringUtil::deserialize($v);
+                            foreach ($arr as $entry) {
+                                foreach ($entry as $item) {
+                                    if ($item !== '') {
+                                        $merge[$k] = $v;
+                                        break 2;
+                                    }
+                                }
+                            }
+                            break;
+                        default:
+                            $merge[$k] = $v ? $v : $merge[$k];
+                            if ($merge[$k] === null) {
+                                $merge[$k] = '';
+                            }
+                    }
+                }
+            }
+            if (!empty($merge)) {
+                $array = $merge;
+            }
+        }
+
         $address = [];
         if ($array['addressStreet'] !== '' && $array['addressStreetNumber'] !== '0') {
             $array['addressStreet'] = $array['addressStreet']. ' ' . $array['addressStreetNumber'];
@@ -148,7 +226,7 @@ class PublicNonEditableModel
         }
 
         foreach ($entries as $entry) {
-            $array['businessHours'] .= "<li class=\"c4g_brick_list_column c4g_brick_list_row_column businessHours\">$entry</li>";
+            $array['businessHours'] .= '<li class="c4g_brick_list_column c4g_brick_list_row_column businessHours">'.$entry.'</li>';
         }
 
         return C4GBrickCommon::arrayToObject($array);

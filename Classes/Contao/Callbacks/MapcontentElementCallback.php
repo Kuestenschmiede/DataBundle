@@ -14,13 +14,12 @@
 
 namespace con4gis\MapContentBundle\Classes\Contao\Callbacks;
 
-use con4gis\MapContentBundle\Resources\contao\models\MapcontentLocationModel;
+use con4gis\MapContentBundle\Resources\contao\models\MapcontentElementModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTagModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
 use con4gis\MapsBundle\Resources\contao\classes\Utils;
 use Contao\Backend;
 use Contao\DataContainer;
-use Contao\StringUtil;
 
 class MapcontentElementCallback extends Backend
 {
@@ -29,9 +28,12 @@ class MapcontentElementCallback extends Backend
     public function loadTypes()
     {
         $arrTypes = [];
+        $arrTypes[''] = '-';
         $types = MapcontentTypeModel::findAll();
         foreach ($types as $type) {
-            $arrTypes[$type->id] = $type->name;
+            if ($type->name !== '') {
+                $arrTypes[$type->id] = $type->name;
+            }
         }
         return $arrTypes;
     }
@@ -56,9 +58,24 @@ class MapcontentElementCallback extends Backend
         }
     }
 
+    public function loadParentOptions(DataContainer $dc) {
+        $options = [];
+        $id = $dc->activeRecord->id;
+        if (!$id) {
+            return [];
+        } else {
+            $models = MapcontentElementModel::findAll();
+            foreach ($models as $model) {
+                if ($model->id !== $id) {
+                    $options[$model->id] = $model->name;
+                }
+            }
+        }
+        return $options;
+    }
+
     public function getLabel($arrRow){
         $label['name'] = $arrRow['name'];
-//        $label['location'] = MapcontentLocationModel::findByPk($arrRow['location'])->name;
         $label['type'] = MapcontentTypeModel::findByPk($arrRow['type'])->name;
         return $label;
     }

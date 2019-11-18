@@ -3,7 +3,8 @@
 $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type'] = [
     'name' => ['Name der Kategorie', 'Geben Sie einen Namen für die Elementkategorie ein.'],
     'locstyle' => ['Lokationsstil', 'Wählen Sie einen Lokationsstil aus, in dem Elemente dieser Kategorie dargestellt werden sollen.'],
-    'type' => ['Elementtyp', 'Wählen Sie die Art der Elementkategorie aus.'],
+    'type' => ['Typ', 'Der Typ bestimmt, welche Felder den einzelnen Elementen zur Verfügung stehen.'],
+    'availableFields' => ['Verfügbare Felder', 'Diese Felder stehen den Elementen dieser Kategorie zur Verfügung.'],
     'availableTags' => ['Verfügbare Tags', 'Wählen Sie die Tags aus, die für Elemente dieser Kategorie zur Auswahl stehen sollen.'],
     'categorySort' => ['Sortierung', 'Geben Sie hier die Sortierung für die Filterdarstellung an.'],
     'new' => ["Neuer Elementkategorie erstellen", "Neue Elementkategorie erstellen"],
@@ -13,7 +14,7 @@ $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type'] = [
     'delete' => ["Elementkategorie ID %s löschen", "Elementkategorie ID %s löschen"]
 ];
 
-$GLOBALS['TL_LANG']['mapcontent_types']['default'] = 'Standard';
+$GLOBALS['TL_LANG']['mapcontent_types']['default'] = 'Benutzerdefiniert';
 $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['data_legend'] = 'Allgemeine Daten';
 
 $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['showLabels'] = ['Label anzeigen', 'Zeigt die Namen der Elemente dieser Kategorie in der Karte an.'];

@@ -8,8 +8,13 @@ $strName = 'tl_c4g_mapcontent_element';
 $GLOBALS['TL_LANG'][$strName]['name'] = ['Bezeichnung', 'Geben Sie die Bezeichnung für dieses Element ein.'];
 $GLOBALS['TL_LANG'][$strName]['description'] = ['Beschreibung', 'Geben Sie einen Beschreibungstext für dieses Element ein.'];
 $GLOBALS['TL_LANG'][$strName]['location'] = ['Lokation des Elements', 'Wählen Sie die Lokation aus, in der das Element liegt.'];
-$GLOBALS['TL_LANG'][$strName]['type'] = ['Elementtyp', 'Wählen Sie den Elementtyp aus.'];
+$GLOBALS['TL_LANG'][$strName]['type'] = ['Kategorie', 'Die Kategorie wird im Frontend dargestellt und bestimmt, welche Felder zur Verfügung stehen.'];
+$GLOBALS['TL_LANG'][$strName]['parentElement'] = ['Elternelement', 'Hurra!'];
 $GLOBALS['TL_LANG'][$strName]['tags'] = ['Tags', 'Wählen Sie die Tags aus, die Sie diesem Element zuweisen möchten.'];
+$GLOBALS['TL_LANG'][$strName]['linkWizard'] = ['Weitere Links', 'Weitere Links, die generiert werden sollen. Das Titelfeld akzeptiert HTML.'];
+$GLOBALS['TL_LANG'][$strName]['linkTitle'] = ['Titel', 'Der sichtbare Text. Akzeptiert HTML.'];
+$GLOBALS['TL_LANG'][$strName]['linkHref'] = ['Adresse / URL', 'Die Adresse bzw. URL, auf die der Link zeigt.'];
+$GLOBALS['TL_LANG'][$strName]['linkNewTab'] = ['Neuer Tab', 'Falls gesetzt, wird der Link in einem neuen Tab geöffnet.'];
 
 $GLOBALS['TL_LANG'][$strName]['businessHours'] = ['Öffnungszeiten', 'Die Öffnungszeiten in Listenform.'];
 $GLOBALS['TL_LANG'][$strName]['businessHoursAdditionalInfo'] = ['Zusätzliche Angaben', 'Weitere Angaben zu den Öffnungszeiten.'];
@@ -25,6 +30,8 @@ $GLOBALS['TL_LANG'][$strName]['addressStreet'] = ['Straße', 'Straße ohne Hausn
 $GLOBALS['TL_LANG'][$strName]['addressStreetNumber'] = ['Hausnummer', ''];
 $GLOBALS['TL_LANG'][$strName]['addressZip'] = ['Postleitzahl', ''];
 $GLOBALS['TL_LANG'][$strName]['addressCity'] = ['Ort', ''];
+
+$GLOBALS['TL_LANG'][$strName]['accessibility'] = ['Barrierefrei', 'Das Element ist barrierefrei.'];
 
 $GLOBALS['TL_LANG'][$strName]['phone'] = ['Telefonnummer', ''];
 $GLOBALS['TL_LANG'][$strName]['mobile'] = ['Mobiltelefonnummer', ''];
@@ -58,6 +65,8 @@ $GLOBALS['TL_LANG'][$strName]['description_legend'] = 'Beschreibung';
 $GLOBALS['TL_LANG'][$strName]['image_legend'] = 'Bild';
 $GLOBALS['TL_LANG'][$strName]['location_legend'] = 'Koordinaten';
 $GLOBALS['TL_LANG'][$strName]['filter_legend'] = 'Filterdaten';
+$GLOBALS['TL_LANG'][$strName]['accessibility_legend'] = 'Barrierefreiheit';
+$GLOBALS['TL_LANG'][$strName]['linkWizard_legend'] = 'Weitere Links';
 
 /**
  * Operations

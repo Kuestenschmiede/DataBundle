@@ -31,7 +31,7 @@ $list->sorting()->panelLayout('filter;sort,search,limit');
 $list->label()->fields(['name', 'type'])
     ->labelCallback($cbClass, 'getLabel');
 $list->addRegularOperations($dca);
-$dca->palette()->default('{data_legend},name,type;')
+$dca->palette()->default('{data_legend},name,type')
     ->selector(['type', 'loctype'])
     ->subPalette("loctype", "point", "geox,geoy")
     ->subPalette("loctype", "circle", "geoJson")
@@ -41,7 +41,76 @@ $dca->palette()->default('{data_legend},name,type;')
 $types = \con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel::findAll();
 if ($types !== null) {
     foreach ($types as $type) {
-        $dca->palette()->subPalette("type", $type->id, ";{location_legend},loctype;{description_legend},description;");
+        $dca->palette()->subPalette("type", $type->id, ",parentElement;{location_legend},loctype;{description_legend},description;");
+    }
+
+    if ($type->type === 'default' && $type->availableFields !== null) {
+        $availableFields = array_flip(StringUtil::deserialize($type->availableFields));
+        $fields = '';
+
+        if (isset($availableFields['businessHours'])) {
+            $fields .= ';{businessHours_legend},businessHours,businessHoursAdditionalInfo';
+        }
+
+        if (isset($availableFields['addressName'])
+            || isset($availableFields['addressStreet'])
+            || isset($availableFields['addressStreetNumber'])
+            || isset($availableFields['addressZip'])
+            || isset($availableFields['addressCity'])
+        ) {
+            $fields .= ';{address_legend}';
+
+            if (isset($availableFields['addressName'])) {
+                $fields .= ',addressName';
+            }
+            if (isset($availableFields['addressStreet'])) {
+                $fields .= ',addressStreet';
+            }
+            if (isset($availableFields['addressStreetNumber'])) {
+                $fields .= ',addressStreetNumber';
+            }
+            if (isset($availableFields['addressZip'])) {
+                $fields .= ',addressZip';
+            }
+            if (isset($availableFields['addressCity'])) {
+                $fields .= ',addressCity';
+            }
+        }
+
+        if (isset($availableFields['phone'])
+            || isset($availableFields['mobile'])
+            || isset($availableFields['fax'])
+            || isset($availableFields['email'])
+            || isset($availableFields['website'])
+        ) {
+            $fields .= ';{contact_legend}';
+
+            if (isset($availableFields['phone'])) {
+                $fields .= ',phone';
+            }
+            if (isset($availableFields['mobile'])) {
+                $fields .= ',mobile';
+            }
+            if (isset($availableFields['fax'])) {
+                $fields .= ',fax';
+            }
+            if (isset($availableFields['email'])) {
+                $fields .= ',email';
+            }
+            if (isset($availableFields['website'])) {
+                $fields .= ',website';
+            }
+        }
+
+        if (isset($availableFields['linkWizard'])) {
+            $fields .= ';{linkWizard_legend},linkWizard';
+        }
+
+        if (isset($availableFields['image'])) {
+            $fields .= ';{image_legend},image,imageMaxHeight,imageMaxWidth';
+        }
+
+        $dca->palette()->subPalette("type", $type->id, $fields);
     }
 }
 
@@ -68,8 +137,16 @@ $type->default('')
     ->eval()->mandatory()
     ->maxlength(20)
     ->class('clr')
-    ->includeBlankOption()
     ->submitOnChange();
+
+$parent = new SelectField('parentElement', $dca);
+$parent->optionsCallback($cbClass, 'loadParentOptions')
+    ->sql("int(10) NOT NULL default 0")
+    ->default('0')
+    ->eval()
+        ->class('clr')
+        ->chosen()
+        ->includeBlankOption();
 
 $locType = new SelectField('loctype', $dca);
 $locType->default('point')
@@ -85,7 +162,7 @@ $geoX->inputType('c4g_text')
     ->sql("varchar(20) NOT NULL default ''")
     ->wizard('con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink')
     ->saveCallback($cbClass, 'setLocLon')
-    ->eval()->mandatory()
+    ->eval()
     ->maxlength(20)
     ->class('w50 wizard');
 
@@ -94,7 +171,7 @@ $geoY->inputType('c4g_text')
     ->sql("varchar(20) NOT NULL default ''")
     ->wizard('con4gis\MapsBundle\Resources\contao\classes\GeoPicker', 'getPickerLink')
     ->saveCallback($cbClass, 'setLocLat')
-    ->eval()->mandatory()
+    ->eval()
     ->maxlength(20)
     ->class('w50 wizard');
 
@@ -180,3 +257,15 @@ $imageMaxWidth->default('200')->sql("int(10) unsigned NOT NULL default '200'")
     ->eval()->maxlength(10)->class('w50');
 
 $accessibility = new CheckboxField('accessibility', $dca);
+
+$linkWizard = new MultiColumnField('linkWizard', $dca);
+$linkWizard->sql('text NULL')
+    ->eval()
+    ->class('clr');
+
+$linkTitle = new TextField('linkTitle', $dca, $linkWizard);
+$linkTitle->eval()
+    ->preserveTags()
+    ->allowHtml();
+$linkHref = new TextField('linkHref', $dca, $linkWizard);
+$linkNewTab = new CheckboxField('linkNewTab', $dca, $linkWizard);
