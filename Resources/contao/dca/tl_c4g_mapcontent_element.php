@@ -45,69 +45,92 @@ if ($types !== null) {
     }
 
     if ($type->type === 'default' && $type->availableFields !== null) {
-        $availableFields = array_flip(StringUtil::deserialize($type->availableFields));
+        $availableFields = StringUtil::deserialize($type->availableFields);
+
         $fields = '';
+        $addressIsSet = false;
+        $contactIsSet = false;
 
-        if (isset($availableFields['businessHours'])) {
-            $fields .= ';{businessHours_legend},businessHours,businessHoursAdditionalInfo';
-        }
+        foreach ($availableFields as $availableField) {
 
-        if (isset($availableFields['addressName'])
-            || isset($availableFields['addressStreet'])
-            || isset($availableFields['addressStreetNumber'])
-            || isset($availableFields['addressZip'])
-            || isset($availableFields['addressCity'])
-        ) {
-            $fields .= ';{address_legend}';
+            if ($availableField === 'businessHours') {
+                $fields .= ';{businessHours_legend},businessHours,businessHoursAdditionalInfo';
+            }
 
-            if (isset($availableFields['addressName'])) {
-                $fields .= ',addressName';
-            }
-            if (isset($availableFields['addressStreet'])) {
-                $fields .= ',addressStreet';
-            }
-            if (isset($availableFields['addressStreetNumber'])) {
-                $fields .= ',addressStreetNumber';
-            }
-            if (isset($availableFields['addressZip'])) {
-                $fields .= ',addressZip';
-            }
-            if (isset($availableFields['addressCity'])) {
-                $fields .= ',addressCity';
-            }
-        }
+            if (($availableField === 'addressName'
+                || $availableField === 'addressStreet'
+                || $availableField === 'addressStreetNumber'
+                || $availableField === 'addressZip'
+                || $availableField === 'addressCity'
+                ) && $addressIsSet === false) {
+                $fields .= ';{address_legend}';
+                $addressIsSet = true;
 
-        if (isset($availableFields['phone'])
-            || isset($availableFields['mobile'])
-            || isset($availableFields['fax'])
-            || isset($availableFields['email'])
-            || isset($availableFields['website'])
-        ) {
-            $fields .= ';{contact_legend}';
+                $addressArray = [];
 
-            if (isset($availableFields['phone'])) {
-                $fields .= ',phone';
-            }
-            if (isset($availableFields['mobile'])) {
-                $fields .= ',mobile';
-            }
-            if (isset($availableFields['fax'])) {
-                $fields .= ',fax';
-            }
-            if (isset($availableFields['email'])) {
-                $fields .= ',email';
-            }
-            if (isset($availableFields['website'])) {
-                $fields .= ',website';
-            }
-        }
+                if (in_array('addressName', $availableFields)) {
+                    $addressArray[array_search('addressName', $availableFields)] = 'addressName';
+                }
+                if (in_array('addressStreet', $availableFields)) {
+                    $addressArray[array_search('addressStreet', $availableFields)] = 'addressStreet';
+                }
+                if (in_array('addressStreetNumber', $availableFields)) {
+                    $addressArray[array_search('addressStreetNumber', $availableFields)] = 'addressStreetNumber';
+                }
+                if (in_array('addressZip', $availableFields)) {
+                    $addressArray[array_search('addressZip', $availableFields)] = 'addressZip';
+                }
+                if (in_array('addressCity', $availableFields)) {
+                    $addressArray[array_search('addressCity', $availableFields)] = 'addressCity';
+                }
 
-        if (isset($availableFields['linkWizard'])) {
-            $fields .= ';{linkWizard_legend},linkWizard';
-        }
+                ksort($addressArray);
+                foreach ($addressArray as $value) {
+                    $fields .= ",$value";
+                }
+            }
 
-        if (isset($availableFields['image'])) {
-            $fields .= ';{image_legend},image,imageMaxHeight,imageMaxWidth';
+            if (($availableField === 'phone'
+                || $availableField === 'mobile'
+                || $availableField === 'fax'
+                || $availableField === 'email'
+                || $availableField === 'website'
+                ) && $contactIsSet === false)
+            {
+                $fields .= ';{contact_legend}';
+                $contactIsSet = true;
+
+                $contactArray = [];
+
+                if (in_array('phone', $availableFields)) {
+                    $contactArray[array_search('phone', $availableFields)] = 'phone';
+                }
+                if (in_array('mobile', $availableFields)) {
+                    $contactArray[array_search('mobile', $availableFields)] = 'mobile';
+                }
+                if (in_array('fax', $availableFields)) {
+                    $contactArray[array_search('fax', $availableFields)] = 'fax';
+                }
+                if (in_array('email', $availableFields)) {
+                    $contactArray[array_search('email', $availableFields)] = 'email';
+                }
+                if (in_array('website', $availableFields)) {
+                    $contactArray[array_search('website', $availableFields)] = 'website';
+                }
+
+                ksort($contactArray);
+                foreach ($contactArray as $value) {
+                    $fields .= ",$value";
+                }
+            }
+
+            if ($availableField === 'linkWizard') {
+                $fields .= ';{linkWizard_legend},linkWizard';
+            }
+
+            if ($availableField === 'image') {
+                $fields .= ';{image_legend},image,imageMaxHeight,imageMaxWidth';
+            }
         }
 
         $dca->palette()->subPalette("type", $type->id, $fields);
