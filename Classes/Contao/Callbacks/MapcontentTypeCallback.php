@@ -70,21 +70,28 @@ class MapcontentTypeCallback extends Backend
     public function loadAvailableFieldsOptions($dc)
     {
         System::loadLanguageFile('tl_c4g_mapcontent_element');
+        $language = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'];
         return [
-            'businessHours' => $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['businessHours'][0],
-            'addressName' => $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressName'][0],
-            'addressStreet' => $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressStreet'][0],
-            'addressStreetNumber' => $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressStreetNumber'][0],
-            'addressZip' => $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressZip'][0],
-            'addressCity' => $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressCity'][0],
-            'phone' => $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['phone'][0],
-            'mobile' => $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['mobile'][0],
-            'fax' => $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['fax'][0],
-            'email' => $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['email'][0],
-            'website' => $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['website'][0],
-            'image' => $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['image'][0],
-            'accessibility' => $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['accessibility'][0],
-            'linkWizard' => $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['linkWizard'][0],
+            'businessHours' => $language['businessHours'][0] .
+                " - ".$language['businessHours'][1],
+            'addressName' => $language['addressName'][0] .
+                " - ".$language['addressName'][1],
+            'addressStreet' => $language['addressStreet'][0] .
+                " - ".$language['addressStreet'][1],
+            'addressStreetNumber' => $language['addressStreetNumber'][0],
+            'addressZip' => $language['addressZip'][0],
+            'addressCity' => $language['addressCity'][0],
+            'phone' => $language['phone'][0],
+            'mobile' => $language['mobile'][0],
+            'fax' => $language['fax'][0],
+            'email' => $language['email'][0],
+            'website' => $language['website'][0],
+            'image' => $language['image'][0] .
+                " - ".$language['image'][1],
+            'accessibility' => $language['accessibility'][0] .
+                " - ".$language['accessibility'][1],
+            'linkWizard' => $language['linkWizard'][0] .
+                " - ".$language['linkWizard'][1],
         ];
     }
 }
