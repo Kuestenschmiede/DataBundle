@@ -29,10 +29,10 @@ $dca = new DCA('tl_c4g_mapcontent_type');
 $list = $dca->list();
 $list->sorting()->fields(['name', 'type', 'availableTags']);
 $list->sorting()->panelLayout('filter;sort,search,limit');
-$list->label()->fields(['name', 'type', 'availableTags', 'categorySort'])
+$list->label()->fields(['name', 'type', 'availableTags'])
     ->labelCallback($cbClass, 'getLabel');
 $list->addRegularOperations($dca);
-$dca->palette()->default('{data_legend},name,locstyle,type,availableTags,showLabels,categorySort;')
+$dca->palette()->default('{data_legend},name,locstyle,type,availableTags,showLabels;')
     ->selector(['type'])
     ->subPalette('type', 'default', 'availableFields,');
 
