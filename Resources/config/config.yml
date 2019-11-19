@@ -3,14 +3,20 @@ services:
     class: con4gis\MapContentBundle\Classes\Listener\LoadLayersListener
     tags:
       - { name: kernel.event_listener, event: maps.layers.load, method: onLoadLayersLoadTypes, priority: 3003 }
+    arguments:
+      - "@con4gis.layer_service"
   mapContent.onLoadLayersLoadElements:
     class: con4gis\MapContentBundle\Classes\Listener\LoadLayersListener
     tags:
       - { name: kernel.event_listener, event: maps.layers.load, method: onLoadLayersLoadElements, priority: 3001 }
+    arguments:
+      - "@con4gis.layer_service"
   mapContent.onLoadLayersCreateMapStructures:
     class: con4gis\MapContentBundle\Classes\Listener\LoadLayersListener
     tags:
       - { name: kernel.event_listener, event: maps.layers.load, method: onLoadLayersCreateMapStructures, priority: 3000 }
+    arguments:
+      - "@con4gis.layer_service"
   mapcontent.onLoadFeatureFilterCreateTagFilter:
     class: con4gis\MapContentBundle\Classes\Listener\LoadFeatureFilterListener
     tags:

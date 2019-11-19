@@ -24,14 +24,24 @@ use con4gis\MapContentBundle\Resources\contao\models\MapcontentLocationModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTagModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
 use con4gis\MapsBundle\Classes\Events\LoadLayersEvent;
+use con4gis\MapsBundle\Classes\Services\LayerService;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\ProjectsBundle\Classes\Maps\C4GBrickMapFrontendParent;
+use Contao\Controller;
 use Contao\FilesModel;
 use Contao\StringUtil;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class LoadLayersListener
 {
+    /**
+     * LayerContentService constructor.
+     * @param LayerService $layerService
+     */
+    public function __construct(LayerService $layerService)
+    {
+        $this->layerService = $layerService;
+    }
     public function onLoadLayersLoadTypes(
         LoadLayersEvent $event,
         $eventName,
@@ -102,6 +112,7 @@ class LoadLayersListener
         $elements = $addData['elements'];
         foreach ($types as $type) {
             $structureElems = [];
+            $jsonFeatures = [];
             $structureType = $fmClass->createMapStructureElementWithIdCalc(
                 $type['id'],
                 $mapContentLayer['id'],
@@ -241,7 +252,7 @@ class LoadLayersListener
                     }
                 }
 
-                $popup->addContactInfo($typeElement['phone'], $typeElement['mobile'], $typeElement['fax'], $typeElement['email'], $typeElement['website'],
+                $popup->addContactInfo($typeElement['phone'], $typeElement['mobile'] ?: "", $typeElement['fax'], $typeElement['email'], $typeElement['website'],
                     $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['contactData'][0].':', 'contact', true);
                 $propertiesEvent = new LoadPropertiesEvent();
                 $propertiesEvent->setElementData($typeElement);
@@ -263,6 +274,20 @@ class LoadLayersListener
 
                 $label = $type['showLabels'] === '1' ? $typeElement['name'] : '';
 
+                $stringClass = $GLOBALS['con4gis']['stringClass'];
+                $popupInfo   = $stringClass::toHtml5($popup->getPopupString());
+                $popupInfo   = Controller::replaceInsertTags($popupInfo, false);
+                $popupInfo   = str_replace(['{{request_token}}', '[{]', '[}]'], [REQUEST_TOKEN, '{{', '}}'], $popupInfo);
+                $popupInfo   = Controller::replaceDynamicScriptTags($popupInfo);
+                $objComments = new \Comments();
+                $popupInfo   = $objComments->parseBbCode($popupInfo);
+                $properties['popup'] = [
+                    'content' => $popupInfo,
+                    'routing_link' => "1",
+                    'async' => false,
+                ];
+                $properties['title'] = $typeElement['name'];
+                $properties['label'] = $typeElement['name'];
                 if ($typeElement['loctype'] === 'point') {
                     $content = $fmClass->createMapStructureContent(
                         $type['locstyle'],
@@ -276,6 +301,8 @@ class LoadLayersListener
                         60000,
                         $properties
                     );
+
+                    $geoJSON = $this->layerService->createGeoJSONFeature($properties, $typeElement['geox'], $typeElement['geoy']);
                 } else {
                     $content = $fmClass->createMapStructureContentFromGeoJson(
                         $type['locstyle'],
@@ -288,6 +315,7 @@ class LoadLayersListener
                         60000,
                         $properties
                     );
+                    $geoJSON = $this->layerService->createGeoJSONFeature($properties,null, null, $typeElement['geoJson']);
                 }
                 $structureElement = $fmClass->createMapStructureElementWithIdCalc(
                     $typeElement['id'],
@@ -301,13 +329,27 @@ class LoadLayersListener
                     $structureType['hide'],
                     $content
                 );
-                
-                
+                $geoJSON['properties']['id'] = $structureElement['id'];
+                $jsonFeatures[] = $geoJSON;
                 $structureElems[] = $structureElement;
             }
     
             $structureType = $fmClass->createMapStructureChilds($structureType, $structureElems);
-    
+            $globalJSON = [
+                "type"          => "FeatureCollection",
+                "features"      => $jsonFeatures,
+                "properties"    => [
+                    "projection" => "EPSG:4326"
+                ]
+            ];
+            $content = $structureType['childs'][0]['content'][0];
+            $content['data'] = $globalJSON;
+            $content['combinedJSON'] = true;
+            $structureType['content'][0] = $content;
+            $structureType['childs'] = [];
+            $structureType['hasChilds'] = false;
+            $structureType['childsCount'] = 0;
+
             $structureTypes[] = $structureType;
         }
         $mapContentLayer = $fmClass->createMapStructureChilds($mapContentLayer, $structureTypes);
