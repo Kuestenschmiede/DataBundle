@@ -13,10 +13,9 @@
  */
 
 $GLOBALS['TL_LANG']['MOD']['con4gis_mapcontent'] = ['con4gis '.$GLOBALS['con4gis']['version'] . ' - Kartenelemente', 'Kartenelemente (MapContentBundle)'];
-$GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_location'] = ['Kartenelemente: Lokationen', 'Lokationen bearbeiten'];
 $GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_tag'] = ['Tags', 'Tags bearbeiten'];
-$GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_type'] = ['Kategorien', 'Elementkategorien bearbeiten'];
-$GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_element'] = ['Elemente', 'Elemente bearbeiten'];
+$GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_type'] = ['Kategorien', 'Kategorien bearbeiten'];
+$GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_element'] = ['Kartenelemente', 'Kartenelemente bearbeiten'];
 
 $GLOBALS['TL_LANG']['FMD']['con4gis_mapcontent'] = 'con4gis MapContent';
 
