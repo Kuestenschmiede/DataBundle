@@ -213,7 +213,7 @@ $addressName = new TextField('addressName', $dca);
 $addressName->eval()->class('w50');
 
 $addressStreet = new TextField('addressStreet', $dca);
-$addressStreet->eval()->class('clr w50');
+$addressStreet->eval()->class('w50');
 
 $addressNumber = new TextField('addressStreetNumber', $dca);
 $addressNumber->sql("varchar(25) NOT NULL default ''")->eval()->class('w50');
