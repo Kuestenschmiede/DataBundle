@@ -42,98 +42,102 @@ $types = \con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel::
 if ($types !== null) {
     foreach ($types as $type) {
         $dca->palette()->subPalette("type", $type->id, ",parentElement;{location_legend},loctype;{description_legend},description;");
-    }
 
-    if ($type->type === 'default' && $type->availableFields !== null) {
-        $availableFields = StringUtil::deserialize($type->availableFields);
+        if ($type->type === 'default' && $type->availableFields !== null) {
+            $availableFields = StringUtil::deserialize($type->availableFields);
 
-        $fields = '';
-        $addressIsSet = false;
-        $contactIsSet = false;
+            $fields = '';
+            $addressIsSet = false;
+            $contactIsSet = false;
 
-        foreach ($availableFields as $availableField) {
+            foreach ($availableFields as $availableField) {
 
-            if ($availableField === 'businessHours') {
-                $fields .= ';{businessHours_legend},businessHours,businessHoursAdditionalInfo';
+                if ($availableField === 'businessHours') {
+                    $fields .= ';{businessHours_legend},businessHours,businessHoursAdditionalInfo';
+                }
+
+                if (($availableField === 'addressName'
+                        || $availableField === 'addressStreet'
+                        || $availableField === 'addressStreetNumber'
+                        || $availableField === 'addressZip'
+                        || $availableField === 'addressCity'
+                    ) && $addressIsSet === false) {
+                    $fields .= ';{address_legend}';
+                    $addressIsSet = true;
+
+                    $addressArray = [];
+
+                    if (in_array('addressName', $availableFields)) {
+                        $addressArray[array_search('addressName', $availableFields)] = 'addressName';
+                    }
+                    if (in_array('addressStreet', $availableFields)) {
+                        $addressArray[array_search('addressStreet', $availableFields)] = 'addressStreet';
+                    }
+                    if (in_array('addressStreetNumber', $availableFields)) {
+                        $addressArray[array_search('addressStreetNumber', $availableFields)] = 'addressStreetNumber';
+                    }
+                    if (in_array('addressZip', $availableFields)) {
+                        $addressArray[array_search('addressZip', $availableFields)] = 'addressZip';
+                    }
+                    if (in_array('addressCity', $availableFields)) {
+                        $addressArray[array_search('addressCity', $availableFields)] = 'addressCity';
+                    }
+
+                    ksort($addressArray);
+                    foreach ($addressArray as $value) {
+                        $fields .= ",$value";
+                    }
+                }
+
+                if (($availableField === 'phone'
+                        || $availableField === 'mobile'
+                        || $availableField === 'fax'
+                        || $availableField === 'email'
+                        || $availableField === 'website'
+                    ) && $contactIsSet === false)
+                {
+                    $fields .= ';{contact_legend}';
+                    $contactIsSet = true;
+
+                    $contactArray = [];
+
+                    if (in_array('phone', $availableFields)) {
+                        $contactArray[array_search('phone', $availableFields)] = 'phone';
+                    }
+                    if (in_array('mobile', $availableFields)) {
+                        $contactArray[array_search('mobile', $availableFields)] = 'mobile';
+                    }
+                    if (in_array('fax', $availableFields)) {
+                        $contactArray[array_search('fax', $availableFields)] = 'fax';
+                    }
+                    if (in_array('email', $availableFields)) {
+                        $contactArray[array_search('email', $availableFields)] = 'email';
+                    }
+                    if (in_array('website', $availableFields)) {
+                        $contactArray[array_search('website', $availableFields)] = 'website';
+                    }
+
+                    ksort($contactArray);
+                    foreach ($contactArray as $value) {
+                        $fields .= ",$value";
+                    }
+                }
+
+                if ($availableField === 'linkWizard') {
+                    $fields .= ';{linkWizard_legend},linkWizard';
+                }
+
+                if ($availableField === 'image') {
+                    $fields .= ';{image_legend},image,imageMaxHeight,imageMaxWidth';
+                }
+
+                if ($availableField === 'osmId') {
+                    $fields .= ';{osmId_legend},osmId';
+                }
             }
 
-            if (($availableField === 'addressName'
-                || $availableField === 'addressStreet'
-                || $availableField === 'addressStreetNumber'
-                || $availableField === 'addressZip'
-                || $availableField === 'addressCity'
-                ) && $addressIsSet === false) {
-                $fields .= ';{address_legend}';
-                $addressIsSet = true;
-
-                $addressArray = [];
-
-                if (in_array('addressName', $availableFields)) {
-                    $addressArray[array_search('addressName', $availableFields)] = 'addressName';
-                }
-                if (in_array('addressStreet', $availableFields)) {
-                    $addressArray[array_search('addressStreet', $availableFields)] = 'addressStreet';
-                }
-                if (in_array('addressStreetNumber', $availableFields)) {
-                    $addressArray[array_search('addressStreetNumber', $availableFields)] = 'addressStreetNumber';
-                }
-                if (in_array('addressZip', $availableFields)) {
-                    $addressArray[array_search('addressZip', $availableFields)] = 'addressZip';
-                }
-                if (in_array('addressCity', $availableFields)) {
-                    $addressArray[array_search('addressCity', $availableFields)] = 'addressCity';
-                }
-
-                ksort($addressArray);
-                foreach ($addressArray as $value) {
-                    $fields .= ",$value";
-                }
-            }
-
-            if (($availableField === 'phone'
-                || $availableField === 'mobile'
-                || $availableField === 'fax'
-                || $availableField === 'email'
-                || $availableField === 'website'
-                ) && $contactIsSet === false)
-            {
-                $fields .= ';{contact_legend}';
-                $contactIsSet = true;
-
-                $contactArray = [];
-
-                if (in_array('phone', $availableFields)) {
-                    $contactArray[array_search('phone', $availableFields)] = 'phone';
-                }
-                if (in_array('mobile', $availableFields)) {
-                    $contactArray[array_search('mobile', $availableFields)] = 'mobile';
-                }
-                if (in_array('fax', $availableFields)) {
-                    $contactArray[array_search('fax', $availableFields)] = 'fax';
-                }
-                if (in_array('email', $availableFields)) {
-                    $contactArray[array_search('email', $availableFields)] = 'email';
-                }
-                if (in_array('website', $availableFields)) {
-                    $contactArray[array_search('website', $availableFields)] = 'website';
-                }
-
-                ksort($contactArray);
-                foreach ($contactArray as $value) {
-                    $fields .= ",$value";
-                }
-            }
-
-            if ($availableField === 'linkWizard') {
-                $fields .= ';{linkWizard_legend},linkWizard';
-            }
-
-            if ($availableField === 'image') {
-                $fields .= ';{image_legend},image,imageMaxHeight,imageMaxWidth';
-            }
+            $dca->palette()->subPalette("type", $type->id, $fields);
         }
-
-        $dca->palette()->subPalette("type", $type->id, $fields);
     }
 }
 
