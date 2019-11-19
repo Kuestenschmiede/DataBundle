@@ -92,6 +92,8 @@ class MapcontentTypeCallback extends Backend
                 " - ".$language['accessibility'][1],
             'linkWizard' => $language['linkWizard'][0] .
                 " - ".$language['linkWizard'][1],
+            'osmId' => $language['osmId'][0] .
+                " - ".$language['osmId'][1],
         ];
     }
 }

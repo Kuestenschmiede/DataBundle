@@ -32,6 +32,7 @@ $GLOBALS['TL_LANG'][$strName]['addressZip'] = ['Postleitzahl', ''];
 $GLOBALS['TL_LANG'][$strName]['addressCity'] = ['Ort', ''];
 
 $GLOBALS['TL_LANG'][$strName]['accessibility'] = ['Barrierefrei', 'Das Element ist barrierefrei.'];
+$GLOBALS['TL_LANG'][$strName]['osmId'] = ['OSM ID', 'Die ID des Elements in der Open Street Map. Falls gesetzt, werden die Daten aus der Open Street Map geladen. Gegebenenfalls werden eingegebene Daten dann ignoriert.'];
 
 $GLOBALS['TL_LANG'][$strName]['phone'] = ['Telefonnummer', ''];
 $GLOBALS['TL_LANG'][$strName]['mobile'] = ['Mobiltelefonnummer', ''];
@@ -67,15 +68,16 @@ $GLOBALS['TL_LANG'][$strName]['location_legend'] = 'Koordinaten';
 $GLOBALS['TL_LANG'][$strName]['filter_legend'] = 'Filterdaten';
 $GLOBALS['TL_LANG'][$strName]['accessibility_legend'] = 'Barrierefreiheit';
 $GLOBALS['TL_LANG'][$strName]['linkWizard_legend'] = 'Weitere Links';
+$GLOBALS['TL_LANG'][$strName]['osmId_legend'] = 'Open Street Map';
 
 /**
  * Operations
  */
-$GLOBALS['TL_LANG'][$strName]['new'] = ["Neues Element erstellen", "Neues Element erstellen"];
-$GLOBALS['TL_LANG'][$strName]['show'] = ["Element ID %s anzeigen", "Element ID %s anzeigen"];
-$GLOBALS['TL_LANG'][$strName]['edit'] = ["Element ID %s bearbeiten", "Element ID %s bearbeiten"];
-$GLOBALS['TL_LANG'][$strName]['copy'] = ["Element ID %s kopieren", "Element ID %s kopieren"];
-$GLOBALS['TL_LANG'][$strName]['delete'] = ["Element ID %s löschen", "Element ID %s löschen"];
+$GLOBALS['TL_LANG'][$strName]['new'] = ["Neues Kartenelement erstellen", "Neues Kartenelement erstellen"];
+$GLOBALS['TL_LANG'][$strName]['show'] = ["Kartenelement mit ID %s anzeigen", "Kartenelement mit ID %s anzeigen"];
+$GLOBALS['TL_LANG'][$strName]['edit'] = ["Kartenelement mit ID %s bearbeiten", "Kartenelement mit ID %s bearbeiten"];
+$GLOBALS['TL_LANG'][$strName]['copy'] = ["Kartenelement mit ID %s kopieren", "Kartenelement mit ID %s kopieren"];
+$GLOBALS['TL_LANG'][$strName]['delete'] = ["Kartenelement mit ID %s löschen", "Kartenelement mit ID %s löschen"];
 
 $GLOBALS['TL_LANG'][$strName]['day_reference'] = [
     '0' => 'Montag',

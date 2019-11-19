@@ -292,3 +292,4 @@ $linkTitle->eval()
     ->allowHtml();
 $linkHref = new TextField('linkHref', $dca, $linkWizard);
 $linkNewTab = new CheckboxField('linkNewTab', $dca, $linkWizard);
+$osmId = new NaturalField('osmId', $dca);
