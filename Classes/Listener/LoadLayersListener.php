@@ -287,7 +287,6 @@ class LoadLayersListener
                     'async' => false,
                 ];
                 $properties['title'] = $typeElement['name'];
-                $properties['label'] = $typeElement['name'];
                 if ($typeElement['loctype'] === 'point') {
                     $content = $fmClass->createMapStructureContent(
                         $type['locstyle'],
