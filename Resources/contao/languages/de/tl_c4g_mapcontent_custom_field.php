@@ -6,6 +6,7 @@ $strName = 'tl_c4g_mapcontent_custom_field';
  * Fields
  */
 $GLOBALS['TL_LANG'][$strName]['name'] = ['Bezeichnung', 'Die Bezeichnung des Feldes im Formular.'];
+$GLOBALS['TL_LANG'][$strName]['alias'] = ['Datenbank-Alias', 'Die Feldbezeichnung in der Datenbank. Wird aus der Bezeichnung generiert.'];
 $GLOBALS['TL_LANG'][$strName]['description'] = ['Beschreibung', 'Die Beschreibung direkt unterhalb des Eingabefeldes (dieser Text).'];
 $GLOBALS['TL_LANG'][$strName]['type'] = ['Typ', 'Der Typ bestimmt die Art der Eingabe. Je nach Typ stehen weitere Optionen zur Verfügung.'];
 $GLOBALS['TL_LANG'][$strName]['legend'] = ['Legende', 'Die Legende ist die Überschrift, unter der das Feld im Formular erscheint.'];
@@ -17,13 +18,16 @@ $GLOBALS['TL_LANG'][$strName]['default'] = ['Vorgabewert', 'Der Vorgabewert des 
 $GLOBALS['TL_LANG'][$strName]['rte'] = ['Rich Text Editor', 'Falls gesetzt, bietet das Feld erweiterte Funktionen, z.B. Fett- und Kursivschrift.'];
 $GLOBALS['TL_LANG'][$strName]['class'] = ['Class', 'Beschreibung fehlt.'];
 $GLOBALS['TL_LANG'][$strName]['margin'] = ['Oberer Rand', 'Falls gesetzt, wird über dem Feld ein Rand von 12 Pixeln eingefügt.'];
+$GLOBALS['TL_LANG'][$strName]['options'] = ['Optionen', 'Die Optionen, die zur Verfügung stehen. Der Schlüssel wird in der Datenbank gespeichert, die Übersetzung dem Nutzer ausgegeben.'];
+$GLOBALS['TL_LANG'][$strName]['key'] = ['Schlüssel', 'Der in der Datenbank gespeicherte Wert. Der Schlüssel sollte nachträglich nicht mehr geändert werden.'];
+$GLOBALS['TL_LANG'][$strName]['value'] = ['Übersetzung', 'Dieser Wert wird dem Nutzer angezeigt. Er kann nachträglich jederzeit geändert werden.'];
 
 /**
  * Legends
  */
 $GLOBALS['TL_LANG'][$strName]['data_legend'] = 'Allgemeine Daten';
 $GLOBALS['TL_LANG'][$strName]['filter_search_legend'] = 'Filtern und Suchen';
-$GLOBALS['TL_LANG'][$strName]['mandatory_default_legend'] = 'Pflichtfeld und Vorgabewert';
+$GLOBALS['TL_LANG'][$strName]['mandatory_legend'] = 'Pflichtfeld';
 $GLOBALS['TL_LANG'][$strName]['positioning_legend'] = 'Positionierung';
 $GLOBALS['TL_LANG'][$strName]['type_specific_legend'] = 'Typspezifische Optionen';
 
@@ -38,9 +42,9 @@ $GLOBALS['TL_LANG'][$strName]['new'] = ["Neues Feld definieren", "Neues Feld def
 
 $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['text'] = 'Einzeiliger Text';
 $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['textarea'] = 'Mehrzeiliger Text';
+$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['texteditor'] = 'Mehrzeiliger Text mit Editor';
 $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['natural'] = 'Positive Ganzzahl';
 $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['int'] = 'Positive oder Negative Ganzzahl';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['decimal'] = 'Positive oder Negative Zahl mit Nachkommastellen';
 $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['select'] = 'Auswahl';
 $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['checkbox'] = 'Checkbox';
 $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['multicheckbox'] = 'Mehrere Checkboxen';

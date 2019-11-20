@@ -10,9 +10,9 @@ $GLOBALS['con4gis']['mapcontent_types'][] = 'default';
 
 $GLOBALS['con4gis']['mapcontent_custom_field_types'][] = 'text';
 $GLOBALS['con4gis']['mapcontent_custom_field_types'][] = 'textarea';
+$GLOBALS['con4gis']['mapcontent_custom_field_types'][] = 'texteditor';
 $GLOBALS['con4gis']['mapcontent_custom_field_types'][] = 'natural';
 $GLOBALS['con4gis']['mapcontent_custom_field_types'][] = 'int';
-$GLOBALS['con4gis']['mapcontent_custom_field_types'][] = 'decimal';
 $GLOBALS['con4gis']['mapcontent_custom_field_types'][] = 'select';
 $GLOBALS['con4gis']['mapcontent_custom_field_types'][] = 'checkbox';
 $GLOBALS['con4gis']['mapcontent_custom_field_types'][] = 'multicheckbox';
