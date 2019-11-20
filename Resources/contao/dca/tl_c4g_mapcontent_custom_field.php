@@ -79,11 +79,15 @@ $type->default('')
     ->includeBlankOption();
 
 $filter = new CheckboxField('filter', $dca);
+$filter->eval()
+    ->class('w50');
 $search = new CheckboxField('search', $dca);
+$search->eval()
+    ->class('w50');
 
 $mandatory = new CheckboxField('mandatory', $dca);
 $mandatory->eval()
-    ->class('w50 m12');
+    ->class('w50');
 
 $class = new SelectField('class', $dca);
 $class->default('w50')
