@@ -32,7 +32,9 @@ $GLOBALS['con4gis']['map-content']['frontend']['image']['default'] = false;
 array_insert($GLOBALS['BE_MOD'], array_search('content', array_keys($GLOBALS['BE_MOD'])) + 3,
     ['con4gis_mapcontent' => [
         'c4g_mapcontent_type' => [
-            'tables' => ['tl_c4g_mapcontent_type']],
+            'tables' => ['tl_c4g_mapcontent_type'],
+            'stylesheet' => 'bundles/con4gismapcontent/css/backend_map_content_type.css'
+        ],
         'c4g_mapcontent_element' => [
             'tables' => ['tl_c4g_mapcontent_element'],
             'javascript' => '/bundles/con4giseditor/js/c4g-backend-helper.js',
