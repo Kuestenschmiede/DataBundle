@@ -18,10 +18,16 @@ use con4gis\MapContentBundle\Resources\contao\models\MapcontentCustomFieldModel;
 use Contao\Backend;
 use Contao\DataContainer;
 use Contao\StringUtil;
+use Contao\Message;
 
 class MapcontentCustomFieldCallback extends Backend
 {
     private $dcaName = 'tl_c4g_mapcontent_custom_field';
+
+    public function addHint() {
+        Message::addInfo($GLOBALS['TL_LANG'][$this->dcaName]['install_tool_hint_new']);
+        Message::addInfo($GLOBALS['TL_LANG'][$this->dcaName]['install_tool_hint_edit']);
+    }
 
     public function getLabels($row) {
         $labels['name'] = $row['name'];
