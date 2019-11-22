@@ -27,6 +27,7 @@ $GLOBALS['TL_LANG'][$strName]['frontendName'] = ['Frontendbezeichnung', 'Kann al
 $GLOBALS['TL_LANG'][$strName]['frontendPopup'] = ['Im Popup zeigen', 'Falls gesetzt, wird das Feld im Popup dargestellt, wenn ein Wert vorhanden ist.'];
 $GLOBALS['TL_LANG'][$strName]['frontendList'] = ['In der Liste zeigen', 'Falls gesetzt, wird das Feld in der Liste dargestellt, wenn ein Wert vorhanden ist.'];
 $GLOBALS['TL_LANG'][$strName]['frontendDetails'] = ['In den Listendetails zeigen', 'Falls gesetzt, wird das Feld in den Listendetails dargestellt, wenn ein Wert vorhanden ist.'];
+$GLOBALS['TL_LANG'][$strName]['frontendFilter'] = ['Im Frontend filterbar', 'Falls gesetzt, ist das Feld im Frontendfilter verfügbar.'];
 
 /**
  * Legends
