@@ -27,14 +27,12 @@ $cbClass = MapcontentTypeCallback::class;
 
 $dca = new DCA('tl_c4g_mapcontent_type');
 $list = $dca->list();
-$list->sorting()->fields(['name', 'type', 'availableTags']);
+$list->sorting()->fields(['name', 'availableFields']);
 $list->sorting()->panelLayout('filter;sort,search,limit');
-$list->label()->fields(['name', 'type', 'availableTags'])
+$list->label()->fields(['name', 'availableFields'])
     ->labelCallback($cbClass, 'getLabel');
 $list->addRegularOperations($dca);
-$dca->palette()->default('{data_legend},name,locstyle,type,availableTags,showLabels;')
-    ->selector(['type'])
-    ->subPalette('type', 'default', 'availableFields,');
+$dca->palette()->default('{data_legend},name,locstyle,availableFields,availableTags,showLabels;');
 
 $id = new IdField('id', $dca);
 
@@ -49,14 +47,6 @@ $locStyle->default('')
         ->sql("varchar(20) NOT NULL default ''")
         ->eval()->class('clr')
             ->submitOnChange();
-
-$type = new SelectField('type', $dca);
-$type->optionsCallback($cbClass, 'getTypeOptions')
-    ->sql("varchar(20) NOT NULL default 'default'")
-    ->default('default')
-    ->eval()->mandatory()
-        ->class('clr')
-        ->submitOnChange();
 
 $availableTags = new SelectField('availableTags', $dca);
 $availableTags->optionsCallback($cbClass, 'getAvailableTags')

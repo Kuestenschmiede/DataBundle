@@ -49,7 +49,7 @@ if ($types !== null) {
     foreach ($types as $type) {
         $dca->palette()->subPalette("type", $type->id, ",parentElement;{location_legend},loctype;{description_legend},description;");
 
-        if ($type->type === 'default' && $type->availableFields !== null) {
+        if ($type->availableFields !== null) {
             $availableFields = StringUtil::deserialize($type->availableFields);
 
             $fields = '';
@@ -71,11 +71,17 @@ if ($types !== null) {
                         $fields .= ','.$availableField;
                     }
                 } else {
-                    if (C4GUtils::endsWith($availableField, 'legend') === 'legend') {
+                    if (C4GUtils::endsWith($availableField, 'legend') === true) {
                         $fields .= ';{'.$availableField.'}';
                     } else {
                         $fields .= ','.$availableField;
                     }
+                }
+
+                if ($availableField === 'businessHours') {
+                    $fields .= ',businessHoursAdditionalInfo';
+                } elseif ($availableField === 'image') {
+                    $fields .= ',imageMaxHeight,imageMaxWidth';
                 }
             }
 

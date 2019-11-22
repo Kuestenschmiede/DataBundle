@@ -15,6 +15,7 @@
 namespace con4gis\MapContentBundle\Classes\Contao\Callbacks;
 
 
+use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentCustomFieldModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTagModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapLocstylesModel;
@@ -47,14 +48,30 @@ class MapcontentTypeCallback extends Backend
 
     public function getLabel($arrRow){
         $label['name'] = $arrRow['name'];
-        $label['type'] = $GLOBALS['TL_LANG']['mapcontent_types'][$arrRow['type']];
-        $label['availableTags'] = '';
-        foreach (StringUtil::deserialize($arrRow['availableTags']) as $tag) {
-            $model = MapcontentTagModel::findByPk($tag);
-            if ($label['availableTags'] === '') {
-                $label['availableTags'] = $model->name;
+        $label['availableFields'] = '';
+        System::loadLanguageFile('tl_c4g_mapcontent_element');
+        foreach (StringUtil::deserialize($arrRow['availableFields']) as $field) {
+            $model = MapcontentCustomFieldModel::findOneBy('alias',$field);
+            if ($model !== null) {
+                if ($label['availableFields'] === '') {
+                    $label['availableFields'] = $model->name;
+                } else {
+                    $label['availableFields'] .= ', ' . $model->name;
+                }
             } else {
-                $label['availableTags'] .= ', ' . $model->name;
+                if (C4GUtils::endsWith($field, 'legend') === true) {
+                    if ($label['availableFields'] === '') {
+                        $label['availableFields'] = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$field];
+                    } else {
+                        $label['availableFields'] .= ', ' . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$field];
+                    }
+                } else {
+                    if ($label['availableFields'] === '') {
+                        $label['availableFields'] = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$field][0];
+                    } else {
+                        $label['availableFields'] .= ', ' . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$field][0];
+                    }
+                }
             }
         }
         return $label;
