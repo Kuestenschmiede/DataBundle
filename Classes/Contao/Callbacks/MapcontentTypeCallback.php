@@ -73,44 +73,48 @@ class MapcontentTypeCallback extends Backend
         System::loadLanguageFile('tl_c4g_mapcontent_element');
         $language = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'];
         $options = [
-            'businessHours_legend' => $language['businessHours_legend'] . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'],
+            'businessHours_legend' => '<strong>'.$language['businessHours_legend'] . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'] . '</strong>',
             'businessHours' => $language['businessHours'][0] .
-                " - ".$language['businessHours'][1],
-            'address_legend' => $language['address_legend'] . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'],
+                " <sup title='".$language['businessHours'][1]."'>(?)</sup>",
+            'address_legend' => '<strong>'.$language['address_legend'] . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'] . '</strong>',
             'addressName' => $language['addressName'][0] .
-                " - ".$language['addressName'][1],
+                " <sup title='".$language['addressName'][1]."'>(?)</sup>",
             'addressStreet' => $language['addressStreet'][0] .
-                " - ".$language['addressStreet'][1],
+                " <sup title='".$language['addressStreet'][1]."'>(?)</sup>",
             'addressStreetNumber' => $language['addressStreetNumber'][0],
             'addressZip' => $language['addressZip'][0],
             'addressCity' => $language['addressCity'][0],
-            'contact_legend' => $language['contact_legend'] . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'],
+            'contact_legend' => '<strong>'.$language['contact_legend'] . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'] . '</strong>',
             'phone' => $language['phone'][0],
             'mobile' => $language['mobile'][0],
             'fax' => $language['fax'][0],
             'email' => $language['email'][0],
             'website' => $language['website'][0],
-            'image_legend' => $language['image_legend'] . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'],
+            'image_legend' => '<strong>'.$language['image_legend'] . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'] . '</strong>',
             'image' => $language['image'][0] .
-                " - ".$language['image'][1],
-            'accessibility_legend' => $language['accessibility_legend'] . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'],
+                " <sup title='".$language['image'][1]."'>(?)</sup>",
+            'accessibility_legend' => '<strong>'.$language['accessibility_legend'] . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'] . '</strong>',
             'accessibility' => $language['accessibility'][0] .
-                " - ".$language['accessibility'][1],
-            'linkWizard_legend' => $language['linkWizard_legend'] . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'],
+                " <sup title='".$language['accessibility'][1]."'>(?)</sup>",
+            'linkWizard_legend' => '<strong>'.$language['linkWizard_legend'] . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'] . '</strong>',
             'linkWizard' => $language['linkWizard'][0] .
-                " - ".$language['linkWizard'][1],
-            'osm_legend' => $language['osmId_legend'] . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'],
+                " <sup title='".$language['linkWizard'][1]."'>(?)</sup>",
+            'osm_legend' => '<strong>'.$language['osmId_legend'] . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'] . '</strong>',
             'osmId' => $language['osmId'][0] .
-                " - ".$language['osmId'][1],
+                " <sup title='".$language['osmId'][1]."'>(?)</sup>",
         ];
         $customFields = MapcontentCustomFieldModel::findAll();
         foreach ($customFields as $customField) {
-            $label = strval($customField->name);
-            if (strval($customField->description) !== '') {
-                $label .= " - " . strval($customField->description);
+            if ($customField->type === 'legend') {
+                $label = '<strong>'.strval($customField->name).'</strong>';
+                $options[strval($customField->alias)] = $label;
+            } else {
+                $label = strval($customField->name);
+                if (strval($customField->description) !== '') {
+                    $label .= " <sup title='".strval($customField->description)."'>(?)</sup>";
+                }
+                $options[strval($customField->alias)] = $label;
             }
-            $options[strval($customField->alias)] = $label;
-
         }
         return $options;
     }
