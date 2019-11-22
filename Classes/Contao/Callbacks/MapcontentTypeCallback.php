@@ -15,6 +15,7 @@
 namespace con4gis\MapContentBundle\Classes\Contao\Callbacks;
 
 
+use con4gis\MapContentBundle\Resources\contao\models\MapcontentCustomFieldModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTagModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapLocstylesModel;
 use Contao\Backend;
@@ -71,9 +72,11 @@ class MapcontentTypeCallback extends Backend
     {
         System::loadLanguageFile('tl_c4g_mapcontent_element');
         $language = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'];
-        return [
+        $options = [
+            'businessHours_legend' => $language['businessHours_legend'] . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'],
             'businessHours' => $language['businessHours'][0] .
                 " - ".$language['businessHours'][1],
+            'address_legend' => $language['address_legend'] . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'],
             'addressName' => $language['addressName'][0] .
                 " - ".$language['addressName'][1],
             'addressStreet' => $language['addressStreet'][0] .
@@ -81,19 +84,34 @@ class MapcontentTypeCallback extends Backend
             'addressStreetNumber' => $language['addressStreetNumber'][0],
             'addressZip' => $language['addressZip'][0],
             'addressCity' => $language['addressCity'][0],
+            'contact_legend' => $language['contact_legend'] . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'],
             'phone' => $language['phone'][0],
             'mobile' => $language['mobile'][0],
             'fax' => $language['fax'][0],
             'email' => $language['email'][0],
             'website' => $language['website'][0],
+            'image_legend' => $language['image_legend'] . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'],
             'image' => $language['image'][0] .
                 " - ".$language['image'][1],
+            'accessibility_legend' => $language['accessibility_legend'] . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'],
             'accessibility' => $language['accessibility'][0] .
                 " - ".$language['accessibility'][1],
+            'linkWizard_legend' => $language['linkWizard_legend'] . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'],
             'linkWizard' => $language['linkWizard'][0] .
                 " - ".$language['linkWizard'][1],
+            'osm_legend' => $language['osmId_legend'] . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'],
             'osmId' => $language['osmId'][0] .
                 " - ".$language['osmId'][1],
         ];
+        $customFields = MapcontentCustomFieldModel::findAll();
+        foreach ($customFields as $customField) {
+            $label = strval($customField->name);
+            if (strval($customField->description) !== '') {
+                $label .= " - " . strval($customField->description);
+            }
+            $options[strval($customField->alias)] = $label;
+
+        }
+        return $options;
     }
 }

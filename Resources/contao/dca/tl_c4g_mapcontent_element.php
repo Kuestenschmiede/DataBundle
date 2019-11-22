@@ -20,6 +20,12 @@ use con4gis\CoreBundle\Classes\DCA\Fields\TextField;
 use con4gis\CoreBundle\Classes\DCA\Fields\ImageField;
 use con4gis\MapContentBundle\Classes\Contao\Callbacks\MapcontentElementCallback;
 use con4gis\CoreBundle\Classes\DCA\Fields\CheckboxField;
+use con4gis\CoreBundle\Classes\DCA\Fields\DigitField;
+use con4gis\CoreBundle\Classes\DCA\Fields\MultiCheckboxField;
+use con4gis\CoreBundle\Classes\DCA\Fields\DatePickerField;
+use con4gis\MapContentBundle\Resources\contao\models\MapcontentCustomFieldModel;
+use Contao\StringUtil;
+use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 
 $strName = 'tl_c4g_mapcontent_element';
 $cbClass = MapcontentElementCallback::class;
@@ -47,94 +53,32 @@ if ($types !== null) {
             $availableFields = StringUtil::deserialize($type->availableFields);
 
             $fields = '';
-            $addressIsSet = false;
-            $contactIsSet = false;
+
+            $database = Database::getInstance();
+            $stmt = $database->prepare("SELECT DISTINCT alias FROM tl_c4g_mapcontent_custom_field");
+            $result = $stmt->execute()->fetchAllAssoc();
+            $aliases = [];
+            foreach ($result as $r) {
+                $aliases[] = $r['alias'];
+            }
 
             foreach ($availableFields as $availableField) {
-
-                if ($availableField === 'businessHours') {
-                    $fields .= ';{businessHours_legend},businessHours,businessHoursAdditionalInfo';
-                }
-
-                if (($availableField === 'addressName'
-                        || $availableField === 'addressStreet'
-                        || $availableField === 'addressStreetNumber'
-                        || $availableField === 'addressZip'
-                        || $availableField === 'addressCity'
-                    ) && $addressIsSet === false) {
-                    $fields .= ';{address_legend}';
-                    $addressIsSet = true;
-
-                    $addressArray = [];
-
-                    if (in_array('addressName', $availableFields)) {
-                        $addressArray[array_search('addressName', $availableFields)] = 'addressName';
+                if (in_array($availableField, $aliases) === true) {
+                    $model = MapcontentCustomFieldModel::findOneBy('alias', $availableField);
+                    if ($model->type === 'legend') {
+                        $fields .= ';{'.strval($model->name).'}';
+                    } else {
+                        $fields .= ','.$availableField;
                     }
-                    if (in_array('addressStreet', $availableFields)) {
-                        $addressArray[array_search('addressStreet', $availableFields)] = 'addressStreet';
+                } else {
+                    if (C4GUtils::endsWith($availableField, 'legend') === 'legend') {
+                        $fields .= ';{'.$availableField.'}';
+                    } else {
+                        $fields .= ','.$availableField;
                     }
-                    if (in_array('addressStreetNumber', $availableFields)) {
-                        $addressArray[array_search('addressStreetNumber', $availableFields)] = 'addressStreetNumber';
-                    }
-                    if (in_array('addressZip', $availableFields)) {
-                        $addressArray[array_search('addressZip', $availableFields)] = 'addressZip';
-                    }
-                    if (in_array('addressCity', $availableFields)) {
-                        $addressArray[array_search('addressCity', $availableFields)] = 'addressCity';
-                    }
-
-                    ksort($addressArray);
-                    foreach ($addressArray as $value) {
-                        $fields .= ",$value";
-                    }
-                }
-
-                if (($availableField === 'phone'
-                        || $availableField === 'mobile'
-                        || $availableField === 'fax'
-                        || $availableField === 'email'
-                        || $availableField === 'website'
-                    ) && $contactIsSet === false)
-                {
-                    $fields .= ';{contact_legend}';
-                    $contactIsSet = true;
-
-                    $contactArray = [];
-
-                    if (in_array('phone', $availableFields)) {
-                        $contactArray[array_search('phone', $availableFields)] = 'phone';
-                    }
-                    if (in_array('mobile', $availableFields)) {
-                        $contactArray[array_search('mobile', $availableFields)] = 'mobile';
-                    }
-                    if (in_array('fax', $availableFields)) {
-                        $contactArray[array_search('fax', $availableFields)] = 'fax';
-                    }
-                    if (in_array('email', $availableFields)) {
-                        $contactArray[array_search('email', $availableFields)] = 'email';
-                    }
-                    if (in_array('website', $availableFields)) {
-                        $contactArray[array_search('website', $availableFields)] = 'website';
-                    }
-
-                    ksort($contactArray);
-                    foreach ($contactArray as $value) {
-                        $fields .= ",$value";
-                    }
-                }
-
-                if ($availableField === 'linkWizard') {
-                    $fields .= ';{linkWizard_legend},linkWizard';
-                }
-
-                if ($availableField === 'image') {
-                    $fields .= ';{image_legend},image,imageMaxHeight,imageMaxWidth';
-                }
-
-                if ($availableField === 'osmId') {
-                    $fields .= ';{osmId_legend},osmId';
                 }
             }
+            \con4gis\CoreBundle\Resources\contao\models\C4gLogModel::addLogEntry('test', $fields);
 
             $dca->palette()->subPalette("type", $type->id, $fields);
         }
@@ -214,7 +158,9 @@ $description->eval()->class('clr')
 /** Fields for use in child bundles */
 
 $businessHours = new MultiColumnField('businessHours', $dca);
-$businessHours->sql('text NULL');
+$businessHours->sql('text NULL')
+    ->eval()
+        ->class('clr');
 
 $businessHoursAdditionalInfo = new TextAreaField('businessHoursAdditionalInfo', $dca);
 $businessHoursAdditionalInfo->eval()->class('clr');
@@ -297,3 +243,178 @@ $linkTitle->eval()
 $linkHref = new TextField('linkHref', $dca, $linkWizard);
 $linkNewTab = new CheckboxField('linkNewTab', $dca, $linkWizard);
 $osmId = new NaturalField('osmId', $dca);
+
+/** Custom Fields */
+
+$customFields = [];
+
+foreach ($GLOBALS['con4gis']['mapcontent_custom_field_types'] as $type) {
+    $customFields = MapcontentCustomFieldModel::findBy('type', $type);
+
+    if ($customFields !== null) {
+        foreach ($customFields as $model) {
+            if ($type === 'text') {
+                $field = new TextField($model->alias, $dca);
+                $field->hardLabel(strval($model->name), strval($model->description))
+                    ->filter(boolval($model->filter))
+                    ->search(boolval($model->search))
+                    ->default(strval($model->defaultText))
+                    ->sql(sprintf(
+                        "varchar(%s) NOT NULL DEFAULT '%s'",
+                        strval($model->maxLength),
+                        strval($model->defaultText)))
+                    ->eval()
+                    ->mandatory(boolval($model->mandatory))
+                    ->maxlength(intval($model->maxLength));
+                $class = strval($model->class);
+                if (boolval($model->margin) === true) {
+                    $class .= ' m12';
+                }
+                $field->eval()->class($class);
+            } elseif ($type === 'textarea') {
+                $field = new TextAreaField($model->alias, $dca);
+                $field->hardLabel(strval($model->name), strval($model->description))
+                    ->filter(boolval($model->filter))
+                    ->search(boolval($model->search))
+                    ->default(strval($model->defaultTextArea))
+                    ->sql(sprintf(
+                        "TEXT NOT NULL DEFAULT '%s'",
+                        strval($model->defaultTextArea)))
+                    ->eval()
+                        ->mandatory(boolval($model->mandatory))
+                        ->maxlength(intval($model->maxLength));
+                $class = strval($model->class);
+                if (boolval($model->margin) === true) {
+                    $class .= ' m12';
+                }
+                $field->eval()->class($class);
+            } elseif ($type === 'textarea') {
+                $field = new TextAreaField($model->alias, $dca);
+                $field->hardLabel(strval($model->name), strval($model->description))
+                    ->filter(boolval($model->filter))
+                    ->search(boolval($model->search))
+                    ->default(strval($model->defaultTextEditor))
+                    ->sql(sprintf(
+                        "TEXT NOT NULL DEFAULT '%s'",
+                        strval($model->defaultTextEditor)))
+                    ->eval()
+                        ->mandatory(boolval($model->mandatory))
+                        ->maxlength(intval($model->maxLength));
+                $class = strval($model->class);
+                if (boolval($model->margin) === true) {
+                    $class .= ' m12';
+                }
+                $field->eval()->class($class);
+            } elseif ($type === 'natural') {
+                $field = new NaturalField($model->alias, $dca);
+                $field->hardLabel(strval($model->name), strval($model->description))
+                    ->filter(boolval($model->filter))
+                    ->search(boolval($model->search))
+                    ->default(strval($model->defaultNatural))
+                    ->sql(sprintf(
+                        "int(10) unsigned NOT NULL default '%s'",
+                        strval($model->defaultNatural)))
+                    ->eval()
+                        ->mandatory(boolval($model->mandatory));
+                $class = strval($model->class);
+                if (boolval($model->margin) === true) {
+                    $class .= ' m12';
+                }
+                $field->eval()->class($class);
+            } elseif ($type === 'int') {
+                $field = new DigitField($model->alias, $dca);
+                $field->hardLabel(strval($model->name), strval($model->description))
+                    ->filter(boolval($model->filter))
+                    ->search(boolval($model->search))
+                    ->default(strval($model->defaultInt))
+                    ->sql(sprintf(
+                        "int(10) signed NOT NULL default '%s'",
+                        strval($model->defaultInt)))
+                    ->eval()
+                        ->mandatory(boolval($model->mandatory));
+                $class = strval($model->class);
+                if (boolval($model->margin) === true) {
+                    $class .= ' m12';
+                }
+                $field->eval()->class($class);
+            } elseif ($type === 'select') {
+                $field = new SelectField($model->alias, $dca);
+                $field->hardLabel(strval($model->name), strval($model->description))
+                    ->filter(boolval($model->filter))
+                    ->search(boolval($model->search))
+                    ->default(strval($model->defaultSelect))
+                    ->sql(sprintf(
+                        "varchar(255) NOT NULL default '%s'",
+                        strval($model->defaultSelect)))
+                    ->eval()
+                        ->mandatory(boolval($model->mandatory));
+                $class = strval($model->class);
+                if (boolval($model->margin) === true) {
+                    $class .= ' m12';
+                }
+                $field->eval()->class($class);
+                $options = StringUtil::deserialize($model->options);
+                $formattedOptions = [];
+                foreach ($options as $option) {
+                    $formattedOptions[$option['key']] = $option['value'];
+                }
+                $field->options($formattedOptions);
+            } elseif ($type === 'checkbox') {
+                $field = new SelectField($model->alias, $dca);
+                $field->hardLabel(strval($model->name), strval($model->description))
+                    ->filter(boolval($model->filter))
+                    ->search(boolval($model->search))
+                    ->default(strval($model->defaultCheckbox))
+                    ->sql(sprintf(
+                        "varchar(255) NOT NULL default '%s'",
+                        strval($model->defaultCheckbox)))
+                    ->eval()
+                        ->mandatory(boolval($model->mandatory));
+                $class = strval($model->class);
+                if (boolval($model->margin) === true) {
+                    $class .= ' m12';
+                }
+                $field->eval()->class($class);
+            } elseif ($type === 'multicheckbox' || $type === 'filtermulticheckbox') {
+                $field = new MultiCheckboxField($model->alias, $dca);
+                $field->hardLabel(strval($model->name), strval($model->description))
+                    ->filter(boolval($model->filter))
+                    ->search(boolval($model->search))
+                    ->default(StringUtil::deserialize($model->defaultMultiCheckbox))
+                    ->eval()
+                        ->mandatory(boolval($model->mandatory));
+                $class = strval($model->class);
+                if (boolval($model->margin) === true) {
+                    $class .= ' m12';
+                }
+                $field->eval()->class($class);
+                $options = StringUtil::deserialize($model->options);
+                $formattedOptions = [];
+                foreach ($options as $option) {
+                    $formattedOptions[$option['key']] = $option['value'];
+                }
+                $field->options($formattedOptions);
+            } elseif ($type === 'datepicker') {
+                $field = new DatePickerField($model->alias, $dca);
+                $field->hardLabel(strval($model->name), strval($model->description))
+                    ->filter(boolval($model->filter))
+                    ->search(boolval($model->search))
+                    ->saveCallback($cbClass, 'saveDate')
+                    ->loadCallback($cbClass, 'loadDate')
+                    ->default(strval($model->defaultDatePicker))
+                    ->sql(sprintf(
+                        "int(10) NOT NULL default '%s'",
+                        strval($model->defaultDatePicker)))
+                    ->eval()
+                        ->mandatory(boolval($model->mandatory));
+                $class = strval($model->class);
+                if (boolval($model->margin) === true) {
+                    $class .= ' m12';
+                }
+                $field->eval()->class($class);
+            }
+        }
+    }
+}
+
+

@@ -14,18 +14,14 @@
 
 namespace con4gis\MapContentBundle\Classes\Contao\Callbacks;
 
-use con4gis\MapContentBundle\Resources\contao\models\MapcontentElementModel;
-use con4gis\MapContentBundle\Resources\contao\models\MapcontentTagModel;
-use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
-use con4gis\MapsBundle\Resources\contao\classes\Utils;
+use con4gis\MapContentBundle\Resources\contao\models\MapcontentCustomFieldModel;
 use Contao\Backend;
 use Contao\DataContainer;
 use Contao\StringUtil;
-use Contao\System;
 
 class MapcontentCustomFieldCallback extends Backend
 {
-    private $dcaName = 'tl_c4g_mapcontent_custom_fields';
+    private $dcaName = 'tl_c4g_mapcontent_custom_field';
 
     public function getLabels($row) {
         $labels['name'] = $row['name'];
@@ -52,9 +48,17 @@ class MapcontentCustomFieldCallback extends Backend
 
     public function saveAlias($value, DataContainer $dca) {
         if (strval($value) !== '') {
-            return strtolower(str_replace(' ', '_', $value));
+            return str_replace([' ', 'ä', 'ö', 'ü', 'Ä', 'Ö', 'Ü'], ['_', 'ae', 'oe', 'ue', 'ae', 'oe', 'ue'], strtolower($value));
         } else {
-            return strtolower(str_replace(' ', '_', $dca->activeRecord->name));
+            return str_replace([' ', 'ä', 'ö', 'ü', 'Ä', 'Ö', 'Ü'], ['_', 'ae', 'oe', 'ue', 'ae', 'oe', 'ue'], strtolower($dca->activeRecord->name));
         }
+    }
+
+    public function saveDate($value, DataContainer $dca) {
+        return strtotime($value);
+    }
+
+    public function loadDate($value, DataContainer $dca) {
+        return date('m/d/Y', $value);
     }
 }

@@ -21,6 +21,10 @@ $GLOBALS['TL_LANG'][$strName]['margin'] = ['Oberer Rand', 'Falls gesetzt, wird �
 $GLOBALS['TL_LANG'][$strName]['options'] = ['Optionen', 'Die Optionen, die zur Verfügung stehen. Der Schlüssel wird in der Datenbank gespeichert, die Übersetzung dem Nutzer ausgegeben.'];
 $GLOBALS['TL_LANG'][$strName]['key'] = ['Schlüssel', 'Der in der Datenbank gespeicherte Wert. Der Schlüssel sollte nachträglich nicht mehr geändert werden.'];
 $GLOBALS['TL_LANG'][$strName]['value'] = ['Übersetzung', 'Dieser Wert wird dem Nutzer angezeigt. Er kann nachträglich jederzeit geändert werden.'];
+$GLOBALS['TL_LANG'][$strName]['frontendName'] = ['Frontendbezeichnung', 'Kann als Bezeichnung im Frontend definiert werden. Wenn kein Wert eingetragen ist, wird die normale Bezeichnung verwendet.'];
+$GLOBALS['TL_LANG'][$strName]['frontendPopup'] = ['Im Popup zeigen', 'Falls gesetzt, wird das Feld im Popup dargestellt, wenn ein Wert vorhanden ist.'];
+$GLOBALS['TL_LANG'][$strName]['frontendList'] = ['In der Liste zeigen', 'Falls gesetzt, wird das Feld in der Liste dargestellt, wenn ein Wert vorhanden ist.'];
+$GLOBALS['TL_LANG'][$strName]['frontendDetails'] = ['In den Listendetails zeigen', 'Falls gesetzt, wird das Feld in den Listendetails dargestellt, wenn ein Wert vorhanden ist.'];
 
 /**
  * Legends
@@ -29,6 +33,7 @@ $GLOBALS['TL_LANG'][$strName]['data_legend'] = 'Allgemeine Daten';
 $GLOBALS['TL_LANG'][$strName]['filter_search_legend'] = 'Filtern und Suchen';
 $GLOBALS['TL_LANG'][$strName]['mandatory_legend'] = 'Pflichtfeld';
 $GLOBALS['TL_LANG'][$strName]['positioning_legend'] = 'Positionierung';
+$GLOBALS['TL_LANG'][$strName]['frontend_legend'] = 'Frontendoptionen';
 $GLOBALS['TL_LANG'][$strName]['type_specific_legend'] = 'Typspezifische Optionen';
 
 /**
@@ -49,6 +54,7 @@ $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['select'] = 'Auswahl';
 $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['checkbox'] = 'Checkbox';
 $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['multicheckbox'] = 'Mehrere Checkboxen';
 $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['datepicker'] = 'Datumsauswahl';
+$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['legend'] = 'Legende';
 
 /**
  * Class Options

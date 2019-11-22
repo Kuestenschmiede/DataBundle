@@ -33,21 +33,22 @@ $list->sorting()->panelLayout('filter;sort,search,limit');
 $list->label()->fields(['name', 'type'])->labelCallback($cbClass, 'getLabels');
 $list->addRegularOperations($dca);
 $dca->palette()->default(
-    '{data_legend},name,alias,legend,description,type'
+    '{data_legend},name,alias,type'
 );
 $generalFields = ';{filter_search_legend},filter,search'.
     ';{mandatory_legend},mandatory'.
-    ';{positioning_legend},class,margin';
+    ';{positioning_legend},class,margin'.
+    ';{frontend_legend},frontendName,frontendPopup,frontendList,frontendDetails';
 $dca->palette()->selector(['type'])
-    ->subPalette('type', 'text', "$generalFields;{type_specific_legend},maxLength,defaultText")
-    ->subPalette('type', 'textarea', "$generalFields;{type_specific_legend},maxLength,defaultTextArea")
-    ->subPalette('type', 'texteditor', "$generalFields;{type_specific_legend},maxLength,defaultTextEditor")
-    ->subPalette('type', 'natural', "$generalFields;{type_specific_legend},defaultNatural")
-    ->subPalette('type', 'int', "$generalFields;{type_specific_legend},defaultInt")
-    ->subPalette('type', 'select', "$generalFields;{type_specific_legend},options,defaultSelect")
-    ->subPalette('type', 'checkbox', "$generalFields;{type_specific_legend},defaultCheckbox")
-    ->subPalette('type', 'multicheckbox', "$generalFields;{type_specific_legend},options,defaultMultiCheckbox")
-    ->subPalette('type', 'datepicker', "$generalFields;{type_specific_legend},defaultDatePicker");
+    ->subPalette('type', 'text', ",description$generalFields;{type_specific_legend},maxLength,defaultText")
+    ->subPalette('type', 'textarea', ",description$generalFields;{type_specific_legend},maxLength,defaultTextArea")
+    ->subPalette('type', 'texteditor', ",description$generalFields;{type_specific_legend},maxLength,defaultTextEditor")
+    ->subPalette('type', 'natural', ",description$generalFields;{type_specific_legend},defaultNatural")
+    ->subPalette('type', 'int', ",description$generalFields;{type_specific_legend},defaultInt")
+    ->subPalette('type', 'select', ",description$generalFields;{type_specific_legend},options,defaultSelect")
+    ->subPalette('type', 'checkbox', ",description$generalFields;{type_specific_legend},defaultCheckbox")
+    ->subPalette('type', 'multicheckbox', ",description$generalFields;{type_specific_legend},options,defaultMultiCheckbox")
+    ->subPalette('type', 'datepicker', ",description$generalFields;{type_specific_legend},defaultDatePicker");
 
 $id = new IdField('id', $dca);
 
@@ -57,15 +58,13 @@ $name = new TextField('name', $dca);
 $name->filter()->search();
 $name->eval()->class('w50')->mandatory();
 
-$name = new TextField('alias', $dca);
-$name->saveCallback($cbClass, 'saveAlias');
-$name->eval()->class('w50');
+$alias = new TextField('alias', $dca);
+$alias->saveCallback($cbClass, 'saveAlias');
+$alias->eval()->class('w50')
+    ->unique();
 
-$name = new TextField('legend', $dca);
-$name->eval()->class('clr');
-
-$name = new TextField('description', $dca);
-$name->eval()->class('clr');
+$description = new TextField('description', $dca);
+$description->eval()->class('clr');
 
 $type = new SelectField('type', $dca);
 $type->default('')
@@ -96,9 +95,25 @@ $class->default('w50')
     ->eval()
         ->class('w50');
 
-$mandatory = new CheckboxField('margin', $dca);
-$mandatory->eval()
+$margin = new CheckboxField('margin', $dca);
+$margin->eval()
     ->class('w50 m12');
+
+$frontendName = new TextField('frontendName', $dca);
+$frontendName->eval()->class('clr');
+
+$frontendPopup = new CheckboxField('frontendPopup', $dca);
+$frontendPopup->default(true)
+    ->eval()
+        ->class('clr w50');
+$frontendList = new CheckboxField('frontendList', $dca);
+$frontendList->default(true)
+    ->eval()
+        ->class('w50');
+$frontendDetails = new CheckboxField('frontendDetails', $dca);
+$frontendDetails->default(true)
+    ->eval()
+        ->class('w50 clr');
 
 /** Type specific */
 
@@ -156,11 +171,13 @@ $defaultCheckbox->label('default')
     ->eval()
         ->class('clr');
 
-$defaultSelect = new MultiCheckboxField('defaultMultiCheckbox', $dca);
-$defaultSelect->optionsCallback($cbClass, 'loadDefaultoptions')
+$defaultMultiCheckbox = new MultiCheckboxField('defaultMultiCheckbox', $dca);
+$defaultMultiCheckbox->optionsCallback($cbClass, 'loadDefaultoptions')
     ->label('default')
     ->eval()
         ->class('clr');
 
 $defaultDatePicker = new DatePickerField('defaultDatePicker', $dca);
-$defaultDatePicker->label('default');
+$defaultDatePicker->label('default')
+    ->saveCallback($cbClass, 'saveDate')
+    ->loadCallback($cbClass, 'loadDate');
