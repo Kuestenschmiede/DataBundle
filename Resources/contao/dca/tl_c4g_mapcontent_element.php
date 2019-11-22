@@ -78,7 +78,6 @@ if ($types !== null) {
                     }
                 }
             }
-            \con4gis\CoreBundle\Resources\contao\models\C4gLogModel::addLogEntry('test', $fields);
 
             $dca->palette()->subPalette("type", $type->id, $fields);
         }
