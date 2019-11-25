@@ -14,9 +14,26 @@
 
 namespace con4gis\MapContentBundle\Resources\contao\models;
 
+use Contao\Database;
 use Contao\Model;
 
 class MapcontentCustomFieldModel extends Model
 {
     protected static $strTable = "tl_c4g_mapcontent_custom_field";
+
+    public static function findBy($strColumn, $varValue, array $arrOptions = array())
+    {
+        if (!Database::getInstance()->tableExists(static::$strTable)) {
+            return null;
+        }
+        return parent::findBy($strColumn, $varValue, $arrOptions);
+    }
+
+    public static function findAll(array $arrOptions = array())
+    {
+        if (!Database::getInstance()->tableExists(static::$strTable)) {
+            return null;
+        }
+        return parent::findAll($arrOptions);
+    }
 }
