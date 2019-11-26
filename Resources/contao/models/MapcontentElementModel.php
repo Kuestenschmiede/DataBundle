@@ -44,4 +44,8 @@ class MapcontentElementModel extends Model
             return null;
         }
     }
+
+    public function string($property) : string {
+        return strval($this->$property);
+    }
 }
