@@ -3,7 +3,6 @@
 $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type'] = [
     'name' => ['Name der Kategorie', 'Die Bezeichnung der Kategorie im Frontend.'],
     'locstyle' => ['Lokationsstil', 'Der Lokationsstil bestimmt mit welchem Icon die Elemente dieser Kategorie in der Karte dargestellt werden.'],
-    'type' => ['Typ', 'Der Typ bestimmt, welche Felder den einzelnen Elementen zur Verfügung stehen.'],
     'availableFields' => ['Verfügbare Felder', 'Diese Felder stehen den Elementen dieser Kategorie zur Verfügung.'],
     'availableTags' => ['Verfügbare Tags', 'Diese Tags können den Elementen zugeordnet werden.'],
     'categorySort' => ['Sortierung', 'Bestimmt die Sortierreihenfolge der Filter.'],
@@ -17,3 +16,7 @@ $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type'] = [
 
 $GLOBALS['TL_LANG']['mapcontent_types']['default'] = 'Benutzerdefiniert';
 $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['data_legend'] = 'Allgemeine Daten';
+
+$GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'] = ' - Legende';
+
+

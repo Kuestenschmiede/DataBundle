@@ -87,6 +87,14 @@ class MapcontentElementCallback extends Backend
     public function changeFileBinToUuid($fieldValue, DataContainer $dc) {
         return \StringUtil::binToUuid($fieldValue);
     }
+
+    public function saveDate($value, DataContainer $dca) {
+        return strtotime($value);
+    }
+
+    public function loadDate($value, DataContainer $dca) {
+        return date('m/d/Y', $value);
+    }
     
     /**
      * Validate Location Lon
