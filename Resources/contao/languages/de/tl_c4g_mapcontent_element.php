@@ -33,6 +33,8 @@ $GLOBALS['TL_LANG'][$strName]['addressCity'] = ['Ort', ''];
 
 $GLOBALS['TL_LANG'][$strName]['accessibility'] = ['Barrierefrei', 'Das Element ist barrierefrei.'];
 $GLOBALS['TL_LANG'][$strName]['osmId'] = ['OSM ID', 'Die ID des Elements in der Open Street Map. Falls gesetzt, werden die Daten aus der Open Street Map geladen. Gegebenenfalls werden eingegebene Daten dann ignoriert.'];
+$GLOBALS['TL_LANG'][$strName]['publishFrom'] = ['Anzeigen ab', 'Das Element wird ab diesem Tag im Frontend angezeigt.'];
+$GLOBALS['TL_LANG'][$strName]['publishTo'] = ['Anzeigen bis', 'Das Element wird bis zu diesem Tag im Frontend angezeigt.'];
 
 $GLOBALS['TL_LANG'][$strName]['phone'] = ['Telefonnummer', ''];
 $GLOBALS['TL_LANG'][$strName]['mobile'] = ['Mobiltelefonnummer', ''];
@@ -69,6 +71,7 @@ $GLOBALS['TL_LANG'][$strName]['filter_legend'] = 'Filterdaten';
 $GLOBALS['TL_LANG'][$strName]['accessibility_legend'] = 'Barrierefreiheit';
 $GLOBALS['TL_LANG'][$strName]['linkWizard_legend'] = 'Weitere Links';
 $GLOBALS['TL_LANG'][$strName]['osmId_legend'] = 'Open Street Map';
+$GLOBALS['TL_LANG'][$strName]['publish_legend'] = 'Anzeige';
 
 /**
  * Operations

@@ -79,7 +79,7 @@ class LoadLayersListener
         $typeIds = $event->getAdditionalData()['typeIds'];
         $arrElements = [];
         foreach ($typeIds as $typeId) {
-            $elements = MapcontentElementModel::findBy('type', $typeId);
+            $elements = MapcontentElementModel::findPublishedBy('type', $typeId);
             if ($elements !== null) {
                 $elements = $elements->fetchAll();
                 foreach ($elements as $key => $element) {
