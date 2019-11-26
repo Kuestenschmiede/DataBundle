@@ -26,6 +26,7 @@ use con4gis\MapsBundle\Classes\Services\LayerService;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\ProjectsBundle\Classes\Maps\C4GBrickMapFrontendParent;
 use Contao\Controller;
+use Contao\Database;
 use Contao\FilesModel;
 use Contao\StringUtil;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -39,6 +40,7 @@ class LoadLayersListener
     public function __construct(LayerService $layerService)
     {
         $this->layerService = $layerService;
+        $this->Database = Database::getInstance();
     }
     public function onLoadLayersLoadTypes(
         LoadLayersEvent $event,
@@ -118,7 +120,15 @@ class LoadLayersListener
                 true,
                 $mapContentLayer['hide']
             );
-            
+            $availableFields = unserialize($type['availableFields']);
+            if ($availableFields) {
+                $strSelect = 'SELECT * FROM tl_c4g_mapcontent_custom_field WHERE type="multicheckbox" AND frontendFilter =1 AND alias IN(';
+                foreach($availableFields as $availableField) {
+                    $strSelect .= '"'. $availableField . '",';
+                }
+                $strSelect = substr($strSelect, 0, strlen($strSelect)-1) . ')';
+                $combineFields = $this->Database->execute($strSelect)->fetchAllAssoc();
+            }
             foreach ($elements[$type['id']] as $typeElement) {
 
                 if (intval($typeElement['parentElement']) > 0) {
@@ -275,6 +285,16 @@ class LoadLayersListener
                     'routing_link' => "1",
                     'async' => false,
                 ];
+                if ($availableFields && $combineFields) {
+                    foreach ($combineFields as $combineField) {
+                        if ($typeElement[$combineField["alias"]]) {
+                            $arrProperties = unserialize($typeElement[$combineField["alias"]]);
+                            foreach($arrProperties as $property) {
+                                $properties[$property] = true;
+                            }
+                        }
+                    }
+                }
                 $properties['title'] = $typeElement['name'];
                 if ($typeElement['loctype'] === 'point') {
                     $content = $fmClass->createMapStructureContent(
