@@ -51,13 +51,13 @@ $GLOBALS['TL_LANG'][$strName]['new'] = ["Neues Feld definieren", "Neues Feld def
 $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['text'] = 'Einzeiliger Text';
 $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['textarea'] = 'Mehrzeiliger Text';
 $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['texteditor'] = 'Mehrzeiliger Text mit Editor';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['natural'] = 'Positive Ganzzahl';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['int'] = 'Positive oder Negative Ganzzahl';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['select'] = 'Auswahl';
+$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['natural'] = 'Natürliche Zahl';
+$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['int'] = 'Ganze Zahl';
+$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['select'] = 'Auswahlliste';
 $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['checkbox'] = 'Checkbox';
 $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['multicheckbox'] = 'Mehrere Checkboxen';
 $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['datepicker'] = 'Datumsauswahl';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['legend'] = 'Legende';
+$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['legend'] = 'Überschrift';
 
 /**
  * Class Options
