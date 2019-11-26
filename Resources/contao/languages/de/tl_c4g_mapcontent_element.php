@@ -10,7 +10,6 @@ $GLOBALS['TL_LANG'][$strName]['description'] = ['Beschreibung', 'Geben Sie einen
 $GLOBALS['TL_LANG'][$strName]['location'] = ['Lokation des Elements', 'Wählen Sie die Lokation aus, in der das Element liegt.'];
 $GLOBALS['TL_LANG'][$strName]['type'] = ['Kategorie', 'Die Kategorie wird im Frontend dargestellt und bestimmt, welche Felder zur Verfügung stehen.'];
 $GLOBALS['TL_LANG'][$strName]['parentElement'] = ['Elternelement', 'Wenn im Elternelement Daten eingetragen sind, die hier fehlen, erbt dieses Element die Daten vom Elternelement.'];
-$GLOBALS['TL_LANG'][$strName]['tags'] = ['Tags', 'Wählen Sie die Tags aus, die Sie diesem Element zuweisen möchten.'];
 $GLOBALS['TL_LANG'][$strName]['linkWizard'] = ['Weitere Links', 'Weitere Links, die generiert werden sollen. Das Titelfeld akzeptiert HTML.'];
 $GLOBALS['TL_LANG'][$strName]['linkTitle'] = ['Titel', 'Der sichtbare Text. Akzeptiert HTML.'];
 $GLOBALS['TL_LANG'][$strName]['linkHref'] = ['Adresse / URL', 'Die Adresse bzw. URL, auf die der Link zeigt.'];

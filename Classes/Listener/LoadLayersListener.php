@@ -20,8 +20,6 @@ use con4gis\MapContentBundle\Classes\Event\LoadPopupEvent;
 use con4gis\MapContentBundle\Classes\Event\LoadPropertiesEvent;
 use con4gis\MapContentBundle\Classes\Popup\Popup;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentElementModel;
-use con4gis\MapContentBundle\Resources\contao\models\MapcontentLocationModel;
-use con4gis\MapContentBundle\Resources\contao\models\MapcontentTagModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
 use con4gis\MapsBundle\Classes\Events\LoadLayersEvent;
 use con4gis\MapsBundle\Classes\Services\LayerService;
@@ -82,10 +80,6 @@ class LoadLayersListener
             $elements = MapcontentElementModel::findPublishedBy('type', $typeId);
             if ($elements !== null) {
                 $elements = $elements->fetchAll();
-                foreach ($elements as $key => $element) {
-                    $element['tags'] = unserialize($element['tags']);
-                    $elements[$key] = $element;
-                }
                 $arrElements[$typeId] = $elements;
             }
         }
@@ -259,17 +253,10 @@ class LoadLayersListener
                 $dispatcher->dispatch($propertiesEvent::NAME, $propertiesEvent);
                 
                 $properties = $propertiesEvent->getProperties();
-                $tagIds = \StringUtil::deserialize($typeElement['tags']);
-                $tagModels = MapcontentTagModel::findMultipleByIds($tagIds);
-                $tags = [];
-                foreach ($tagModels as $model) {
-                    $tags[] = $model->name;
-                }
 
                 if ($typeElement['linkWizard']) {
                     $popup->addLinks(StringUtil::deserialize($typeElement['linkWizard']));
                 }
-                $popup->addTags($tags);
                 $popup->addDescription(strval($typeElement['description']));
 
                 $label = $type['showLabels'] === '1' ? $typeElement['name'] : '';

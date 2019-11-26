@@ -4,7 +4,6 @@ $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type'] = [
     'name' => ['Name der Kategorie', 'Die Bezeichnung der Kategorie im Frontend.'],
     'locstyle' => ['Lokationsstil', 'Der Lokationsstil bestimmt mit welchem Icon die Elemente dieser Kategorie in der Karte dargestellt werden.'],
     'availableFields' => ['Verfügbare Felder', 'Diese Felder stehen den Elementen dieser Kategorie zur Verfügung.'],
-    'availableTags' => ['Verfügbare Tags', 'Diese Tags können den Elementen zugeordnet werden.'],
     'categorySort' => ['Sortierung', 'Bestimmt die Sortierreihenfolge der Filter.'],
     'showLabels' => ['Label anzeigen', 'Zeigt die Namen der Elemente dieser Kategorie in der Karte an.'],
     'new' => ["Neue Kategorie erstellen", "Neue Kategorie erstellen"],

@@ -98,13 +98,6 @@ $name = new TextField('name', $dca);
 $name->filter()->search();
 $name->eval()->class('clr')->mandatory();
 
-$tags = new SelectField('tags', $dca);
-$tags->optionsCallback($cbClass, 'loadAvailableTags')
-    ->sql("varchar(20) NOT NULL default ''")
-    ->eval()->class('clr')
-        ->chosen()
-        ->multiple();
-
 $type = new SelectField('type', $dca);
 $type->default('')
     ->optionsCallback($cbClass, 'loadTypes')

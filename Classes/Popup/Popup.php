@@ -80,10 +80,6 @@ class Popup
         return $this;
     }
 
-    public function addTags(array $entries, string $class = 'tags') {
-        return $this->addStringFromArray($entries, $class);
-    }
-
     public function addDescription(string $description, string $class = 'description') {
         $this->popupString .= "<div class=\"$class\">$description</div>";
         return $this;
