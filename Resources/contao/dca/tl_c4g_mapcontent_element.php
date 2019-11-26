@@ -160,8 +160,6 @@ $description = new TextAreaField('description', $dca);
 $description->eval()->class('clr')
     ->rte('tinyMCE');
 
-/** Fields for use in child bundles */
-
 $businessHours = new MultiColumnField('businessHours', $dca);
 $businessHours->sql('text NULL')
     ->eval()
@@ -421,5 +419,4 @@ foreach ($GLOBALS['con4gis']['mapcontent_custom_field_types'] as $type) {
         }
     }
 }
-
 
