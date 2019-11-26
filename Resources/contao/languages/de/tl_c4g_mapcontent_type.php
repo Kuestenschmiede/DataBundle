@@ -17,6 +17,6 @@ $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type'] = [
 $GLOBALS['TL_LANG']['mapcontent_types']['default'] = 'Benutzerdefiniert';
 $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['data_legend'] = 'Allgemeine Daten';
 
-$GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'] = ' - Legende';
+$GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'] = 'Überschrift: ';
 
 

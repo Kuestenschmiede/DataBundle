@@ -160,8 +160,6 @@ $description = new TextAreaField('description', $dca);
 $description->eval()->class('clr')
     ->rte('tinyMCE');
 
-/** Fields for use in child bundles */
-
 $businessHours = new MultiColumnField('businessHours', $dca);
 $businessHours->sql('text NULL')
     ->eval()
@@ -248,6 +246,14 @@ $linkTitle->eval()
 $linkHref = new TextField('linkHref', $dca, $linkWizard);
 $linkNewTab = new CheckboxField('linkNewTab', $dca, $linkWizard);
 $osmId = new NaturalField('osmId', $dca);
+
+$publishFrom = new DatePickerField('publishFrom', $dca);
+$publishFrom->saveCallback($cbClass, 'saveDate')
+    ->loadCallback($cbClass, 'loadDate');
+
+$publishTo = new DatePickerField('publishTo', $dca);
+$publishTo->saveCallback($cbClass, 'saveDate')
+    ->loadCallback($cbClass, 'loadDate');
 
 /** Custom Fields */
 
@@ -359,11 +365,13 @@ foreach ($GLOBALS['con4gis']['mapcontent_custom_field_types'] as $type) {
                 }
                 $field->eval()->class($class);
                 $options = StringUtil::deserialize($model->options);
-                $formattedOptions = [];
-                foreach ($options as $option) {
-                    $formattedOptions[$option['key']] = $option['value'];
+                if ($options !== null) {
+                    $formattedOptions = [];
+                    foreach ($options as $option) {
+                        $formattedOptions[$option['key']] = $option['value'];
+                    }
+                    $field->options($formattedOptions);
                 }
-                $field->options($formattedOptions);
             } elseif ($type === 'checkbox') {
                 $field = new SelectField($model->alias, $dca);
                 $field->hardLabel(strval($model->name), strval($model->description))
@@ -421,5 +429,4 @@ foreach ($GLOBALS['con4gis']['mapcontent_custom_field_types'] as $type) {
         }
     }
 }
-
 
