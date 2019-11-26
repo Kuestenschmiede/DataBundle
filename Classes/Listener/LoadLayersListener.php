@@ -163,11 +163,13 @@ class LoadLayersListener
                 $popup->addName($typeElement['name']);
 
                 $dispatcher = \Contao\System::getContainer()->get('event_dispatcher');
-                $popupEvent = new LoadPopupEvent($type['type'], $popup);
-                $popupEvent->setElementData($typeElement);
-                $dispatcher->dispatch($popupEvent::NAME, $popupEvent);
 
-                if ($popupEvent->isShowAddress() === true) {
+                if ($typeElement['addressName'] !== '' ||
+                    $typeElement['addressStreet'] !== '' ||
+                    $typeElement['addressStreetNumber'] !== '0' ||
+                    $typeElement['addressZip'] !== '' ||
+                    $typeElement['addressCity'] !== ''
+                ) {
                     $address = [];
                     if ($typeElement['addressName'] !== '') {
                         $address[] = $typeElement['addressName'];
@@ -195,9 +197,9 @@ class LoadLayersListener
                     }
                 }
 
-                if ($popupEvent->isShowBusinessTimes() === true) {
+                $businessTimes = \StringUtil::deserialize($typeElement['businessHours']);
+                if (!empty($businessTimes) || $typeElement['businessHoursAdditionalInfo'] !== '') {
                     $timeString = [];
-                    $businessTimes = \StringUtil::deserialize($typeElement['businessHours']);
                     $showBusinessTimes = false;
                     foreach ($businessTimes as $key => $time) {
                         $timeString[$key] = '';
@@ -246,7 +248,7 @@ class LoadLayersListener
                     }
                 }
 
-                $popup->addContactInfo($typeElement['phone'], $typeElement['mobile'] ?: "", $typeElement['fax'], $typeElement['email'], $typeElement['website'],
+                $popup->addContactInfo(strval($typeElement['phone']), strval($typeElement['mobile']), strval($typeElement['fax']), strval($typeElement['email']), strval($typeElement['website']),
                     $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['contactData'][0].':', 'contact', true);
                 $propertiesEvent = new LoadPropertiesEvent();
                 $propertiesEvent->setElementData($typeElement);
