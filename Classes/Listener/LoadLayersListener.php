@@ -20,8 +20,6 @@ use con4gis\MapContentBundle\Classes\Event\LoadPopupEvent;
 use con4gis\MapContentBundle\Classes\Event\LoadPropertiesEvent;
 use con4gis\MapContentBundle\Classes\Popup\Popup;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentElementModel;
-use con4gis\MapContentBundle\Resources\contao\models\MapcontentLocationModel;
-use con4gis\MapContentBundle\Resources\contao\models\MapcontentTagModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
 use con4gis\MapsBundle\Classes\Events\LoadLayersEvent;
 use con4gis\MapsBundle\Classes\Services\LayerService;
@@ -82,10 +80,6 @@ class LoadLayersListener
             $elements = MapcontentElementModel::findPublishedBy('type', $typeId);
             if ($elements !== null) {
                 $elements = $elements->fetchAll();
-                foreach ($elements as $key => $element) {
-                    $element['tags'] = unserialize($element['tags']);
-                    $elements[$key] = $element;
-                }
                 $arrElements[$typeId] = $elements;
             }
         }
@@ -169,11 +163,13 @@ class LoadLayersListener
                 $popup->addName($typeElement['name']);
 
                 $dispatcher = \Contao\System::getContainer()->get('event_dispatcher');
-                $popupEvent = new LoadPopupEvent($type['type'], $popup);
-                $popupEvent->setElementData($typeElement);
-                $dispatcher->dispatch($popupEvent::NAME, $popupEvent);
 
-                if ($popupEvent->isShowAddress() === true) {
+                if ($typeElement['addressName'] !== '' ||
+                    $typeElement['addressStreet'] !== '' ||
+                    $typeElement['addressStreetNumber'] !== '0' ||
+                    $typeElement['addressZip'] !== '' ||
+                    $typeElement['addressCity'] !== ''
+                ) {
                     $address = [];
                     if ($typeElement['addressName'] !== '') {
                         $address[] = $typeElement['addressName'];
@@ -201,9 +197,9 @@ class LoadLayersListener
                     }
                 }
 
-                if ($popupEvent->isShowBusinessTimes() === true) {
+                $businessTimes = \StringUtil::deserialize($typeElement['businessHours']);
+                if (!empty($businessTimes) || $typeElement['businessHoursAdditionalInfo'] !== '') {
                     $timeString = [];
-                    $businessTimes = \StringUtil::deserialize($typeElement['businessHours']);
                     $showBusinessTimes = false;
                     foreach ($businessTimes as $key => $time) {
                         $timeString[$key] = '';
@@ -252,24 +248,17 @@ class LoadLayersListener
                     }
                 }
 
-                $popup->addContactInfo($typeElement['phone'], $typeElement['mobile'] ?: "", $typeElement['fax'], $typeElement['email'], $typeElement['website'],
+                $popup->addContactInfo(strval($typeElement['phone']), strval($typeElement['mobile']), strval($typeElement['fax']), strval($typeElement['email']), strval($typeElement['website']),
                     $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['contactData'][0].':', 'contact', true);
                 $propertiesEvent = new LoadPropertiesEvent();
                 $propertiesEvent->setElementData($typeElement);
                 $dispatcher->dispatch($propertiesEvent::NAME, $propertiesEvent);
                 
                 $properties = $propertiesEvent->getProperties();
-                $tagIds = \StringUtil::deserialize($typeElement['tags']);
-                $tagModels = MapcontentTagModel::findMultipleByIds($tagIds);
-                $tags = [];
-                foreach ($tagModels as $model) {
-                    $tags[] = $model->name;
-                }
 
                 if ($typeElement['linkWizard']) {
                     $popup->addLinks(StringUtil::deserialize($typeElement['linkWizard']));
                 }
-                $popup->addTags($tags);
                 $popup->addDescription(strval($typeElement['description']));
 
                 $label = $type['showLabels'] === '1' ? $typeElement['name'] : '';

@@ -17,8 +17,4 @@ services:
       - { name: kernel.event_listener, event: maps.layers.load, method: onLoadLayersCreateMapStructures, priority: 3000 }
     arguments:
       - "@con4gis.layer_service"
-  mapcontent.onLoadFeatureFilterCreateTagFilter:
-    class: con4gis\MapContentBundle\Classes\Listener\LoadFeatureFilterListener
-    tags:
-      - { name: kernel.event_listener, event: maps.filters.load, method: onLoadFeatureFilter, priority: 512}
 

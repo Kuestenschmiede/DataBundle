@@ -15,7 +15,6 @@
 namespace con4gis\MapContentBundle\Classes\Contao\Callbacks;
 
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentElementModel;
-use con4gis\MapContentBundle\Resources\contao\models\MapcontentTagModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
 use con4gis\MapsBundle\Resources\contao\classes\Utils;
 use Contao\Backend;
@@ -36,26 +35,6 @@ class MapcontentElementCallback extends Backend
             }
         }
         return $arrTypes;
-    }
-    
-    public function loadAvailableTags(DataContainer $dc)
-    {
-        $arrTags = [];
-        $typeId = $dc->activeRecord->type;
-        if (!$typeId) {
-            return [];
-        } else {
-            $type = MapcontentTypeModel::findByPk($typeId);
-            if (!$type) {
-                return [];
-            }
-            $tagIds = unserialize($type->availableTags);
-            $tags = MapcontentTagModel::findMultipleByIds($tagIds);
-            foreach ($tags as $tag) {
-                $arrTags[$tag->id] = $tag->name;
-            }
-            return $arrTags;
-        }
     }
 
     public function loadParentOptions(DataContainer $dc) {

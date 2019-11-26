@@ -17,7 +17,6 @@ namespace con4gis\MapContentBundle\Classes\Contao\Callbacks;
 
 use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentCustomFieldModel;
-use con4gis\MapContentBundle\Resources\contao\models\MapcontentTagModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapLocstylesModel;
 use Contao\Backend;
 use Contao\StringUtil;
@@ -34,16 +33,6 @@ class MapcontentTypeCallback extends Backend
             $arrLocstyles[$locstyle->id] = $locstyle->name;
         }
         return $arrLocstyles;
-    }
-    
-    public function getAvailableTags()
-    {
-        $tags = MapcontentTagModel::findAll();
-        $arrTags = [];
-        foreach ($tags as $tag) {
-            $arrTags[$tag->id] = $tag->name;
-        }
-        return $arrTags;
     }
 
     public function getLabel($arrRow){

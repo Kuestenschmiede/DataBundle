@@ -32,7 +32,7 @@ $list->sorting()->panelLayout('filter;sort,search,limit');
 $list->label()->fields(['name', 'availableFields'])
     ->labelCallback($cbClass, 'getLabel');
 $list->addRegularOperations($dca);
-$dca->palette()->default('{data_legend},name,locstyle,availableFields,availableTags,showLabels;');
+$dca->palette()->default('{data_legend},name,locstyle,availableFields,showLabels;');
 
 $id = new IdField('id', $dca);
 
@@ -47,14 +47,6 @@ $locStyle->default('')
         ->sql("varchar(20) NOT NULL default ''")
         ->eval()->class('clr')
             ->submitOnChange();
-
-$availableTags = new SelectField('availableTags', $dca);
-$availableTags->optionsCallback($cbClass, 'getAvailableTags')
-    ->sql("blob NULL default ''")
-    ->default('')
-    ->eval()->class('clr')
-        ->chosen()
-        ->multiple();
 
 $showLabels = new CheckboxField('showLabels', $dca);
 $showLabels->default(false);
