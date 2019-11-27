@@ -242,11 +242,13 @@ $osmId = new NaturalField('osmId', $dca);
 
 $publishFrom = new DatePickerField('publishFrom', $dca);
 $publishFrom->saveCallback($cbClass, 'saveDate')
-    ->loadCallback($cbClass, 'loadDate');
+    ->loadCallback($cbClass, 'loadDate')
+    ->sql("varchar(10) NOT NULL default ''");
 
 $publishTo = new DatePickerField('publishTo', $dca);
 $publishTo->saveCallback($cbClass, 'saveDate')
-    ->loadCallback($cbClass, 'loadDate');
+    ->loadCallback($cbClass, 'loadDate')
+    ->sql("varchar(10) NOT NULL default ''");
 
 /** Custom Fields */
 
