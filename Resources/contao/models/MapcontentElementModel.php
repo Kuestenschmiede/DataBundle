@@ -37,7 +37,7 @@ class MapcontentElementModel extends Model
     public static function findPublishedBy($field, $value) {
         $database = Database::getInstance();
         $stmt = $database->prepare("SELECT * FROM tl_c4g_mapcontent_element "."
-        WHERE ($field = ?) AND (publishFrom >= ? OR publishFrom = '') AND (publishTo < ? OR publishTo = '')");
+        WHERE ($field = ?) AND (publishFrom >= ? OR publishFrom IS NULL) AND (publishTo < ? OR publishTo IS NULL)");
         try {
             return static::createCollectionFromDbResult($stmt->execute($value, time(), time()), static::$strTable);
         } catch (Throwable $throwable) {
