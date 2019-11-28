@@ -118,7 +118,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         $fieldList[] = C4GImageField::create('image',
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['image'][0],
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['image'][1],
-            true, false, true, false)
+            true, true, true, false)
             ->setCondition($conditions);
 
         $conditions = [];
