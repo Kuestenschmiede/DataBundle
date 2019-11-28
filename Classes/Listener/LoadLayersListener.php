@@ -201,7 +201,7 @@ class LoadLayersListener
                 if ($typeElement['image'] !== '' && is_string($typeElement['image'])) {
                     $fileModel = FilesModel::findByUuid($typeElement['image']);
                     if ($fileModel !== null) {
-                        $popup->addImage($fileModel->path, $typeElement['imageMaxHeight'], $typeElement['imageMaxWidth']);
+                        $popup->addImage($fileModel->path, $typeElement['imageMaxHeight'], $typeElement['imageMaxWidth'], $typeElement['imageLink']);
                     } else {
                         C4gLogModel::addLogEntry('map-content', 'Popupimage of element '.$typeElement['id'].' with uuid '.$typeElement['image'].' not found.');
                     }

@@ -81,7 +81,7 @@ if ($types !== null) {
                 if ($availableField === 'businessHours') {
                     $fields .= ',businessHoursAdditionalInfo';
                 } elseif ($availableField === 'image') {
-                    $fields .= ',imageMaxHeight,imageMaxWidth';
+                    $fields .= ',imageMaxHeight,imageMaxWidth,imageLink';
                 }
             }
 
@@ -224,6 +224,9 @@ $imageMaxHeight->default('200')->sql("int(10) unsigned NOT NULL default '200'")
 $imageMaxWidth = new NaturalField('imageMaxWidth', $dca);
 $imageMaxWidth->default('200')->sql("int(10) unsigned NOT NULL default '200'")
     ->eval()->maxlength(10)->class('w50');
+
+$imageLink = new TextField('imageLink', $dca);
+$imageLink->eval()->class('clr');
 
 $accessibility = new CheckboxField('accessibility', $dca);
 
@@ -411,7 +414,7 @@ foreach ($GLOBALS['con4gis']['mapcontent_custom_field_types'] as $type) {
                     ->loadCallback($cbClass, 'loadDate')
                     ->default(strval($model->defaultDatePicker))
                     ->sql(sprintf(
-                        "int(10) NOT NULL default '%s'",
+                        "varchar(10) NOT NULL default '%s'",
                         strval($model->defaultDatePicker)))
                     ->eval()
                         ->mandatory(boolval($model->mandatory));

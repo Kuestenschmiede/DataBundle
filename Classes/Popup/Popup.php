@@ -85,9 +85,15 @@ class Popup
         return $this;
     }
 
-    public function addImage(string $path, string $maxHeight, string $maxWidth, string $class = 'image') {
-        $this->popupString .= "<img class=\"$class\" src=\"" . $path . "\" " . "style=\"max-height: " .
+    public function addImage(string $path, string $maxHeight, string $maxWidth, string $link = '', string $class = 'image') {
+        if ($link !== '') {
+            $this->popupString .= "<a href=\"$link\" target=\"_blank\" rel=\"noopener noreferrer\">";
+        }
+        $this->popupString .= "<img class=\"$class\" src=\"$path\" style=\"max-height: " .
             $maxHeight . "px;max-width: " . $maxWidth . "px;\">";
+        if ($link !== '') {
+            $this->popupString .= "</a>";
+        }
         return $this;
     }
 
