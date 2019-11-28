@@ -3,6 +3,7 @@
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentElementModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentCustomFieldModel;
+use con4gis\MapContentBundle\Resources\contao\models\MapcontentDirectoryModel;
 use con4gis\MapContentBundle\Resources\contao\modules\PublicEditableModule;
 use con4gis\MapContentBundle\Resources\contao\modules\PublicNonEditableModule;
 
@@ -41,6 +42,9 @@ array_insert($GLOBALS['BE_MOD'], array_search('content', array_keys($GLOBALS['BE
         ],
         'c4g_mapcontent_custom_field' => [
             'tables' => ['tl_c4g_mapcontent_custom_field']
+        ],
+        'c4g_mapcontent_directory' => [
+            'tables' => ['tl_c4g_mapcontent_directory']
         ]
     ]
 ]);
@@ -54,6 +58,7 @@ $GLOBALS['c4g_locationtypes'][] = 'mpCntnt';
 $GLOBALS['TL_MODELS']['tl_c4g_mapcontent_type'] = MapcontentTypeModel::class;
 $GLOBALS['TL_MODELS']['tl_c4g_mapcontent_element'] = MapcontentElementModel::class;
 $GLOBALS['TL_MODELS']['tl_c4g_mapcontent_custom_field'] = MapcontentCustomFieldModel::class;
+$GLOBALS['TL_MODELS']['tl_c4g_mapcontent_directory'] = MapcontentDirectoryModel::class;
 
 array_insert($GLOBALS['FE_MOD']['con4gis_mapcontent'], 1,
     ['public_editable' => PublicEditableModule::class]
