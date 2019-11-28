@@ -20,5 +20,5 @@ use Contao\Model;
 
 class MapcontentDirectoryModel extends Model
 {
-    protected static $strTable = "tl_c4g_mapcontent_type";
+    protected static $strTable = "tl_c4g_mapcontent_directory";
 }

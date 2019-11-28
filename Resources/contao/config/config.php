@@ -54,6 +54,7 @@ if(TL_MODE == "BE") {
 }
 
 $GLOBALS['c4g_locationtypes'][] = 'mpCntnt';
+$GLOBALS['c4g_locationtypes'][] = 'mpCntnt_directory';
 
 $GLOBALS['TL_MODELS']['tl_c4g_mapcontent_type'] = MapcontentTypeModel::class;
 $GLOBALS['TL_MODELS']['tl_c4g_mapcontent_element'] = MapcontentElementModel::class;
