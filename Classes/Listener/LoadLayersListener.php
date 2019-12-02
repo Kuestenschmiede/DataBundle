@@ -19,6 +19,7 @@ use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\MapContentBundle\Classes\Event\LoadPropertiesEvent;
 use con4gis\MapContentBundle\Classes\Popup\Popup;
+use con4gis\MapContentBundle\Resources\contao\models\MapcontentCustomFieldModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentElementModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
 use con4gis\MapsBundle\Classes\Events\LoadLayersEvent;
@@ -201,12 +202,15 @@ class LoadLayersListener
                         $popup->addEntry(implode(', ', $address), 'address');
                     }
 
-                    elseif ($availableField === 'image' && is_string($typeElement['image'])) {
-                        $fileModel = FilesModel::findByUuid($typeElement['image']);
-                        if ($fileModel !== null) {
-                            $popup->addImageEntry($fileModel->path, $typeElement['imageMaxHeight'], $typeElement['imageMaxWidth'], 'image' , strval($typeElement['imageLink']));
-                        } else {
-                            C4gLogModel::addLogEntry('map-content', 'Popupimage of element '.$typeElement['id'].' with uuid '.$typeElement['image'].' not found.');
+                    elseif ($availableField === 'image') {
+                        if (is_string($typeElement['image']) === true)
+                        {
+                            $fileModel = FilesModel::findByUuid($typeElement['image']);
+                            if ($fileModel !== null) {
+                                $popup->addImageEntry($fileModel->path, $typeElement['imageMaxHeight'], $typeElement['imageMaxWidth'], 'image', strval($typeElement['imageLink']));
+                            } else {
+                                C4gLogModel::addLogEntry('map-content', 'Popupimage of element ' . $typeElement['id'] . ' with uuid ' . $typeElement['image'] . ' not found.');
+                            }
                         }
                     }
 
@@ -272,21 +276,29 @@ class LoadLayersListener
                     }
 
                     elseif ($availableField === 'phone') {
-                        $list['linkHref'] = 'tel:'.$typeElement['phone'];
-                        $list['linkTitle'] = "Tel.: ".$typeElement['phone'];
-                        $popup->addLinkEntry($list['linkTitle'], 'phone', $list['linkHref']);
-                    } elseif ($availableField === 'mobile' && $typeElement['mobile'] !== '') {
-                        $list['linkHref'] = 'tel:'.$typeElement['mobile'];
-                        $list['linkTitle'] = "Mobil: ".$typeElement['mobile'];
-                        $popup->addLinkEntry($list['linkTitle'], 'mobile', $list['linkHref']);
+                        if ($typeElement['phone'] !== '') {
+                            $list['linkHref'] = 'tel:' . $typeElement['phone'];
+                            $list['linkTitle'] = "Tel.: " . $typeElement['phone'];
+                            $popup->addLinkEntry($list['linkTitle'], 'phone', $list['linkHref']);
+                        }
+                    } elseif ($availableField === 'mobile') {
+                        if ($typeElement['mobile'] !== '') {
+                            $list['linkHref'] = 'tel:' . $typeElement['mobile'];
+                            $list['linkTitle'] = "Mobil: " . $typeElement['mobile'];
+                            $popup->addLinkEntry($list['linkTitle'], 'mobile', $list['linkHref']);
+                        }
                     } elseif ($availableField === 'fax') {
-                        $list['linkHref'] = '';
-                        $list['linkTitle'] = $typeElement['fax'];
-                        $popup->addEntry($list['linkTitle'], 'fax');
+                        if ($typeElement['fax'] !== '') {
+                            $list['linkHref'] = '';
+                            $list['linkTitle'] = $typeElement['fax'];
+                            $popup->addEntry($list['linkTitle'], 'fax');
+                        }
                     } elseif ($availableField === 'email') {
-                        $list['linkHref'] = 'mailto:'.$typeElement['email'];
-                        $list['linkTitle'] = "Email: ".$typeElement['email'];
-                        $popup->addLinkEntry($list['linkTitle'], 'email', $list['linkHref']);
+                        if ($typeElement['email'] !== '') {
+                            $list['linkHref'] = 'mailto:' . $typeElement['email'];
+                            $list['linkTitle'] = "Email: " . $typeElement['email'];
+                            $popup->addLinkEntry($list['linkTitle'], 'email', $list['linkHref']);
+                        }
                     } elseif ($availableField === 'website') {
                         if (!C4GUtils::startsWith($typeElement['website'], 'http')) {
                             $list['linkHref'] = 'http://'.$typeElement['website'];
@@ -296,6 +308,25 @@ class LoadLayersListener
                         $list['linkHref'] = $typeElement['website'];
                         $list['linkTitle'] = $typeElement['website'];
                         $popup->addLinkEntry($list['linkTitle'], 'website', $list['linkHref']);
+                    }
+
+                    else {
+                        $model = MapcontentCustomFieldModel::findBy('alias', $availableField);
+                        if ($model !== null) {
+                            if (strval($model->frontendPopup) === '1') {
+                                if (strval($model->type) === 'legend' && (strval($model->frontendName) !== '' || strval($model->name) !== '')) {
+                                    $popup->addEntry(strval($model->frontendName ?: $model->name), 'legend');
+                                } else {
+                                    $popup->addEntry($typeElement[$availableField], $availableField);
+                                }
+                            }
+                        } else {
+                            if (C4GUtils::endsWith($availableField, '_legend') === true &&
+                                is_string($GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField]) &&
+                                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField] !== '') {
+                                $popup->addEntry($GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField], $availableField);
+                            }
+                        }
                     }
                 }
 
