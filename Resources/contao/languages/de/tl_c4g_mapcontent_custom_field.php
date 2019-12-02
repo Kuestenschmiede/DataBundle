@@ -2,8 +2,8 @@
 
 $strName = 'tl_c4g_mapcontent_custom_field';
 
-$GLOBALS['TL_LANG'][$strName]['install_tool_hint_new'] = 'Nach der Definition eines neuen Feldes ist eine Aktualisierung der Datenbank erforderlich.';
-$GLOBALS['TL_LANG'][$strName]['install_tool_hint_edit'] = 'Bei Änderungen des Datenbank-Alias oder des Vorgabewertes ist eine Leerung des Caches und eine Aktualisierung der Datenbank erforderlich.';
+$GLOBALS['TL_LANG'][$strName]['install_tool_hint'] = 'Nach der Definition eines neuen Feldes sowie nach Änderungen ist es erforderlich, den Cache zu leeren und die Datenbank zu aktualisieren.';
+
 /**
  * Fields
  */
