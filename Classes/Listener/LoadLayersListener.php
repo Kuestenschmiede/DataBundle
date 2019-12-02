@@ -173,6 +173,9 @@ class LoadLayersListener
                 \System::loadLanguageFile('tl_c4g_mapcontent_element');
 
                 $popup->addEntry($typeElement['name'], 'name');
+                if (strval($typeElement['description']) !== '') {
+                    $popup->addEntry($typeElement['description'], 'description');
+                }
                 $addressIsSet = false;
 
                 foreach ($availableFields as $availableField) {
