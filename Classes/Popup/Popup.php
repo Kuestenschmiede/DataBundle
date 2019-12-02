@@ -63,6 +63,7 @@ class Popup
                         'img',
                         '',
                         [
+                            'src' => $path,
                             'maxHeight' => $maxHeight,
                             'maxWidth' => $maxWidth
                         ],
@@ -78,6 +79,7 @@ class Popup
                     'img',
                     '',
                     [
+                        'src' => $path,
                         'maxHeight' => $maxHeight,
                         'maxWidth' => $maxWidth
                     ],
