@@ -36,4 +36,16 @@ class MapcontentCustomFieldModel extends Model
         }
         return parent::findAll($arrOptions);
     }
+    
+    public static function translateFieldKey($strAlias, $strKey)
+    {
+        $field = static::findBy("alias", $strAlias);
+        $arrOptions = unserialize($field->options);
+        foreach ($arrOptions as $option) {
+            if ($option['key'] === $strKey) {
+                return $option['value'];
+            }
+        }
+        return "";
+    }
 }
