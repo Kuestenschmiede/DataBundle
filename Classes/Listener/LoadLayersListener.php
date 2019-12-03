@@ -274,7 +274,7 @@ class LoadLayersListener
 
                     elseif ($availableField === 'linkWizard') {
                         foreach (StringUtil::deserialize($typeElement['linkWizard']) as $link) {
-                            $popup->addEntry($link, 'link');
+                            $popup->addLinkEntry($link['linkTitle'], 'link', $link['linkHref'], $link['linkNewTab']);
                         }
                     }
 
