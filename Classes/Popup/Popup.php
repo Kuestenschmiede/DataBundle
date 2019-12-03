@@ -25,10 +25,16 @@ class Popup
     }
 
     public function addEntry(string $content, string $class) {
+        if (trim($content) === '') {
+            return;
+        }
         $this->popupString .= $this->buildTag('li', $content, ['class' => $class]);
     }
 
     public function addLinkEntry(string $content, string $class, string $href, bool $newTab = true) {
+        if (trim($content) === '' || trim($href) === '') {
+            return;
+        }
         $attributes = [
             'href' => $href
         ];
@@ -48,6 +54,10 @@ class Popup
     }
 
     public function addImageEntry(string $path, string $maxHeight, string $maxWidth, string $class, string $link = '') {
+        if (trim($path) === '' || trim($maxHeight) === '' || trim($maxWidth) === '') {
+            return;
+        }
+
         if ($link !== '') {
             $attributes = [
                 'href' => $link,
