@@ -242,10 +242,6 @@ class LoadLayersListener
                                     $showBusinessTimes = true;
                                 }
                             }
-                            if ($typeElement['businessHoursAdditionalInfo'] !== '') {
-                                $timeString[] = $typeElement['businessHoursAdditionalInfo'];
-                                $showBusinessTimes = true;
-                            }
                             if ($showBusinessTimes === true) {
                                 $bH = [];
                                 $entries = [];
@@ -268,6 +264,9 @@ class LoadLayersListener
                                 foreach ($entries as $entry) {
                                     $popup->addEntry(strval($entry), 'businessHours');
                                 }
+                            }
+                            if ($typeElement['businessHoursAdditionalInfo'] !== '') {
+                                $popup->addEntry(strval($typeElement['businessHoursAdditionalInfo']), 'businessHours');
                             }
                         }
                     }
