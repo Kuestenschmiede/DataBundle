@@ -70,7 +70,7 @@ $GLOBALS['TL_LANG'][$strName]['location_legend'] = 'Koordinaten';
 $GLOBALS['TL_LANG'][$strName]['filter_legend'] = 'Filterdaten';
 $GLOBALS['TL_LANG'][$strName]['accessibility_legend'] = 'Barrierefreiheit';
 $GLOBALS['TL_LANG'][$strName]['linkWizard_legend'] = 'Weitere Links';
-$GLOBALS['TL_LANG'][$strName]['osmId_legend'] = 'Open Street Map';
+$GLOBALS['TL_LANG'][$strName]['osm_legend'] = 'Open Street Map';
 $GLOBALS['TL_LANG'][$strName]['publish_legend'] = 'Anzeige';
 
 /**

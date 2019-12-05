@@ -105,7 +105,7 @@ class MapcontentTypeCallback extends Backend
             'linkWizard_legend' => '<strong>'.$GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'] . $language['linkWizard_legend'] . '</strong>',
             'linkWizard' => $language['linkWizard'][0] .
                 " <sup title='".$language['linkWizard'][1]."'>(?)</sup>",
-            'osm_legend' => '<strong>'.$GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'] . $language['osmId_legend'] . '</strong>',
+            'osm_legend' => '<strong>'.$GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'] . $language['osm_legend'] . '</strong>',
             'osmId' => $language['osmId'][0] .
                 " <sup title='".$language['osmId'][1]."'>(?)</sup>",
             'publish_legend' => '<strong>'.$GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'] .$language['publish_legend'] . '</strong>',
