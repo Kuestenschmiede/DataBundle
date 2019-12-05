@@ -178,31 +178,32 @@ class LoadLayersListener
                 }
                 $addressIsSet = false;
 
-                foreach ($availableFields as $availableField) {
+                foreach ($availableFields as $fieldKey => $availableField) {
                     if (($availableField === 'addressName' ||
                             $availableField === 'addressStreet' ||
                             $availableField === 'addressStreetNumber' ||
                             $availableField === 'addressZip' ||
-                            $availableField === 'addressCity') &&
-                        ($addressIsSet === false)
+                            $availableField === 'addressCity')
                     ) {
-                        $addressIsSet = true;
-                        $address = [];
-                        if ($typeElement['addressName'] !== '') {
-                            $address[] = $typeElement['addressName'];
-                        }
-                        if ($typeElement['addressStreet'] !== '') {
-                            if ($typeElement['addressStreetNumber'] !== '0') {
-                                $address[] = $typeElement['addressStreet'] . " " .
-                                    $typeElement['addressStreetNumber'];
-                            } else {
-                                $address[] = $typeElement['addressStreet'];
+                        if ($addressIsSet === false) {
+                            $addressIsSet = true;
+                            $address = [];
+                            if ($typeElement['addressName'] !== '') {
+                                $address[] = $typeElement['addressName'];
                             }
+                            if ($typeElement['addressStreet'] !== '') {
+                                if ($typeElement['addressStreetNumber'] !== '0') {
+                                    $address[] = $typeElement['addressStreet'] . " " .
+                                        $typeElement['addressStreetNumber'];
+                                } else {
+                                    $address[] = $typeElement['addressStreet'];
+                                }
+                            }
+                            if ($typeElement['addressZip'] !== '' && $typeElement['addressCity'] !== '') {
+                                $address[] = $typeElement['addressZip'] . " " . $typeElement['addressCity'];
+                            }
+                            $popup->addEntry(implode(', ', $address), 'address');
                         }
-                        if ($typeElement['addressZip'] !== '' && $typeElement['addressCity'] !== '') {
-                            $address[] = $typeElement['addressZip'] . " " . $typeElement['addressCity'];
-                        }
-                        $popup->addEntry(implode(', ', $address), 'address');
                     }
 
                     elseif ($availableField === 'image') {
@@ -315,8 +316,29 @@ class LoadLayersListener
                         if ($model !== null) {
                             if (strval($model->frontendPopup) === '1') {
                                 if (strval($model->type) === 'legend' && (strval($model->frontendName) !== '' || strval($model->name) !== '')) {
-                                    $popup->addEntry(strval($model->frontendName ?: $model->name), 'legend');
-                                } else {
+                                    $i = $fieldKey + 1;
+                                    while ($i < count($availableFields)) {
+                                        $legendModel = MapcontentCustomFieldModel::findBy('alias', $availableFields[$i]);
+                                        if ($legendModel !== null && $legendModel->type === 'legend') {
+                                            break;
+                                        } if (C4GUtils::endsWith($availableFields[$i], '_legend') === true) {
+                                            break;
+                                        }
+                                        $i += 1;
+                                    }
+                                    $n = $fieldKey + 1;
+                                    $show = false;
+                                    while ($i > $n) {
+                                        if (strval($typeElement[$availableFields[$n]]) !== ''
+                                            && intval($typeElement[$availableFields[$n]]) !== 0) {
+                                            $show = true;
+                                        }
+                                        $n += 1;
+                                    }
+                                    if ($show === true) {
+                                        $popup->addEntry(strval($model->frontendName ?: $model->name), 'legend');
+                                    }
+                                } elseif (strval($model->type) !== 'legend') {
                                     $popup->addEntry(strval($typeElement[$availableField]), $availableField);
                                 }
                             }
@@ -329,14 +351,40 @@ class LoadLayersListener
                                     case 'publish_legend':
                                         break;
                                     default:
-                                        if (strval($GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField]) !== '') {
-                                            $popup->addEntry(
-                                                strval($GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField]),
-                                                $availableField
-                                            );
+                                        $i = $fieldKey + 1;
+                                        while ($i < count($availableFields)) {
+                                            $legendModel = MapcontentCustomFieldModel::findBy('alias', $availableFields[$i]);
+                                            if ($legendModel !== null && $legendModel->type === 'legend') {
+                                                break;
+                                            } if (C4GUtils::endsWith($availableFields[$i], '_legend') === true) {
+                                                break;
+                                            }
+                                            $i += 1;
+                                        }
+                                        $n = $fieldKey + 1;
+                                        $show = false;
+                                        while ($i > $n) {
+                                            if (strval($typeElement[$availableFields[$n]]) !== ''
+                                            && intval($typeElement[$availableFields[$n]]) !== 0) {
+                                                $show = true;
+                                            }
+                                            $n += 1;
+                                        }
+                                        if ($show === true) {
+                                            if (strval($GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField]) !== '') {
+                                                $popup->addEntry(
+                                                    strval($GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField]),
+                                                    $availableField
+                                                );
+                                            }
                                         }
                                         break;
                                 }
+                            } elseif (strval($typeElement[$availableField]) !== '' &&
+                                intval($typeElement[$availableField]) !== 0) {
+                                $popup->addEntry(
+                                    strval($typeElement[$availableField]),
+                                    $availableField);
                             }
                         }
                     }
