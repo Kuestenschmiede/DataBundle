@@ -326,6 +326,7 @@ class LoadLayersListener
                                     case 'address_legend':
                                     case 'image_legend':
                                     case 'linkWizard_legend':
+                                    case 'publish_legend':
                                         break;
                                     default:
                                         if (strval($GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField]) !== '') {
