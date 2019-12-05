@@ -275,9 +275,7 @@ class LoadLayersListener
                         foreach (StringUtil::deserialize($typeElement['linkWizard']) as $link) {
                             $popup->addLinkEntry(strval($link['linkTitle']), 'link', strval($link['linkHref']), $link['linkNewTab']);
                         }
-                    }
-
-                    elseif ($availableField === 'phone') {
+                    } elseif ($availableField === 'phone') {
                         if ($typeElement['phone'] !== '') {
                             $list['linkHref'] = 'tel:' . $typeElement['phone'];
                             $list['linkTitle'] = "Tel.: " . $typeElement['phone'];
@@ -323,10 +321,21 @@ class LoadLayersListener
                                 }
                             }
                         } else {
-                            if (C4GUtils::endsWith($availableField, '_legend') === true &&
-                                is_string($GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField]) &&
-                                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField] !== '') {
-                                $popup->addEntry(strval($GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField]), $availableField);
+                            if (C4GUtils::endsWith($availableField, '_legend') === true) {
+                                switch ($availableField) {
+                                    case 'address_legend':
+                                    case 'image_legend':
+                                    case 'linkWizard_legend':
+                                        break;
+                                    default:
+                                        if (strval($GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField]) !== '') {
+                                            $popup->addEntry(
+                                                strval($GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField]),
+                                                $availableField
+                                            );
+                                        }
+                                        break;
+                                }
                             }
                         }
                     }
