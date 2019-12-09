@@ -99,9 +99,6 @@ class PublicNonEditableModel
                         $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['timeCaption'];
                 }
             }
-            if ($re['businessHoursAdditionalInfo'] !== '') {
-                $timeString[] = $re['businessHoursAdditionalInfo'];
-            }
 
             $bH = [];
             $entries = [];
@@ -120,6 +117,10 @@ class PublicNonEditableModel
                 } else {
                     $entries[] = $k;
                 }
+            }
+
+            if ($re['businessHoursAdditionalInfo'] !== '') {
+                $entries[] = $re['businessHoursAdditionalInfo'];
             }
 
             foreach ($entries as $entry) {
@@ -202,9 +203,6 @@ class PublicNonEditableModel
                     $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['timeCaption'];
             }
         }
-        if ($array['businessHoursAdditionalInfo'] !== '') {
-            $timeString[] = $array['businessHoursAdditionalInfo'];
-        }
 
         $bH = [];
         $entries = [];
@@ -223,6 +221,10 @@ class PublicNonEditableModel
             } else {
                 $entries[] = $k;
             }
+        }
+
+        if ($array['businessHoursAdditionalInfo'] !== '') {
+            $entries[] = $array['businessHoursAdditionalInfo'];
         }
 
         foreach ($entries as $entry) {
