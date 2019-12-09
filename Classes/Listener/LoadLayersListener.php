@@ -339,7 +339,25 @@ class LoadLayersListener
                                         $popup->addEntry(strval($model->frontendName ?: $model->name), 'legend');
                                     }
                                 } elseif (strval($model->type) !== 'legend') {
-                                    $popup->addEntry(strval($typeElement[$availableField]), $availableField);
+                                    switch ($model->type) {
+                                        case 'select':
+                                        case 'multicheckbox':
+                                            $options = StringUtil::deserialize($model->options);
+                                            if (is_array($options)) {
+                                                foreach ($options as $option) {
+                                                    if ($option['key'] === $typeElement[$availableField]) {
+                                                        $popup->addEntry($option['value'], $availableField);
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            break;
+                                        case 'datepicker':
+                                            $popup->addEntry(date('d.m.Y', $typeElement[$availableField]), $availableField);
+                                            break;
+                                        default:
+                                            $popup->addEntry(strval($typeElement[$availableField]), $availableField);
+                                    }
                                 }
                             }
                         } else {
