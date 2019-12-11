@@ -126,6 +126,18 @@ class PublicNonEditableModel
             foreach ($entries as $entry) {
                 $resultElements[$key]['businessHours'] .= '<li class="c4g_brick_list_column c4g_brick_list_row_column businessHours">'.$entry.'</li>';
             }
+
+            $models = MapcontentCustomFieldModel::findAll();
+            if ($models !== null) {
+                foreach ($models as $model) {
+                    if ($model->type === 'multicheckbox') {
+                        $resultElements[$key][$model->alias] = StringUtil::deserialize($resultElements[$key][$model->alias]);
+                        if (is_array($resultElements[$key][$model->alias])) {
+                            $resultElements[$key][$model->alias] = $model->name.": ". implode(', ', $resultElements[$key][$model->alias]);
+                        }
+                    }
+                }
+            }
         }
 
         return C4GBrickCommon::arrayToObject($resultElements);

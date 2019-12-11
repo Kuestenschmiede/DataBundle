@@ -204,7 +204,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         foreach ($availableFields as $fieldKey => $availableField) {
             $model = MapcontentCustomFieldModel::findBy('alias', $availableField);
             if ($model !== null) {
-                if ($model->frontendList === '1') {
+                if ($model->frontendDetails === '1') {
                     if ($model->type === 'legend') {
                         $i = $fieldKey + 1;
                         while ($i < count($availableFields)) {

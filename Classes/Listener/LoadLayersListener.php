@@ -341,7 +341,6 @@ class LoadLayersListener
                                 } elseif (strval($model->type) !== 'legend') {
                                     switch ($model->type) {
                                         case 'select':
-                                        case 'multicheckbox':
                                             $options = StringUtil::deserialize($model->options);
                                             if (is_array($options)) {
                                                 foreach ($options as $option) {
@@ -350,6 +349,24 @@ class LoadLayersListener
                                                         break;
                                                     }
                                                 }
+                                            }
+                                            break;
+                                        case 'multicheckbox':
+                                            $options = StringUtil::deserialize($model->options);
+                                            $values = StringUtil::deserialize($typeElement[$availableField]);
+                                            $display = [];
+                                            if (is_array($options) && is_array($values)) {
+                                                foreach ($values as $value) {
+                                                    foreach ($options as $option) {
+                                                        if ($value === $option['key']) {
+                                                            $display[] = $option['value'];
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            if (!empty($display)) {
+                                                $popup->addEntry($model->name . ": " . implode(', ', $display), $availableField);
                                             }
                                             break;
                                         case 'datepicker':
