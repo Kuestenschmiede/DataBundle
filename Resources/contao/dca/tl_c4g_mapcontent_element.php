@@ -81,7 +81,7 @@ if ($types !== null) {
                 if ($availableField === 'businessHours') {
                     $fields .= ',businessHoursAdditionalInfo';
                 } elseif ($availableField === 'image') {
-                    $fields .= ',imageMaxHeight,imageMaxWidth';
+                    $fields .= ',imageMaxHeight,imageMaxWidth,imageLink';
                 }
             }
 
@@ -225,6 +225,9 @@ $imageMaxWidth = new NaturalField('imageMaxWidth', $dca);
 $imageMaxWidth->default('200')->sql("int(10) unsigned NOT NULL default '200'")
     ->eval()->maxlength(10)->class('w50');
 
+$imageLink = new TextField('imageLink', $dca);
+$imageLink->eval()->class('clr');
+
 $accessibility = new CheckboxField('accessibility', $dca);
 
 $linkWizard = new MultiColumnField('linkWizard', $dca);
@@ -239,6 +242,7 @@ $linkTitle->eval()
 $linkHref = new TextField('linkHref', $dca, $linkWizard);
 $linkNewTab = new CheckboxField('linkNewTab', $dca, $linkWizard);
 $osmId = new NaturalField('osmId', $dca);
+$osmId->eval()->class('clr');
 
 $publishFrom = new DatePickerField('publishFrom', $dca);
 $publishFrom->saveCallback($cbClass, 'saveDate')
@@ -411,7 +415,7 @@ foreach ($GLOBALS['con4gis']['mapcontent_custom_field_types'] as $type) {
                     ->loadCallback($cbClass, 'loadDate')
                     ->default(strval($model->defaultDatePicker))
                     ->sql(sprintf(
-                        "int(10) NOT NULL default '%s'",
+                        "varchar(10) NOT NULL default '%s'",
                         strval($model->defaultDatePicker)))
                     ->eval()
                         ->mandatory(boolval($model->mandatory));

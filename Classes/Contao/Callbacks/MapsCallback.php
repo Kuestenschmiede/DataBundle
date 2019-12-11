@@ -14,7 +14,7 @@
 
 namespace con4gis\MapContentBundle\Classes\Contao\Callbacks;
 
-
+use con4gis\MapContentBundle\Resources\contao\models\MapcontentDirectoryModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
 use Contao\Backend;
 
@@ -25,9 +25,23 @@ class MapsCallback extends Backend
         $arrTypes = [];
         $t = "tl_c4g_mapcontent_type";
         $arrOptions = array(
-            'order' => "$t.categorySort ASC"
+            'order' => "$t.categorySort ASC, $t.name ASC"
         );
         $types = MapcontentTypeModel::findAll($arrOptions);
+        foreach ($types as $type) {
+            $arrTypes[$type->id] = $type->name;
+        }
+        return $arrTypes;
+    }
+
+    public function getConfiguredDirectories()
+    {
+        $arrTypes = [];
+        $t = "tl_c4g_mapcontent_directory";
+        $arrOptions = array(
+            'order' => "$t.name ASC"
+        );
+        $types = MapcontentDirectoryModel::findAll($arrOptions);
         foreach ($types as $type) {
             $arrTypes[$type->id] = $type->name;
         }

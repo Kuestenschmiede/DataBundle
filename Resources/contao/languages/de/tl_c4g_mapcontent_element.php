@@ -43,6 +43,7 @@ $GLOBALS['TL_LANG'][$strName]['website'] = ['Website', ''];
 $GLOBALS['TL_LANG'][$strName]['image'] = ['Bild', 'Ein Bild, das das Element zeigt.'];
 $GLOBALS['TL_LANG'][$strName]['imageMaxHeight'] = ['Maximale Bildhöhe (Pixel)', 'Das Seitenverhältnis wird beibehalten.'];
 $GLOBALS['TL_LANG'][$strName]['imageMaxWidth'] = ['Maximale Bildbreite (Pixel)', 'Das Seitenverhältnis wird beibehalten.'];
+$GLOBALS['TL_LANG'][$strName]['imageLink'] = ['Bildlink', 'Link, zu dem das Bild führt.'];
 $GLOBALS['TL_LANG'][$strName]['loctype'] = ['Lokationstyp', 'Wählen Sie die Art der Lokation aus.'];
 $GLOBALS['TL_LANG'][$strName]['geox'] = ['Geo-X-Koordinate', 'Wählen Sie die X-Koordinate (Longitude) aus. Mit Verwendung des Geopickers werden beide Felder automatisch befüllt.'];
 $GLOBALS['TL_LANG'][$strName]['geoy'] = ['Geo-Y-Koordinate', 'Wählen Sie die Y-Koordinate (Latitude) aus. Mit Verwendung des Geopickers werden beide Felder automatisch befüllt.'];
@@ -69,7 +70,7 @@ $GLOBALS['TL_LANG'][$strName]['location_legend'] = 'Koordinaten';
 $GLOBALS['TL_LANG'][$strName]['filter_legend'] = 'Filterdaten';
 $GLOBALS['TL_LANG'][$strName]['accessibility_legend'] = 'Barrierefreiheit';
 $GLOBALS['TL_LANG'][$strName]['linkWizard_legend'] = 'Weitere Links';
-$GLOBALS['TL_LANG'][$strName]['osmId_legend'] = 'Open Street Map';
+$GLOBALS['TL_LANG'][$strName]['osm_legend'] = 'Open Street Map';
 $GLOBALS['TL_LANG'][$strName]['publish_legend'] = 'Anzeige';
 
 /**

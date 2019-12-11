@@ -15,10 +15,11 @@
 namespace con4gis\MapContentBundle\Classes\Listener;
 
 
+use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
-use con4gis\MapContentBundle\Classes\Event\LoadPopupEvent;
 use con4gis\MapContentBundle\Classes\Event\LoadPropertiesEvent;
 use con4gis\MapContentBundle\Classes\Popup\Popup;
+use con4gis\MapContentBundle\Resources\contao\models\MapcontentCustomFieldModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentElementModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
 use con4gis\MapsBundle\Classes\Events\LoadLayersEvent;
@@ -170,106 +171,250 @@ class LoadLayersListener
 
                 $popup = new Popup();
                 \System::loadLanguageFile('tl_c4g_mapcontent_element');
-                $popup->addName($typeElement['name']);
 
-                $dispatcher = \Contao\System::getContainer()->get('event_dispatcher');
-
-                if ($typeElement['addressName'] !== '' ||
-                    $typeElement['addressStreet'] !== '' ||
-                    $typeElement['addressStreetNumber'] !== '0' ||
-                    $typeElement['addressZip'] !== '' ||
-                    $typeElement['addressCity'] !== ''
-                ) {
-                    $address = [];
-                    if ($typeElement['addressName'] !== '') {
-                        $address[] = $typeElement['addressName'];
-                    }
-                    if ($typeElement['addressStreet'] !== '') {
-                        if ($typeElement['addressStreetNumber'] !== '0') {
-                            $address[] = $typeElement['addressStreet'] . " " .
-                                $typeElement['addressStreetNumber'];
-                        } else {
-                            $address[] = $typeElement['addressStreet'];
-                        }
-                    }
-                    if ($typeElement['addressZip'] !== '' && $typeElement['addressCity'] !== '') {
-                        $address[] = $typeElement['addressZip'] . " " . $typeElement['addressCity'];
-                    }
-                    $popup->addAddress($address);
+                $popup->addEntry(strval($typeElement['name']), 'name');
+                if (strval($typeElement['description']) !== '') {
+                    $popup->addEntry(strval($typeElement['description']), 'description');
                 }
+                $addressIsSet = false;
 
-                if ($typeElement['image'] !== '' && is_string($typeElement['image'])) {
-                    $fileModel = FilesModel::findByUuid($typeElement['image']);
-                    if ($fileModel !== null) {
-                        $popup->addImage($fileModel->path, $typeElement['imageMaxHeight'], $typeElement['imageMaxWidth']);
-                    } else {
-                        C4gLogModel::addLogEntry('map-content', 'Popupimage of element '.$typeElement['id'].' with uuid '.$typeElement['image'].' not found.');
-                    }
-                }
-
-                $businessTimes = \StringUtil::deserialize($typeElement['businessHours']);
-                if (!empty($businessTimes) || $typeElement['businessHoursAdditionalInfo'] !== '') {
-                    $timeString = [];
-                    $showBusinessTimes = false;
-                    foreach ($businessTimes as $key => $time) {
-                        $timeString[$key] = '';
-                        if ($time['dayFrom'] !== '' && $time['timeFrom'] !== '' && $time['timeTo'] !== '') {
-                            $timeString[$key] .= $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayFrom']];
-                            if ($time['dayTo'] !== $time['dayFrom'] && $time['dayTo'] !== '') {
-                                if (abs(intval($time['dayTo']) - intval($time['dayFrom'])) > 1) {
-                                    $join = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_join']['to'];
+                foreach ($availableFields as $fieldKey => $availableField) {
+                    if (($availableField === 'addressName' ||
+                            $availableField === 'addressStreet' ||
+                            $availableField === 'addressStreetNumber' ||
+                            $availableField === 'addressZip' ||
+                            $availableField === 'addressCity')
+                    ) {
+                        if ($addressIsSet === false) {
+                            $addressIsSet = true;
+                            $address = [];
+                            if ($typeElement['addressName'] !== '') {
+                                $address[] = $typeElement['addressName'];
+                            }
+                            if ($typeElement['addressStreet'] !== '') {
+                                if ($typeElement['addressStreetNumber'] !== '0') {
+                                    $address[] = $typeElement['addressStreet'] . " " .
+                                        $typeElement['addressStreetNumber'];
                                 } else {
-                                    $join = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_join']['and'];
+                                    $address[] = $typeElement['addressStreet'];
                                 }
+                            }
+                            if ($typeElement['addressZip'] !== '' && $typeElement['addressCity'] !== '') {
+                                $address[] = $typeElement['addressZip'] . " " . $typeElement['addressCity'];
+                            }
+                            $popup->addEntry(implode(', ', $address), 'address');
+                        }
+                    }
 
-                                $timeString[$key] .= " $join " . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayTo']];
+                    elseif ($availableField === 'image') {
+                        if (is_string($typeElement['image']) === true)
+                        {
+                            $fileModel = FilesModel::findByUuid($typeElement['image']);
+                            if ($fileModel !== null) {
+                                $popup->addImageEntry($fileModel->path, $typeElement['imageMaxHeight'], $typeElement['imageMaxWidth'], 'image', strval($typeElement['imageLink']));
+                            } else {
+                                C4gLogModel::addLogEntry('map-content', 'Popupimage of element ' . $typeElement['id'] . ' with uuid ' . $typeElement['image'] . ' not found.');
                             }
-                            $timeString[$key] .= ": " . date('H:i', $time['timeFrom']) .
-                                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['timeCaption'] .
-                                " - " . date('H:i', $time['timeTo']) .
-                                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['timeCaption'];
-                            $showBusinessTimes = true;
                         }
                     }
-                    if ($typeElement['businessHoursAdditionalInfo'] !== '') {
-                        $timeString[] = $typeElement['businessHoursAdditionalInfo'];
-                        $showBusinessTimes = true;
+
+                    elseif ($availableField === 'businessHours') {
+                        $businessTimes = \StringUtil::deserialize($typeElement['businessHours']);
+                        if (!empty($businessTimes) || $typeElement['businessHoursAdditionalInfo'] !== '') {
+                            $timeString = [];
+                            $showBusinessTimes = false;
+                            foreach ($businessTimes as $key => $time) {
+                                $timeString[$key] = '';
+                                if ($time['dayFrom'] !== '' && $time['timeFrom'] !== '' && $time['timeTo'] !== '') {
+                                    $timeString[$key] .= $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayFrom']];
+                                    if ($time['dayTo'] !== $time['dayFrom'] && $time['dayTo'] !== '') {
+                                        if (abs(intval($time['dayTo']) - intval($time['dayFrom'])) > 1) {
+                                            $join = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_join']['to'];
+                                        } else {
+                                            $join = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_join']['and'];
+                                        }
+
+                                        $timeString[$key] .= " $join " . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayTo']];
+                                    }
+                                    $timeString[$key] .= ": " . date('H:i', $time['timeFrom']) .
+                                        $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['timeCaption'] .
+                                        " - " . date('H:i', $time['timeTo']) .
+                                        $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['timeCaption'];
+                                    $showBusinessTimes = true;
+                                }
+                            }
+                            if ($showBusinessTimes === true) {
+                                $bH = [];
+                                $entries = [];
+                                foreach ($timeString as $string) {
+                                    $explode = explode(': ', $string);
+                                    $key = $explode[0];
+                                    if (isset($bH[$key]) === true) {
+                                        $bH[$key] .= ', ' . $explode[1];
+                                    } else {
+                                        $bH[$key] = $explode[1];
+                                    }
+                                }
+                                foreach ($bH as $k => $v) {
+                                    if (!empty($v)) {
+                                        $entries[] = $k . ': ' . $v;
+                                    } else {
+                                        $entries[] = $k;
+                                    }
+                                }
+                                foreach ($entries as $entry) {
+                                    $popup->addEntry(strval($entry), 'businessHours');
+                                }
+                            }
+                            if ($typeElement['businessHoursAdditionalInfo'] !== '') {
+                                $popup->addEntry(strval($typeElement['businessHoursAdditionalInfo']), 'businessHours');
+                            }
+                        }
                     }
-                    if ($showBusinessTimes === true) {
-                        $bH = [];
-                        $entries = [];
-                        foreach ($timeString as $string) {
-                            $explode = explode(': ', $string);
-                            $key = $explode[0];
-                            if (isset($bH[$key]) === true) {
-                                $bH[$key] .= ', '.$explode[1];
-                            } else {
-                                $bH[$key] = $explode[1];
+
+                    elseif ($availableField === 'linkWizard') {
+                        foreach (StringUtil::deserialize($typeElement['linkWizard']) as $link) {
+                            $popup->addLinkEntry(strval($link['linkTitle']), 'link', strval($link['linkHref']), $link['linkNewTab']);
+                        }
+                    } elseif ($availableField === 'phone') {
+                        if ($typeElement['phone'] !== '') {
+                            $list['linkHref'] = 'tel:' . $typeElement['phone'];
+                            $list['linkTitle'] = "Tel.: " . $typeElement['phone'];
+                            $popup->addLinkEntry(strval($list['linkTitle']), 'phone', strval($list['linkHref']));
+                        }
+                    } elseif ($availableField === 'mobile') {
+                        if ($typeElement['mobile'] !== '') {
+                            $list['linkHref'] = 'tel:' . $typeElement['mobile'];
+                            $list['linkTitle'] = "Mobil: " . $typeElement['mobile'];
+                            $popup->addLinkEntry(strval($list['linkTitle']), 'mobile', strval($list['linkHref']));
+                        }
+                    } elseif ($availableField === 'fax') {
+                        if ($typeElement['fax'] !== '') {
+                            $list['linkHref'] = '';
+                            $list['linkTitle'] = $typeElement['fax'];
+                            $popup->addEntry(strval($list['linkTitle']), 'fax');
+                        }
+                    } elseif ($availableField === 'email') {
+                        if ($typeElement['email'] !== '') {
+                            $list['linkHref'] = 'mailto:' . $typeElement['email'];
+                            $list['linkTitle'] = "Email: " . $typeElement['email'];
+                            $popup->addLinkEntry(strval($list['linkTitle']), 'email', strval($list['linkHref']));
+                        }
+                    } elseif ($availableField === 'website') {
+                        if (!C4GUtils::startsWith($typeElement['website'], 'http')) {
+                            $list['linkHref'] = 'http://'.$typeElement['website'];
+                        } else {
+                            $list['linkHref'] = $typeElement['website'];
+                        }
+                        $list['linkHref'] = $typeElement['website'];
+                        $list['linkTitle'] = $typeElement['website'];
+                        $popup->addLinkEntry(strval($list['linkTitle']), 'website', strval($list['linkHref']));
+                    }
+
+                    else {
+                        $model = MapcontentCustomFieldModel::findBy('alias', $availableField);
+                        if ($model !== null) {
+                            if (strval($model->frontendPopup) === '1') {
+                                if (strval($model->type) === 'legend' && (strval($model->frontendName) !== '' || strval($model->name) !== '')) {
+                                    $i = $fieldKey + 1;
+                                    while ($i < count($availableFields)) {
+                                        $legendModel = MapcontentCustomFieldModel::findBy('alias', $availableFields[$i]);
+                                        if ($legendModel !== null && $legendModel->type === 'legend') {
+                                            break;
+                                        } if (C4GUtils::endsWith($availableFields[$i], '_legend') === true) {
+                                            break;
+                                        }
+                                        $i += 1;
+                                    }
+                                    $n = $fieldKey + 1;
+                                    $show = false;
+                                    while ($i > $n) {
+                                        if (strval($typeElement[$availableFields[$n]]) !== ''
+                                            && intval($typeElement[$availableFields[$n]]) !== 0) {
+                                            $show = true;
+                                        }
+                                        $n += 1;
+                                    }
+                                    if ($show === true) {
+                                        $popup->addEntry(strval($model->frontendName ?: $model->name), 'legend');
+                                    }
+                                } elseif (strval($model->type) !== 'legend') {
+                                    switch ($model->type) {
+                                        case 'select':
+                                        case 'multicheckbox':
+                                            $options = StringUtil::deserialize($model->options);
+                                            if (is_array($options)) {
+                                                foreach ($options as $option) {
+                                                    if ($option['key'] === $typeElement[$availableField]) {
+                                                        $popup->addEntry($option['value'], $availableField);
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            break;
+                                        case 'datepicker':
+                                            $popup->addEntry(date('d.m.Y', $typeElement[$availableField]), $availableField);
+                                            break;
+                                        default:
+                                            $popup->addEntry(strval($typeElement[$availableField]), $availableField);
+                                    }
+                                }
+                            }
+                        } else {
+                            if (C4GUtils::endsWith($availableField, '_legend') === true) {
+                                switch ($availableField) {
+                                    case 'address_legend':
+                                    case 'image_legend':
+                                    case 'linkWizard_legend':
+                                    case 'publish_legend':
+                                        break;
+                                    default:
+                                        $i = $fieldKey + 1;
+                                        while ($i < count($availableFields)) {
+                                            $legendModel = MapcontentCustomFieldModel::findBy('alias', $availableFields[$i]);
+                                            if ($legendModel !== null && $legendModel->type === 'legend') {
+                                                break;
+                                            } if (C4GUtils::endsWith($availableFields[$i], '_legend') === true) {
+                                                break;
+                                            }
+                                            $i += 1;
+                                        }
+                                        $n = $fieldKey + 1;
+                                        $show = false;
+                                        while ($i > $n) {
+                                            if (strval($typeElement[$availableFields[$n]]) !== ''
+                                            && intval($typeElement[$availableFields[$n]]) !== 0) {
+                                                $show = true;
+                                            }
+                                            $n += 1;
+                                        }
+                                        if ($show === true) {
+                                            if (strval($GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField]) !== '') {
+                                                $popup->addEntry(
+                                                    strval($GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField]),
+                                                    $availableField
+                                                );
+                                            }
+                                        }
+                                        break;
+                                }
+                            } elseif (strval($typeElement[$availableField]) !== '' &&
+                                intval($typeElement[$availableField]) !== 0) {
+                                $popup->addEntry(
+                                    strval($typeElement[$availableField]),
+                                    $availableField);
                             }
                         }
-                        foreach ($bH as $k => $v) {
-                            if (!empty($v)) {
-                                $entries[] = $k.': '.$v;
-                            } else {
-                                $entries[] = $k;
-                            }
-                        }
-                        $popup->addBusinessHours($entries, $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['businessHours'][0].':');
                     }
                 }
 
-                $popup->addContactInfo(strval($typeElement['phone']), strval($typeElement['mobile']), strval($typeElement['fax']), strval($typeElement['email']), strval($typeElement['website']),
-                    $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['contactData'][0].':', 'contact', true);
                 $propertiesEvent = new LoadPropertiesEvent();
                 $propertiesEvent->setElementData($typeElement);
+
+                $dispatcher = \Contao\System::getContainer()->get('event_dispatcher');
                 $dispatcher->dispatch($propertiesEvent::NAME, $propertiesEvent);
                 
                 $properties = $propertiesEvent->getProperties();
-
-                if ($typeElement['linkWizard']) {
-                    $popup->addLinks(StringUtil::deserialize($typeElement['linkWizard']));
-                }
-                $popup->addDescription(strval($typeElement['description']));
 
                 $label = $type['showLabels'] === '1' ? $typeElement['name'] : '';
 
