@@ -177,6 +177,13 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             ->setLatitudeColumn('geoy')
             ->setnewTab();
 
+        $fieldList[] = C4GTextField::create('searchInfo',
+            '',
+            '',
+            false, true, true, false)
+            ->setShowIfEmpty(false)
+            ->setHidden();
+
         // Details
 
         $fieldList[] = C4GHeadlineField::create('data',
