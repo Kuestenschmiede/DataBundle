@@ -74,8 +74,7 @@ class Popup
                         '',
                         [
                             'src' => $path,
-                            'maxHeight' => $maxHeight,
-                            'maxWidth' => $maxWidth
+                            'style' => "max-height: $maxHeight\px;max-width: $maxWidth\px;"
                         ],
                         false
                     ),
@@ -90,8 +89,7 @@ class Popup
                     '',
                     [
                         'src' => $path,
-                        'maxHeight' => $maxHeight,
-                        'maxWidth' => $maxWidth
+                        'style' => "max-height: $maxHeight;max-width: $maxWidth;"
                     ],
                     false
                 ),

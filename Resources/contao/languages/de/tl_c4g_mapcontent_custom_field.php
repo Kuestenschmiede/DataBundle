@@ -17,8 +17,7 @@ $GLOBALS['TL_LANG'][$strName]['search'] = ['Suchbar', 'Falls gesetzt, ist das Fe
 $GLOBALS['TL_LANG'][$strName]['mandatory'] = ['Pflichtfeld', 'Falls gesetzt, ist das Feld ein Pflichtfeld.'];
 $GLOBALS['TL_LANG'][$strName]['maxLength'] = ['Maximale Länge', 'Die maximale Anzahl Stellen.'];
 $GLOBALS['TL_LANG'][$strName]['default'] = ['Vorgabewert', 'Der Vorgabewert des Feldes.'];
-$GLOBALS['TL_LANG'][$strName]['rte'] = ['Rich Text Editor', 'Falls gesetzt, bietet das Feld erweiterte Funktionen, z.B. Fett- und Kursivschrift.'];
-$GLOBALS['TL_LANG'][$strName]['class'] = ['Class', 'Beschreibung fehlt.'];
+$GLOBALS['TL_LANG'][$strName]['class'] = ['Spalte', 'Die Spaltenpositionierung im Backend.'];
 $GLOBALS['TL_LANG'][$strName]['margin'] = ['Oberer Rand', 'Falls gesetzt, wird über dem Feld ein Rand von 12 Pixeln eingefügt.'];
 $GLOBALS['TL_LANG'][$strName]['options'] = ['Optionen', 'Die Optionen, die zur Verfügung stehen. Der Schlüssel wird in der Datenbank gespeichert, die Übersetzung dem Nutzer ausgegeben.'];
 $GLOBALS['TL_LANG'][$strName]['key'] = ['Schlüssel', 'Der in der Datenbank gespeicherte Wert. Der Schlüssel sollte nachträglich nicht mehr geändert werden.'];
@@ -63,6 +62,6 @@ $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['legend'] = 'Überschrift';
  * Class Options
  */
 
-$GLOBALS['TL_LANG']['mapcontent_custom_field_class_options']['w50'] = 'w50';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_class_options']['w50 clr'] = 'w50 clr';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_class_options']['clr'] = 'clr';
+$GLOBALS['TL_LANG']['mapcontent_custom_field_class_options']['w50'] = 'Einspaltig';
+$GLOBALS['TL_LANG']['mapcontent_custom_field_class_options']['w50 clr'] = 'Einspaltig, Links';
+$GLOBALS['TL_LANG']['mapcontent_custom_field_class_options']['clr'] = 'Zweispaltig';
