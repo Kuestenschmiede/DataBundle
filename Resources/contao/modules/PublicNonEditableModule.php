@@ -18,9 +18,11 @@ use con4gis\ProjectsBundle\Classes\Database\C4GBrickDatabaseType;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GHeadlineField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GImageField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GKeyField;
+use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GLinkButtonField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GLinkField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GMapLinkButtonField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GMultiCheckboxField;
+use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GMultiLinkField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GTextField;
 use con4gis\ProjectsBundle\Classes\Framework\C4GBrickModuleParent;
 use con4gis\ProjectsBundle\Classes\Lists\C4GBrickRenderMode;
@@ -159,6 +161,10 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             ->setLinkType(C4GLinkField::LINK_TYPE_DEFAULT)
             ->setNewTab();
 
+        $fieldList[] = C4GMultiLinkField::create('linkWizard',
+            '', '', false,
+            true, true, false);
+
         $customFields = MapcontentCustomFieldModel::findAll();
         foreach ($customFields as $customField) {
             if ($customField->frontendList === '1') {
@@ -170,6 +176,13 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             }
         }
 
+        $fieldList[] = C4GTextField::create('searchInfo',
+            '',
+            '',
+            false, true, true, false)
+            ->setShowIfEmpty(false)
+            ->setHidden();
+
         $fieldList[] = C4GMapLinkButtonField::create('maplink')
             ->setTargetPageId($this->mapPage)
             ->setButtonLabel('zur Karte')
@@ -177,12 +190,16 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             ->setLatitudeColumn('geoy')
             ->setnewTab();
 
-        $fieldList[] = C4GTextField::create('searchInfo',
-            '',
-            '',
-            false, true, true, false)
-            ->setShowIfEmpty(false)
-            ->setHidden();
+        foreach ($customFields as $customField) {
+            if ($customField->frontendList === '1' && $customField->type === 'link') {
+                $link = C4GLinkButtonField::create($customField->alias);
+                $link->setButtonLabel($customField->linkTitle)
+                    ->setNewTab($customField->linkNewTab === '1')
+                    ->setTargetMode(C4GLinkButtonField::TARGET_MODE_URL)
+                    ->setTargetPageUrl($customField->linkHref);
+                $fieldList[] = $link;
+            }
+        }
 
         // Details
 
@@ -339,16 +356,12 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField][0],
                                 $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField][1],
                                 true, false, true, false);
-                            breaK;
+                            break;
                         case 'linkWizard':
-                            foreach (StringUtil::deserialize($model->linkWizard) as $link) {
-                                $fieldList[] = C4GTextField::create($link['linkTitle'],
-                                    $link['linkTitle'], '', true,
-                                    false, false, false)
-                                ->setAddStrBeforeValue($link['linkHref'])
-                                ->setShowIfEmpty(true);
-                            }
-                            breaK;
+                            $fieldList[] = C4GMultiLinkField::create('linkWizard',
+                                '', '', true,
+                                false, true, false);
+                            break;
                         default:
                             $fieldList[] = C4GTextField::create($availableField,
                                 $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField][0],

@@ -49,7 +49,8 @@ $dca->palette()->selector(['type'])
     ->subPalette('type', 'select', ",description$generalFields;{type_specific_legend},options,defaultSelect")
     ->subPalette('type', 'checkbox', ",description$generalFields;{type_specific_legend},defaultCheckbox")
     ->subPalette('type', 'multicheckbox', ",description$generalFields;{type_specific_legend},options,defaultMultiCheckbox")
-    ->subPalette('type', 'datepicker', ",description$generalFields;{type_specific_legend},defaultDatePicker");
+    ->subPalette('type', 'datepicker', ",description$generalFields;{type_specific_legend},defaultDatePicker")
+    ->subPalette('type', 'link', ",description$generalFields;{type_specific_legend},defaultCheckbox,linkTitle,linkHref,linkNewTab");
 
 $id = new IdField('id', $dca);
 
@@ -188,3 +189,13 @@ $defaultDatePicker->label('default')
     ->saveCallback($cbClass, 'saveDate')
     ->loadCallback($cbClass, 'loadDate')
     ->sql("varchar(10) NOT NULL default ''");
+
+$linkTitle = new TextField('linkTitle', $dca);
+$linkTitle->eval()
+    ->class('w50');
+$linkHref = new TextField('linkHref', $dca);
+$linkHref->eval()
+    ->class('w50');
+$linkNewTab = new CheckboxField('linkNewTab', $dca);
+$linkNewTab->eval()
+    ->class('clr');
