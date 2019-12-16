@@ -166,8 +166,9 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             true, true, false);
 
         $customFields = MapcontentCustomFieldModel::findAll();
+
         foreach ($customFields as $customField) {
-            if ($customField->frontendList === '1') {
+            if ($customField->frontendList === '1' && ($customField->type !== 'link')) {
                 $fieldList[] = C4GTextField::create($customField->alias,
                     $customField->name,
                     $customField->description,
@@ -196,7 +197,9 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                 $link->setButtonLabel($customField->linkTitle)
                     ->setNewTab($customField->linkNewTab === '1')
                     ->setTargetMode(C4GLinkButtonField::TARGET_MODE_URL)
-                    ->setTargetPageUrl($customField->linkHref);
+                    ->setTargetPageUrl($customField->linkHref)
+                    ->setConditional()
+                    ->setFormField(false);
                 $fieldList[] = $link;
             }
         }

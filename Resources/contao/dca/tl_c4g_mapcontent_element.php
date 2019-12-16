@@ -371,14 +371,14 @@ foreach ($GLOBALS['con4gis']['mapcontent_custom_field_types'] as $type) {
                     }
                     $field->options($formattedOptions);
                 }
-            } elseif ($type === 'checkbox') {
-                $field = new SelectField($model->alias, $dca);
+            } elseif ($type === 'checkbox' || $type === 'link') {
+                $field = new CheckboxField($model->alias, $dca);
                 $field->hardLabel(strval($model->name), strval($model->description))
                     ->filter(boolval($model->filter))
                     ->search(boolval($model->search))
                     ->default(strval($model->defaultCheckbox))
                     ->sql(sprintf(
-                        "varchar(255) NOT NULL default '%s'",
+                        "char(1) NOT NULL default '%s'",
                         strval($model->defaultCheckbox)))
                     ->eval()
                         ->mandatory(boolval($model->mandatory));
