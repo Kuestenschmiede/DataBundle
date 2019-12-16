@@ -192,7 +192,9 @@ $defaultDatePicker->label('default')
 
 $linkTitle = new TextField('linkTitle', $dca);
 $linkTitle->eval()
-    ->class('w50');
+    ->class('w50')
+    ->preserveTags()
+    ->allowHtml();
 $linkHref = new TextField('linkHref', $dca);
 $linkHref->eval()
     ->class('w50');
