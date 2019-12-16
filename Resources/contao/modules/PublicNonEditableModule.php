@@ -69,7 +69,16 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         $this->dialogParams->setWithLabels(false);
         $this->dialogParams->setWithDescriptions(false);
         $this->dialogParams->setId($id);
+
         static::$type = $this->c4g_mapcontent_type;
+        
+        if (strval($this->caption) !== '') {
+            $this->dialogParams->setBrickCaption(strval($this->caption));
+        }
+
+        if (strval($this->captionPlural) !== '') {
+            $this->dialogParams->setBrickCaptionPlural(strval($this->captionPlural));
+        }
     }
 
     protected function compileCss()

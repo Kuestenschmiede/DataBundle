@@ -10,7 +10,7 @@
  * @link      https://www.kuestenschmiede.de
  */
 
-$GLOBALS['TL_DCA']['tl_module']['palettes']['public_noneditable'] = '{title_legend},name,headline,type;{c4g_mapcontent_type_legend},c4g_mapcontent_type;{mapPage_legend},mapPage';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['public_noneditable'] = '{title_legend},name,headline,type;{caption_legend},captionPlural,caption;{c4g_mapcontent_type_legend},c4g_mapcontent_type;{mapPage_legend},mapPage';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['public_editable'] = '{title_legend},name,headline,type;';
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_mapcontent_type'] =
@@ -27,4 +27,18 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['mapPage'] =
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['mapPage'],
         'inputType'               => 'pageTree',
         'sql'                     => "int(10) unsigned NOT NULL default '0'"
+    ];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['caption'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['caption'],
+        'inputType'               => 'text',
+        'sql'                     => "varchar(255) NOT NULL default ''"
+    ];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['captionPlural'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['captionPlural'],
+        'inputType'               => 'text',
+        'sql'                     => "varchar(255) NOT NULL default ''"
     ];
