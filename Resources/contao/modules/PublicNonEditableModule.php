@@ -277,6 +277,11 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             ->setShowIfEmpty(false)
                             ->setOptions($formattedOptions)
                             ->setSort(false);
+                    } elseif ($model->type === 'link') {
+                        $fieldList[] = C4GLinkField::create($model->alias,
+                            $model->name,
+                            $model->description,
+                            true, false, true, false);
                     } else {
                         switch ($availableField) {
                             default:
