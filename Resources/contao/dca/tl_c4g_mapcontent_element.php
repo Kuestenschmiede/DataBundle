@@ -298,18 +298,19 @@ foreach ($GLOBALS['con4gis']['mapcontent_custom_field_types'] as $type) {
                     $class .= ' m12';
                 }
                 $field->eval()->class($class);
-            } elseif ($type === 'textarea') {
+            } elseif ($type === 'texteditor') {
                 $field = new TextAreaField($model->alias, $dca);
                 $field->hardLabel(strval($model->name), strval($model->description))
                     ->filter(boolval($model->filter))
                     ->search(boolval($model->search))
                     ->default(strval($model->defaultTextEditor))
                     ->sql(sprintf(
-                        "TEXT NOT NULL DEFAULT '%s'",
+                        "TEXT NULL DEFAULT '%s'",
                         strval($model->defaultTextEditor)))
                     ->eval()
                         ->mandatory(boolval($model->mandatory))
-                        ->maxlength(intval($model->maxLength));
+                        ->maxlength(intval($model->maxLength))
+                        ->rte();
                 $class = strval($model->class);
                 if (boolval($model->margin) === true) {
                     $class .= ' m12';
