@@ -50,7 +50,8 @@ $dca->palette()->selector(['type'])
     ->subPalette('type', 'checkbox', ",description$generalFields;{type_specific_legend},defaultCheckbox")
     ->subPalette('type', 'multicheckbox', ",description$generalFields;{type_specific_legend},options,defaultMultiCheckbox")
     ->subPalette('type', 'datepicker', ",description$generalFields;{type_specific_legend},defaultDatePicker")
-    ->subPalette('type', 'link', ",description$generalFields;{type_specific_legend},defaultCheckbox,linkTitle,linkHref,linkNewTab");
+    ->subPalette('type', 'link', ",description$generalFields;{type_specific_legend},defaultCheckbox,linkTitle,linkHref,linkNewTab")
+    ->subPalette('type', 'legend', ";{frontend_legend},frontendName,frontendPopup,frontendList,frontendDetails");
 
 $id = new IdField('id', $dca);
 
