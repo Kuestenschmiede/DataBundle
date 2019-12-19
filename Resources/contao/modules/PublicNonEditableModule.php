@@ -294,21 +294,27 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                 }
             } else {
                 if (C4GUtils::endsWith($availableField, '_legend') === true) {
-                    $i = $fieldKey + 1;
-                    while ($i < count($availableFields)) {
-                        $legendModel = MapcontentCustomFieldModel::findBy('alias', $availableFields[$i]);
-                        if ($legendModel !== null && $legendModel->type === 'legend') {
+                    switch ($availableField) {
+                        case 'publish_legend':
                             break;
-                        } if (C4GUtils::endsWith($availableFields[$i], '_legend') === true) {
+                        default:
+                            $i = $fieldKey + 1;
+                            while ($i < count($availableFields)) {
+                                $legendModel = MapcontentCustomFieldModel::findBy('alias', $availableFields[$i]);
+                                if ($legendModel !== null && $legendModel->type === 'legend') {
+                                    break;
+                                } if (C4GUtils::endsWith($availableFields[$i], '_legend') === true) {
+                                    break;
+                                }
+                                $i += 1;
+                            }
+                            if (($i - 1) > ($fieldKey + 1)) {
+                                $fieldList[] = C4GHeadlineField::create($availableField,
+                                    $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField],
+                                    '',
+                                    true, false, false, false);
+                            }
                             break;
-                        }
-                        $i += 1;
-                    }
-                    if (($i - 1) > ($fieldKey + 1)) {
-                        $fieldList[] = C4GHeadlineField::create($availableField,
-                            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField],
-                            '',
-                            true, false, false, false);
                     }
                 } else {
                     switch ($availableField) {
