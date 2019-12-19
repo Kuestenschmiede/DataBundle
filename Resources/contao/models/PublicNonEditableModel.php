@@ -143,6 +143,17 @@ class PublicNonEditableModel
                                 $resultElements[$key]['searchInfo'] .= implode(', ', $resultElements[$key][$model->alias]) . " ";
                             }
                         }
+                    } elseif ($model->type === 'select') {
+                        if ($resultElements[$key][$model->alias]) {
+                            $options = StringUtil::deserialize($model->options);
+                            if ($options !== null) {
+                                foreach ($options as $option) {
+                                    if ($option['key'] === $resultElements[$key][$model->alias]) {
+                                        $resultElements[$key][$model->alias] = $option['value'];
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -251,6 +262,24 @@ class PublicNonEditableModel
 
         foreach ($entries as $entry) {
             $array['businessHours'] .= '<li class="c4g_brick_list_column c4g_brick_list_row_column businessHours">'.$entry.'</li>';
+        }
+
+        $customFields = MapcontentCustomFieldModel::findAll();
+        if ($customFields !== null) {
+            foreach ($customFields as $customField) {
+                if ($customField->type === 'select') {
+                    if ($array[$customField->alias]) {
+                        $options = StringUtil::deserialize($customField->options);
+                        if ($options !== null) {
+                            foreach ($options as $option) {
+                                if ($option['key'] === $array[$customField->alias]) {
+                                    $array[$customField->alias] = $option['value'];
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         return C4GBrickCommon::arrayToObject($array);
