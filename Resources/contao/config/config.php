@@ -30,25 +30,23 @@ $GLOBALS['con4gis']['map-content']['frontend']['contact']['default'] = false;
 $GLOBALS['con4gis']['map-content']['frontend']['accessibility']['default'] = false;
 $GLOBALS['con4gis']['map-content']['frontend']['image']['default'] = false;
 
-array_insert($GLOBALS['BE_MOD'], array_search('con4gis', array_keys($GLOBALS['BE_MOD'])) + 3,
-    ['con4gis_mapcontent' => [
-        'c4g_mapcontent_type' => [
-            'tables' => ['tl_c4g_mapcontent_type'],
-            'stylesheet' => 'bundles/con4gismapcontent/css/backend_map_content_type.css'
-        ],
-        'c4g_mapcontent_element' => [
-            'tables' => ['tl_c4g_mapcontent_element'],
-            'javascript' => '/bundles/con4giseditor/js/c4g-backend-helper.js',
-            'stylesheet' => [
-                'bundles/con4gismapcontent/css/backend_map_content_element.css'
-            ]
-        ],
-        'c4g_mapcontent_custom_field' => [
-            'tables' => ['tl_c4g_mapcontent_custom_field']
-        ],
-        'c4g_mapcontent_directory' => [
-            'tables' => ['tl_c4g_mapcontent_directory']
+$GLOBALS['BE_MOD']['con4gis'] = array_merge($GLOBALS['BE_MOD']['con4gis'], [
+    'c4g_mapcontent_type' => [
+        'tables' => ['tl_c4g_mapcontent_type'],
+        'stylesheet' => 'bundles/con4gismapcontent/css/backend_map_content_type.css'
+    ],
+    'c4g_mapcontent_element' => [
+        'tables' => ['tl_c4g_mapcontent_element'],
+        'javascript' => '/bundles/con4giseditor/js/c4g-backend-helper.js',
+        'stylesheet' => [
+            'bundles/con4gismapcontent/css/backend_map_content_element.css'
         ]
+    ],
+    'c4g_mapcontent_custom_field' => [
+        'tables' => ['tl_c4g_mapcontent_custom_field']
+    ],
+    'c4g_mapcontent_directory' => [
+        'tables' => ['tl_c4g_mapcontent_directory']
     ]
 ]);
 

@@ -16,6 +16,10 @@
   background-color: #2C3E50;
 }*/
 
-#tl_navigation .tl_level_1_group .group-con4gis_mapcontent {
-  background: url("../../con4giscore/images/con4gis.svg") 7px center no-repeat;
+/*#tl_navigation .tl_level_1_group .group-con4gis_mapcontent {*/
+/*  background: url("../../con4giscore/images/con4gis.svg") 7px center no-repeat;*/
+/*}*/
+
+li .c4g_mapcontent_custom_field, li .c4g_mapcontent_element, li .c4g_mapcontent_type, li .c4g_mapcontent_directory {
+  display: none !important;
 }
