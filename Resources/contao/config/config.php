@@ -30,7 +30,7 @@ $GLOBALS['con4gis']['map-content']['frontend']['contact']['default'] = false;
 $GLOBALS['con4gis']['map-content']['frontend']['accessibility']['default'] = false;
 $GLOBALS['con4gis']['map-content']['frontend']['image']['default'] = false;
 
-array_insert($GLOBALS['BE_MOD'], array_search('content', array_keys($GLOBALS['BE_MOD'])) + 3,
+array_insert($GLOBALS['BE_MOD'], array_search('con4gis', array_keys($GLOBALS['BE_MOD'])) + 3,
     ['con4gis_mapcontent' => [
         'c4g_mapcontent_type' => [
             'tables' => ['tl_c4g_mapcontent_type'],
