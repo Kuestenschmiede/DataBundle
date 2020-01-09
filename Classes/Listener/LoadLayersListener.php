@@ -4,16 +4,13 @@
  * the gis-kit for Contao CMS.
  *
  * @package   	con4gis
- * @version        6
+ * @version    7
  * @author  	    con4gis contributors (see "authors.txt")
  * @license 	    LGPL-3.0-or-later
  * @copyright 	Küstenschmiede GmbH Software & Design
  * @link              https://www.con4gis.org
- *
  */
-
 namespace con4gis\MapContentBundle\Classes\Listener;
-
 
 use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
@@ -49,7 +46,7 @@ class LoadLayersListener
         EventDispatcherInterface $eventDispatcher
     ) {
         $mapContentLayer = $event->getLayerData();
-        if (!$mapContentLayer['type'] === "mpCntnt") {
+        if (!$mapContentLayer['type'] === 'mpCntnt') {
             return;
         }
         $objMapContent = C4gMapsModel::findByPk($mapContentLayer['id']);
@@ -72,7 +69,7 @@ class LoadLayersListener
         EventDispatcherInterface $eventDispatcher
     ) {
         $mapContentLayer = $event->getLayerData();
-        if (!$mapContentLayer['type'] === "mpCntnt") {
+        if (!$mapContentLayer['type'] === 'mpCntnt') {
             return;
         }
         $objLocations = [];
@@ -87,20 +84,20 @@ class LoadLayersListener
                 $arrElements[$typeId] = $elements;
             }
         }
-        
+
         $addData = $event->getAdditionalData();
         $addData['types'] = $types;
         $addData['elements'] = $arrElements;
         $event->setAdditionalData($addData);
     }
-    
+
     public function onLoadLayersCreateMapStructures(
         LoadLayersEvent $event,
         $eventName,
         EventDispatcherInterface $eventDispatcher
     ) {
         $mapContentLayer = $event->getLayerData();
-        if (!($mapContentLayer['type'] === "mpCntnt")) {
+        if (!($mapContentLayer['type'] === 'mpCntnt')) {
             return;
         }
         $fmClass = new C4GBrickMapFrontendParent();
@@ -125,17 +122,16 @@ class LoadLayersListener
             $availableFields = unserialize($type['availableFields']);
             if ($availableFields) {
                 $strSelect = 'SELECT * FROM tl_c4g_mapcontent_custom_field WHERE type="multicheckbox" AND frontendFilter =1 AND alias IN(';
-                foreach($availableFields as $availableField) {
-                    $strSelect .= '"'. $availableField . '",';
+                foreach ($availableFields as $availableField) {
+                    $strSelect .= '"' . $availableField . '",';
                 }
-                $strSelect = substr($strSelect, 0, strlen($strSelect)-1) . ')';
+                $strSelect = substr($strSelect, 0, strlen($strSelect) - 1) . ')';
                 $combineFields = $this->Database->execute($strSelect)->fetchAllAssoc();
             }
             foreach ($elements[$type['id']] as $typeElement) {
-
                 if (intval($typeElement['parentElement']) > 0) {
                     $toMerge = [
-                        $typeElement
+                        $typeElement,
                     ];
                     while (intval($toMerge[0]['parentElement']) > 0) {
                         array_unshift($toMerge, MapcontentElementModel::findByPk([$toMerge[0]['parentElement']])->row());
@@ -152,10 +148,12 @@ class LoadLayersListener
                                         foreach ($entry as $item) {
                                             if ($item !== '') {
                                                 $merge[$k] = $v;
+
                                                 break 2;
                                             }
                                         }
                                     }
+
                                     break;
                                 default:
                                     $merge[$k] = $v ? $v : $merge[$k];
@@ -194,22 +192,19 @@ class LoadLayersListener
                             }
                             if ($typeElement['addressStreet'] !== '') {
                                 if ($typeElement['addressStreetNumber'] !== '0') {
-                                    $address[] = $typeElement['addressStreet'] . " " .
+                                    $address[] = $typeElement['addressStreet'] . ' ' .
                                         $typeElement['addressStreetNumber'];
                                 } else {
                                     $address[] = $typeElement['addressStreet'];
                                 }
                             }
                             if ($typeElement['addressZip'] !== '' && $typeElement['addressCity'] !== '') {
-                                $address[] = $typeElement['addressZip'] . " " . $typeElement['addressCity'];
+                                $address[] = $typeElement['addressZip'] . ' ' . $typeElement['addressCity'];
                             }
                             $popup->addEntry(implode(', ', $address), 'address');
                         }
-                    }
-
-                    elseif ($availableField === 'image') {
-                        if (is_string($typeElement['image']) === true)
-                        {
+                    } elseif ($availableField === 'image') {
+                        if (is_string($typeElement['image']) === true) {
                             $fileModel = FilesModel::findByUuid($typeElement['image']);
                             if ($fileModel !== null) {
                                 $popup->addImageEntry($fileModel->path, $typeElement['imageMaxHeight'], $typeElement['imageMaxWidth'], 'image', strval($typeElement['imageLink']));
@@ -217,9 +212,7 @@ class LoadLayersListener
                                 C4gLogModel::addLogEntry('map-content', 'Popupimage of element ' . $typeElement['id'] . ' with uuid ' . $typeElement['image'] . ' not found.');
                             }
                         }
-                    }
-
-                    elseif ($availableField === 'businessHours') {
+                    } elseif ($availableField === 'businessHours') {
                         $businessTimes = \StringUtil::deserialize($typeElement['businessHours']);
                         if (!empty($businessTimes) || $typeElement['businessHoursAdditionalInfo'] !== '') {
                             $timeString = [];
@@ -237,9 +230,9 @@ class LoadLayersListener
 
                                         $timeString[$key] .= " $join " . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayTo']];
                                     }
-                                    $timeString[$key] .= ": " . date('H:i', $time['timeFrom']) .
+                                    $timeString[$key] .= ': ' . date('H:i', $time['timeFrom']) .
                                         $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['timeCaption'] .
-                                        " - " . date('H:i', $time['timeTo']) .
+                                        ' - ' . date('H:i', $time['timeTo']) .
                                         $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['timeCaption'];
                                     $showBusinessTimes = true;
                                 }
@@ -271,22 +264,20 @@ class LoadLayersListener
                                 $popup->addEntry(strval($typeElement['businessHoursAdditionalInfo']), 'businessHours');
                             }
                         }
-                    }
-
-                    elseif ($availableField === 'linkWizard') {
+                    } elseif ($availableField === 'linkWizard') {
                         foreach (StringUtil::deserialize($typeElement['linkWizard']) as $link) {
                             $popup->addLinkEntry(strval($link['linkTitle']), 'link', strval($link['linkHref']), $link['linkNewTab']);
                         }
                     } elseif ($availableField === 'phone') {
                         if ($typeElement['phone'] !== '') {
                             $list['linkHref'] = 'tel:' . $typeElement['phone'];
-                            $list['linkTitle'] = "Tel.: " . $typeElement['phone'];
+                            $list['linkTitle'] = 'Tel.: ' . $typeElement['phone'];
                             $popup->addLinkEntry(strval($list['linkTitle']), 'phone', strval($list['linkHref']));
                         }
                     } elseif ($availableField === 'mobile') {
                         if ($typeElement['mobile'] !== '') {
                             $list['linkHref'] = 'tel:' . $typeElement['mobile'];
-                            $list['linkTitle'] = "Mobil: " . $typeElement['mobile'];
+                            $list['linkTitle'] = 'Mobil: ' . $typeElement['mobile'];
                             $popup->addLinkEntry(strval($list['linkTitle']), 'mobile', strval($list['linkHref']));
                         }
                     } elseif ($availableField === 'fax') {
@@ -298,21 +289,19 @@ class LoadLayersListener
                     } elseif ($availableField === 'email') {
                         if ($typeElement['email'] !== '') {
                             $list['linkHref'] = 'mailto:' . $typeElement['email'];
-                            $list['linkTitle'] = "Email: " . $typeElement['email'];
+                            $list['linkTitle'] = 'Email: ' . $typeElement['email'];
                             $popup->addLinkEntry(strval($list['linkTitle']), 'email', strval($list['linkHref']));
                         }
                     } elseif ($availableField === 'website') {
                         if (!C4GUtils::startsWith($typeElement['website'], 'http')) {
-                            $list['linkHref'] = 'http://'.$typeElement['website'];
+                            $list['linkHref'] = 'http://' . $typeElement['website'];
                         } else {
                             $list['linkHref'] = $typeElement['website'];
                         }
                         $list['linkHref'] = $typeElement['website'];
                         $list['linkTitle'] = $typeElement['website'];
                         $popup->addLinkEntry(strval($list['linkTitle']), 'website', strval($list['linkHref']));
-                    }
-
-                    else {
+                    } else {
                         $model = MapcontentCustomFieldModel::findBy('alias', $availableField);
                         if ($model !== null) {
                             if (strval($model->frontendPopup) === '1') {
@@ -322,7 +311,8 @@ class LoadLayersListener
                                         $legendModel = MapcontentCustomFieldModel::findBy('alias', $availableFields[$i]);
                                         if ($legendModel !== null && $legendModel->type === 'legend') {
                                             break;
-                                        } if (C4GUtils::endsWith($availableFields[$i], '_legend') === true) {
+                                        }
+                                        if (C4GUtils::endsWith($availableFields[$i], '_legend') === true) {
                                             break;
                                         }
                                         $i += 1;
@@ -347,10 +337,12 @@ class LoadLayersListener
                                                 foreach ($options as $option) {
                                                     if ($option['key'] === $typeElement[$availableField]) {
                                                         $popup->addEntry($option['value'], $availableField);
+
                                                         break;
                                                     }
                                                 }
                                             }
+
                                             break;
                                         case 'multicheckbox':
                                             $options = StringUtil::deserialize($model->options);
@@ -361,17 +353,20 @@ class LoadLayersListener
                                                     foreach ($options as $option) {
                                                         if ($value === $option['key']) {
                                                             $display[] = $option['value'];
+
                                                             break;
                                                         }
                                                     }
                                                 }
                                             }
                                             if (!empty($display)) {
-                                                $popup->addEntry($model->name . ": " . implode(', ', $display), $availableField);
+                                                $popup->addEntry($model->name . ': ' . implode(', ', $display), $availableField);
                                             }
+
                                             break;
                                         case 'datepicker':
                                             $popup->addEntry(date('d.m.Y', $typeElement[$availableField]), $availableField);
+
                                             break;
                                         default:
                                             $popup->addEntry(strval($typeElement[$availableField]), $availableField);
@@ -392,7 +387,8 @@ class LoadLayersListener
                                             $legendModel = MapcontentCustomFieldModel::findBy('alias', $availableFields[$i]);
                                             if ($legendModel !== null && $legendModel->type === 'legend') {
                                                 break;
-                                            } if (C4GUtils::endsWith($availableFields[$i], '_legend') === true) {
+                                            }
+                                            if (C4GUtils::endsWith($availableFields[$i], '_legend') === true) {
                                                 break;
                                             }
                                             $i += 1;
@@ -414,6 +410,7 @@ class LoadLayersListener
                                                 );
                                             }
                                         }
+
                                         break;
                                 }
                             } elseif (strval($typeElement[$availableField]) !== '' &&
@@ -431,28 +428,28 @@ class LoadLayersListener
 
                 $dispatcher = \Contao\System::getContainer()->get('event_dispatcher');
                 $dispatcher->dispatch($propertiesEvent::NAME, $propertiesEvent);
-                
+
                 $properties = $propertiesEvent->getProperties();
 
                 $label = $type['showLabels'] === '1' ? $typeElement['name'] : '';
 
                 $stringClass = $GLOBALS['con4gis']['stringClass'];
-                $popupInfo   = $stringClass::toHtml5($popup->getPopupString());
-                $popupInfo   = Controller::replaceInsertTags($popupInfo, false);
-                $popupInfo   = str_replace(['{{request_token}}', '[{]', '[}]'], [REQUEST_TOKEN, '{{', '}}'], $popupInfo);
-                $popupInfo   = Controller::replaceDynamicScriptTags($popupInfo);
+                $popupInfo = $stringClass::toHtml5($popup->getPopupString());
+                $popupInfo = Controller::replaceInsertTags($popupInfo, false);
+                $popupInfo = str_replace(['{{request_token}}', '[{]', '[}]'], [REQUEST_TOKEN, '{{', '}}'], $popupInfo);
+                $popupInfo = Controller::replaceDynamicScriptTags($popupInfo);
                 $objComments = new \Comments();
-                $popupInfo   = $objComments->parseBbCode($popupInfo);
+                $popupInfo = $objComments->parseBbCode($popupInfo);
                 $properties['popup'] = [
                     'content' => $popupInfo,
-                    'routing_link' => "1",
+                    'routing_link' => '1',
                     'async' => false,
                 ];
                 if ($availableFields && $combineFields) {
                     foreach ($combineFields as $combineField) {
-                        if ($typeElement[$combineField["alias"]]) {
-                            $arrProperties = unserialize($typeElement[$combineField["alias"]]);
-                            foreach($arrProperties as $property) {
+                        if ($typeElement[$combineField['alias']]) {
+                            $arrProperties = unserialize($typeElement[$combineField['alias']]);
+                            foreach ($arrProperties as $property) {
                                 $properties[$property] = true;
                             }
                         }
@@ -486,7 +483,7 @@ class LoadLayersListener
                         60000,
                         $properties
                     );
-                    $geoJSON = $this->layerService->createGeoJSONFeature($properties,null, null, $typeElement['geoJson']);
+                    $geoJSON = $this->layerService->createGeoJSONFeature($properties, null, null, $typeElement['geoJson']);
                 }
                 $structureElement = $fmClass->createMapStructureElementWithIdCalc(
                     $typeElement['id'],
@@ -504,14 +501,14 @@ class LoadLayersListener
                 $jsonFeatures[] = $geoJSON;
                 $structureElems[] = $structureElement;
             }
-    
+
             $structureType = $fmClass->createMapStructureChilds($structureType, $structureElems);
             $globalJSON = [
-                "type"          => "FeatureCollection",
-                "features"      => $jsonFeatures,
-                "properties"    => [
-                    "projection" => "EPSG:4326"
-                ]
+                'type' => 'FeatureCollection',
+                'features' => $jsonFeatures,
+                'properties' => [
+                    'projection' => 'EPSG:4326',
+                ],
             ];
             $content = $structureType['childs'][0]['content'][0];
             $content['data'] = $globalJSON;

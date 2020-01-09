@@ -4,25 +4,20 @@
  * the gis-kit for Contao CMS.
  *
  * @package   	con4gis
- * @version        6
+ * @version    7
  * @author  	    con4gis contributors (see "authors.txt")
  * @license 	    LGPL-3.0-or-later
  * @copyright 	Küstenschmiede GmbH Software & Design
  * @link              https://www.con4gis.org
- *
  */
 namespace con4gis\MapContentBundle\Classes\Listener;
-use con4gis\MapContentBundle\Resources\contao\models\MapcontentTagModel;
-use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
+
 use con4gis\MapsBundle\Classes\Events\LoadFeatureFiltersEvent;
 use con4gis\MapsBundle\Classes\Filter\FeatureFilter;
 use con4gis\MapsBundle\Classes\Services\FilterService;
-use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use Contao\Database;
-use Contao\Model\Collection;
-use Contao\StringUtil;
-use Contao\System;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+
 class LoadFeatureFilterListener
 {
     public function __construct(FilterService $filterService)
@@ -42,10 +37,10 @@ class LoadFeatureFilterListener
         foreach ($customFields as $customField) {
             $filterObject = new FeatureFilter();
             $filterObject->setFieldName($customField['frontendName'] ?: $customField['name']);
-            foreach(unserialize($customField["options"]) as $option) {
+            foreach (unserialize($customField['options']) as $option) {
                 $filterObject->addFilterValue([
-                    "identifier" => $option["key"],
-                    "translation" => $option["value"]
+                    'identifier' => $option['key'],
+                    'translation' => $option['value'],
                 ]);
             }
             $currentFilters = array_merge($currentFilters, [$filterObject]);

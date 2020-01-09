@@ -1,14 +1,12 @@
 <?php
 
-
 namespace con4gis\MapContentBundle\Classes\Event;
-
 
 use Symfony\Component\EventDispatcher\Event;
 
 class LoadPropertiesEvent extends Event
 {
-    const NAME = "mapcontent.properties.load";
+    const NAME = 'mapcontent.properties.load';
 
     private $properties = [];
     private $elementData = [];
@@ -20,13 +18,14 @@ class LoadPropertiesEvent extends Event
     public function setProperties(array $properties): LoadPropertiesEvent
     {
         $this->properties = $properties;
+
         return $this;
     }
     public function getProperties(): array
     {
         return $this->properties;
     }
-    
+
     /**
      * @return array
      */
@@ -42,6 +41,7 @@ class LoadPropertiesEvent extends Event
     public function setElementData(array $elementData): LoadPropertiesEvent
     {
         $this->elementData = $elementData;
+
         return $this;
     }
 }

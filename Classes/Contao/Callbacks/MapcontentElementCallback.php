@@ -4,14 +4,12 @@
  * the gis-kit for Contao CMS.
  *
  * @package   	con4gis
- * @version        6
+ * @version    7
  * @author  	    con4gis contributors (see "authors.txt")
  * @license 	    LGPL-3.0-or-later
  * @copyright 	Küstenschmiede GmbH Software & Design
  * @link              https://www.con4gis.org
- *
  */
-
 namespace con4gis\MapContentBundle\Classes\Contao\Callbacks;
 
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentElementModel;
@@ -23,7 +21,7 @@ use Contao\DataContainer;
 class MapcontentElementCallback extends Backend
 {
     private $dcaName = 'tl_c4g_mapcontent_element';
-    
+
     public function loadTypes()
     {
         $arrTypes = [];
@@ -34,47 +32,55 @@ class MapcontentElementCallback extends Backend
                 $arrTypes[$type->id] = $type->name;
             }
         }
+
         return $arrTypes;
     }
 
-    public function loadParentOptions(DataContainer $dc) {
+    public function loadParentOptions(DataContainer $dc)
+    {
         $options = [];
         $id = $dc->activeRecord->id;
         if (!$id) {
             return [];
-        } else {
-            $models = MapcontentElementModel::findAll();
-            foreach ($models as $model) {
-                if ($model->id !== $id) {
-                    $options[$model->id] = $model->name;
-                }
+        }
+        $models = MapcontentElementModel::findAll();
+        foreach ($models as $model) {
+            if ($model->id !== $id) {
+                $options[$model->id] = $model->name;
             }
         }
+
         return $options;
     }
 
-    public function getLabel($arrRow){
+    public function getLabel($arrRow)
+    {
         $label['name'] = $arrRow['name'];
         $label['type'] = MapcontentTypeModel::findByPk($arrRow['type'])->name;
+
         return $label;
     }
 
-    public function getDay($dc) {
+    public function getDay($dc)
+    {
         return $GLOBALS['con4gis']['map-content']['day_option'];
     }
 
-    public function changeFileBinToUuid($fieldValue, DataContainer $dc) {
+    public function changeFileBinToUuid($fieldValue, DataContainer $dc)
+    {
         return \StringUtil::binToUuid($fieldValue);
     }
 
-    public function saveDate($value, DataContainer $dca) {
+    public function saveDate($value, DataContainer $dca)
+    {
         return strtotime($value);
     }
 
-    public function loadDate($value, DataContainer $dca) {
+    public function loadDate($value, DataContainer $dca)
+    {
         return date('m/d/Y', $value);
     }
-    
+
     /**
      * Validate Location Lon
      */
@@ -83,9 +89,10 @@ class MapcontentElementCallback extends Backend
         if (!Utils::validateLon($varValue)) {
             throw new \Exception($GLOBALS['TL_LANG']['c4g_maps']['geox_invalid']);
         }
+
         return $varValue;
     }
-    
+
     /**
      * Validate Location Lat
      */
@@ -94,6 +101,7 @@ class MapcontentElementCallback extends Backend
         if (!Utils::validateLat($varValue)) {
             throw new \Exception($GLOBALS['TL_LANG']['c4g_maps']['geoy_invalid']);
         }
+
         return $varValue;
     }
 }

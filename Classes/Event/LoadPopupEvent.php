@@ -4,7 +4,7 @@
  * the gis-kit for Contao CMS.
  *
  * @package    con4gis
- * @version    6
+ * @version    7
  * @author     con4gis contributors (see "authors.txt")
  * @license    LGPL-3.0-or-later
  * @copyright  Küstenschmiede GmbH Software & Design
@@ -12,13 +12,12 @@
  */
 namespace con4gis\MapContentBundle\Classes\Event;
 
-
 use con4gis\MapContentBundle\Classes\Popup\Popup;
 use Symfony\Component\EventDispatcher\Event;
 
 class LoadPopupEvent extends Event
 {
-    const NAME = "mapcontent.popup.load";
+    const NAME = 'mapcontent.popup.load';
 
     private $popup;
     private $type = '';
@@ -29,7 +28,8 @@ class LoadPopupEvent extends Event
     private $showBusinessTimes = false;
     private $elementData = [];
 
-    public function __construct(string $type, Popup $popup) {
+    public function __construct(string $type, Popup $popup)
+    {
         $this->type = $type;
         $this->popup = $popup;
     }
@@ -49,6 +49,7 @@ class LoadPopupEvent extends Event
     public function setPopup(Popup $popup): LoadPopupEvent
     {
         $this->popup = $popup;
+
         return $this;
     }
 
@@ -75,6 +76,7 @@ class LoadPopupEvent extends Event
     public function setShowAddress(bool $showAddress = true): LoadPopupEvent
     {
         $this->showAddress = $showAddress;
+
         return $this;
     }
 
@@ -93,6 +95,7 @@ class LoadPopupEvent extends Event
     public function setShowPhone(bool $showPhone = true): LoadPopupEvent
     {
         $this->showPhone = $showPhone;
+
         return $this;
     }
 
@@ -111,6 +114,7 @@ class LoadPopupEvent extends Event
     public function setShowFax(bool $showFax = true): LoadPopupEvent
     {
         $this->showFax = $showFax;
+
         return $this;
     }
 
@@ -129,6 +133,7 @@ class LoadPopupEvent extends Event
     public function setShowEmail(bool $showEmail = true): LoadPopupEvent
     {
         $this->showEmail = $showEmail;
+
         return $this;
     }
 
@@ -147,6 +152,7 @@ class LoadPopupEvent extends Event
     public function setShowBusinessTimes(bool $showBusinessTimes = true): LoadPopupEvent
     {
         $this->showBusinessTimes = $showBusinessTimes;
+
         return $this;
     }
 
@@ -165,6 +171,7 @@ class LoadPopupEvent extends Event
     public function setElementData(array $elementData): LoadPopupEvent
     {
         $this->elementData = $elementData;
+
         return $this;
     }
 }

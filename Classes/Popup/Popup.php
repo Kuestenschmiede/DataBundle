@@ -6,37 +6,41 @@ class Popup
 {
     protected $popupString = '';
 
-    public function getPopupString() {
-        return "<ul>".$this->popupString."</ul>";
+    public function getPopupString()
+    {
+        return '<ul>' . $this->popupString . '</ul>';
     }
 
-    protected function buildTag(string $tagName, string $content = '', array $attributes = [], bool $close = true) {
+    protected function buildTag(string $tagName, string $content = '', array $attributes = [], bool $close = true)
+    {
         foreach ($attributes as $key => $value) {
             if (trim($value) !== '') {
                 $attributes[$key] = "$key=\"$value\"";
             }
         }
-        $attributeString = implode(" ", $attributes);
+        $attributeString = implode(' ', $attributes);
         if ($close === true || $content !== '') {
             return "<$tagName $attributeString>$content</$tagName>";
-        } else {
-            return "<$tagName $attributeString>";
         }
+
+        return "<$tagName $attributeString>";
     }
 
-    public function addEntry(string $content, string $class) {
+    public function addEntry(string $content, string $class)
+    {
         if (trim($content) === '') {
             return;
         }
         $this->popupString .= $this->buildTag('li', $content, ['class' => $class]);
     }
 
-    public function addLinkEntry(string $content, string $class, string $href, bool $newTab = true) {
+    public function addLinkEntry(string $content, string $class, string $href, bool $newTab = true)
+    {
         if (trim($content) === '' || trim($href) === '') {
             return;
         }
         $attributes = [
-            'href' => $href
+            'href' => $href,
         ];
         if ($newTab === true) {
             $attributes['target'] = '_blank';
@@ -47,13 +51,14 @@ class Popup
             $this->buildTag('a', $content, [
                 'href' => $href,
                 'target' => '_blank',
-                'rel' => 'noopener noreferrer'
+                'rel' => 'noopener noreferrer',
             ]),
             ['class' => $class]
         );
     }
 
-    public function addImageEntry(string $path, string $maxHeight, string $maxWidth, string $class, string $link = '') {
+    public function addImageEntry(string $path, string $maxHeight, string $maxWidth, string $class, string $link = '')
+    {
         if (trim($path) === '' || trim($maxHeight) === '' || trim($maxWidth) === '') {
             return;
         }
@@ -62,7 +67,7 @@ class Popup
             $attributes = [
                 'href' => $link,
                 'target' => '_blank',
-                'rel' => 'noopener noreferrer'
+                'rel' => 'noopener noreferrer',
             ];
 
             $this->popupString .= $this->buildTag(
@@ -74,7 +79,7 @@ class Popup
                         '',
                         [
                             'src' => $path,
-                            'style' => "max-height: $maxHeight\px;max-width: $maxWidth\px;"
+                            'style' => "max-height: $maxHeight\px;max-width: $maxWidth\px;",
                         ],
                         false
                     ),
@@ -89,7 +94,7 @@ class Popup
                     '',
                     [
                         'src' => $path,
-                        'style' => "max-height: $maxHeight\px;max-width: $maxWidth\px;"
+                        'style' => "max-height: $maxHeight\px;max-width: $maxWidth\px;",
                     ],
                     false
                 ),
@@ -97,6 +102,4 @@ class Popup
             );
         }
     }
-
-
 }
