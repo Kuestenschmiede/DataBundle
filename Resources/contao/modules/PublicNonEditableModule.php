@@ -11,8 +11,6 @@ namespace con4gis\MapContentBundle\Resources\contao\modules;
 use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
 use con4gis\CoreBundle\Resources\contao\classes\ResourceLoader;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentCustomFieldModel;
-use con4gis\MapContentBundle\Resources\contao\models\MapcontentElementModel;
-use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
 use con4gis\MapContentBundle\Resources\contao\models\PublicNonEditableModel;
 use con4gis\ProjectsBundle\Classes\Database\C4GBrickDatabaseType;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GHeadlineField;
@@ -21,13 +19,11 @@ use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GKeyField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GLinkButtonField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GLinkField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GMapLinkButtonField;
-use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GMultiCheckboxField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GMultiLinkField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GTextField;
 use con4gis\ProjectsBundle\Classes\Framework\C4GBrickModuleParent;
 use con4gis\ProjectsBundle\Classes\Lists\C4GBrickRenderMode;
 use con4gis\ProjectsBundle\Classes\Views\C4GBrickViewType;
-use Contao\StringUtil;
 
 
 class PublicNonEditableModule extends C4GBrickModuleParent
@@ -154,8 +150,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             ->setShowIfEmpty(false);
 
         $fieldList[] = C4GLinkField::create('email',
-            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['email'][0],
-            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['email'][1],
+            strval($GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['email'][0]),
+            strval($GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['email'][1]),
             false, true, true, false)
             ->setAddStrBeforeValue('Email: ')
             ->setShowIfEmpty(false)
@@ -176,40 +172,44 @@ class PublicNonEditableModule extends C4GBrickModuleParent
 
         $customFields = MapcontentCustomFieldModel::findAll();
 
-        foreach ($customFields as $customField) {
-            if ($customField->frontendList === '1' && ($customField->type !== 'link')) {
-                $fieldList[] = C4GTextField::create($customField->alias,
-                    $customField->name,
-                    $customField->description,
-                    false, true, true, false
-                );
+        if ($customFields !== null) {
+            foreach ($customFields as $customField) {
+                if ($customField->frontendList === '1' && ($customField->type !== 'link')) {
+                    $fieldList[] = C4GTextField::create($customField->alias,
+                        $customField->name,
+                        $customField->description,
+                        false, true, true, false
+                    );
+                }
             }
         }
 
-        $fieldList[] = C4GTextField::create('searchInfo',
-            '',
-            '',
-            false, true, true, false)
-            ->setShowIfEmpty(false)
-            ->setHidden();
+            $fieldList[] = C4GTextField::create('searchInfo',
+                '',
+                '',
+                false, true, true, false)
+                ->setShowIfEmpty(false)
+                ->setHidden();
 
-        $fieldList[] = C4GMapLinkButtonField::create('maplink')
-            ->setTargetPageId($this->mapPage)
-            ->setButtonLabel('zur Karte')
-            ->setLongitudeColumn('geox')
-            ->setLatitudeColumn('geoy')
-            ->setnewTab();
+            $fieldList[] = C4GMapLinkButtonField::create('maplink')
+                ->setTargetPageId($this->mapPage)
+                ->setButtonLabel('zur Karte')
+                ->setLongitudeColumn('geox')
+                ->setLatitudeColumn('geoy')
+                ->setnewTab();
 
-        foreach ($customFields as $customField) {
-            if ($customField->frontendList === '1' && $customField->type === 'link') {
-                $link = C4GLinkButtonField::create($customField->alias);
-                $link->setButtonLabel($customField->linkTitle)
-                    ->setNewTab($customField->linkNewTab === '1')
-                    ->setTargetMode(C4GLinkButtonField::TARGET_MODE_URL)
-                    ->setTargetPageUrl($customField->linkHref)
-                    ->setConditional()
-                    ->setFormField(false);
-                $fieldList[] = $link;
+        if ($customFields !== null) {
+            foreach ($customFields as $customField) {
+                if ($customField->frontendList === '1' && $customField->type === 'link') {
+                    $link = C4GLinkButtonField::create($customField->alias);
+                    $link->setButtonLabel($customField->linkTitle)
+                        ->setNewTab($customField->linkNewTab === '1')
+                        ->setTargetMode(C4GLinkButtonField::TARGET_MODE_URL)
+                        ->setTargetPageUrl($customField->linkHref)
+                        ->setConditional()
+                        ->setFormField(false);
+                    $fieldList[] = $link;
+                }
             }
         }
 
@@ -232,166 +232,145 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             true, false, true, false)
             ->setSimpleTextWithoutEditing();
 
-        $model = MapcontentElementModel::findByPk($this->dialogParams->getId());
-        $typeModel = MapcontentTypeModel::findByPk($model->type);
-        $availableFields = $typeModel->availableFields;
-        $availableFields = StringUtil::deserialize($availableFields);
+        $availableFieldsDetails = [
+            'image',
+            'address_legend',
+            'addressName',
+            'addressStreet',
+            'addressCity',
+            'businessHours_legend',
+            'businessHours',
+            'contact_legend',
+            'phone',
+            'mobile',
+            'fax',
+            'email',
+            'website',
+            'linkWizard_legend',
+            'linkWizard'
+        ];
 
-        foreach ($availableFields as $fieldKey => $availableField) {
-            $model = MapcontentCustomFieldModel::findBy('alias', $availableField);
-            if ($model !== null) {
-                if ($model->frontendDetails === '1') {
-                    if ($model->type === 'legend') {
-                        $i = $fieldKey + 1;
-                        while ($i < count($availableFields)) {
-                            $legendModel = MapcontentCustomFieldModel::findBy('alias', $availableFields[$i]);
-                            if ($legendModel !== null && $legendModel->type === 'legend') {
-                                break;
-                            } if (C4GUtils::endsWith($availableFields[$i], '_legend') === true) {
-                                break;
-                            }
-                            $i += 1;
-                        }
-                        $n = $fieldKey + 1;
-                        if ($i > $n) {
-                            $fieldList[] = C4GHeadlineField::create($model->alias,
-                                $model->name,
-                                $model->description,
-                                true, false, false, false);
-                        }
-                    } elseif ($model->type === 'multicheckbox') {
-                        $options = StringUtil::deserialize($model->options);
-                        $formattedOptions = [];
-                        foreach ($options as $option) {
-                            $formattedOptions[] = [
-                                'id' => $option['key'],
-                                'name' => $option['value']
-                            ];
-                        }
-
-                        $fieldList[] = C4GMultiCheckboxField::create($model->alias,
-                            $model->name,
-                            $model->description,
-                            true, false, true, false)
-                            ->setShowAsCsv()
-                            ->setShowIfEmpty(false)
-                            ->setOptions($formattedOptions)
-                            ->setSort(false);
-                    } elseif ($model->type === 'link') {
-                        // Do nothing
-                    } else {
-                        switch ($availableField) {
-                            default:
-                                $fieldList[] = C4GTextField::create($availableField,
-                                    $model->name,
-                                    $model->description,
-                                    true, false, true, false);
-                        }
-                    }
-                }
-            } else {
-                if (C4GUtils::endsWith($availableField, '_legend') === true) {
-                    switch ($availableField) {
-                        case 'publish_legend':
-                            break;
-                        default:
-                            $i = $fieldKey + 1;
-                            while ($i < count($availableFields)) {
-                                $legendModel = MapcontentCustomFieldModel::findBy('alias', $availableFields[$i]);
-                                if ($legendModel !== null && $legendModel->type === 'legend') {
-                                    break;
-                                } if (C4GUtils::endsWith($availableFields[$i], '_legend') === true) {
-                                    break;
-                                }
-                                $i += 1;
-                            }
-                            if (($i - 1) > ($fieldKey + 1)) {
-                                $fieldList[] = C4GHeadlineField::create($availableField,
-                                    $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField],
-                                    '',
-                                    true, false, false, false);
-                            }
-                            break;
-                    }
-                } else {
-                    switch ($availableField) {
-                        case 'addressStreetNumber':
-                        case 'addressZip':
-                            break;
-                        case 'businessHours':
-                            $fieldList[] = C4GTextField::create('businessHours',
-                                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['businessHours'][0],
-                                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['businessHours'][1],
-                                true, false, true, false)
-                                ->setSimpleTextWithoutEditing()
-                                ->setEncodeHtmlEntities(false);
-                            break;
-                        case 'phone':
-                            $fieldList[] = C4GLinkField::create('phone',
-                                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['phone'][0],
-                                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['phone'][1],
-                                true, false, true, false)
-                                ->setAddStrBeforeValue('Tel.: ')
-                                ->setShowIfEmpty(false)
-                                ->setLinkType(C4GLinkField::LINK_TYPE_PHONE);
-                            break;
-                        case 'mobile':
-                            $fieldList[] = C4GLinkField::create('mobile',
-                                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['mobile'][0],
-                                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['mobile'][1],
-                                true, false, true, false)
-                                ->setAddStrBeforeValue('Mobil: ')
-                                ->setShowIfEmpty(false)
-                                ->setLinkType(C4GLinkField::LINK_TYPE_PHONE);
-                            break;
-                        case 'fax':
-                            $fieldList[] = C4GTextField::create('fax',
-                                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['fax'][0],
-                                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['fax'][1],
-                                true, false, true, false)
-                                ->setAddStrBeforeValue('Fax: ')
-                                ->setShowIfEmpty(false);
-                            break;
-                        case 'email':
-                            $fieldList[] = C4GLinkField::create('email',
-                                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['email'][0],
-                                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['email'][1],
-                                true, false, true, false)
-                                ->setAddStrBeforeValue('Email: ')
-                                ->setShowIfEmpty(false)
-                                ->setLinkType(C4GLinkField::LINK_TYPE_EMAIL);
-                            break;
-                        case 'website':
-                            $fieldList[] = C4GLinkField::create('website',
-                                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['website'][0],
-                                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['website'][1],
-                                true, false, true, false)
-                                ->setAddStrBeforeValue('Website: ')
-                                ->setShowIfEmpty(false)
-                                ->setLinkType(C4GLinkField::LINK_TYPE_DEFAULT)
-                                ->setNewTab();
-                            break;
-                        case 'image':
-                            $fieldList[] = C4GImageField::create($availableField,
-                                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField][0],
-                                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField][1],
-                                true, false, true, false);
-                            break;
-                        case 'linkWizard':
-                            $fieldList[] = C4GMultiLinkField::create('linkWizard',
-                                '', '', true,
-                                false, true, false);
-                            break;
-                        default:
-                            $fieldList[] = C4GTextField::create($availableField,
-                                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField][0],
-                                $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField][1],
-                                true, false, true, false)
-                                ->setShowIfEmpty(false);
-                    }
+        if ($customFields !== null) {
+            foreach ($customFields as $customField) {
+                if ($customField->frontendDetails === '1') {
+                    $availableFieldsDetails[] = $customField->alias;
                 }
             }
         }
+
+        $legend = null;
+        foreach ($availableFieldsDetails as $field) {
+            $model = MapcontentCustomFieldModel::findBy('alias', $field);
+            if ($model !== null && $model->type === 'legend') {
+                $legend = C4GHeadlineField::create($field,
+                    $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$field],
+                    '',
+                    true, false, false, false);
+                $fieldList[] = $legend;
+            } elseif ($model === null && C4GUtils::endsWith($field, '_legend') === true) {
+                $legend = C4GHeadlineField::create($field,
+                    $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$field],
+                    '',
+                    true, false, false, false);
+                $fieldList[] = $legend;
+            } elseif ($model === null) {
+                $brickField = null;
+                switch ($field) {
+                    case 'addressStreetNumber':
+                    case 'addressZip':
+                        break;
+                    case 'businessHours':
+                        $brickField = C4GTextField::create('businessHours',
+                            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['businessHours'][0],
+                            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['businessHours'][1],
+                            true, false, true, false)
+                            ->setSimpleTextWithoutEditing()
+                            ->setEncodeHtmlEntities(false)
+                            ->setShowIfEmpty(false);
+                        break;
+                    case 'phone':
+                        $brickField = C4GLinkField::create('phone',
+                            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['phone'][0],
+                            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['phone'][1],
+                            true, false, true, false)
+                            ->setAddStrBeforeValue('Tel.: ')
+                            ->setShowIfEmpty(false)
+                            ->setLinkType(C4GLinkField::LINK_TYPE_PHONE);
+                        break;
+                    case 'mobile':
+                        $brickField = C4GLinkField::create('mobile',
+                            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['mobile'][0],
+                            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['mobile'][1],
+                            true, false, true, false)
+                            ->setAddStrBeforeValue('Mobil: ')
+                            ->setShowIfEmpty(false)
+                            ->setLinkType(C4GLinkField::LINK_TYPE_PHONE);
+                        break;
+                    case 'fax':
+                        $brickField = C4GTextField::create('fax',
+                            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['fax'][0],
+                            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['fax'][1],
+                            true, false, true, false)
+                            ->setAddStrBeforeValue('Fax: ')
+                            ->setShowIfEmpty(false);
+                        break;
+                    case 'email':
+                        $brickField = C4GLinkField::create('email',
+                            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['email'][0],
+                            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['email'][1],
+                            true, false, true, false)
+                            ->setAddStrBeforeValue('Email: ')
+                            ->setShowIfEmpty(false)
+                            ->setLinkType(C4GLinkField::LINK_TYPE_EMAIL);
+                        break;
+                    case 'website':
+                        $brickField = C4GLinkField::create('website',
+                            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['website'][0],
+                            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['website'][1],
+                            true, false, true, false)
+                            ->setAddStrBeforeValue('Website: ')
+                            ->setShowIfEmpty(false)
+                            ->setLinkType(C4GLinkField::LINK_TYPE_DEFAULT)
+                            ->setNewTab();
+                        break;
+                    case 'image':
+                        $brickField = C4GImageField::create('image',
+                            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['image'][0],
+                            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['image'][1],
+                            true, false, true, false);
+                        break;
+                    case 'linkWizard':
+                        $brickField = C4GMultiLinkField::create('linkWizard',
+                            '', '', true,
+                            false, true, false);
+                        break;
+                    default:
+                        $brickField = C4GTextField::create($field,
+                            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$field][0],
+                            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$field][1],
+                            true, false, true, false)
+                            ->setShowIfEmpty(false);
+                }
+                if ($brickField !== null) {
+                    $fieldList[] = $brickField;
+                }
+                if ($legend !== null && $brickField !== null) {
+                    $legend->addAssociatedField($brickField);
+                }
+            } else {
+                $brickField = C4GTextField::create($field,
+                    strval($model->name),
+                    strval($model->description),
+                    true, false, true, false)
+                    ->setShowIfEmpty(false);
+                $fieldList[] = $brickField;
+                if ($legend !== null && $brickField !== null) {
+                    $legend->addAssociatedField($brickField);
+                }
+            }
+        }
+
+
 
         return $fieldList;
     }

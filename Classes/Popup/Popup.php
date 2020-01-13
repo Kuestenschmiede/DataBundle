@@ -2,6 +2,8 @@
 
 namespace con4gis\MapContentBundle\Classes\Popup;
 
+use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
+
 class Popup
 {
     protected $popupString = '';
@@ -39,6 +41,11 @@ class Popup
         if (trim($content) === '' || trim($href) === '') {
             return;
         }
+
+        if (!C4GUtils::startsWith($href, 'http')) {
+            $href = 'http://' . $href;
+        }
+
         $attributes = [
             'href' => $href,
         ];
