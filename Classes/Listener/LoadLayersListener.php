@@ -17,6 +17,7 @@ use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\MapContentBundle\Classes\Event\LoadPropertiesEvent;
 use con4gis\MapContentBundle\Classes\Popup\Popup;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentCustomFieldModel;
+use con4gis\MapContentBundle\Resources\contao\models\MapcontentDirectoryModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentElementModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
 use con4gis\MapsBundle\Classes\Events\LoadLayersEvent;
@@ -31,6 +32,10 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class LoadLayersListener
 {
+    private $layerService;
+    
+    private $Database;
+    
     /**
      * LayerContentService constructor.
      * @param LayerService $layerService
@@ -40,23 +45,53 @@ class LoadLayersListener
         $this->layerService = $layerService;
         $this->Database = Database::getInstance();
     }
+    
+    public function onLoadLayersLoadDirectories(
+        LoadLayersEvent $event,
+        $eventName,
+        EventDispatcherInterface $eventDispatcher
+    ) {
+        $mapContentLayer = $event->getLayerData();
+        if (!$mapContentLayer['type'] === "mpCntnt_directory") {
+            return;
+        }
+        $objMapContentLayer = C4gMapsModel::findByPk($mapContentLayer['id']);
+        if (!$objMapContentLayer) {
+            return;
+        }
+        $arrDirectoryIds = unserialize($objMapContentLayer->directorySelection);
+        $objDirectories = MapcontentDirectoryModel::findMultipleByIds($arrDirectoryIds);
+        $typeIds = [];
+        foreach ($objDirectories as $directory) {
+            $typeIds = array_merge(unserialize($directory->types));
+        }
+        $addData = $event->getAdditionalData();
+        $addData['typeIds'] = $typeIds;
+        $event->setAdditionalData($addData);
+    }
+    
     public function onLoadLayersLoadTypes(
         LoadLayersEvent $event,
         $eventName,
         EventDispatcherInterface $eventDispatcher
     ) {
         $mapContentLayer = $event->getLayerData();
-        if (!$mapContentLayer['type'] === 'mpCntnt') {
+        if (!$mapContentLayer['type'] === 'mpCntnt' || !$mapContentLayer['type'] === "mpCntnt_directory") {
             return;
         }
         $objMapContent = C4gMapsModel::findByPk($mapContentLayer['id']);
-        $selectedTypes = unserialize($objMapContent->typeSelection);
-        if (!$selectedTypes) {
-            return;
+        $addData = $event->getAdditionalData();
+        if ($addData['typeIds']) {
+            $selectedTypes = $addData['typeIds'];
+        } else {
+            $selectedTypes = unserialize($objMapContent->typeSelection);
+            if (!$selectedTypes) {
+                return;
+            }
         }
         $objSelectedTypes = MapcontentTypeModel::findMultipleByIds($selectedTypes);
         $arrTypes = $objSelectedTypes->fetchAll();
-        $addData = $event->getAdditionalData();
+//        $addData = $event->getAdditionalData();
         $addData['types'] = $arrTypes;
         $addData['typeIds'] = $selectedTypes;
         $addData['mapContentLayer'] = $mapContentLayer;
@@ -69,7 +104,7 @@ class LoadLayersListener
         EventDispatcherInterface $eventDispatcher
     ) {
         $mapContentLayer = $event->getLayerData();
-        if (!$mapContentLayer['type'] === 'mpCntnt') {
+        if (!$mapContentLayer['type'] === 'mpCntnt' || !$mapContentLayer['type'] === "mpCntnt_directory") {
             return;
         }
         $objLocations = [];
@@ -97,7 +132,7 @@ class LoadLayersListener
         EventDispatcherInterface $eventDispatcher
     ) {
         $mapContentLayer = $event->getLayerData();
-        if (!($mapContentLayer['type'] === 'mpCntnt')) {
+        if (!($mapContentLayer['type'] === 'mpCntnt' || $mapContentLayer['type'] === "mpCntnt_directory")) {
             return;
         }
         $fmClass = new C4GBrickMapFrontendParent();
@@ -503,24 +538,25 @@ class LoadLayersListener
             }
 
             $structureType = $fmClass->createMapStructureChilds($structureType, $structureElems);
-            $globalJSON = [
-                'type' => 'FeatureCollection',
-                'features' => $jsonFeatures,
-                'properties' => [
-                    'projection' => 'EPSG:4326',
-                ],
-            ];
-            $content = $structureType['childs'][0]['content'][0];
-            $content['data'] = $globalJSON;
-            $content['combinedJSON'] = true;
-            $structureType['content'][0] = $content;
-            $structureType['childs'] = [];
-            $structureType['hasChilds'] = false;
-            $structureType['childsCount'] = 0;
+//            $globalJSON = [
+//                'type' => 'FeatureCollection',
+//                'features' => $jsonFeatures,
+//                'properties' => [
+//                    'projection' => 'EPSG:4326',
+//                ],
+//            ];
+//            $content = $structureType['childs'][0]['content'][0];
+//            $content['data'] = $globalJSON;
+//            $content['combinedJSON'] = true;
+//            $structureType['content'][0] = $content;
+//            $structureType['childs'] = [];
+//            $structureType['hasChilds'] = false;
+//            $structureType['childsCount'] = 0;
 
             $structureTypes[] = $structureType;
         }
         $mapContentLayer = $fmClass->createMapStructureChilds($mapContentLayer, $structureTypes);
+        $mapContentLayer['type'] = "none";
         $event->setLayerData($mapContentLayer);
     }
 }

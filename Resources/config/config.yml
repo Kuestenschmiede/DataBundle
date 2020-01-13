@@ -1,4 +1,10 @@
 services:
+  mapContent.onLoadLayersLoadDirectories:
+    class: con4gis\MapContentBundle\Classes\Listener\LoadLayersListener
+    tags:
+      - { name: kernel.event_listener, event: maps.layers.load, method: onLoadLayersLoadDirectories, priority: 3004 }
+    arguments:
+      - "@con4gis.layer_service"
   mapContent.onLoadLayersLoadTypes:
     class: con4gis\MapContentBundle\Classes\Listener\LoadLayersListener
     tags:
