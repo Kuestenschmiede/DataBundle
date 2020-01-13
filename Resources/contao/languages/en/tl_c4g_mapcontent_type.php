@@ -13,7 +13,6 @@ $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type'] = [
     'delete' => ["Delete category with ID %s", "Delete category with ID %s"],
 ];
 
-$GLOBALS['TL_LANG']['mapcontent_types']['default'] = 'Custom';
 $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['data_legend'] = 'General data';
 
 $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'] = 'Headline: ';
