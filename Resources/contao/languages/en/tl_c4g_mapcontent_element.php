@@ -8,6 +8,7 @@ $strName = 'tl_c4g_mapcontent_element';
 $GLOBALS['TL_LANG'][$strName]['name'] = ['Title', 'Enter a name for this element.'];
 $GLOBALS['TL_LANG'][$strName]['description'] = ['Description', 'Enter a description for this element.'];
 $GLOBALS['TL_LANG'][$strName]['type'] = ['Category', 'The category is displayed in the frontend and determines which fields are available.'];
+$GLOBALS['TL_LANG'][$strName]['location'] = ['Location of the element', 'Select the location where the element is located.'];
 $GLOBALS['TL_LANG'][$strName]['parentElement'] = ['Parent element', 'If the parent element has data that is missing here, that data is inherited from the parent.'];
 $GLOBALS['TL_LANG'][$strName]['linkWizard'] = ['Additional Links', 'Additional links to be generated. The title field accepts HTML.'];
 $GLOBALS['TL_LANG'][$strName]['linkTitle'] = ['Title', 'The visible text. Accepts HTML.'];
