@@ -3,7 +3,6 @@
 
 namespace con4gis\MapContentBundle\Resources\contao\models;
 
-
 use con4gis\MapContentBundle\Resources\contao\modules\PublicNonEditableModule;
 use con4gis\ProjectsBundle\Classes\Common\C4GBrickCommon;
 use Contao\StringUtil;
@@ -261,7 +260,9 @@ class PublicNonEditableModel
         }
 
         foreach ($entries as $entry) {
-            $array['businessHours'] .= '<li class="c4g_brick_list_column c4g_brick_list_row_column businessHours">'.$entry.'</li>';
+            if (trim($entry) !== '') {
+                $array['businessHours'] .= '<li class="c4g_brick_list_column c4g_brick_list_row_column businessHours">'.$entry.'</li>';
+            }
         }
 
         $customFields = MapcontentCustomFieldModel::findAll();
