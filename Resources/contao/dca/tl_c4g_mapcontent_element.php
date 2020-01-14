@@ -372,7 +372,7 @@ foreach ($GLOBALS['con4gis']['mapcontent_custom_field_types'] as $type) {
                     }
                     $field->options($formattedOptions);
                 }
-            } elseif ($type === 'checkbox' || $type === 'link') {
+            } elseif ($type === 'checkbox' || $type === 'link' || $type === 'icon') {
                 $field = new CheckboxField($model->alias, $dca);
                 $field->hardLabel(strval($model->name), strval($model->description))
                     ->filter(boolval($model->filter))
