@@ -93,8 +93,10 @@ class LoadLayersListener
         }
         $arrTypes = [];
         foreach ($selectedTypes as $key => $selectedType) {
-            $objSelectedTypes = MapcontentTypeModel::findMultipleByIds($selectedType);
-            $arrTypes = array_merge($objSelectedTypes->fetchAll());
+            $objSelectedTypes = MapcontentTypeModel::findByPk($selectedType);
+            if ($objSelectedTypes) {
+                $arrTypes[] = $objSelectedTypes->row();
+            }
         }
 //        $addData = $event->getAdditionalData();
         $addData['types'] = $arrTypes;
@@ -147,29 +149,37 @@ class LoadLayersListener
         $directoryTypeIds = $addData['directoryTypeIds'];
         $elements = $addData['elements'];
         $directoryStructures = [];
-        foreach ($directories as $directory) {
-            $currentTypes = [];
-            foreach ($types as $type) {
-                if (in_array($type['id'], $directoryTypeIds[$directory['id']])) {
-                    $currentTypes[] = $type;
+        if ($directories) {
+            // directories on highest level
+            foreach ($directories as $directory) {
+                $currentTypes = [];
+                foreach ($types as $type) {
+                    if (in_array($type['id'], $directoryTypeIds[$directory['id']])) {
+                        $currentTypes[] = $type;
+                    }
                 }
+                $structureTypes = $this->getStructuresForTypes($types, $mapContentLayer, $elements);
+                $directoryStructure = $fmClass->createMapStructureElementWithIdCalc(
+                    $directory['id'],
+                    $mapContentLayer['id'],
+                    $mapContentLayer['pid'],
+                    512,
+                    'none',
+                    $directory['name'],
+                    $directory['name'],
+                    true,
+                    $mapContentLayer['hide']
+                );
+                $directoryStructures[] = $fmClass->createMapStructureChilds($directoryStructure, $structureTypes);
             }
-            $structureTypes = $this->getStructuresForTypes($types, $mapContentLayer, $elements);
-            $directoryStructure = $fmClass->createMapStructureElementWithIdCalc(
-                $directory['id'],
-                $mapContentLayer['id'],
-                $mapContentLayer['pid'],
-                512,
-                'none',
-                $directory['name'],
-                $directory['name'],
-                true,
-                $mapContentLayer['hide']
-            );
-            $directoryStructures[] = $fmClass->createMapStructureChilds($directoryStructure, $structureTypes);
+    
+            $mapContentLayer = $fmClass->createMapStructureChilds($mapContentLayer, $directoryStructures);
+        } else {
+            // types on highest level
+            $structures = $this->getStructuresForTypes($types, $mapContentLayer, $elements);
+            $mapContentLayer = $fmClass->createMapStructureChilds($mapContentLayer, $structures);
         }
         
-        $mapContentLayer = $fmClass->createMapStructureChilds($mapContentLayer, $directoryStructures);
         $mapContentLayer['type'] = "none";
         $event->setLayerData($mapContentLayer);
     }
