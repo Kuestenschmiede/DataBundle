@@ -16,6 +16,7 @@ $GLOBALS['con4gis']['mapcontent_custom_field_types'][] = 'natural';
 $GLOBALS['con4gis']['mapcontent_custom_field_types'][] = 'int';
 $GLOBALS['con4gis']['mapcontent_custom_field_types'][] = 'select';
 $GLOBALS['con4gis']['mapcontent_custom_field_types'][] = 'checkbox';
+$GLOBALS['con4gis']['mapcontent_custom_field_types'][] = 'icon';
 $GLOBALS['con4gis']['mapcontent_custom_field_types'][] = 'multicheckbox';
 $GLOBALS['con4gis']['mapcontent_custom_field_types'][] = 'datepicker';
 $GLOBALS['con4gis']['mapcontent_custom_field_types'][] = 'link';

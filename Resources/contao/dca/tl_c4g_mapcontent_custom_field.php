@@ -48,6 +48,7 @@ $dca->palette()->selector(['type'])
     ->subPalette('type', 'int', ",description$generalFields;{type_specific_legend},defaultInt")
     ->subPalette('type', 'select', ",description$generalFields;{type_specific_legend},options,defaultSelect")
     ->subPalette('type', 'checkbox', ",description$generalFields;{type_specific_legend},defaultCheckbox")
+    ->subPalette('type', 'icon', ",description$generalFields;{type_specific_legend},defaultCheckbox,icon")
     ->subPalette('type', 'multicheckbox', ",description$generalFields;{type_specific_legend},options,defaultMultiCheckbox")
     ->subPalette('type', 'datepicker', ",description$generalFields;{type_specific_legend},defaultDatePicker")
     ->subPalette('type', 'link', ",description$generalFields;{type_specific_legend},defaultCheckbox,linkTitle,linkHref,linkNewTab")
@@ -201,4 +202,9 @@ $linkHref->eval()
     ->class('w50');
 $linkNewTab = new CheckboxField('linkNewTab', $dca);
 $linkNewTab->eval()
+    ->class('clr');
+$icon = new TextField('icon', $dca);
+$icon->eval()
+    ->allowHtml()
+    ->mandatory()
     ->class('clr');
