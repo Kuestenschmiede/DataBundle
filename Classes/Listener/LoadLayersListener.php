@@ -84,7 +84,10 @@ class LoadLayersListener
         $objMapContent = C4gMapsModel::findByPk($mapContentLayer['id']);
         $addData = $event->getAdditionalData();
         if ($addData['directoryTypeIds']) {
-            $selectedTypes = $addData['directoryTypeIds'];
+            $selectedTypes = [];
+            foreach ($addData['directoryTypeIds'] as $arrIds) {
+                $selectedTypes = array_merge($arrIds, $selectedTypes);
+            }
         } else {
             $selectedTypes = unserialize($objMapContent->typeSelection);
             if (!$selectedTypes) {
