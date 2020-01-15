@@ -13,7 +13,6 @@ use con4gis\CoreBundle\Resources\contao\classes\ResourceLoader;
 use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentCustomFieldModel;
 use con4gis\MapContentBundle\Resources\contao\models\PublicNonEditableModel;
-use con4gis\MapsBundle\Resources\contao\classes\TextField;
 use con4gis\ProjectsBundle\Classes\Buttons\C4GFilterButton;
 use con4gis\ProjectsBundle\Classes\Database\C4GBrickDatabaseType;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GClassField;
@@ -76,10 +75,29 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             foreach ($customFields as $customField) {
                 switch ($customField->type) {
                     case 'icon':
-                        $this->listParams->addFilterButton(new C4GFilterButton($customField->icon));
+                        $this->listParams->addFilterButton(
+                            new C4GFilterButton(
+                                $customField->icon,
+                                $customField->frontendName ?: $customField->name ?: '',
+                                $customField->alias
+                            )
+                        );
                         $alias = $customField->alias;
                         ResourceLoader::loadCssResourceTag(
-                            "filter_$alias\_parent > div:not(filter_$alias\_child) {display: none;}"
+                            '.filter_'.$alias.'_parent > div:not(.filter_'.$alias.'_child) {display: none;}'
+                        );
+                        break;
+                    case 'link':
+                        $this->listParams->addFilterButton(
+                            new C4GFilterButton(
+                                $customField->linkTitle,
+                                $customField->frontendName ?: $customField->name ?: '',
+                                $customField->alias
+                            )
+                        );
+                        $alias = $customField->alias;
+                        ResourceLoader::loadCssResourceTag(
+                            '.filter_'.$alias.'_parent > div:not(.filter_'.$alias.'_child) {display: none;}'
                         );
                         break;
                     default:
@@ -236,7 +254,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                         $icon = C4GIconField::create($customField->alias);
                         $icon->setIcon($customField->icon)
                             ->setConditional()
-                            ->setFormField(false);
+                            ->setFormField(false)
+                            ->setDescription($customField->description);
                         $fieldList[] = $icon;
                     }
                 }
@@ -403,10 +422,10 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         foreach ($customFields as $customField) {
             if ($customField->frontendFilter === '1') {
                 try {
-                    $classField = new C4GClassField($customField->icon);
+                    $classField = new C4GClassField();
                     $classField->setFieldName($customField->alias)
-                        ->setStyleClass($customField->alias)
-                        ->setOptions(['1']);
+                        ->setStyleClass('filter_'.$customField->alias.'_child')
+                        ->setOptions(['1', 1]);
                     $fieldList[] = $classField;
                 } catch (\Throwable $throwable) {
                     C4gLogModel::addLogEntry('projects', $throwable->getMessage());
