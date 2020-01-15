@@ -12,7 +12,6 @@
  *
  */
 
-$GLOBALS['TL_LANG']['MOD']['con4gis_mapcontent'] = ['con4gis '.$GLOBALS['con4gis']['version'] . ' - Map elements', 'Map elements (MapContentBundle)'];
 $GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_type'] = ['MapContent: Categories', 'Edit Categories'];
 $GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_element'] = ['MapContent: Map elements', 'Edit map elements'];
 $GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_custom_field'] = ['MapContent: Custom fields', 'Edit custom fields'];
