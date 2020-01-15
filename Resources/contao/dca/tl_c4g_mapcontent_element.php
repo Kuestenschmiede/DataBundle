@@ -25,7 +25,7 @@ use con4gis\CoreBundle\Classes\DCA\Fields\MultiCheckboxField;
 use con4gis\CoreBundle\Classes\DCA\Fields\DatePickerField;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentCustomFieldModel;
 use Contao\StringUtil;
-use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
+use con4gis\CoreBundle\Classes\C4GUtils;
 
 $strName = 'tl_c4g_mapcontent_element';
 $cbClass = MapcontentElementCallback::class;

@@ -2,7 +2,7 @@
 
 namespace con4gis\MapContentBundle\Classes\Popup;
 
-use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
+use con4gis\CoreBundle\Classes\C4GUtils;
 
 class Popup
 {
