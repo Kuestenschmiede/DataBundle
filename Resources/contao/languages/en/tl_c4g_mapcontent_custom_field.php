@@ -30,6 +30,7 @@ $GLOBALS['TL_LANG'][$strName]['frontendFilter'] = ['Filterable in Frontend', 'If
 $GLOBALS['TL_LANG'][$strName]['linkTitle'] = ['Link title', 'The text displayed to the user.'];
 $GLOBALS['TL_LANG'][$strName]['linkHref'] = ['URL', 'The URL the link points to.'];
 $GLOBALS['TL_LANG'][$strName]['linkNewTab'] = ['Open in new tab', 'If checked, the link is opened in a new tab.'];
+$GLOBALS['TL_LANG'][$strName]['icon'] = ['Font Awesome Icon', 'The icon to be shown.'];
 
 /**
  * Legends
@@ -57,6 +58,7 @@ $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['natural'] = 'Natural Numbe
 $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['int'] = 'Whole Number';
 $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['select'] = 'Select list';
 $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['checkbox'] = 'Checkbox';
+$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['icon'] = 'Icon';
 $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['multicheckbox'] = 'Multiple Checkboxes';
 $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['datepicker'] = 'Datepicker';
 $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['link'] = 'Link';

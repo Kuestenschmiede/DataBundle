@@ -8,12 +8,16 @@
 
 namespace con4gis\MapContentBundle\Resources\contao\modules;
 
-use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
-use con4gis\CoreBundle\Resources\contao\classes\ResourceLoader;
+use con4gis\CoreBundle\Classes\C4GUtils;
+use con4gis\CoreBundle\Classes\ResourceLoader;
+use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentCustomFieldModel;
 use con4gis\MapContentBundle\Resources\contao\models\PublicNonEditableModel;
+use con4gis\ProjectsBundle\Classes\Buttons\C4GFilterButton;
 use con4gis\ProjectsBundle\Classes\Database\C4GBrickDatabaseType;
+use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GClassField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GHeadlineField;
+use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GIconField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GImageField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GKeyField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GLinkButtonField;
@@ -65,6 +69,42 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         $this->dialogParams->setWithLabels(false);
         $this->dialogParams->setWithDescriptions(false);
         $this->dialogParams->setId($id);
+
+        $customFields = MapcontentCustomFieldModel::findBy('frontendFilter', 1);
+        if ($customFields !== null) {
+            foreach ($customFields as $customField) {
+                switch ($customField->type) {
+                    case 'icon':
+                        $this->listParams->addFilterButton(
+                            new C4GFilterButton(
+                                $customField->icon,
+                                $customField->frontendName ?: $customField->name ?: '',
+                                $customField->alias
+                            )
+                        );
+                        $alias = $customField->alias;
+                        ResourceLoader::loadCssResourceTag(
+                            '.filter_'.$alias.'_parent > div:not(.filter_'.$alias.'_child) {display: none;}'
+                        );
+                        break;
+                    case 'link':
+                        $this->listParams->addFilterButton(
+                            new C4GFilterButton(
+                                $customField->linkTitle,
+                                $customField->frontendName ?: $customField->name ?: '',
+                                $customField->alias
+                            )
+                        );
+                        $alias = $customField->alias;
+                        ResourceLoader::loadCssResourceTag(
+                            '.filter_'.$alias.'_parent > div:not(.filter_'.$alias.'_child) {display: none;}'
+                        );
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
 
         static::$type = $this->c4g_mapcontent_type;
         
@@ -174,7 +214,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
 
         if ($customFields !== null) {
             foreach ($customFields as $customField) {
-                if ($customField->frontendList === '1' && ($customField->type !== 'link')) {
+                if ($customField->frontendList === '1' && ($customField->type !== 'link' && $customField->type !== 'icon')) {
                     $fieldList[] = C4GTextField::create($customField->alias,
                         $customField->name,
                         $customField->description,
@@ -200,15 +240,24 @@ class PublicNonEditableModule extends C4GBrickModuleParent
 
         if ($customFields !== null) {
             foreach ($customFields as $customField) {
-                if ($customField->frontendList === '1' && $customField->type === 'link') {
-                    $link = C4GLinkButtonField::create($customField->alias);
-                    $link->setButtonLabel($customField->linkTitle)
-                        ->setNewTab($customField->linkNewTab === '1')
-                        ->setTargetMode(C4GLinkButtonField::TARGET_MODE_URL)
-                        ->setTargetPageUrl($customField->linkHref)
-                        ->setConditional()
-                        ->setFormField(false);
-                    $fieldList[] = $link;
+                if ($customField->frontendList === '1') {
+                    if ($customField->type === 'link') {
+                        $link = C4GLinkButtonField::create($customField->alias);
+                        $link->setButtonLabel($customField->linkTitle)
+                            ->setNewTab($customField->linkNewTab === '1')
+                            ->setTargetMode(C4GLinkButtonField::TARGET_MODE_URL)
+                            ->setTargetPageUrl($customField->linkHref)
+                            ->setConditional()
+                            ->setFormField(false);
+                        $fieldList[] = $link;
+                    } elseif ($customField->type === 'icon') {
+                        $icon = C4GIconField::create($customField->alias);
+                        $icon->setIcon($customField->icon)
+                            ->setConditional()
+                            ->setFormField(false)
+                            ->setDescription($customField->description);
+                        $fieldList[] = $icon;
+                    }
                 }
             }
         }
@@ -366,6 +415,20 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                 $fieldList[] = $brickField;
                 if ($legend !== null && $brickField !== null) {
                     $legend->addAssociatedField($brickField);
+                }
+            }
+        }
+
+        foreach ($customFields as $customField) {
+            if ($customField->frontendFilter === '1') {
+                try {
+                    $classField = new C4GClassField();
+                    $classField->setFieldName($customField->alias)
+                        ->setStyleClass('filter_'.$customField->alias.'_child')
+                        ->setOptions(['1', 1]);
+                    $fieldList[] = $classField;
+                } catch (\Throwable $throwable) {
+                    C4gLogModel::addLogEntry('projects', $throwable->getMessage());
                 }
             }
         }

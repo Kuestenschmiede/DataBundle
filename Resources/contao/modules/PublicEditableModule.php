@@ -8,7 +8,7 @@
 
 namespace con4gis\MapContentBundle\Resources\contao\modules;
 
-use con4gis\CoreBundle\Resources\contao\classes\ResourceLoader;
+use con4gis\CoreBundle\Classes\ResourceLoader;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
 use con4gis\MapContentBundle\Resources\contao\models\PublicNonEditableModel;
 use con4gis\ProjectsBundle\Classes\Common\C4GBrickConst;

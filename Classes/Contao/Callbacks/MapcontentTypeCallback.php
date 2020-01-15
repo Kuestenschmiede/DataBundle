@@ -12,7 +12,7 @@
  */
 namespace con4gis\MapContentBundle\Classes\Contao\Callbacks;
 
-use con4gis\CoreBundle\Resources\contao\classes\C4GUtils;
+use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentCustomFieldModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapLocstylesModel;
 use Contao\Backend;
