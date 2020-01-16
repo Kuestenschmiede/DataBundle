@@ -23,8 +23,23 @@ class PublicNonEditableModel
             $stmtElements = $db->prepare("SELECT * FROM tl_c4g_mapcontent_element WHERE name != '' AND type = ? ORDER BY name ASC");
             $resultElements = $stmtElements->execute(PublicNonEditableModule::$type)->fetchAllAssoc();
         } else {
-            $stmtElements = $db->prepare("SELECT * FROM tl_c4g_mapcontent_element WHERE name != '' ORDER BY name ASC");
-            $resultElements = $stmtElements->execute()->fetchAllAssoc();
+            if (PublicNonEditableModule::$directory) {
+                $directoryModel = MapcontentDirectoryModel::findByPk(PublicNonEditableModule::$directory);
+                if ($directoryModel !== null) {
+                    $types = StringUtil::deserialize($directoryModel->types);
+                    $resultElements = [];
+                    foreach ($types as $type) {
+                        $stmtElements = $db->prepare("SELECT * FROM tl_c4g_mapcontent_element WHERE name != '' AND type = ? ORDER BY name ASC");
+                        $resultElements = array_merge($resultElements, $stmtElements->execute($type)->fetchAllAssoc());
+                    }
+                } else {
+                    $stmtElements = $db->prepare("SELECT * FROM tl_c4g_mapcontent_element WHERE name != '' ORDER BY name ASC");
+                    $resultElements = $stmtElements->execute()->fetchAllAssoc();
+                }
+            } else {
+                $stmtElements = $db->prepare("SELECT * FROM tl_c4g_mapcontent_element WHERE name != '' ORDER BY name ASC");
+                $resultElements = $stmtElements->execute()->fetchAllAssoc();
+            }
         }
 
         foreach ($resultElements as $key => $re) {

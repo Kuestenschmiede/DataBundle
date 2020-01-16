@@ -51,6 +51,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
     protected $loadMiniSearchResources = true;
 
     public static $type = 0;
+    public static $directory = 0;
 
     public function initBrickModule($id)
     {
@@ -107,7 +108,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         }
 
         static::$type = $this->c4g_mapcontent_type;
-        
+        static::$directory = $this->c4g_mapcontent_directory;
+
         if (strval($this->caption) !== '') {
             $this->dialogParams->setBrickCaption(strval($this->caption));
         }
