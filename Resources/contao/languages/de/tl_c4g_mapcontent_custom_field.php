@@ -46,6 +46,10 @@ $GLOBALS['TL_LANG'][$strName]['type_specific_legend'] = 'Typspezifische Optionen
  * Operations
  */
 $GLOBALS['TL_LANG'][$strName]['new'] = ["Neues Feld definieren", "Neues Feld definieren"];
+$GLOBALS['TL_LANG'][$strName]['show'] = ["Felddetails", "Feld mit ID %s anzeigen"];
+$GLOBALS['TL_LANG'][$strName]['edit'] = ["Feld mit ID %s bearbeiten", "Feld mit ID %s bearbeiten"];
+$GLOBALS['TL_LANG'][$strName]['copy'] = ["Feld mit ID %s kopieren", "Feld mit ID %s kopieren"];
+$GLOBALS['TL_LANG'][$strName]['delete'] = ["Feld mit ID %s löschen", "Feld mit ID %s löschen"];
 
 /**
  * Custom Field Types

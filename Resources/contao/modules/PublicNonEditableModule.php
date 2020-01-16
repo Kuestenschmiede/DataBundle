@@ -51,6 +51,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
     protected $loadMiniSearchResources = true;
 
     public static $type = 0;
+    public static $directory = 0;
 
     public function initBrickModule($id)
     {
@@ -107,7 +108,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         }
 
         static::$type = $this->c4g_mapcontent_type;
-        
+        static::$directory = $this->c4g_mapcontent_directory;
+
         if (strval($this->caption) !== '') {
             $this->dialogParams->setBrickCaption(strval($this->caption));
         }
@@ -157,6 +159,11 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         $fieldList[] = C4GTextField::create('addressCity',
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressCity'][0],
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressCity'][1],
+            false, true, true, false);
+
+        $fieldList[] = C4GTextField::create('addressCountry',
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressCountry'][0],
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressCountry'][1],
             false, true, true, false);
 
         $fieldList[] = C4GTextField::create('businessHours',
@@ -287,6 +294,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             'addressName',
             'addressStreet',
             'addressCity',
+            'addressCountry',
             'businessHours_legend',
             'businessHours',
             'contact_legend',

@@ -91,6 +91,8 @@ class MapcontentTypeCallback extends Backend
             'addressStreetNumber' => $language['addressStreetNumber'][0],
             'addressZip' => $language['addressZip'][0],
             'addressCity' => $language['addressCity'][0],
+            'addressState' => $language['addressState'][0],
+            'addressCountry' => $language['addressCountry'][0],
             'contact_legend' => '<strong>' . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'] . $language['contact_legend'] . '</strong>',
             'phone' => $language['phone'][0],
             'mobile' => $language['mobile'][0],

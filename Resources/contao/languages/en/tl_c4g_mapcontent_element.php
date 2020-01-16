@@ -29,6 +29,8 @@ $GLOBALS['TL_LANG'][$strName]['addressStreet'] = ['Street', 'Street without hous
 $GLOBALS['TL_LANG'][$strName]['addressStreetNumber'] = ['House number', ''];
 $GLOBALS['TL_LANG'][$strName]['addressZip'] = ['Zip code', ''];
 $GLOBALS['TL_LANG'][$strName]['addressCity'] = ['City', ''];
+$GLOBALS['TL_LANG'][$strName]['addressState'] = ['State', ''];
+$GLOBALS['TL_LANG'][$strName]['addressCountry'] = ['Country', ''];
 
 $GLOBALS['TL_LANG'][$strName]['accessibility'] = ['Accessible', 'The element is accessible.'];
 $GLOBALS['TL_LANG'][$strName]['osmId'] = ['OSM ID', 'The element\'s id in the Open Street Map.'];
@@ -77,7 +79,7 @@ $GLOBALS['TL_LANG'][$strName]['publish_legend'] = 'Display';
  * Operations
  */
 $GLOBALS['TL_LANG'][$strName]['new'] = ["Create new map element", "Create new map element"];
-$GLOBALS['TL_LANG'][$strName]['show'] = ["Show map element with ID %s", "Show map element with ID %s"];
+$GLOBALS['TL_LANG'][$strName]['show'] = ["Map element details", "Show map element with ID %s"];
 $GLOBALS['TL_LANG'][$strName]['edit'] = ["Edit map element with ID %s", "Edit map element with ID %s"];
 $GLOBALS['TL_LANG'][$strName]['copy'] = ["Copy map element with ID %s", "Copy map element with ID %s"];
 $GLOBALS['TL_LANG'][$strName]['delete'] = ["Delete map element with ID %s", "Delete map element with ID %s"];

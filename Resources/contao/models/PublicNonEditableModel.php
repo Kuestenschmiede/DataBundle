@@ -23,8 +23,23 @@ class PublicNonEditableModel
             $stmtElements = $db->prepare("SELECT * FROM tl_c4g_mapcontent_element WHERE name != '' AND type = ? ORDER BY name ASC");
             $resultElements = $stmtElements->execute(PublicNonEditableModule::$type)->fetchAllAssoc();
         } else {
-            $stmtElements = $db->prepare("SELECT * FROM tl_c4g_mapcontent_element WHERE name != '' ORDER BY name ASC");
-            $resultElements = $stmtElements->execute()->fetchAllAssoc();
+            if (PublicNonEditableModule::$directory) {
+                $directoryModel = MapcontentDirectoryModel::findByPk(PublicNonEditableModule::$directory);
+                if ($directoryModel !== null) {
+                    $types = StringUtil::deserialize($directoryModel->types);
+                    $resultElements = [];
+                    foreach ($types as $type) {
+                        $stmtElements = $db->prepare("SELECT * FROM tl_c4g_mapcontent_element WHERE name != '' AND type = ? ORDER BY name ASC");
+                        $resultElements = array_merge($resultElements, $stmtElements->execute($type)->fetchAllAssoc());
+                    }
+                } else {
+                    $stmtElements = $db->prepare("SELECT * FROM tl_c4g_mapcontent_element WHERE name != '' ORDER BY name ASC");
+                    $resultElements = $stmtElements->execute()->fetchAllAssoc();
+                }
+            } else {
+                $stmtElements = $db->prepare("SELECT * FROM tl_c4g_mapcontent_element WHERE name != '' ORDER BY name ASC");
+                $resultElements = $stmtElements->execute()->fetchAllAssoc();
+            }
         }
 
         foreach ($resultElements as $key => $re) {
@@ -75,6 +90,12 @@ class PublicNonEditableModel
                 $resultElements[$key]['addressStreet'] = $re['addressStreet'];
             }
             $resultElements[$key]['addressCity'] = $re['addressZip'] . ' ' . $re['addressCity'];
+
+            if (strval($re['addressState']) !== '') {
+                $resultElements[$key]['addressCountry'] = $re['addressState'] . ', ' . $re['addressCountry'];
+            } else {
+                $resultElements[$key]['addressCountry'] = $re['addressCountry'];
+            }
 
             $timeString = [];
             $businessTimes = \StringUtil::deserialize($re['businessHours']);
@@ -204,14 +225,16 @@ class PublicNonEditableModel
             }
         }
 
-        $address = [];
         if ($array['addressStreet'] !== '' && $array['addressStreetNumber'] !== '0') {
             $array['addressStreet'] = $array['addressStreet']. ' ' . $array['addressStreetNumber'];
         }
         if ($array['addressZip'] !== '' && $array['addressCity'] !== '') {
             $array['addressCity'] = $array['addressZip'] . ' ' . $array['addressCity'];
         }
-        $array['address'] = implode(', ',  $address);
+        if ($array['addressState'] !== '' && $array['addressCountry'] !== '') {
+            $array['addressCountry'] = $array['addressState'] . ', ' . $array['addressCountry'];
+            $array['addressState'] = '';
+        }
 
         $timeString = [];
         $businessTimes = \StringUtil::deserialize($array['businessHours']);
