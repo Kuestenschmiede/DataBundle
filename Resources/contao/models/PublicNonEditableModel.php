@@ -91,6 +91,12 @@ class PublicNonEditableModel
             }
             $resultElements[$key]['addressCity'] = $re['addressZip'] . ' ' . $re['addressCity'];
 
+            if (strval($re['addressState']) !== '') {
+                $resultElements[$key]['addressCountry'] = $re['addressState'] . ', ' . $re['addressCountry'];
+            } else {
+                $resultElements[$key]['addressCountry'] = $re['addressCountry'];
+            }
+
             $timeString = [];
             $businessTimes = \StringUtil::deserialize($re['businessHours']);
             $resultElements[$key]['businessHours'] = '';
@@ -219,14 +225,16 @@ class PublicNonEditableModel
             }
         }
 
-        $address = [];
         if ($array['addressStreet'] !== '' && $array['addressStreetNumber'] !== '0') {
             $array['addressStreet'] = $array['addressStreet']. ' ' . $array['addressStreetNumber'];
         }
         if ($array['addressZip'] !== '' && $array['addressCity'] !== '') {
             $array['addressCity'] = $array['addressZip'] . ' ' . $array['addressCity'];
         }
-        $array['address'] = implode(', ',  $address);
+        if ($array['addressState'] !== '' && $array['addressCountry'] !== '') {
+            $array['addressCountry'] = $array['addressState'] . ', ' . $array['addressCountry'];
+            $array['addressState'] = '';
+        }
 
         $timeString = [];
         $businessTimes = \StringUtil::deserialize($array['businessHours']);

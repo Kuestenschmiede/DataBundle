@@ -161,6 +161,11 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressCity'][1],
             false, true, true, false);
 
+        $fieldList[] = C4GTextField::create('addressCountry',
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressCountry'][0],
+            $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['addressCountry'][1],
+            false, true, true, false);
+
         $fieldList[] = C4GTextField::create('businessHours',
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['businessHours'][0],
             $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['businessHours'][1],
@@ -289,6 +294,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             'addressName',
             'addressStreet',
             'addressCity',
+            'addressCountry',
             'businessHours_legend',
             'businessHours',
             'contact_legend',

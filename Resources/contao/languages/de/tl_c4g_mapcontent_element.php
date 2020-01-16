@@ -29,6 +29,8 @@ $GLOBALS['TL_LANG'][$strName]['addressStreet'] = ['Straße', 'Straße ohne Hausn
 $GLOBALS['TL_LANG'][$strName]['addressStreetNumber'] = ['Hausnummer', ''];
 $GLOBALS['TL_LANG'][$strName]['addressZip'] = ['Postleitzahl', ''];
 $GLOBALS['TL_LANG'][$strName]['addressCity'] = ['Ort', ''];
+$GLOBALS['TL_LANG'][$strName]['addressState'] = ['Bundesland', ''];
+$GLOBALS['TL_LANG'][$strName]['addressCountry'] = ['Staat', ''];
 
 $GLOBALS['TL_LANG'][$strName]['accessibility'] = ['Barrierefrei', 'Das Element ist barrierefrei.'];
 $GLOBALS['TL_LANG'][$strName]['osmId'] = ['OSM ID', 'Die ID des Elements in der Open Street Map. Falls gesetzt, werden die Daten aus der Open Street Map geladen. Gegebenenfalls werden eingegebene Daten dann ignoriert.'];

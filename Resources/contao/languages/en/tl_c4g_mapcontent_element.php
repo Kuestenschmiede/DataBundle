@@ -29,6 +29,8 @@ $GLOBALS['TL_LANG'][$strName]['addressStreet'] = ['Street', 'Street without hous
 $GLOBALS['TL_LANG'][$strName]['addressStreetNumber'] = ['House number', ''];
 $GLOBALS['TL_LANG'][$strName]['addressZip'] = ['Zip code', ''];
 $GLOBALS['TL_LANG'][$strName]['addressCity'] = ['City', ''];
+$GLOBALS['TL_LANG'][$strName]['addressState'] = ['State', ''];
+$GLOBALS['TL_LANG'][$strName]['addressCountry'] = ['Country', ''];
 
 $GLOBALS['TL_LANG'][$strName]['accessibility'] = ['Accessible', 'The element is accessible.'];
 $GLOBALS['TL_LANG'][$strName]['osmId'] = ['OSM ID', 'The element\'s id in the Open Street Map.'];

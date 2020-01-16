@@ -195,6 +195,12 @@ $addressZip->sql('varchar(10) NULL')
 $addressCity = new TextField('addressCity', $dca);
 $addressCity->eval()->class('w50');
 
+$addressState = new TextField('addressState', $dca);
+$addressState->eval()->class('w50');
+
+$addressCountry = new TextField('addressCountry', $dca);
+$addressCountry->eval()->class('w50');
+
 $phone = new TextField('phone', $dca);
 $phone->eval()->regEx('phone')
         ->class('w50');
