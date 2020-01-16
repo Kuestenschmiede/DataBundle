@@ -77,7 +77,7 @@ $GLOBALS['TL_LANG'][$strName]['publish_legend'] = 'Anzeige';
  * Operations
  */
 $GLOBALS['TL_LANG'][$strName]['new'] = ["Neues Kartenelement erstellen", "Neues Kartenelement erstellen"];
-$GLOBALS['TL_LANG'][$strName]['show'] = ["Kartenelement mit ID %s anzeigen", "Kartenelement mit ID %s anzeigen"];
+$GLOBALS['TL_LANG'][$strName]['show'] = ["Kartenelementdetails", "Kartenelement mit ID %s anzeigen"];
 $GLOBALS['TL_LANG'][$strName]['edit'] = ["Kartenelement mit ID %s bearbeiten", "Kartenelement mit ID %s bearbeiten"];
 $GLOBALS['TL_LANG'][$strName]['copy'] = ["Kartenelement mit ID %s kopieren", "Kartenelement mit ID %s kopieren"];
 $GLOBALS['TL_LANG'][$strName]['delete'] = ["Kartenelement mit ID %s löschen", "Kartenelement mit ID %s löschen"];
