@@ -36,7 +36,11 @@ $id = new IdField('id', $dca);
 $tStamp = new NaturalField('tstamp', $dca);
 
 $name = new TextField('name', $dca);
-$name->eval()->class('clr')->mandatory();
+$name->filter()
+    ->search();
+$name->eval()
+    ->class('clr')
+    ->mandatory();
 
 $types = new MultiCheckboxField('types', $dca);
 $types->optionsCallback($cbClass, 'loadTypeOptions');

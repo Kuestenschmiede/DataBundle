@@ -39,7 +39,11 @@ $id = new IdField('id', $dca);
 $tStamp = new NaturalField('tstamp', $dca);
 
 $name = new TextField('name', $dca);
-$name->eval()->class('clr')->mandatory();
+$name->filter()
+    ->search();
+$name->eval()
+    ->class('clr')
+    ->mandatory();
 
 $locStyle = new SelectField('locstyle', $dca);
 $locStyle->default('')
