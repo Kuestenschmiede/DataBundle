@@ -32,22 +32,30 @@ $GLOBALS['con4gis']['map-content']['frontend']['accessibility']['default'] = fal
 $GLOBALS['con4gis']['map-content']['frontend']['image']['default'] = false;
 
 $GLOBALS['BE_MOD']['con4gis'] = array_merge($GLOBALS['BE_MOD']['con4gis'], [
-    'c4g_mapcontent_type' => [
-        'tables' => ['tl_c4g_mapcontent_type'],
-        'stylesheet' => 'bundles/con4gismapcontent/css/backend_map_content_type.css'
+    'c4g_mapcontent_custom_field' => [
+        'brick' => 'map-content',
+        'tables' => ['tl_c4g_mapcontent_custom_field'],
+        'icon' => 'bundles/con4giscore/images/be-icons/edit.svg'
     ],
     'c4g_mapcontent_element' => [
+        'brick' => 'map-content',
         'tables' => ['tl_c4g_mapcontent_element'],
         'javascript' => '/bundles/con4giseditor/js/c4g-backend-helper.js',
         'stylesheet' => [
             'bundles/con4gismapcontent/css/backend_map_content_element.css'
-        ]
+        ],
+        'icon' => $icon = 'bundles/con4gismapcontent/images/be-icons/mapelements.svg'
     ],
-    'c4g_mapcontent_custom_field' => [
-        'tables' => ['tl_c4g_mapcontent_custom_field']
+    'c4g_mapcontent_type' => [
+        'brick' => 'map-content',
+        'tables' => ['tl_c4g_mapcontent_type'],
+        'stylesheet' => 'bundles/con4gismapcontent/css/backend_map_content_type.css',
+        'icon' => 'bundles/con4gismapcontent/images/be-icons/mapcategory.svg'
     ],
     'c4g_mapcontent_directory' => [
-        'tables' => ['tl_c4g_mapcontent_directory']
+        'brick' => 'map-content',
+        'tables' => ['tl_c4g_mapcontent_directory'],
+        'icon' => 'bundles/con4gismapcontent/images/be-icons/mapfolder.svg'
     ]
 ]);
 
