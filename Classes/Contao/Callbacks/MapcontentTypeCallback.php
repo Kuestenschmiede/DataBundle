@@ -98,7 +98,10 @@ class MapcontentTypeCallback extends Backend
             'mobile' => $language['mobile'][0],
             'fax' => $language['fax'][0],
             'email' => $language['email'][0],
-            'website' => $language['website'][0],
+            'website' => $language['website'][0] .
+                " <sup title='" . $language['website'][1] . "'>(?)</sup>",
+            'websiteLabel' => $language['websiteLabel'][0] .
+                " <sup title='" . $language['websiteLabel'][1] . "'>(?)</sup>",
             'image_legend' => '<strong>' . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'] . $language['image_legend'] . '</strong>',
             'image' => $language['image'][0] .
                 " <sup title='" . $language['image'][1] . "'>(?)</sup>",
