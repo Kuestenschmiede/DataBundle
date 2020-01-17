@@ -3,6 +3,7 @@
 
 namespace con4gis\MapContentBundle\Resources\contao\models;
 
+use con4gis\CoreBundle\Classes\Helper\ArrayHelper;
 use con4gis\MapContentBundle\Resources\contao\modules\PublicNonEditableModule;
 use con4gis\ProjectsBundle\Classes\Common\C4GBrickCommon;
 use Contao\StringUtil;
@@ -181,7 +182,7 @@ class PublicNonEditableModel
             $resultElements[$key]['searchInfo'] .= $resultElements[$key]['type'];
         }
 
-        return C4GBrickCommon::arrayToObject($resultElements);
+        return ArrayHelper::arrayToObject($resultElements);
     }
 
     public static function findByPk($pk) {
@@ -306,6 +307,6 @@ class PublicNonEditableModel
             }
         }
 
-        return C4GBrickCommon::arrayToObject($array);
+        return ArrayHelper::arrayToObject($array);
     }
 }

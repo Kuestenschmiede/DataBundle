@@ -17,7 +17,5 @@ $GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_element'] = ['MapContent: Karteneleme
 $GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_custom_field'] = ['MapContent: Benutzerdefinierte Felder', 'Benutzerdefinierte Felder bearbeiten'];
 $GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_directory'] = ['MapContent: Verzeichnisse', 'Verzeichnisse bearbeiten'];
 
-$GLOBALS['TL_LANG']['FMD']['con4gis_mapcontent'] = 'con4gis MapContent';
-
-$GLOBALS['TL_LANG']['FMD']['public_noneditable'] = ['Darstellung der Kartenelemente ohne Schreibzugriff', ''];
-$GLOBALS['TL_LANG']['FMD']['public_editable'] = ['Darstellung der Kartenelemente mit Schreibzugriff', ''];
+$GLOBALS['TL_LANG']['FMD']['public_noneditable'] = ['map-content: Kartenelemente auflisten (ohne Schreibzugriff)', 'Darstellung der Kartenelemente ohne Schreibzugriff'];
+$GLOBALS['TL_LANG']['FMD']['public_editable'] = ['map-content: Kartenelemente auflisten (mit Schreibzugriff)', 'Darstellung der Kartenelemente mit Schreibzugriff'];

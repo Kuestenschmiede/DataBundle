@@ -4,6 +4,7 @@
 namespace con4gis\MapContentBundle\Resources\contao\models;
 
 
+use con4gis\CoreBundle\Classes\Helper\ArrayHelper;
 use con4gis\ProjectsBundle\Classes\Common\C4GBrickCommon;
 use Contao\StringUtil;
 
@@ -45,7 +46,7 @@ class PublicEditableModel
             $resultElements[$key]['addressCity'] = $re['addressCity'];
         }
 
-        return C4GBrickCommon::arrayToObject($resultElements);
+        return ArrayHelper::arrayToObject($resultElements);
     }
 
     public static function findByPk($pk) {
@@ -56,6 +57,6 @@ class PublicEditableModel
         $array['businessHours'] = json_encode($businessHours);
         $array['businessHours'] = str_replace('"', '\'', $array['businessHours']);
 
-        return C4GBrickCommon::arrayToObject($array);
+        return ArrayHelper::arrayToObject($array);
     }
 }

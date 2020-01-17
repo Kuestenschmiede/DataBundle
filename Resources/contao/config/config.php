@@ -71,10 +71,6 @@ $GLOBALS['TL_MODELS']['tl_c4g_mapcontent_element'] = MapcontentElementModel::cla
 $GLOBALS['TL_MODELS']['tl_c4g_mapcontent_custom_field'] = MapcontentCustomFieldModel::class;
 $GLOBALS['TL_MODELS']['tl_c4g_mapcontent_directory'] = MapcontentDirectoryModel::class;
 
-//array_insert($GLOBALS['FE_MOD']['con4gis_mapcontent'], 1,
-//    ['public_editable' => PublicEditableModule::class]
-//);
-
-array_insert($GLOBALS['FE_MOD']['con4gis_mapcontent'], 1,
-    ['public_noneditable' => PublicNonEditableModule::class]
-);
+//$GLOBALS['FE_MOD']['con4gis']['public_editable'] = PublicEditableModule::class;
+$GLOBALS['FE_MOD']['con4gis']['public_noneditable'] = PublicNonEditableModule::class;
+asort($GLOBALS['FE_MOD']['con4gis']);

@@ -19,5 +19,5 @@ $GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_directory'] = ['MapContent: Directori
 
 $GLOBALS['TL_LANG']['FMD']['con4gis_mapcontent'] = 'con4gis MapContent';
 
-$GLOBALS['TL_LANG']['FMD']['public_noneditable'] = ['List of map elements without write access', ''];
-$GLOBALS['TL_LANG']['FMD']['public_editable'] = ['List of map elements with write access', ''];
+$GLOBALS['TL_LANG']['FMD']['public_noneditable'] = ['map-content: map elements listing (without write access)', 'List of map elements without write access'];
+$GLOBALS['TL_LANG']['FMD']['public_editable'] = ['map-content: map elements listing (with write access)', 'List of map elements with write access'];
