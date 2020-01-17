@@ -218,8 +218,12 @@ $email = new TextField('email', $dca);
 $email->eval()->regEx('email')
         ->class('w50');
 
-$email = new TextField('website', $dca);
-$email->eval()->regEx('url')
+$website = new TextField('website', $dca);
+$website->eval()->regEx('url')
+        ->class('w50');
+
+$websiteLabel = new TextField('websiteLabel', $dca);
+$websiteLabel->eval()
         ->class('w50');
 
 $image = new ImageField('image', $dca);

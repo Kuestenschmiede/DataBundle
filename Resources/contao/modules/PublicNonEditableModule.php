@@ -211,7 +211,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             ->setAddStrBeforeValue('Website: ')
             ->setShowIfEmpty(false)
             ->setLinkType(C4GLinkField::LINK_TYPE_DEFAULT)
-            ->setNewTab();
+            ->setNewTab()
+            ->setLabelField('websiteLabel');
 
         $fieldList[] = C4GMultiLinkField::create('linkWizard',
             '', '', false,
@@ -388,7 +389,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             ->setAddStrBeforeValue('Website: ')
                             ->setShowIfEmpty(false)
                             ->setLinkType(C4GLinkField::LINK_TYPE_DEFAULT)
-                            ->setNewTab();
+                            ->setNewTab()
+                            ->setLabelField('websiteLabel');
                         break;
                     case 'image':
                         $brickField = C4GImageField::create('image',
