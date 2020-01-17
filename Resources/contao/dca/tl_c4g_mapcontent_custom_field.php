@@ -28,6 +28,7 @@ $cbClass = MapcontentCustomFieldCallback::class;
 
 $dca = new DCA($strName);
 $dca->config()->onloadCallback($cbClass, 'addHint');
+
 $list = $dca->list();
 $list->sorting()->fields(['name']);
 $list->sorting()->panelLayout('filter;sort,search,limit');
