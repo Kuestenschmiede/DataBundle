@@ -154,9 +154,18 @@ class PublicNonEditableModel
                 foreach ($models as $model) {
                     if ($model->type === 'multicheckbox') {
                         if ($model->frontendList === '1') {
+                            $options = StringUtil::deserialize($model->options);
                             $resultElements[$key][$model->alias] = StringUtil::deserialize($resultElements[$key][$model->alias]);
                             if (is_array($resultElements[$key][$model->alias])) {
-                                $resultElements[$key][$model->alias] = $model->name . ": " . implode(', ', $resultElements[$key][$model->alias]);
+                                $displayValues = [];
+                                foreach ($resultElements[$key][$model->alias] as $value) {
+                                    foreach ($options as $option) {
+                                        if ($option['key'] === $value) {
+                                            $displayValues[] = $option['value'];
+                                        }
+                                    }
+                                }
+                                $resultElements[$key][$model->alias] = $model->name . ": " . implode(', ', $displayValues);
                             }
                         } else {
                             $resultElements[$key][$model->alias] = StringUtil::deserialize($resultElements[$key][$model->alias]);
