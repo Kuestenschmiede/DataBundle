@@ -12,6 +12,8 @@ use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\CoreBundle\Classes\ResourceLoader;
 use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentCustomFieldModel;
+use con4gis\MapContentBundle\Resources\contao\models\MapcontentElementModel;
+use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
 use con4gis\MapContentBundle\Resources\contao\models\PublicNonEditableModel;
 use con4gis\ProjectsBundle\Classes\Buttons\C4GFilterButton;
 use con4gis\ProjectsBundle\Classes\Database\C4GBrickDatabaseType;
@@ -28,6 +30,7 @@ use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GTextField;
 use con4gis\ProjectsBundle\Classes\Framework\C4GBrickModuleParent;
 use con4gis\ProjectsBundle\Classes\Lists\C4GBrickRenderMode;
 use con4gis\ProjectsBundle\Classes\Views\C4GBrickViewType;
+use Contao\StringUtil;
 
 
 class PublicNonEditableModule extends C4GBrickModuleParent
@@ -308,9 +311,26 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             'linkWizard'
         ];
 
-        if ($customFields !== null) {
+        $elementModel = MapcontentElementModel::findByPk($this->dialogParams->getId());
+        if ($elementModel !== null) {
+            $typeModel = MapcontentTypeModel::findByPk($elementModel->type);
+            if ($typeModel !== null) {
+                $availableFields = StringUtil::deserialize($typeModel->availableFields);
+                foreach ($availableFields as $availableField) {
+                    if (!in_array($availableField, $availableFieldsDetails, true)) {
+                        if ($customFields !== null) {
+                            foreach ($customFields as $customField) {
+                                if ($customField->alias === $availableField && ($customField->frontendDetails === '1' || $customField->type === 'legend')) {
+                                    $availableFieldsDetails[] = $availableField;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } elseif ($customFields !== null) {
             foreach ($customFields as $customField) {
-                if ($customField->frontendDetails === '1') {
+                if ($customField->frontendDetails === '1' || $customField->type === 'legend') {
                     $availableFieldsDetails[] = $customField->alias;
                 }
             }
@@ -320,8 +340,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         foreach ($availableFieldsDetails as $field) {
             $model = MapcontentCustomFieldModel::findBy('alias', $field);
             if ($model !== null && $model->type === 'legend') {
-                $legend = C4GHeadlineField::create($field,
-                    $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$field],
+                $legend = C4GHeadlineField::create(strval($model->alias),
+                    strval($model->frontendName ?: $model->name),
                     '',
                     true, false, false, false);
                 $fieldList[] = $legend;
