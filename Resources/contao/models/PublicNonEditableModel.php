@@ -312,6 +312,22 @@ class PublicNonEditableModel
                             }
                         }
                     }
+                } elseif ($customField->type === 'multicheckbox') {
+                    if ($array[$customField->alias]) {
+                        $options = StringUtil::deserialize($customField->options);
+                        $values = StringUtil::deserialize($array[$customField->alias]);
+                        $displayValues = [];
+                        foreach ($values as $value) {
+                            foreach ($options as $option) {
+                                if ($option['key'] === $value) {
+                                    $displayValues[] = $option['value'];
+                                }
+                            }
+                        }
+                        if (!empty($displayValues)) {
+                            $array[$customField->alias] = $customField->name . ": " . implode(', ', $displayValues);
+                        }
+                    }
                 }
             }
         }
