@@ -59,10 +59,6 @@ $GLOBALS['BE_MOD']['con4gis'] = array_merge($GLOBALS['BE_MOD']['con4gis'], [
     ]
 ]);
 
-if(TL_MODE == "BE") {
-    $GLOBALS['TL_CSS'][] = '/bundles/con4gismapcontent/css/con4gis.css';
-}
-
 $GLOBALS['c4g_locationtypes'][] = 'mpCntnt';
 $GLOBALS['c4g_locationtypes'][] = 'mpCntnt_directory';
 

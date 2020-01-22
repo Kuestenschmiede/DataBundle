@@ -14,7 +14,7 @@ namespace con4gis\MapContentBundle\Classes\Contao\Callbacks;
 
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentElementModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
-use con4gis\MapsBundle\Resources\contao\classes\Utils;
+use con4gis\MapsBundle\Classes\Utils;
 use Contao\Backend;
 use Contao\DataContainer;
 
