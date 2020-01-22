@@ -266,7 +266,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                         $icon->setIcon($customField->icon)
                             ->setConditional()
                             ->setFormField(false)
-                            ->setDescription($customField->description);
+                            ->setDescription($customField->description)
+                            ->setTitle($customField->frontendName ?: $customField->name);
                         $fieldList[] = $icon;
                     }
                 }
