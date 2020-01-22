@@ -104,10 +104,11 @@ $type->default('')
     ->optionsCallback($cbClass, 'loadTypes')
     ->sql("varchar(20) NOT NULL default ''")
     ->filter()->search()
-    ->eval()->mandatory()
-    ->maxlength(20)
-    ->class('clr')
-    ->submitOnChange();
+        ->eval()->mandatory()
+        ->maxlength(20)
+        ->class('clr')
+        ->submitOnChange()
+        ->chosen();
 
 $parent = new SelectField('parentElement', $dca);
 $parent->optionsCallback($cbClass, 'loadParentOptions')
