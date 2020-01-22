@@ -16,6 +16,7 @@ use con4gis\MapContentBundle\Resources\contao\models\MapcontentElementModel;
 use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
 use con4gis\MapContentBundle\Resources\contao\models\PublicNonEditableModel;
 use con4gis\ProjectsBundle\Classes\Buttons\C4GFilterButton;
+use con4gis\ProjectsBundle\Classes\Buttons\C4GCheckboxFilterButton;
 use con4gis\ProjectsBundle\Classes\Database\C4GBrickDatabaseType;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GClassField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GHeadlineField;
@@ -82,6 +83,19 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                         $this->listParams->addFilterButton(
                             new C4GFilterButton(
                                 $customField->icon,
+                                $customField->frontendName ?: $customField->name ?: '',
+                                $customField->alias
+                            )
+                        );
+                        $alias = $customField->alias;
+                        ResourceLoader::loadCssResourceTag(
+                            '.filter_'.$alias.'_parent > div:not(.filter_'.$alias.'_child) {display: none;}'
+                        );
+                        break;
+                    case 'checkbox':
+                        $this->listParams->addFilterButton(
+                            new C4GCheckboxFilterButton(
+                                $customField->frontendName ?: $customField->name,
                                 $customField->frontendName ?: $customField->name ?: '',
                                 $customField->alias
                             )
