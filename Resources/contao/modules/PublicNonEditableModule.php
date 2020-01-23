@@ -93,12 +93,16 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                         );
                         break;
                     case 'checkbox':
+                        $filterCheckbox = new C4GCheckboxFilterButton(
+                            $customField->frontendName ?: $customField->name,
+                            $customField->frontendName ?: $customField->name ?: '',
+                            $customField->alias
+                        );
+                        $filterCheckbox->setStyle($customField->frontendFilterCheckboxStyling);
+                        $filterCheckbox->setLabelChecked($customField->frontendFilterCheckboxButtonLabelOn);
+                        $filterCheckbox->setLabelUnChecked($customField->frontendFilterCheckboxButtonLabelOff);
                         $this->listParams->addFilterButton(
-                            new C4GCheckboxFilterButton(
-                                $customField->frontendName ?: $customField->name,
-                                $customField->frontendName ?: $customField->name ?: '',
-                                $customField->alias
-                            )
+                            $filterCheckbox
                         );
                         $alias = $customField->alias;
                         ResourceLoader::loadCssResourceTag(

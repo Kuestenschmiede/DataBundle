@@ -27,6 +27,9 @@ $GLOBALS['TL_LANG'][$strName]['frontendPopup'] = ['Im Popup zeigen', 'Falls gese
 $GLOBALS['TL_LANG'][$strName]['frontendList'] = ['In der Liste zeigen', 'Falls gesetzt, wird das Feld in der Liste dargestellt, wenn ein Wert vorhanden ist.'];
 $GLOBALS['TL_LANG'][$strName]['frontendDetails'] = ['In den Listendetails zeigen', 'Falls gesetzt, wird das Feld in den Listendetails dargestellt, wenn ein Wert vorhanden ist.'];
 $GLOBALS['TL_LANG'][$strName]['frontendFilter'] = ['Im Frontend filterbar', 'Falls gesetzt, ist das Feld im Frontendfilter verfügbar.'];
+$GLOBALS['TL_LANG'][$strName]['frontendFilterCheckboxStyling'] = ['Gestaltung des Frontendfilters', 'Bestimmt, wie der Filter oberhalb der Liste dargestellt wird.'];
+$GLOBALS['TL_LANG'][$strName]['frontendFilterCheckboxButtonLabelOn'] = ['Button Text für aktiven Filter', 'Der Button Text, wenn der Filter aktiv ist. Erlaubt HTML.'];
+$GLOBALS['TL_LANG'][$strName]['frontendFilterCheckboxButtonLabelOff'] = ['Button Text für inaktiven Filter', 'Der Button Text, wenn der Filter nicht aktiv ist. Erlaubt HTML.'];
 $GLOBALS['TL_LANG'][$strName]['linkTitle'] = ['Linkbezeichnung', 'Der Text, der dem Nutzer ausgegeben wird.'];
 $GLOBALS['TL_LANG'][$strName]['linkHref'] = ['URL', 'Die URL, auf die der Link zeigt.'];
 $GLOBALS['TL_LANG'][$strName]['linkNewTab'] = ['In neuem Tab öffnen', 'Falls gesetzt, wird der Link in einem neuen Tab geöffnet.'];
@@ -75,3 +78,10 @@ $GLOBALS['TL_LANG']['mapcontent_custom_field_types']['legend'] = 'Überschrift';
 $GLOBALS['TL_LANG']['mapcontent_custom_field_class_options']['w50'] = 'Einspaltig';
 $GLOBALS['TL_LANG']['mapcontent_custom_field_class_options']['w50 clr'] = 'Einspaltig, Links';
 $GLOBALS['TL_LANG']['mapcontent_custom_field_class_options']['clr'] = 'Zweispaltig';
+
+/**
+ *
+ */
+
+$GLOBALS['TL_LANG']['mapcontent_custom_field_frontend_filter_checkbox_styling_options']['checkbox'] = 'als Checkbox';
+$GLOBALS['TL_LANG']['mapcontent_custom_field_frontend_filter_checkbox_styling_options']['button'] = 'als Button';
