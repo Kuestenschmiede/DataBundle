@@ -40,7 +40,7 @@ $dca->palette()->default(
 $generalFields = ';{filter_search_legend},filter,search'.
     ';{mandatory_legend},mandatory'.
     ';{positioning_legend},class,margin'.
-    ';{frontend_legend},frontendName,frontendPopup,frontendList,frontendDetails,frontendFilter';
+    ';{frontend_legend},frontendName,frontendPopup,frontendList,frontendDetails,frontendFilter,frontendFilterList';
 $dca->palette()->selector(['type'])
     ->subPalette('type', 'text', ",description$generalFields;{type_specific_legend},maxLength,defaultText")
     ->subPalette('type', 'textarea', ",description$generalFields;{type_specific_legend},maxLength,defaultTextArea")
@@ -121,10 +121,15 @@ $frontendDetails->default(true)
     ->eval()
         ->class('w50 clr');
 
-$frontendDetails = new CheckboxField('frontendFilter', $dca);
-$frontendDetails->default(false)
+$frontendFilter = new CheckboxField('frontendFilter', $dca);
+$frontendFilter->default(false)
     ->eval()
         ->class('w50');
+
+$frontendFilterList = new CheckboxField('frontendFilterList', $dca);
+$frontendFilterList->default(false)
+    ->eval()
+        ->class('w50 clr');
 
 /** Type specific */
 

@@ -75,7 +75,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         $this->dialogParams->setWithDescriptions(false);
         $this->dialogParams->setId($id);
 
-        $customFields = MapcontentCustomFieldModel::findBy('frontendFilter', 1);
+        $customFields = MapcontentCustomFieldModel::findBy('frontendFilterList', 1);
         if ($customFields !== null) {
             foreach ($customFields as $customField) {
                 switch ($customField->type) {
@@ -469,7 +469,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         }
 
         foreach ($customFields as $customField) {
-            if ($customField->frontendFilter === '1') {
+            if ($customField->frontendFilterList === '1') {
                 try {
                     $classField = new C4GClassField();
                     $classField->setFieldName($customField->alias)
