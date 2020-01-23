@@ -12,10 +12,10 @@
  *
  */
 
-$GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_type'] = ['MapContent: Kategorien', 'Kategorien bearbeiten'];
-$GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_element'] = ['MapContent: Kartenelemente', 'Kartenelemente bearbeiten'];
-$GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_custom_field'] = ['MapContent: Benutzerdefinierte Felder', 'Benutzerdefinierte Felder bearbeiten'];
-$GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_directory'] = ['MapContent: Verzeichnisse', 'Verzeichnisse bearbeiten'];
+$GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_type'] = ['(data) Kategorien', 'Kategorien bearbeiten'];
+$GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_element'] = ['(data) Datenerfassung', 'Kartenelemente bearbeiten'];
+$GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_custom_field'] = ['(data) Benutzerdefinierte Felder', 'Benutzerdefinierte Felder bearbeiten'];
+$GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_directory'] = ['(data) Verzeichnisse', 'Verzeichnisse bearbeiten'];
 
-$GLOBALS['TL_LANG']['FMD']['public_noneditable'] = ['map-content: Kartenelemente auflisten (ohne Schreibzugriff)', 'Darstellung der Kartenelemente ohne Schreibzugriff'];
-$GLOBALS['TL_LANG']['FMD']['public_editable'] = ['map-content: Kartenelemente auflisten (mit Schreibzugriff)', 'Darstellung der Kartenelemente mit Schreibzugriff'];
+$GLOBALS['TL_LANG']['FMD']['public_noneditable'] = ['(data) Auflistung ohne Schreibzugriff', 'Darstellung der Kartenelemente ohne Schreibzugriff'];
+$GLOBALS['TL_LANG']['FMD']['public_editable'] = ['(data) Auflistung mit Schreibzugriff', 'Darstellung der Kartenelemente mit Schreibzugriff'];

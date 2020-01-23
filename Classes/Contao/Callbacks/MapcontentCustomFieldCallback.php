@@ -55,7 +55,7 @@ class MapcontentCustomFieldCallback extends Backend
         return $formattedOptions;
     }
 
-    public function  loadFrontendFilterCheckboxStylingOptions($dca)
+    public function loadFrontendFilterCheckboxStylingOptions($dca)
     {
         return $GLOBALS['TL_LANG']['mapcontent_custom_field_frontend_filter_checkbox_styling_options'];
     }
