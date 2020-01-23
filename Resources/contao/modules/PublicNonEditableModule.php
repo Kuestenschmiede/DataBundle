@@ -17,8 +17,10 @@ use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
 use con4gis\MapContentBundle\Resources\contao\models\PublicNonEditableModel;
 use con4gis\ProjectsBundle\Classes\Buttons\C4GFilterButton;
 use con4gis\ProjectsBundle\Classes\Buttons\C4GCheckboxFilterButton;
+use con4gis\ProjectsBundle\Classes\Buttons\C4GSelectFilterButton;
 use con4gis\ProjectsBundle\Classes\Database\C4GBrickDatabaseType;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GClassField;
+use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GDataClassField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GHeadlineField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GIconField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GImageField;
@@ -130,6 +132,20 @@ class PublicNonEditableModule extends C4GBrickModuleParent
 
         static::$type = $this->c4g_mapcontent_type;
         static::$directory = $this->c4g_mapcontent_directory;
+
+        if (!static::$type) {
+            $typeModels = MapcontentTypeModel::findAll();
+            if ($typeModels !== null) {
+                $options = [];
+                foreach ($typeModels as $model) {
+                    $options[] = $model->name;
+                    ResourceLoader::loadCssResourceTag(
+                        '.filter_type_'.str_replace(' ', '', $model->name).'_parent > div:not(.filter_type_'.str_replace(' ', '', $model->name).'_child) {display: none;}'
+                    );
+                }
+                $this->listParams->addFilterButton(new C4GSelectFilterButton($options));
+            }
+        }
 
         if (strval($this->caption) !== '') {
             $this->dialogParams->setBrickCaption(strval($this->caption));
@@ -482,7 +498,17 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             }
         }
 
-
+        if (!static::$type) {
+            try {
+                $classField = new C4GDataClassField();
+                $classField->setFieldName('type');
+                $classField->setClassPrefix('filter_type_');
+                $classField->setClassSuffix('_child');
+                $fieldList[] = $classField;
+            } catch (\Throwable $throwable) {
+                C4gLogModel::addLogEntry('projects', $throwable->getMessage());
+            }
+        }
 
         return $fieldList;
     }
