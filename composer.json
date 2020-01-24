@@ -1,23 +1,20 @@
 {
     "name": "con4gis/data",
     "type": "contao-bundle",
-    "description": "Base functionality for geo-referenced based content management.",
-    "keywords": ["con4gis", "data", "contao", "c4g", "DataBundle"],
+    "description": "A con4gis bundle.",
+    "keywords": ["con4gis", "DataBundle"],
+    "homepage": "https://con4gis.org",
     "license": "LGPL-3.0-or-later",
     "authors": [
         {
             "name": "Kuestenschmiede GmbH Software & Design",
             "homepage": "https://kuestenschmiede.de",
             "role": "Operator"
-        },
-        {
-            "name": "con4gis community",
-            "homepage": "https://con4gis.org",
-            "role": "Developer"
         }
     ],
     "support": {
-        "email": "support@con4gis.org"
+        "email": "support@con4gis.org",
+        "issues": "https://github.com/Kuestenschmiede/Data/issues"
     },
     "require": {
         "php": "^7.1",
@@ -54,3 +51,5 @@
         "contao-manager-plugin": "con4gis\\DataBundle\\ContaoManager\\Plugin"
     }
 }
+
+
