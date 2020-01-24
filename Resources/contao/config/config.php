@@ -37,6 +37,12 @@ $GLOBALS['BE_MOD']['con4gis'] = array_merge($GLOBALS['BE_MOD']['con4gis'], [
         'tables' => ['tl_c4g_data_custom_field'],
         'icon' => 'bundles/con4giscore/images/be-icons/edit.svg'
     ],
+    'c4g_data_type' => [
+        'brick' => 'data',
+        'tables' => ['tl_c4g_data_type'],
+        'stylesheet' => 'bundles/con4gisdata/css/backend_data_type.css',
+        'icon' => 'bundles/con4gisdata/images/be-icons/mapcategory.svg'
+    ],
     'c4g_data_element' => [
         'brick' => 'data',
         'tables' => ['tl_c4g_data_element'],
@@ -45,12 +51,6 @@ $GLOBALS['BE_MOD']['con4gis'] = array_merge($GLOBALS['BE_MOD']['con4gis'], [
             'bundles/con4gisdata/css/backend_data_element.css'
         ],
         'icon' => $icon = 'bundles/con4gisdata/images/be-icons/mapelements.svg'
-    ],
-    'c4g_data_type' => [
-        'brick' => 'data',
-        'tables' => ['tl_c4g_data_type'],
-        'stylesheet' => 'bundles/con4gisdata/css/backend_data_type.css',
-        'icon' => 'bundles/con4gisdata/images/be-icons/mapcategory.svg'
     ],
     'c4g_data_directory' => [
         'brick' => 'data',
