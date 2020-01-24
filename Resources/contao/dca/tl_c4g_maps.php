@@ -16,8 +16,8 @@ use con4gis\DataBundle\Classes\Contao\Callbacks\MapsCallback;
 
 $cbClass = MapsCallback::class;
 
-$GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['mpCntnt'] = "{general_legend},name,profile,profile_mobile,published;{map_legend},is_map;{location_legend},location_type,tDontShowIfEmpty,data_layername,typeSelection,data_hidelayer,hide_when_in_tab,hideInStarboard;{protection_legend:hide},protect_element;";
-$GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['mpCntnt_directory'] = "{general_legend},name,profile,profile_mobile,published;{map_legend},is_map;{location_legend},location_type,tDontShowIfEmpty,data_layername,directorySelection,data_hidelayer,hide_when_in_tab,hideInStarboard;{protection_legend:hide},protect_element;";
+$GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['mpCntnt'] = "{general_legend},name,location_type;{location_legend},tDontShowIfEmpty,data_layername,typeSelection,data_hidelayer,hide_when_in_tab,hideInStarboard;{protection_legend:hide},protect_element;";
+$GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['mpCntnt_directory'] = "{general_legend},name,location_type;{location_legend},tDontShowIfEmpty,data_layername,directorySelection,data_hidelayer,hide_when_in_tab,hideInStarboard;{protection_legend:hide},protect_element;";
 
 $GLOBALS['TL_DCA']['tl_c4g_maps']['fields']['typeSelection'] = [
     'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['typeSelection'],
