@@ -484,6 +484,15 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             }
         }
 
+        $fieldList[] = C4GMapLinkButtonField::create('maplinkDetails')
+            ->setFormField(true)
+            ->setTableColumn(false)
+            ->setTargetPageId($this->mapPage)
+            ->setButtonLabel('zur Karte')
+            ->setLongitudeColumn('geox')
+            ->setLatitudeColumn('geoy')
+            ->setnewTab();
+
         foreach ($customFields as $customField) {
             if ($customField->frontendFilterList === '1') {
                 try {
