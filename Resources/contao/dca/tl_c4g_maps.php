@@ -12,7 +12,7 @@
  *
  */
 
-use con4gis\MapContentBundle\Classes\Contao\Callbacks\MapsCallback;
+use con4gis\DataBundle\Classes\Contao\Callbacks\MapsCallback;
 
 $cbClass = MapsCallback::class;
 

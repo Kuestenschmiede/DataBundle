@@ -1,6 +1,6 @@
 <?php
 
-namespace con4gis\MapContentBundle\Classes\Popup;
+namespace con4gis\DataBundle\Classes\Popup;
 
 use con4gis\CoreBundle\Classes\C4GUtils;
 

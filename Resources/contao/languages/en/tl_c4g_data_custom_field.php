@@ -1,6 +1,6 @@
 <?php
 
-$strName = 'tl_c4g_mapcontent_custom_field';
+$strName = 'tl_c4g_data_custom_field';
 
 $GLOBALS['TL_LANG'][$strName]['install_tool_hint'] = 'After a field has been defined or changed, it is necessary to clear the cache and to update the database.';
 
@@ -55,23 +55,23 @@ $GLOBALS['TL_LANG'][$strName]['delete'] = ["Delete field with ID %s", "Delete fi
  * Custom Field Types
  */
 
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['text'] = 'Single line of text';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['textarea'] = 'Multiple lines of text';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['texteditor'] = 'Multiple lines of text with editor';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['natural'] = 'Natural Number';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['int'] = 'Whole Number';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['select'] = 'Select list';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['checkbox'] = 'Checkbox';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['icon'] = 'Icon';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['multicheckbox'] = 'Multiple Checkboxes';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['datepicker'] = 'Datepicker';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['link'] = 'Link';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['legend'] = 'Headline';
+$GLOBALS['TL_LANG']['data_custom_field_types']['text'] = 'Single line of text';
+$GLOBALS['TL_LANG']['data_custom_field_types']['textarea'] = 'Multiple lines of text';
+$GLOBALS['TL_LANG']['data_custom_field_types']['texteditor'] = 'Multiple lines of text with editor';
+$GLOBALS['TL_LANG']['data_custom_field_types']['natural'] = 'Natural Number';
+$GLOBALS['TL_LANG']['data_custom_field_types']['int'] = 'Whole Number';
+$GLOBALS['TL_LANG']['data_custom_field_types']['select'] = 'Select list';
+$GLOBALS['TL_LANG']['data_custom_field_types']['checkbox'] = 'Checkbox';
+$GLOBALS['TL_LANG']['data_custom_field_types']['icon'] = 'Icon';
+$GLOBALS['TL_LANG']['data_custom_field_types']['multicheckbox'] = 'Multiple Checkboxes';
+$GLOBALS['TL_LANG']['data_custom_field_types']['datepicker'] = 'Datepicker';
+$GLOBALS['TL_LANG']['data_custom_field_types']['link'] = 'Link';
+$GLOBALS['TL_LANG']['data_custom_field_types']['legend'] = 'Headline';
 
 /**
  * Class Options
  */
 
-$GLOBALS['TL_LANG']['mapcontent_custom_field_class_options']['w50'] = 'Single column';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_class_options']['w50 clr'] = 'Single column, left side';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_class_options']['clr'] = 'Multicolumn';
+$GLOBALS['TL_LANG']['data_custom_field_class_options']['w50'] = 'Single column';
+$GLOBALS['TL_LANG']['data_custom_field_class_options']['w50 clr'] = 'Single column, left side';
+$GLOBALS['TL_LANG']['data_custom_field_class_options']['clr'] = 'Multicolumn';

@@ -18,17 +18,17 @@ use con4gis\CoreBundle\Classes\DCA\Fields\SelectField;
 use con4gis\CoreBundle\Classes\DCA\Fields\TextAreaField;
 use con4gis\CoreBundle\Classes\DCA\Fields\TextField;
 use con4gis\CoreBundle\Classes\DCA\Fields\ImageField;
-use con4gis\MapContentBundle\Classes\Contao\Callbacks\MapcontentElementCallback;
+use con4gis\DataBundle\Classes\Contao\Callbacks\ElementCallback;
 use con4gis\CoreBundle\Classes\DCA\Fields\CheckboxField;
 use con4gis\CoreBundle\Classes\DCA\Fields\DigitField;
 use con4gis\CoreBundle\Classes\DCA\Fields\MultiCheckboxField;
 use con4gis\CoreBundle\Classes\DCA\Fields\DatePickerField;
-use con4gis\MapContentBundle\Resources\contao\models\MapcontentCustomFieldModel;
+use con4gis\DataBundle\Resources\contao\models\DataCustomFieldModel;
 use Contao\StringUtil;
 use con4gis\CoreBundle\Classes\C4GUtils;
 
-$strName = 'tl_c4g_mapcontent_element';
-$cbClass = MapcontentElementCallback::class;
+$strName = 'tl_c4g_data_element';
+$cbClass = ElementCallback::class;
 
 $dca = new DCA($strName);
 $dca->config()->onsubmitCallback(\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator::class, 'purgeLayerApiCache');
@@ -45,7 +45,7 @@ $dca->palette()->default('{data_legend},name,type')
     ->subPalette("loctype", "line", "geoJson")
     ->subPalette("loctype", "polygon", "geoJson");
 
-$types = \con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel::findAll();
+$types = \con4gis\DataBundle\Resources\contao\models\DataTypeModel::findAll();
 if ($types !== null) {
     foreach ($types as $type) {
         $dca->palette()->subPalette("type", $type->id, ",parentElement;{location_legend},loctype;{description_legend},description;");
@@ -56,7 +56,7 @@ if ($types !== null) {
             $fields = '';
 
             $database = Database::getInstance();
-            $stmt = $database->prepare("SELECT DISTINCT alias FROM tl_c4g_mapcontent_custom_field");
+            $stmt = $database->prepare("SELECT DISTINCT alias FROM tl_c4g_data_custom_field");
             $result = $stmt->execute()->fetchAllAssoc();
             $aliases = [];
             foreach ($result as $r) {
@@ -65,7 +65,7 @@ if ($types !== null) {
 
             foreach ($availableFields as $availableField) {
                 if (in_array($availableField, $aliases) === true) {
-                    $model = MapcontentCustomFieldModel::findOneBy('alias', $availableField);
+                    $model = DataCustomFieldModel::findOneBy('alias', $availableField);
                     if ($model->type === 'legend') {
                         $fields .= ';{'.strval($model->name).'}';
                     } else {
@@ -270,8 +270,8 @@ $publishTo->saveCallback($cbClass, 'saveDate')
 
 $customFields = [];
 
-foreach ($GLOBALS['con4gis']['mapcontent_custom_field_types'] as $type) {
-    $customFields = MapcontentCustomFieldModel::findBy('type', $type);
+foreach ($GLOBALS['con4gis']['data_custom_field_types'] as $type) {
+    $customFields = DataCustomFieldModel::findBy('type', $type);
 
     if ($customFields !== null) {
         foreach ($customFields as $model) {

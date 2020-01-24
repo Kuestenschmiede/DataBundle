@@ -20,12 +20,12 @@ use con4gis\CoreBundle\Classes\DCA\Fields\SelectField;
 use con4gis\CoreBundle\Classes\DCA\Fields\TextField;
 use con4gis\CoreBundle\Classes\DCA\Fields\CheckboxField;
 use con4gis\CoreBundle\Classes\DCA\Fields\MultiCheckboxField;
-use con4gis\MapContentBundle\Classes\Contao\Callbacks\MapcontentTypeCallback;
+use con4gis\DataBundle\Classes\Contao\Callbacks\TypeCallback;
 
-$strName = 'tl_c4g_mapcontent_type';
-$cbClass = MapcontentTypeCallback::class;
+$strName = 'tl_c4g_data_type';
+$cbClass = TypeCallback::class;
 
-$dca = new DCA('tl_c4g_mapcontent_type');
+$dca = new DCA('tl_c4g_data_type');
 $list = $dca->list();
 $list->sorting()->fields(['name', 'availableFields']);
 $list->sorting()->panelLayout('filter;sort,search,limit');

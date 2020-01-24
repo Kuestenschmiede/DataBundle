@@ -12,7 +12,7 @@
  *
  */
 
-namespace con4gis\MapContentBundle\DependencyInjection;
+namespace con4gis\DataBundle\DependencyInjection;
 
 
 use Symfony\Component\Config\FileLocator;
@@ -20,7 +20,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-class con4gisMapContentExtension extends Extension
+class con4GisDataExtension extends Extension
 {
     /**
      * {@inheritdoc}
@@ -35,6 +35,6 @@ class con4gisMapContentExtension extends Extension
     }
     public function getAlias()
     {
-        return "con4gis_map_content";
+        return "con4gis_data";
     }
 }

@@ -1,8 +1,8 @@
 {
-    "name": "con4gis/map-content",
+    "name": "con4gis/data",
     "type": "contao-bundle",
     "description": "Base functionality for geo-referenced based content management.",
-    "keywords": ["con4gis", "map", "mapcontent", "contao", "c4g", "MapContentBundle"],
+    "keywords": ["con4gis", "data", "contao", "c4g", "DataBundle"],
     "license": "LGPL-3.0-or-later",
     "authors": [
         {
@@ -32,7 +32,7 @@
     },
     "autoload": {
         "psr-4": {
-            "con4gis\\MapContentBundle\\": ""
+            "con4gis\\DataBundle\\": ""
         },
         "classmap": [
             "Resources/contao/"
@@ -51,6 +51,6 @@
         "branch-alias": {
             "dev-master": "1.0.x-dev"
         },
-        "contao-manager-plugin": "con4gis\\MapContentBundle\\ContaoManager\\Plugin"
+        "contao-manager-plugin": "con4gis\\DataBundle\\ContaoManager\\Plugin"
     }
 }

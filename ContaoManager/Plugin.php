@@ -1,10 +1,10 @@
 <?php
 
-namespace con4gis\MapContentBundle\ContaoManager;
+namespace con4gis\DataBundle\ContaoManager;
 
 use con4gis\CoreBundle\con4gisCoreBundle;
 use con4gis\CloudBundle\con4gisCloudBundle;
-use con4gis\MapContentBundle\con4gisMapContentBundle;
+use con4gis\DataBundle\con4GisDataContentBundle;
 use con4gis\MapsBundle\con4gisMapsBundle;
 use con4gis\ProjectsBundle\con4gisProjectsBundle;
 use Contao\CoreBundle\ContaoCoreBundle;
@@ -30,14 +30,14 @@ class Plugin implements BundlePluginInterface, ConfigPluginInterface
     public function getBundles(ParserInterface $parser)
     {
         return [
-            BundleConfig::create(con4gisMapContentBundle::class)
+            BundleConfig::create(con4GisDataContentBundle::class)
                 ->setLoadAfter([con4gisProjectsBundle::class, con4gisMapsBundle::class]),
         ];
     }
     
     public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig)
     {
-        $loader->load('@con4gisMapContentBundle/Resources/config/config.yml');
+        $loader->load('@con4gisDataBundle/Resources/config/config.yml');
     }
     
 }

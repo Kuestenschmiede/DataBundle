@@ -1,12 +1,12 @@
 <?php
 
-namespace con4gis\MapContentBundle\Classes\Event;
+namespace con4gis\DataBundle\Classes\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 
 class LoadPropertiesEvent extends Event
 {
-    const NAME = 'mapcontent.properties.load';
+    const NAME = 'data.properties.load';
 
     private $properties = [];
     private $elementData = [];

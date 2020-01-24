@@ -1,6 +1,6 @@
 <?php
 
-$GLOBALS['TL_LANG']['tl_c4g_mapcontent_type'] = [
+$GLOBALS['TL_LANG']['tl_c4g_data_type'] = [
     'name' => ['Name of category', 'The name of the category in the frontend.'],
     'locstyle' => ['Location style', 'The location style determines the icon used to display the elements in this category.'],
     'availableFields' => ['Available fields', 'These fields are available to elements of this category..'],
@@ -13,8 +13,8 @@ $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type'] = [
     'delete' => ["Delete category with ID %s", "Delete category with ID %s"],
 ];
 
-$GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['data_legend'] = 'General data';
+$GLOBALS['TL_LANG']['tl_c4g_data_type']['data_legend'] = 'General data';
 
-$GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'] = 'Headline: ';
+$GLOBALS['TL_LANG']['tl_c4g_data_type']['legend'] = 'Headline: ';
 
 

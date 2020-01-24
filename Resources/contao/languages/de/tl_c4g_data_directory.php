@@ -1,6 +1,6 @@
 <?php
 
-$GLOBALS['TL_LANG']['tl_c4g_mapcontent_directory'] = [
+$GLOBALS['TL_LANG']['tl_c4g_data_directory'] = [
     'name' => ['Bezeichnung', 'Die Bezeichnung des Verzeichnisses im Frontend.'],
     'types' => ['Kategorien', 'Die im Verzeichnis verfügbaren Kategorien.'],
     'new' => ["Neues Verzeichnis erstellen", "Neues Verzeichnis erstellen"],

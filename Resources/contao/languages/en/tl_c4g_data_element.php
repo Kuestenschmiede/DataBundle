@@ -1,6 +1,6 @@
 <?php
 
-$strName = 'tl_c4g_mapcontent_element';
+$strName = 'tl_c4g_data_element';
 
 /**
  * Fields

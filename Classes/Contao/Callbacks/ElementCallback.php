@@ -10,23 +10,23 @@
  * @copyright 	Küstenschmiede GmbH Software & Design
  * @link              https://www.con4gis.org
  */
-namespace con4gis\MapContentBundle\Classes\Contao\Callbacks;
+namespace con4gis\DataBundle\Classes\Contao\Callbacks;
 
-use con4gis\MapContentBundle\Resources\contao\models\MapcontentElementModel;
-use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
+use con4gis\DataBundle\Resources\contao\models\DataElementModel;
+use con4gis\DataBundle\Resources\contao\models\DataTypeModel;
 use con4gis\MapsBundle\Classes\Utils;
 use Contao\Backend;
 use Contao\DataContainer;
 
-class MapcontentElementCallback extends Backend
+class ElementCallback extends Backend
 {
-    private $dcaName = 'tl_c4g_mapcontent_element';
+    private $dcaName = 'tl_c4g_data_element';
 
     public function loadTypes()
     {
         $arrTypes = [];
         $arrTypes[''] = '-';
-        $types = MapcontentTypeModel::findAll();
+        $types = DataTypeModel::findAll();
         foreach ($types as $type) {
             if ($type->name !== '') {
                 $arrTypes[$type->id] = $type->name;
@@ -43,7 +43,7 @@ class MapcontentElementCallback extends Backend
         if (!$id) {
             return [];
         }
-        $models = MapcontentElementModel::findAll();
+        $models = DataElementModel::findAll();
         foreach ($models as $model) {
             if ($model->id !== $id) {
                 $options[$model->id] = $model->name;
@@ -56,14 +56,14 @@ class MapcontentElementCallback extends Backend
     public function getLabel($arrRow)
     {
         $label['name'] = $arrRow['name'];
-        $label['type'] = MapcontentTypeModel::findByPk($arrRow['type'])->name;
+        $label['type'] = DataTypeModel::findByPk($arrRow['type'])->name;
 
         return $label;
     }
 
     public function getDay($dc)
     {
-        return $GLOBALS['con4gis']['map-content']['day_option'];
+        return $GLOBALS['con4gis']['data']['day_option'];
     }
 
     public function changeFileBinToUuid($fieldValue, DataContainer $dc)

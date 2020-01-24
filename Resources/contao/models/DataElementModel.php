@@ -12,20 +12,20 @@
  *
  */
 
-namespace con4gis\MapContentBundle\Resources\contao\models;
+namespace con4gis\DataBundle\Resources\contao\models;
 
 
 use Contao\Database;
 use Contao\Model;
 use \Throwable;
 
-class MapcontentElementModel extends Model
+class DataElementModel extends Model
 {
-    protected static $strTable = "tl_c4g_mapcontent_element";
+    protected static $strTable = "tl_c4g_data_element";
 
     public static function findAllPublished() {
         $database = Database::getInstance();
-        $stmt = $database->prepare("SELECT * FROM tl_c4g_mapcontent_element "."
+        $stmt = $database->prepare("SELECT * FROM tl_c4g_data_element "."
         WHERE (publishFrom >= ? OR publishFrom = '') AND (publishTo < ? OR publishTo = '')");
         try {
             return static::createCollectionFromDbResult($stmt->execute(time(), time()), static::$strTable);
@@ -36,7 +36,7 @@ class MapcontentElementModel extends Model
 
     public static function findPublishedBy($field, $value) {
         $database = Database::getInstance();
-        $stmt = $database->prepare("SELECT * FROM tl_c4g_mapcontent_element "."
+        $stmt = $database->prepare("SELECT * FROM tl_c4g_data_element "."
         WHERE ($field = ?) AND (publishFrom >= ? OR publishFrom = '') AND (publishTo < ? OR publishTo = '')");
         try {
             return static::createCollectionFromDbResult($stmt->execute($value, time(), time()), static::$strTable);

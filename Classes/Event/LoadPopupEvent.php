@@ -10,14 +10,14 @@
  * @copyright  Küstenschmiede GmbH Software & Design
  * @link       https://www.con4gis.org
  */
-namespace con4gis\MapContentBundle\Classes\Event;
+namespace con4gis\DataBundle\Classes\Event;
 
-use con4gis\MapContentBundle\Classes\Popup\Popup;
+use con4gis\DataBundle\Classes\Popup\Popup;
 use Symfony\Component\EventDispatcher\Event;
 
 class LoadPopupEvent extends Event
 {
-    const NAME = 'mapcontent.popup.load';
+    const NAME = 'data.popup.load';
 
     private $popup;
     private $type = '';

@@ -10,7 +10,7 @@
  * @copyright 	Küstenschmiede GmbH Software & Design
  * @link              https://www.con4gis.org
  */
-namespace con4gis\MapContentBundle\Classes\Listener;
+namespace con4gis\DataBundle\Classes\Listener;
 
 use con4gis\MapsBundle\Classes\Events\LoadFeatureFiltersEvent;
 use con4gis\MapsBundle\Classes\Filter\FeatureFilter;
@@ -31,7 +31,7 @@ class LoadFeatureFilterListener
         EventDispatcherInterface $eventDispatcher
     ) {
         $currentFilters = $event->getFilters();
-        $strSelect = 'SELECT * FROM tl_c4g_mapcontent_custom_field WHERE type="multicheckbox" AND frontendFilter =1 ';
+        $strSelect = 'SELECT * FROM tl_c4g_data_custom_field WHERE type="multicheckbox" AND frontendFilter =1 ';
         $customFields = $this->Database->execute($strSelect)->fetchAllAssoc();
 
         foreach ($customFields as $customField) {

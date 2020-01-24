@@ -12,14 +12,14 @@
  *
  */
 
-namespace con4gis\MapContentBundle\Resources\contao\models;
+namespace con4gis\DataBundle\Resources\contao\models;
 
 use Contao\Database;
 use Contao\Model;
 
-class MapcontentCustomFieldModel extends Model
+class DataCustomFieldModel extends Model
 {
-    protected static $strTable = "tl_c4g_mapcontent_custom_field";
+    protected static $strTable = "tl_c4g_data_custom_field";
 
     public static function findBy($strColumn, $varValue, array $arrOptions = array())
     {

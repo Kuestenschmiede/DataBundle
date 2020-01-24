@@ -10,16 +10,16 @@
  * @copyright 	Küstenschmiede GmbH Software & Design
  * @link              https://www.con4gis.org
  */
-namespace con4gis\MapContentBundle\Classes\Contao\Callbacks;
+namespace con4gis\DataBundle\Classes\Contao\Callbacks;
 
 use Contao\Backend;
 use Contao\DataContainer;
 use Contao\StringUtil;
 use Contao\Message;
 
-class MapcontentCustomFieldCallback extends Backend
+class CustomFieldCallback extends Backend
 {
-    private $dcaName = 'tl_c4g_mapcontent_custom_field';
+    private $dcaName = 'tl_c4g_data_custom_field';
 
     public function addHint()
     {
@@ -29,19 +29,19 @@ class MapcontentCustomFieldCallback extends Backend
     public function getLabels($row)
     {
         $labels['name'] = $row['name'];
-        $labels['type'] = $GLOBALS['TL_LANG']['mapcontent_custom_field_types'][$row['type']];
+        $labels['type'] = $GLOBALS['TL_LANG']['data_custom_field_types'][$row['type']];
 
         return $labels;
     }
 
     public function loadTypes($dca)
     {
-        return $GLOBALS['TL_LANG']['mapcontent_custom_field_types'];
+        return $GLOBALS['TL_LANG']['data_custom_field_types'];
     }
 
     public function loadClassOptions($dca)
     {
-        return $GLOBALS['TL_LANG']['mapcontent_custom_field_class_options'];
+        return $GLOBALS['TL_LANG']['data_custom_field_class_options'];
     }
 
     public function loadDefaultOptions($dca)
@@ -57,7 +57,7 @@ class MapcontentCustomFieldCallback extends Backend
 
     public function loadFrontendFilterCheckboxStylingOptions($dca)
     {
-        return $GLOBALS['TL_LANG']['mapcontent_custom_field_frontend_filter_checkbox_styling_options'];
+        return $GLOBALS['TL_LANG']['data_custom_field_frontend_filter_checkbox_styling_options'];
     }
 
     public function saveAlias($value, DataContainer $dca)

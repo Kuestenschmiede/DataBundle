@@ -12,12 +12,12 @@
  *
  */
 
-$GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_type'] = ['(data) Categories', 'Edit Categories'];
-$GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_element'] = ['(data) Data entry', 'Edit map elements'];
-$GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_custom_field'] = ['(data) Custom fields', 'Edit custom fields'];
-$GLOBALS['TL_LANG']['MOD']['c4g_mapcontent_directory'] = ['(data) Directories', 'Edit directories'];
+$GLOBALS['TL_LANG']['MOD']['c4g_data_type'] = ['(data) Categories', 'Edit Categories'];
+$GLOBALS['TL_LANG']['MOD']['c4g_data_element'] = ['(data) Data entry', 'Edit map elements'];
+$GLOBALS['TL_LANG']['MOD']['c4g_data_custom_field'] = ['(data) Custom fields', 'Edit custom fields'];
+$GLOBALS['TL_LANG']['MOD']['c4g_data_directory'] = ['(data) Directories', 'Edit directories'];
 
-$GLOBALS['TL_LANG']['FMD']['con4gis_mapcontent'] = 'con4gis MapContent';
+$GLOBALS['TL_LANG']['FMD']['con4gis_data'] = 'con4gis Data';
 
 $GLOBALS['TL_LANG']['FMD']['public_noneditable'] = ['(data) Listing without write access', 'List of map elements without write access'];
 $GLOBALS['TL_LANG']['FMD']['public_editable'] = ['(data) Listing with write access', 'List of map elements with write access'];

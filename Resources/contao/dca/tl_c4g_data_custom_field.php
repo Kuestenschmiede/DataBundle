@@ -21,10 +21,10 @@ use con4gis\CoreBundle\Classes\DCA\Fields\DigitField;
 use con4gis\CoreBundle\Classes\DCA\Fields\MultiColumnField;
 use con4gis\CoreBundle\Classes\DCA\Fields\MultiCheckboxField;
 use con4gis\CoreBundle\Classes\DCA\Fields\DatePickerField;
-use con4gis\MapContentBundle\Classes\Contao\Callbacks\MapcontentCustomFieldCallback;
+use con4gis\DataBundle\Classes\Contao\Callbacks\CustomFieldCallback;
 
-$strName = 'tl_c4g_mapcontent_custom_field';
-$cbClass = MapcontentCustomFieldCallback::class;
+$strName = 'tl_c4g_data_custom_field';
+$cbClass = CustomFieldCallback::class;
 
 $dca = new DCA($strName);
 $dca->config()->onloadCallback($cbClass, 'addHint');

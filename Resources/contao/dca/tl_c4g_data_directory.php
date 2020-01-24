@@ -18,10 +18,10 @@ use con4gis\CoreBundle\Classes\DCA\Fields\IdField;
 use con4gis\CoreBundle\Classes\DCA\Fields\NaturalField;
 use con4gis\CoreBundle\Classes\DCA\Fields\TextField;
 use con4gis\CoreBundle\Classes\DCA\Fields\MultiCheckboxField;
-use con4gis\MapContentBundle\Classes\Contao\Callbacks\MapcontentDirectoryCallback;
+use con4gis\DataBundle\Classes\Contao\Callbacks\DirectoryCallback;
 
-$strName = 'tl_c4g_mapcontent_directory';
-$cbClass = MapcontentDirectoryCallback::class;
+$strName = 'tl_c4g_data_directory';
+$cbClass = DirectoryCallback::class;
 
 $dca = new DCA($strName);
 $list = $dca->list();

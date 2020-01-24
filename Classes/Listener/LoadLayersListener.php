@@ -10,16 +10,16 @@
  * @copyright 	Küstenschmiede GmbH Software & Design
  * @link              https://www.con4gis.org
  */
-namespace con4gis\MapContentBundle\Classes\Listener;
+namespace con4gis\DataBundle\Classes\Listener;
 
 use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
-use con4gis\MapContentBundle\Classes\Event\LoadPropertiesEvent;
-use con4gis\MapContentBundle\Classes\Popup\Popup;
-use con4gis\MapContentBundle\Resources\contao\models\MapcontentCustomFieldModel;
-use con4gis\MapContentBundle\Resources\contao\models\MapcontentDirectoryModel;
-use con4gis\MapContentBundle\Resources\contao\models\MapcontentElementModel;
-use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
+use con4gis\DataBundle\Classes\Event\LoadPropertiesEvent;
+use con4gis\DataBundle\Classes\Popup\Popup;
+use con4gis\DataBundle\Resources\contao\models\DataCustomFieldModel;
+use con4gis\DataBundle\Resources\contao\models\DataDirectoryModel;
+use con4gis\DataBundle\Resources\contao\models\DataElementModel;
+use con4gis\DataBundle\Resources\contao\models\DataTypeModel;
 use con4gis\MapsBundle\Classes\Events\LoadLayersEvent;
 use con4gis\MapsBundle\Classes\Services\LayerService;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
@@ -51,16 +51,16 @@ class LoadLayersListener
         $eventName,
         EventDispatcherInterface $eventDispatcher
     ) {
-        $mapContentLayer = $event->getLayerData();
-        if (!($mapContentLayer['type'] === 'mpCntnt_directory')) {
+        $dataLayer = $event->getLayerData();
+        if (!($dataLayer['type'] === 'mpCntnt_directory')) {
             return;
         }
-        $objMapContentLayer = C4gMapsModel::findByPk($mapContentLayer['id']);
-        if (!$objMapContentLayer) {
+        $objDataLayer = C4gMapsModel::findByPk($dataLayer['id']);
+        if (!$objDataLayer) {
             return;
         }
-        $arrDirectoryIds = unserialize($objMapContentLayer->directorySelection);
-        $objDirectories = MapcontentDirectoryModel::findMultipleByIds($arrDirectoryIds);
+        $arrDirectoryIds = unserialize($objDataLayer->directorySelection);
+        $objDirectories = DataDirectoryModel::findMultipleByIds($arrDirectoryIds);
         $arrDirectories = $objDirectories->fetchAll();
         $typeIds = [];
         foreach ($objDirectories as $directory) {
@@ -77,11 +77,11 @@ class LoadLayersListener
         $eventName,
         EventDispatcherInterface $eventDispatcher
     ) {
-        $mapContentLayer = $event->getLayerData();
-        if (!$mapContentLayer['type'] === 'mpCntnt' || !$mapContentLayer['type'] === 'mpCntnt_directory') {
+        $dataLayer = $event->getLayerData();
+        if (!$dataLayer['type'] === 'mpCntnt' || !$dataLayer['type'] === 'mpCntnt_directory') {
             return;
         }
-        $objMapContent = C4gMapsModel::findByPk($mapContentLayer['id']);
+        $objData = C4gMapsModel::findByPk($dataLayer['id']);
         $addData = $event->getAdditionalData();
         if ($addData['directoryTypeIds']) {
             $selectedTypes = [];
@@ -89,14 +89,14 @@ class LoadLayersListener
                 $selectedTypes = array_merge($arrIds, $selectedTypes);
             }
         } else {
-            $selectedTypes = unserialize($objMapContent->typeSelection);
+            $selectedTypes = unserialize($objData->typeSelection);
             if (!$selectedTypes) {
                 return;
             }
         }
         $arrTypes = [];
         foreach ($selectedTypes as $key => $selectedType) {
-            $objSelectedTypes = MapcontentTypeModel::findByPk($selectedType);
+            $objSelectedTypes = DataTypeModel::findByPk($selectedType);
             if ($objSelectedTypes) {
                 $arrTypes[] = $objSelectedTypes->row();
             }
@@ -104,7 +104,7 @@ class LoadLayersListener
 //        $addData = $event->getAdditionalData();
         $addData['types'] = $arrTypes;
         $addData['typeIds'] = $selectedTypes;
-        $addData['mapContentLayer'] = $mapContentLayer;
+        $addData['dataLayer'] = $dataLayer;
         $event->setAdditionalData($addData);
     }
 
@@ -113,8 +113,8 @@ class LoadLayersListener
         $eventName,
         EventDispatcherInterface $eventDispatcher
     ) {
-        $mapContentLayer = $event->getLayerData();
-        if (!$mapContentLayer['type'] === 'mpCntnt' || !$mapContentLayer['type'] === 'mpCntnt_directory') {
+        $dataLayer = $event->getLayerData();
+        if (!$dataLayer['type'] === 'mpCntnt' || !$dataLayer['type'] === 'mpCntnt_directory') {
             return;
         }
         $objLocations = [];
@@ -122,7 +122,7 @@ class LoadLayersListener
         $typeIds = $event->getAdditionalData()['typeIds'];
         $arrElements = [];
         foreach ($typeIds as $typeId) {
-            $class = $GLOBALS['TL_MODELS']['tl_c4g_mapcontent_element'];
+            $class = $GLOBALS['TL_MODELS']['tl_c4g_data_element'];
             $elements = $class::findPublishedBy('type', $typeId);
             if ($elements !== null) {
                 $elements = $elements->fetchAll();
@@ -141,8 +141,8 @@ class LoadLayersListener
         $eventName,
         EventDispatcherInterface $eventDispatcher
     ) {
-        $mapContentLayer = $event->getLayerData();
-        if (!($mapContentLayer['type'] === 'mpCntnt' || $mapContentLayer['type'] === 'mpCntnt_directory')) {
+        $dataLayer = $event->getLayerData();
+        if (!($dataLayer['type'] === 'mpCntnt' || $dataLayer['type'] === 'mpCntnt_directory')) {
             return;
         }
         $fmClass = new C4GBrickMapFrontendParent();
@@ -161,33 +161,33 @@ class LoadLayersListener
                         $currentTypes[] = $type;
                     }
                 }
-                $structureTypes = $this->getStructuresForTypes($types, $mapContentLayer, $elements);
+                $structureTypes = $this->getStructuresForTypes($types, $dataLayer, $elements);
                 $directoryStructure = $fmClass->createMapStructureElementWithIdCalc(
                     $directory['id'],
-                    $mapContentLayer['id'],
-                    $mapContentLayer['pid'],
+                    $dataLayer['id'],
+                    $dataLayer['pid'],
                     512,
                     'none',
                     $directory['name'],
                     $directory['name'],
                     true,
-                    $mapContentLayer['hide']
+                    $dataLayer['hide']
                 );
                 $directoryStructures[] = $fmClass->createMapStructureChilds($directoryStructure, $structureTypes);
             }
 
-            $mapContentLayer = $fmClass->createMapStructureChilds($mapContentLayer, $directoryStructures);
+            $dataLayer = $fmClass->createMapStructureChilds($dataLayer, $directoryStructures);
         } else {
             // types on highest level
-            $structures = $this->getStructuresForTypes($types, $mapContentLayer, $elements);
-            $mapContentLayer = $fmClass->createMapStructureChilds($mapContentLayer, $structures);
+            $structures = $this->getStructuresForTypes($types, $dataLayer, $elements);
+            $dataLayer = $fmClass->createMapStructureChilds($dataLayer, $structures);
         }
 
-        $mapContentLayer['type'] = 'none';
-        $event->setLayerData($mapContentLayer);
+        $dataLayer['type'] = 'none';
+        $event->setLayerData($dataLayer);
     }
 
-    private function getStructuresForTypes($types, $mapContentLayer, $elements)
+    private function getStructuresForTypes($types, $dataLayer, $elements)
     {
         $structureTypes = [];
         $fmClass = new C4GBrickMapFrontendParent();
@@ -196,18 +196,18 @@ class LoadLayersListener
             $jsonFeatures = [];
             $structureType = $fmClass->createMapStructureElementWithIdCalc(
                 $type['id'],
-                $mapContentLayer['id'],
-                $mapContentLayer['pid'],
+                $dataLayer['id'],
+                $dataLayer['pid'],
                 419,
                 'GeoJSON',
                 $type['name'],
                 $type['name'],
                 true,
-                $mapContentLayer['hide']
+                $dataLayer['hide']
             );
             $availableFields = unserialize($type['availableFields']);
             if ($availableFields) {
-                $strSelect = 'SELECT * FROM tl_c4g_mapcontent_custom_field WHERE type="multicheckbox" AND frontendFilter =1 AND alias IN(';
+                $strSelect = 'SELECT * FROM tl_c4g_data_custom_field WHERE type="multicheckbox" AND frontendFilter =1 AND alias IN(';
                 foreach ($availableFields as $availableField) {
                     $strSelect .= '"' . $availableField . '",';
                 }
@@ -220,7 +220,7 @@ class LoadLayersListener
                         $typeElement,
                     ];
                     while (intval($toMerge[0]['parentElement']) > 0) {
-                        array_unshift($toMerge, MapcontentElementModel::findByPk([$toMerge[0]['parentElement']])->row());
+                        array_unshift($toMerge, DataElementModel::findByPk([$toMerge[0]['parentElement']])->row());
                     }
 
                     $merge = [];
@@ -255,7 +255,7 @@ class LoadLayersListener
                 }
 
                 $popup = new Popup();
-                \System::loadLanguageFile('tl_c4g_mapcontent_element');
+                \System::loadLanguageFile('tl_c4g_data_element');
 
                 $popup->addEntry(strval($typeElement['name']), 'name');
                 if (strval($typeElement['description']) !== '') {
@@ -295,7 +295,7 @@ class LoadLayersListener
                             if ($fileModel !== null) {
                                 $popup->addImageEntry($fileModel->path, $typeElement['imageMaxHeight'], $typeElement['imageMaxWidth'], 'image', strval($typeElement['imageLink']));
                             } else {
-                                C4gLogModel::addLogEntry('map-content', 'Popupimage of element ' . $typeElement['id'] . ' with uuid ' . $typeElement['image'] . ' not found.');
+                                C4gLogModel::addLogEntry('data', 'Popupimage of element ' . $typeElement['id'] . ' with uuid ' . $typeElement['image'] . ' not found.');
                             }
                         }
                     } elseif ($availableField === 'businessHours') {
@@ -306,20 +306,20 @@ class LoadLayersListener
                             foreach ($businessTimes as $key => $time) {
                                 $timeString[$key] = '';
                                 if ($time['dayFrom'] !== '' && $time['timeFrom'] !== '' && $time['timeTo'] !== '') {
-                                    $timeString[$key] .= $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayFrom']];
+                                    $timeString[$key] .= $GLOBALS['TL_LANG']['tl_c4g_data_element']['day_reference'][$time['dayFrom']];
                                     if ($time['dayTo'] !== $time['dayFrom'] && $time['dayTo'] !== '') {
                                         if (abs(intval($time['dayTo']) - intval($time['dayFrom'])) > 1) {
-                                            $join = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_join']['to'];
+                                            $join = $GLOBALS['TL_LANG']['tl_c4g_data_element']['day_join']['to'];
                                         } else {
-                                            $join = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_join']['and'];
+                                            $join = $GLOBALS['TL_LANG']['tl_c4g_data_element']['day_join']['and'];
                                         }
 
-                                        $timeString[$key] .= " $join " . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayTo']];
+                                        $timeString[$key] .= " $join " . $GLOBALS['TL_LANG']['tl_c4g_data_element']['day_reference'][$time['dayTo']];
                                     }
                                     $timeString[$key] .= ': ' . date('H:i', $time['timeFrom']) .
-                                        $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['timeCaption'] .
+                                        $GLOBALS['TL_LANG']['tl_c4g_data_element']['timeCaption'] .
                                         ' - ' . date('H:i', $time['timeTo']) .
-                                        $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['timeCaption'];
+                                        $GLOBALS['TL_LANG']['tl_c4g_data_element']['timeCaption'];
                                     $showBusinessTimes = true;
                                 }
                             }
@@ -388,13 +388,13 @@ class LoadLayersListener
                         $list['linkTitle'] = $typeElement['website'];
                         $popup->addLinkEntry(strval($list['linkTitle']), 'website', strval($list['linkHref']));
                     } else {
-                        $model = MapcontentCustomFieldModel::findBy('alias', $availableField);
+                        $model = DataCustomFieldModel::findBy('alias', $availableField);
                         if ($model !== null) {
                             if (strval($model->frontendPopup) === '1') {
                                 if (strval($model->type) === 'legend' && (strval($model->frontendName) !== '' || strval($model->name) !== '')) {
                                     $i = $fieldKey + 1;
                                     while ($i < count($availableFields)) {
-                                        $legendModel = MapcontentCustomFieldModel::findBy('alias', $availableFields[$i]);
+                                        $legendModel = DataCustomFieldModel::findBy('alias', $availableFields[$i]);
                                         if ($legendModel !== null && $legendModel->type === 'legend') {
                                             break;
                                         }
@@ -470,7 +470,7 @@ class LoadLayersListener
                                     default:
                                         $i = $fieldKey + 1;
                                         while ($i < count($availableFields)) {
-                                            $legendModel = MapcontentCustomFieldModel::findBy('alias', $availableFields[$i]);
+                                            $legendModel = DataCustomFieldModel::findBy('alias', $availableFields[$i]);
                                             if ($legendModel !== null && $legendModel->type === 'legend') {
                                                 break;
                                             }
@@ -489,9 +489,9 @@ class LoadLayersListener
                                             $n += 1;
                                         }
                                         if ($show === true) {
-                                            if (strval($GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField]) !== '') {
+                                            if (strval($GLOBALS['TL_LANG']['tl_c4g_data_element'][$availableField]) !== '') {
                                                 $popup->addEntry(
-                                                    strval($GLOBALS['TL_LANG']['tl_c4g_mapcontent_element'][$availableField]),
+                                                    strval($GLOBALS['TL_LANG']['tl_c4g_data_element'][$availableField]),
                                                     $availableField
                                                 );
                                             }

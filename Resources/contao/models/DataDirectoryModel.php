@@ -12,13 +12,13 @@
  *
  */
 
-namespace con4gis\MapContentBundle\Resources\contao\models;
+namespace con4gis\DataBundle\Resources\contao\models;
 
 
 use Contao\Database;
 use Contao\Model;
 
-class MapcontentDirectoryModel extends Model
+class DataDirectoryModel extends Model
 {
-    protected static $strTable = "tl_c4g_mapcontent_directory";
+    protected static $strTable = "tl_c4g_data_directory";
 }

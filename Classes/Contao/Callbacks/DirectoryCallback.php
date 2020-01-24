@@ -10,16 +10,16 @@
  * @copyright 	Küstenschmiede GmbH Software & Design
  * @link              https://www.con4gis.org
  */
-namespace con4gis\MapContentBundle\Classes\Contao\Callbacks;
+namespace con4gis\DataBundle\Classes\Contao\Callbacks;
 
-use con4gis\MapContentBundle\Resources\contao\models\MapcontentTypeModel;
+use con4gis\DataBundle\Resources\contao\models\DataTypeModel;
 use Contao\Backend;
 
-class MapcontentDirectoryCallback extends Backend
+class DirectoryCallback extends Backend
 {
     public function loadTypeOptions($dc)
     {
-        $types = MapcontentTypeModel::findAll();
+        $types = DataTypeModel::findAll();
         $options = [];
         if ($types !== null) {
             foreach ($types as $type) {

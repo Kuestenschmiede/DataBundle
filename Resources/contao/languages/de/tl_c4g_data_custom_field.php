@@ -1,6 +1,6 @@
 <?php
 
-$strName = 'tl_c4g_mapcontent_custom_field';
+$strName = 'tl_c4g_data_custom_field';
 
 $GLOBALS['TL_LANG'][$strName]['install_tool_hint'] = 'Nach der Definition eines neuen Feldes sowie nach Änderungen ist es erforderlich, den Cache zu leeren und die Datenbank zu aktualisieren.';
 
@@ -59,30 +59,30 @@ $GLOBALS['TL_LANG'][$strName]['delete'] = ["Feld mit ID %s löschen", "Feld mit 
  * Custom Field Types
  */
 
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['text'] = 'Einzeiliger Text';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['textarea'] = 'Mehrzeiliger Text';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['texteditor'] = 'Mehrzeiliger Text mit Editor';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['natural'] = 'Natürliche Zahl';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['int'] = 'Ganze Zahl';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['select'] = 'Auswahlliste';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['checkbox'] = 'Checkbox';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['icon'] = 'Icon';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['multicheckbox'] = 'Mehrere Checkboxen';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['datepicker'] = 'Datumsauswahl';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['link'] = 'Verlinkung';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_types']['legend'] = 'Überschrift';
+$GLOBALS['TL_LANG']['data_custom_field_types']['text'] = 'Einzeiliger Text';
+$GLOBALS['TL_LANG']['data_custom_field_types']['textarea'] = 'Mehrzeiliger Text';
+$GLOBALS['TL_LANG']['data_custom_field_types']['texteditor'] = 'Mehrzeiliger Text mit Editor';
+$GLOBALS['TL_LANG']['data_custom_field_types']['natural'] = 'Natürliche Zahl';
+$GLOBALS['TL_LANG']['data_custom_field_types']['int'] = 'Ganze Zahl';
+$GLOBALS['TL_LANG']['data_custom_field_types']['select'] = 'Auswahlliste';
+$GLOBALS['TL_LANG']['data_custom_field_types']['checkbox'] = 'Checkbox';
+$GLOBALS['TL_LANG']['data_custom_field_types']['icon'] = 'Icon';
+$GLOBALS['TL_LANG']['data_custom_field_types']['multicheckbox'] = 'Mehrere Checkboxen';
+$GLOBALS['TL_LANG']['data_custom_field_types']['datepicker'] = 'Datumsauswahl';
+$GLOBALS['TL_LANG']['data_custom_field_types']['link'] = 'Verlinkung';
+$GLOBALS['TL_LANG']['data_custom_field_types']['legend'] = 'Überschrift';
 
 /**
  * Class Options
  */
 
-$GLOBALS['TL_LANG']['mapcontent_custom_field_class_options']['w50'] = 'Einspaltig';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_class_options']['w50 clr'] = 'Einspaltig, Links';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_class_options']['clr'] = 'Zweispaltig';
+$GLOBALS['TL_LANG']['data_custom_field_class_options']['w50'] = 'Einspaltig';
+$GLOBALS['TL_LANG']['data_custom_field_class_options']['w50 clr'] = 'Einspaltig, Links';
+$GLOBALS['TL_LANG']['data_custom_field_class_options']['clr'] = 'Zweispaltig';
 
 /**
  *
  */
 
-$GLOBALS['TL_LANG']['mapcontent_custom_field_frontend_filter_checkbox_styling_options']['checkbox'] = 'als Checkbox';
-$GLOBALS['TL_LANG']['mapcontent_custom_field_frontend_filter_checkbox_styling_options']['button'] = 'als Button';
+$GLOBALS['TL_LANG']['data_custom_field_frontend_filter_checkbox_styling_options']['checkbox'] = 'als Checkbox';
+$GLOBALS['TL_LANG']['data_custom_field_frontend_filter_checkbox_styling_options']['button'] = 'als Button';

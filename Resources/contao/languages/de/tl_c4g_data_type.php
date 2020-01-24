@@ -1,6 +1,6 @@
 <?php
 
-$GLOBALS['TL_LANG']['tl_c4g_mapcontent_type'] = [
+$GLOBALS['TL_LANG']['tl_c4g_data_type'] = [
     'name' => ['Name der Kategorie', 'Die Bezeichnung der Kategorie im Frontend.'],
     'locstyle' => ['Lokationsstil', 'Der Lokationsstil bestimmt mit welchem Icon die Elemente dieser Kategorie in der Karte dargestellt werden.'],
     'availableFields' => ['Verfügbare Felder', 'Diese Felder stehen den Elementen dieser Kategorie zur Verfügung.'],
@@ -13,8 +13,8 @@ $GLOBALS['TL_LANG']['tl_c4g_mapcontent_type'] = [
     'delete' => ["Kategorie mit ID %s löschen", "Kategorie mit ID %s löschen"]
 ];
 
-$GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['data_legend'] = 'Allgemeine Daten';
+$GLOBALS['TL_LANG']['tl_c4g_data_type']['data_legend'] = 'Allgemeine Daten';
 
-$GLOBALS['TL_LANG']['tl_c4g_mapcontent_type']['legend'] = 'Überschrift: ';
+$GLOBALS['TL_LANG']['tl_c4g_data_type']['legend'] = 'Überschrift: ';
 
 

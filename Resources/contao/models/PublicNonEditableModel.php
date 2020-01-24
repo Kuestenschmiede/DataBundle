@@ -1,10 +1,10 @@
 <?php
 
 
-namespace con4gis\MapContentBundle\Resources\contao\models;
+namespace con4gis\DataBundle\Resources\contao\models;
 
 use con4gis\CoreBundle\Classes\Helper\ArrayHelper;
-use con4gis\MapContentBundle\Resources\contao\modules\PublicNonEditableModule;
+use con4gis\DataBundle\Resources\contao\modules\PublicNonEditableModule;
 use con4gis\ProjectsBundle\Classes\Common\C4GBrickCommon;
 use Contao\StringUtil;
 
@@ -13,7 +13,7 @@ class PublicNonEditableModel
     public static function find() {
 
         $db = \Database::getInstance();
-        $stmtTypes = $db->prepare("SELECT * FROM tl_c4g_mapcontent_type");
+        $stmtTypes = $db->prepare("SELECT * FROM tl_c4g_data_type");
         $resultTypes = $stmtTypes->execute()->fetchAllAssoc();
         $types = [];
         foreach ($resultTypes as $rt) {
@@ -21,24 +21,24 @@ class PublicNonEditableModel
         }
 
         if (PublicNonEditableModule::$type) {
-            $stmtElements = $db->prepare("SELECT * FROM tl_c4g_mapcontent_element WHERE name != '' AND type = ? ORDER BY name ASC");
+            $stmtElements = $db->prepare("SELECT * FROM tl_c4g_data_element WHERE name != '' AND type = ? ORDER BY name ASC");
             $resultElements = $stmtElements->execute(PublicNonEditableModule::$type)->fetchAllAssoc();
         } else {
             if (PublicNonEditableModule::$directory) {
-                $directoryModel = MapcontentDirectoryModel::findByPk(PublicNonEditableModule::$directory);
+                $directoryModel = DataDirectoryModel::findByPk(PublicNonEditableModule::$directory);
                 if ($directoryModel !== null) {
                     $types = StringUtil::deserialize($directoryModel->types);
                     $resultElements = [];
                     foreach ($types as $type) {
-                        $stmtElements = $db->prepare("SELECT * FROM tl_c4g_mapcontent_element WHERE name != '' AND type = ? ORDER BY name ASC");
+                        $stmtElements = $db->prepare("SELECT * FROM tl_c4g_data_element WHERE name != '' AND type = ? ORDER BY name ASC");
                         $resultElements = array_merge($resultElements, $stmtElements->execute($type)->fetchAllAssoc());
                     }
                 } else {
-                    $stmtElements = $db->prepare("SELECT * FROM tl_c4g_mapcontent_element WHERE name != '' ORDER BY name ASC");
+                    $stmtElements = $db->prepare("SELECT * FROM tl_c4g_data_element WHERE name != '' ORDER BY name ASC");
                     $resultElements = $stmtElements->execute()->fetchAllAssoc();
                 }
             } else {
-                $stmtElements = $db->prepare("SELECT * FROM tl_c4g_mapcontent_element WHERE name != '' ORDER BY name ASC");
+                $stmtElements = $db->prepare("SELECT * FROM tl_c4g_data_element WHERE name != '' ORDER BY name ASC");
                 $resultElements = $stmtElements->execute()->fetchAllAssoc();
             }
         }
@@ -50,7 +50,7 @@ class PublicNonEditableModel
                     $re
                 ];
                 while (intval($toMerge[0]['parentElement']) > 0) {
-                    array_unshift($toMerge, MapcontentElementModel::findByPk([$toMerge[0]['parentElement']])->row());
+                    array_unshift($toMerge, DataElementModel::findByPk([$toMerge[0]['parentElement']])->row());
                 }
 
                 $merge = [];
@@ -104,20 +104,20 @@ class PublicNonEditableModel
             foreach ($businessTimes as $k => $time) {
                 $timeString[$k] = '';
                 if ($time['dayFrom'] !== '' && $time['timeFrom'] !== '' && $time['timeTo'] !== '') {
-                    $timeString[$k] .= $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayFrom']];
+                    $timeString[$k] .= $GLOBALS['TL_LANG']['tl_c4g_data_element']['day_reference'][$time['dayFrom']];
                     if ($time['dayTo'] !== $time['dayFrom'] && $time['dayTo'] !== '') {
                         if (abs(intval($time['dayTo']) - intval($time['dayFrom'])) > 1) {
-                            $join = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_join']['to'];
+                            $join = $GLOBALS['TL_LANG']['tl_c4g_data_element']['day_join']['to'];
                         } else {
-                            $join = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_join']['and'];
+                            $join = $GLOBALS['TL_LANG']['tl_c4g_data_element']['day_join']['and'];
                         }
 
-                        $timeString[$k] .= " $join " . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayTo']];
+                        $timeString[$k] .= " $join " . $GLOBALS['TL_LANG']['tl_c4g_data_element']['day_reference'][$time['dayTo']];
                     }
                     $timeString[$k] .= ": " . date('H:i', $time['timeFrom']) .
-                        $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['timeCaption'] .
+                        $GLOBALS['TL_LANG']['tl_c4g_data_element']['timeCaption'] .
                         " - " . date('H:i', $time['timeTo']) .
-                        $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['timeCaption'];
+                        $GLOBALS['TL_LANG']['tl_c4g_data_element']['timeCaption'];
                 }
             }
 
@@ -149,7 +149,7 @@ class PublicNonEditableModel
             }
 
             $resultElements[$key]['searchInfo'] = '';
-            $models = MapcontentCustomFieldModel::findAll();
+            $models = DataCustomFieldModel::findAll();
             if ($models !== null) {
                 foreach ($models as $model) {
                     if ($model->type === 'multicheckbox') {
@@ -195,7 +195,7 @@ class PublicNonEditableModel
     }
 
     public static function findByPk($pk) {
-        $model = MapcontentElementModel::findByPk($pk);
+        $model = DataElementModel::findByPk($pk);
         $array = $model->row();
 
         if (intval($array['parentElement']) > 0) {
@@ -203,7 +203,7 @@ class PublicNonEditableModel
                 $array
             ];
             while (intval($toMerge[0]['parentElement']) > 0) {
-                array_unshift($toMerge, MapcontentElementModel::findByPk([$toMerge[0]['parentElement']])->row());
+                array_unshift($toMerge, DataElementModel::findByPk([$toMerge[0]['parentElement']])->row());
             }
 
             $merge = [];
@@ -252,20 +252,20 @@ class PublicNonEditableModel
         foreach ($businessTimes as $k => $time) {
             $timeString[$k] = '';
             if ($time['dayFrom'] !== '' && $time['timeFrom'] !== '' && $time['timeTo'] !== '') {
-                $timeString[$k] .= $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayFrom']];
+                $timeString[$k] .= $GLOBALS['TL_LANG']['tl_c4g_data_element']['day_reference'][$time['dayFrom']];
                 if ($time['dayTo'] !== $time['dayFrom'] && $time['dayTo'] !== '') {
                     if (abs(intval($time['dayTo']) - intval($time['dayFrom'])) > 1) {
-                        $join = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_join']['to'];
+                        $join = $GLOBALS['TL_LANG']['tl_c4g_data_element']['day_join']['to'];
                     } else {
-                        $join = $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_join']['and'];
+                        $join = $GLOBALS['TL_LANG']['tl_c4g_data_element']['day_join']['and'];
                     }
 
-                    $timeString[$k] .= " $join " . $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['day_reference'][$time['dayTo']];
+                    $timeString[$k] .= " $join " . $GLOBALS['TL_LANG']['tl_c4g_data_element']['day_reference'][$time['dayTo']];
                 }
                 $timeString[$k] .= ": " . date('H:i', $time['timeFrom']) .
-                    $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['timeCaption'] .
+                    $GLOBALS['TL_LANG']['tl_c4g_data_element']['timeCaption'] .
                     " - " . date('H:i', $time['timeTo']) .
-                    $GLOBALS['TL_LANG']['tl_c4g_mapcontent_element']['timeCaption'];
+                    $GLOBALS['TL_LANG']['tl_c4g_data_element']['timeCaption'];
             }
         }
 
@@ -298,7 +298,7 @@ class PublicNonEditableModel
             }
         }
 
-        $customFields = MapcontentCustomFieldModel::findAll();
+        $customFields = DataCustomFieldModel::findAll();
         if ($customFields !== null) {
             foreach ($customFields as $customField) {
                 if ($customField->type === 'select') {
