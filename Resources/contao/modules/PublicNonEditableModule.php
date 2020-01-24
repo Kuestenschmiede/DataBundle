@@ -472,14 +472,31 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                     $legend->addAssociatedField($brickField);
                 }
             } else {
-                $brickField = C4GTextField::create($field,
-                    strval($model->name),
-                    strval($model->description),
-                    true, false, true, false)
-                    ->setShowIfEmpty(false);
-                $fieldList[] = $brickField;
-                if ($legend !== null && $brickField !== null) {
-                    $legend->addAssociatedField($brickField);
+                switch ($model->type) {
+                    case 'icon':
+                        $brickField = C4GIconField::create($field,
+                            strval($model->name),
+                            strval($model->description),
+                            true, false, true, false)
+                            ->setShowIfEmpty(false)
+                            ->setFormField(true)
+                            ->setIcon(strval($model->icon));
+                        $fieldList[] = $brickField;
+                        if ($legend !== null && $brickField !== null) {
+                            $legend->addAssociatedField($brickField);
+                        }
+                        break;
+                    default:
+                        $brickField = C4GTextField::create($field,
+                            strval($model->name),
+                            strval($model->description),
+                            true, false, true, false)
+                            ->setShowIfEmpty(false);
+                        $fieldList[] = $brickField;
+                        if ($legend !== null && $brickField !== null) {
+                            $legend->addAssociatedField($brickField);
+                        }
+                        break;
                 }
             }
         }
