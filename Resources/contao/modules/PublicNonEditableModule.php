@@ -133,7 +133,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         static::$type = $this->c4g_mapcontent_type;
         static::$directory = $this->c4g_mapcontent_directory;
 
-        if (!static::$type) {
+        if (!static::$type && $this->showSelectFilter) {
             $typeModels = MapcontentTypeModel::findAll();
             if ($typeModels !== null) {
                 $options = [];

@@ -15,6 +15,7 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_mapcontent_directory'] = ['Verzeichnis (op
 $GLOBALS['TL_LANG']['tl_module']['mapPage'] = ['Kartenseite', ''];
 $GLOBALS['TL_LANG']['tl_module']['captionPlural'] = ['Listentitel', 'Der Titel oberhalb der Liste.'];
 $GLOBALS['TL_LANG']['tl_module']['caption'] = ['Detailtitel', 'Der Titel oberhalb der Listendetails.'];
+$GLOBALS['TL_LANG']['tl_module']['showSelectFilter'] = ['Zeige Kategoriefilter in der Liste', 'Falls gesetzt, wird über der Liste ein Filterfeld angezeigt, mit dem der Nutzer die Liste nach Kategorie filtern kann.'];
 
 $GLOBALS['TL_LANG']['tl_module']['c4g_mapcontent_type_legend'] = 'Kategorie';
 $GLOBALS['TL_LANG']['tl_module']['mapPage_legend'] = 'Kartenseite';
