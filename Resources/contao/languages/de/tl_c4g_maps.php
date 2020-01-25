@@ -12,7 +12,7 @@
  *
  */
 
-$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['mpCntnt']  = 'Kartenelemente nach Kategorie';
-$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['mpCntnt_directory']  = 'Kartenelemente nach Verzeichnis';
-$GLOBALS['TL_LANG']['tl_c4g_maps']['typeSelection'] = ['Anzuzeigende Kategorien von Kartenelementen', ''];
-$GLOBALS['TL_LANG']['tl_c4g_maps']['directorySelection'] = ['Anzuzeigende Verzeichnisse von Kartenelementen', ''];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['mpCntnt']  = '[data] Daten nach Kategorie';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['mpCntnt_directory']  = '[data] Daten nach Verzeichnis';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['typeSelection'] = ['Datenkategorien', 'Die eigenen Daten werden anhand der ausgewählten Kategorien dargestellt.'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['directorySelection'] = ['Datenverzeichnisse', 'Die eigenen Daten werden anhand der ausgewählten Verzeichnisse dargestellt.'];

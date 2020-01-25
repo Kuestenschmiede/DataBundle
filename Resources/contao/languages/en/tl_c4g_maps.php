@@ -12,7 +12,7 @@
  *
  */
 
-$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['mpCntnt']  = 'Map elements by category';
-$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['mpCntnt_directory']  = 'Map elements by directory';
-$GLOBALS['TL_LANG']['tl_c4g_maps']['typeSelection'] = ['Categories shown', ''];
-$GLOBALS['TL_LANG']['tl_c4g_maps']['directorySelection'] = ['Directories shown', ''];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['mpCntnt']  = '[data] By category';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['references']['mpCntnt_directory']  = '[data] By directory';
+$GLOBALS['TL_LANG']['tl_c4g_maps']['typeSelection'] = ['Categories of data', 'Your own data is displayed according to the selected categories.'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['directorySelection'] = ['Data directories', 'The own data is displayed according to the selected directories.'];
