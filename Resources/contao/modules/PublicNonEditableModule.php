@@ -17,6 +17,7 @@ use con4gis\DataBundle\Resources\contao\models\DataTypeModel;
 use con4gis\DataBundle\Resources\contao\models\PublicNonEditableModel;
 use con4gis\ProjectsBundle\Classes\Buttons\C4GFilterButton;
 use con4gis\ProjectsBundle\Classes\Buttons\C4GCheckboxFilterButton;
+use con4gis\ProjectsBundle\Classes\Buttons\C4GFilterResetButton;
 use con4gis\ProjectsBundle\Classes\Buttons\C4GSelectFilterButton;
 use con4gis\ProjectsBundle\Classes\Database\C4GBrickDatabaseType;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GClassField;
@@ -145,6 +146,10 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                 }
                 $this->listParams->addFilterButton(new C4GSelectFilterButton($options));
             }
+        }
+
+        if ($this->showFilterResetButton) {
+            $this->listParams->addFilterButton(new C4GFilterResetButton($this->filterResetButtonCaption ?: '', $this->filterResetButtonCaption ?: ''));
         }
 
         if (strval($this->caption) !== '') {
