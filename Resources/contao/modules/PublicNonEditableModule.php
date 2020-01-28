@@ -315,6 +315,12 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             '',
             true, false, false, false);
 
+        $fieldList[] = C4GTextField::create('type',
+            $GLOBALS['TL_LANG']['tl_c4g_data_element']['type'][0],
+            $GLOBALS['TL_LANG']['tl_c4g_data_element']['type'][1],
+            true, false, true, false)
+            ->setWithoutLabel();
+
         $fieldList[] = C4GTextField::create('name',
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['name'][0],
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['name'][1],

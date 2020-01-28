@@ -246,6 +246,9 @@ class PublicNonEditableModel
             $array['addressState'] = '';
         }
 
+        $typeModel = DataTypeModel::findByPk($array['type']);
+        $array['type'] = $typeModel->name;
+
         $timeString = [];
         $businessTimes = \StringUtil::deserialize($array['businessHours']);
         $array['businessHours'] = '';
