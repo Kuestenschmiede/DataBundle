@@ -10,7 +10,7 @@
  * @link      https://www.kuestenschmiede.de
  */
 
-$GLOBALS['TL_DCA']['tl_module']['palettes']['public_noneditable'] = '{title_legend},name,headline,type;{caption_legend},captionPlural,caption;{c4g_data_type_legend},c4g_data_type,c4g_data_directory,showSelectFilter;{mapPage_legend},mapPage';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['public_noneditable'] = '{title_legend},name,headline,type;{caption_legend},captionPlural,caption;{c4g_data_type_legend},c4g_data_type,c4g_data_directory,showSelectFilter,showFilterResetButton,filterResetButtonCaption;{mapPage_legend},mapPage';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['public_editable'] = '{title_legend},name,headline,type;';
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_data_type'] =
@@ -59,3 +59,20 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['showSelectFilter'] =
         'inputType'               => 'checkbox',
         'sql'                     => "char(1) NOT NULL default '0'"
     ];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['showFilterResetButton'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['showFilterResetButton'],
+        'default'                 => false,
+        'inputType'               => 'checkbox',
+        'sql'                     => "char(1) NOT NULL default '0'"
+    ];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['filterResetButtonCaption'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module'][''],
+        'default'                 => false,
+        'inputType'               => 'text',
+        'sql'                     => "varchar(255) NOT NULL default ''"
+    ];
+
