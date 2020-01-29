@@ -47,6 +47,7 @@ $GLOBALS['TL_LANG'][$strName]['image'] = ['Bild', 'Ein Bild, das das Element zei
 $GLOBALS['TL_LANG'][$strName]['imageMaxHeight'] = ['Maximale Bildhöhe (Pixel)', 'Das Seitenverhältnis wird beibehalten.'];
 $GLOBALS['TL_LANG'][$strName]['imageMaxWidth'] = ['Maximale Bildbreite (Pixel)', 'Das Seitenverhältnis wird beibehalten.'];
 $GLOBALS['TL_LANG'][$strName]['imageLink'] = ['Bildlink', 'Link, zu dem das Bild führt.'];
+$GLOBALS['TL_LANG'][$strName]['imageLightBox'] = ['Lightbox', 'Falls gesetzt, wird das Bild bei einem Klick in einer Lightbox dargestellt. (Ist ein Link definiert, hat er Vorrang.)'];
 $GLOBALS['TL_LANG'][$strName]['loctype'] = ['Lokationstyp', 'Wählen Sie die Art der Lokation aus.'];
 $GLOBALS['TL_LANG'][$strName]['geox'] = ['Geo-X-Koordinate', 'Wählen Sie die X-Koordinate (Longitude) aus. Mit Verwendung des Geopickers werden beide Felder automatisch befüllt.'];
 $GLOBALS['TL_LANG'][$strName]['geoy'] = ['Geo-Y-Koordinate', 'Wählen Sie die Y-Koordinate (Latitude) aus. Mit Verwendung des Geopickers werden beide Felder automatisch befüllt.'];

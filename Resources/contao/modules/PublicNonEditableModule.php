@@ -184,7 +184,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         $fieldList[] = C4GImageField::create('image',
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['image'][0],
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['image'][1],
-            false, true, true, false);
+            false, true, true, false)
+            ->setLightBoxField('imageLightBox');
 
         $fieldList[] = C4GTextField::create('addressName',
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['addressName'][0],
@@ -462,7 +463,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                         $brickField = C4GImageField::create('image',
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['image'][0],
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['image'][1],
-                            true, false, true, false);
+                            true, false, true, false)
+                            ->setLightBoxField('imageLightBox');
                         break;
                     case 'linkWizard':
                         $brickField = C4GMultiLinkField::create('linkWizard',

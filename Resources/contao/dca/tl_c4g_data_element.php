@@ -82,7 +82,7 @@ if ($types !== null) {
                 if ($availableField === 'businessHours') {
                     $fields .= ',businessHoursAdditionalInfo';
                 } elseif ($availableField === 'image') {
-                    $fields .= ',imageMaxHeight,imageMaxWidth,imageLink';
+                    $fields .= ',imageMaxHeight,imageMaxWidth,imageLink,imageLightBox,';
                 }
             }
 
@@ -239,6 +239,8 @@ $imageMaxWidth->default('200')->sql("int(10) unsigned NOT NULL default '200'")
 
 $imageLink = new TextField('imageLink', $dca);
 $imageLink->eval()->class('clr');
+
+$imageLightBox = new CheckboxField('imageLightBox', $dca);
 
 $accessibility = new CheckboxField('accessibility', $dca);
 
