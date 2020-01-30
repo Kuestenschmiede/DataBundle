@@ -60,6 +60,8 @@ $id = new IdField('id', $dca);
 
 $tStamp = new NaturalField('tstamp', $dca);
 
+$published = new CheckboxField('published', $dca);
+
 $name = new TextField('name', $dca);
 $name->filter()->search();
 $name->eval()->class('w50')->mandatory();
