@@ -31,7 +31,7 @@ class LoadFeatureFilterListener
         EventDispatcherInterface $eventDispatcher
     ) {
         $currentFilters = $event->getFilters();
-        $strSelect = 'SELECT * FROM tl_c4g_data_custom_field WHERE type="multicheckbox" AND frontendFilter =1 ';
+        $strSelect = 'SELECT * FROM tl_c4g_data_custom_field WHERE published = "1" AND type="multicheckbox" AND frontendFilter =1 ';
         $customFields = $this->Database->execute($strSelect)->fetchAllAssoc();
 
         foreach ($customFields as $customField) {

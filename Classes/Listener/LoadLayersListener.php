@@ -207,7 +207,7 @@ class LoadLayersListener
             );
             $availableFields = unserialize($type['availableFields']);
             if ($availableFields) {
-                $strSelect = 'SELECT * FROM tl_c4g_data_custom_field WHERE type="multicheckbox" AND frontendFilter =1 AND alias IN(';
+                $strSelect = 'SELECT * FROM tl_c4g_data_custom_field WHERE published = "1" AND type="multicheckbox" AND frontendFilter =1 AND alias IN(';
                 foreach ($availableFields as $availableField) {
                     $strSelect .= '"' . $availableField . '",';
                 }
