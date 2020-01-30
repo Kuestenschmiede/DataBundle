@@ -22,6 +22,7 @@ use con4gis\CoreBundle\Classes\DCA\Fields\MultiColumnField;
 use con4gis\CoreBundle\Classes\DCA\Fields\MultiCheckboxField;
 use con4gis\CoreBundle\Classes\DCA\Fields\DatePickerField;
 use con4gis\DataBundle\Classes\Contao\Callbacks\CustomFieldCallback;
+use \con4gis\CoreBundle\Classes\DCA\Operations\TogglePublishedOperation;
 
 $strName = 'tl_c4g_data_custom_field';
 $cbClass = CustomFieldCallback::class;
@@ -34,6 +35,7 @@ $list->sorting()->fields(['name']);
 $list->sorting()->panelLayout('filter;sort,search,limit');
 $list->label()->fields(['name', 'type'])->labelCallback($cbClass, 'getLabels');
 $list->addRegularOperations($dca);
+new TogglePublishedOperation($dca, $cbClass, 'toggleIcon');
 $dca->palette()->default(
     '{data_legend},name,alias,type'
 );
@@ -238,3 +240,5 @@ $icon = new TextField('frontendFilterCheckboxButtonLabelOff', $dca);
 $icon->eval()
     ->allowHtml()
     ->class('w50');
+
+
