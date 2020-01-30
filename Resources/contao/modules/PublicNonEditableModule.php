@@ -472,11 +472,19 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             false, true, false);
                         break;
                     default:
-                        $brickField = C4GTextField::create($field,
-                            $GLOBALS['TL_LANG']['tl_c4g_data_element'][$field][0],
-                            $GLOBALS['TL_LANG']['tl_c4g_data_element'][$field][1],
-                            true, false, true, false)
-                            ->setShowIfEmpty(false);
+                        try {
+                            $brickField = C4GTextField::create($field,
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element'][$field][0],
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element'][$field][1],
+                                true, false, true, false)
+                                ->setShowIfEmpty(false);
+                        } catch (\Throwable $throwable) {
+                            C4gLogModel::addLogEntry(
+                                'data',
+                                "$field is an assigned but not published custom field".
+                                " or a regular field without language entries."
+                            );
+                        }
                 }
                 if ($brickField !== null) {
                     $fieldList[] = $brickField;
