@@ -390,12 +390,12 @@ class LoadLayersListener
                     } else {
                         $model = DataCustomFieldModel::findBy('alias', $availableField);
                         if ($model !== null) {
-                            if (strval($model->frontendPopup) === '1') {
+                            if ($model->published === '1' && $model->frontendPopup === '1') {
                                 if (strval($model->type) === 'legend' && (strval($model->frontendName) !== '' || strval($model->name) !== '')) {
                                     $i = $fieldKey + 1;
                                     while ($i < count($availableFields)) {
                                         $legendModel = DataCustomFieldModel::findBy('alias', $availableFields[$i]);
-                                        if ($legendModel !== null && $legendModel->type === 'legend') {
+                                        if ($legendModel !== null && $legendModel->published === '1' && $legendModel->type === 'legend') {
                                             break;
                                         }
                                         if (C4GUtils::endsWith($availableFields[$i], '_legend') === true) {
@@ -471,7 +471,7 @@ class LoadLayersListener
                                         $i = $fieldKey + 1;
                                         while ($i < count($availableFields)) {
                                             $legendModel = DataCustomFieldModel::findBy('alias', $availableFields[$i]);
-                                            if ($legendModel !== null && $legendModel->type === 'legend') {
+                                            if ($legendModel !== null && $model->published === '1' && $legendModel->type === 'legend') {
                                                 break;
                                             }
                                             if (C4GUtils::endsWith($availableFields[$i], '_legend') === true) {

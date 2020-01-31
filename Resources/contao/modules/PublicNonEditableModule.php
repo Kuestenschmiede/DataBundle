@@ -81,52 +81,54 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         $customFields = DataCustomFieldModel::findBy('frontendFilterList', 1);
         if ($customFields !== null) {
             foreach ($customFields as $customField) {
-                switch ($customField->type) {
-                    case 'icon':
-                        $this->listParams->addFilterButton(
-                            new C4GFilterButton(
-                                $customField->icon,
+                if ($customField->published === '1') {
+                    switch ($customField->type) {
+                        case 'icon':
+                            $this->listParams->addFilterButton(
+                                new C4GFilterButton(
+                                    $customField->icon,
+                                    $customField->frontendName ?: $customField->name ?: '',
+                                    $customField->alias
+                                )
+                            );
+                            $alias = $customField->alias;
+                            ResourceLoader::loadCssResourceTag(
+                                '.filter_' . $alias . '_parent > div:not(.filter_' . $alias . '_child) {display: none;}'
+                            );
+                            break;
+                        case 'checkbox':
+                            $filterCheckbox = new C4GCheckboxFilterButton(
+                                $customField->frontendName ?: $customField->name,
                                 $customField->frontendName ?: $customField->name ?: '',
                                 $customField->alias
-                            )
-                        );
-                        $alias = $customField->alias;
-                        ResourceLoader::loadCssResourceTag(
-                            '.filter_'.$alias.'_parent > div:not(.filter_'.$alias.'_child) {display: none;}'
-                        );
-                        break;
-                    case 'checkbox':
-                        $filterCheckbox = new C4GCheckboxFilterButton(
-                            $customField->frontendName ?: $customField->name,
-                            $customField->frontendName ?: $customField->name ?: '',
-                            $customField->alias
-                        );
-                        $filterCheckbox->setStyle($customField->frontendFilterCheckboxStyling);
-                        $filterCheckbox->setLabelChecked($customField->frontendFilterCheckboxButtonLabelOn);
-                        $filterCheckbox->setLabelUnChecked($customField->frontendFilterCheckboxButtonLabelOff);
-                        $this->listParams->addFilterButton(
-                            $filterCheckbox
-                        );
-                        $alias = $customField->alias;
-                        ResourceLoader::loadCssResourceTag(
-                            '.filter_'.$alias.'_parent > div:not(.filter_'.$alias.'_child) {display: none;}'
-                        );
-                        break;
-                    case 'link':
-                        $this->listParams->addFilterButton(
-                            new C4GFilterButton(
-                                $customField->linkTitle,
-                                $customField->frontendName ?: $customField->name ?: '',
-                                $customField->alias
-                            )
-                        );
-                        $alias = $customField->alias;
-                        ResourceLoader::loadCssResourceTag(
-                            '.filter_'.$alias.'_parent > div:not(.filter_'.$alias.'_child) {display: none;}'
-                        );
-                        break;
-                    default:
-                        break;
+                            );
+                            $filterCheckbox->setStyle($customField->frontendFilterCheckboxStyling);
+                            $filterCheckbox->setLabelChecked($customField->frontendFilterCheckboxButtonLabelOn);
+                            $filterCheckbox->setLabelUnChecked($customField->frontendFilterCheckboxButtonLabelOff);
+                            $this->listParams->addFilterButton(
+                                $filterCheckbox
+                            );
+                            $alias = $customField->alias;
+                            ResourceLoader::loadCssResourceTag(
+                                '.filter_' . $alias . '_parent > div:not(.filter_' . $alias . '_child) {display: none;}'
+                            );
+                            break;
+                        case 'link':
+                            $this->listParams->addFilterButton(
+                                new C4GFilterButton(
+                                    $customField->linkTitle,
+                                    $customField->frontendName ?: $customField->name ?: '',
+                                    $customField->alias
+                                )
+                            );
+                            $alias = $customField->alias;
+                            ResourceLoader::loadCssResourceTag(
+                                '.filter_' . $alias . '_parent > div:not(.filter_' . $alias . '_child) {display: none;}'
+                            );
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
@@ -386,7 +388,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         $legend = null;
         foreach ($availableFieldsDetails as $field) {
             $model = DataCustomFieldModel::findBy('alias', $field);
-            if ($model !== null && $model->type === 'legend') {
+            if ($model !== null && $model->published === '1' && $model->type === 'legend') {
                 $legend = C4GHeadlineField::create(strval($model->alias),
                     strval($model->frontendName ?: $model->name),
                     '',
@@ -492,7 +494,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                 if ($legend !== null && $brickField !== null) {
                     $legend->addAssociatedField($brickField);
                 }
-            } else {
+            } elseif ($model->published === '1') {
                 switch ($model->type) {
                     case 'icon':
                         $brickField = C4GIconField::create($field,
