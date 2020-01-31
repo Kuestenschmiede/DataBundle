@@ -24,6 +24,7 @@ $GLOBALS['TL_LANG'][$strName]['timeTo'] = ['Time to', ''];
 $GLOBALS['TL_LANG'][$strName]['timeCaption'] = '';
 
 $GLOBALS['TL_LANG'][$strName]['contactData'] = ['Contact data', 'Contact data'];
+$GLOBALS['TL_LANG'][$strName]['address'] = ['Address', 'The full address.'];
 $GLOBALS['TL_LANG'][$strName]['addressName'] = ['Name', 'Name as part of the address.'];
 $GLOBALS['TL_LANG'][$strName]['addressStreet'] = ['Street', 'Street without house number.'];
 $GLOBALS['TL_LANG'][$strName]['addressStreetNumber'] = ['House number', ''];

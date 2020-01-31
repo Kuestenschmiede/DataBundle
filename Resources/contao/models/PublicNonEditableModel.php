@@ -84,18 +84,27 @@ class PublicNonEditableModel
             }
 
             $resultElements[$key]['type'] = $types[$re['type']];
-            $resultElements[$key]['addressName'] = $re['addressName'];
+
+            $address = [];
+            $address[] = $re['addressName'];
             if ($re['addressStreetNumber'] !== '0') {
-                $resultElements[$key]['addressStreet'] = $re['addressStreet'] . ' ' . $re['addressStreetNumber'];
+                $address[] = $re['addressStreet'] . ' ' . $re['addressStreetNumber'];
             } else {
-                $resultElements[$key]['addressStreet'] = $re['addressStreet'];
+                $address[] = $re['addressStreet'];
             }
-            $resultElements[$key]['addressCity'] = $re['addressZip'] . ' ' . $re['addressCity'];
+            $address[] = $re['addressZip'] . ' ' . $re['addressCity'];
 
             if (strval($re['addressState']) !== '') {
-                $resultElements[$key]['addressCountry'] = $re['addressState'] . ', ' . $re['addressCountry'];
+                $address[] = $re['addressState'] . ', ' . $re['addressCountry'];
             } else {
-                $resultElements[$key]['addressCountry'] = $re['addressCountry'];
+                $address[] = $re['addressCountry'];
+            }
+
+            $resultElements[$key]['address'] = '';
+            foreach ($address as $part) {
+                if ($part !== '') {
+                    $resultElements[$key]['address'] .= "<span>$part</span>";
+                }
             }
 
             $timeString = [];

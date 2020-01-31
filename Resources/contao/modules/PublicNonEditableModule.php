@@ -189,27 +189,11 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             false, true, true, false)
             ->setLightBoxField('imageLightBox');
 
-        $fieldList[] = C4GTextField::create('addressName',
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['addressName'][0],
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['addressName'][1],
+        $fieldList[] = C4GTextField::create('address',
+            $GLOBALS['TL_LANG']['tl_c4g_data_element']['address'][0],
+            $GLOBALS['TL_LANG']['tl_c4g_data_element']['address'][1],
             false, true, true, false)
-            ->setShowIfEmpty(false)
-            ->setSimpleTextWithoutEditing();
-
-        $fieldList[] = C4GTextField::create('addressStreet',
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['addressStreet'][0],
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['addressStreet'][1],
-            false, true, true, false);
-
-        $fieldList[] = C4GTextField::create('addressCity',
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['addressCity'][0],
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['addressCity'][1],
-            false, true, true, false);
-
-        $fieldList[] = C4GTextField::create('addressCountry',
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['addressCountry'][0],
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['addressCountry'][1],
-            false, true, true, false);
+            ->setEncodeHtmlEntities(false);
 
         $fieldList[] = C4GTextField::create('businessHours',
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['businessHours'][0],

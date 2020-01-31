@@ -38,3 +38,7 @@
 .searchInfo {
     display: none;
 }
+
+li > span {
+    display: list-item;
+}
