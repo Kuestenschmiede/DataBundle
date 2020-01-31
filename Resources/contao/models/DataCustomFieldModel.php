@@ -26,7 +26,7 @@ class DataCustomFieldModel extends Model
         if (!Database::getInstance()->tableExists(static::$strTable)) {
             return null;
         }
-        return parent::findBy(['published', $strColumn], ['1', $varValue], $arrOptions);
+        return parent::findBy($strColumn, $varValue, $arrOptions);
     }
 
     public static function findAll(array $arrOptions = array())
