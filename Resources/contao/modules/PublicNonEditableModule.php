@@ -73,6 +73,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
 
         $this->listParams->setWithDetails(true);
         $this->listParams->setShowFullTextSearchInHeadline();
+        $this->listParams->setShowItemType();
         $this->dialogParams->setTabContent(false);
         $this->dialogParams->setWithLabels(false);
         $this->dialogParams->setWithDescriptions(false);
@@ -161,6 +162,10 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         if (strval($this->captionPlural) !== '') {
             $this->dialogParams->setBrickCaptionPlural(strval($this->captionPlural));
         }
+
+        if (strval($this->itemType) !== '') {
+            $this->listParams->setItemType($this->itemType);
+        }
     }
 
     protected function compileCss()
@@ -181,19 +186,23 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['name'][0],
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['name'][1],
             false, true, true, false)
+            ->setItemprop('name')
             ->setWithoutLabel();
 
         $fieldList[] = C4GImageField::create('image',
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['image'][0],
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['image'][1],
             false, true, true, false)
-            ->setLightBoxField('imageLightBox');
+            ->setLightBoxField('imageLightBox')
+            ->setItemprop('image');
 
         $fieldList[] = C4GTextField::create('address',
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['address'][0],
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['address'][1],
             false, true, true, false)
-            ->setEncodeHtmlEntities(false);
+            ->setEncodeHtmlEntities(false)
+            ->setItemprop('address')
+            ->setItemType('http://schema.org/PostalAddress');
 
         $fieldList[] = C4GTextField::create('businessHours',
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['businessHours'][0],
@@ -208,7 +217,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             false, true, true, false)
             ->setAddStrBeforeValue('Tel.: ')
             ->setShowIfEmpty(false)
-            ->setLinkType(C4GLinkField::LINK_TYPE_PHONE);
+            ->setLinkType(C4GLinkField::LINK_TYPE_PHONE)
+            ->setItemprop('telephone');
 
         $fieldList[] = C4GLinkField::create('mobile',
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['mobile'][0],
@@ -231,7 +241,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             false, true, true, false)
             ->setAddStrBeforeValue('Email: ')
             ->setShowIfEmpty(false)
-            ->setLinkType(C4GLinkField::LINK_TYPE_EMAIL);
+            ->setLinkType(C4GLinkField::LINK_TYPE_EMAIL)
+            ->setItemprop('email');
 
         $fieldList[] = C4GLinkField::create('website',
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['website'][0],

@@ -83,21 +83,51 @@ class PublicNonEditableModel
                 }
             }
 
+            $typeModel = DataTypeModel::findByPk($resultElements[$key]['type']);
+            $resultElements[$key]['itemType'] = strval($typeModel->itemType);
+
             $resultElements[$key]['type'] = $types[$re['type']];
 
             $address = [];
             $address[] = $re['addressName'];
-            if ($re['addressStreetNumber'] !== '0') {
-                $address[] = $re['addressStreet'] . ' ' . $re['addressStreetNumber'];
-            } else {
-                $address[] = $re['addressStreet'];
-            }
-            $address[] = $re['addressZip'] . ' ' . $re['addressCity'];
+            if ($resultElements[$key]['itemType'] !== '') {
+                if ($re['addressStreetNumber'] !== '0' && $re['addressStreet'] !== '') {
+                    $address[] = '<span itemprop="streetAddress">' . $re['addressStreet'] . ' ' . $re['addressStreetNumber'] . '</span>';
+                } elseif ($re['addressStreet'] !== '') {
+                    $address[] = '<span itemprop="streetAddress">' . $re['addressStreet'] . '</span>';
+                }
 
-            if (strval($re['addressState']) !== '') {
-                $address[] = $re['addressState'] . ', ' . $re['addressCountry'];
+                if ($re['addressZip'] && $re['addressCity']) {
+                    $address[] = '<span itemprop="postalCode">' . $re['addressZip'] .
+                        '</span> <span itemprop="addressLocality">' . $re['addressCity'] . '</span>';
+                }
+
+
+                if ($re['addressState'] !== '' && $re['addressCountry'] !== '') {
+                    $address[] = '<span itemprop="addressRegion">' . $re['addressState'] .
+                        '</span>, <span itemprop="addressCountry">' . $re['addressCountry'] . '</span>';
+                } elseif ($re['addressCountry'] !== '') {
+                    $address[] = '<span itemprop="addressCountry">' . $re['addressCountry'] . '</span>';
+                }
             } else {
-                $address[] = $re['addressCountry'];
+                if ($re['addressStreetNumber'] !== '0' && $re['addressStreet'] !== '') {
+                    $address[] = '<span>' . $re['addressStreet'] . ' ' . $re['addressStreetNumber'] . '</span>';
+                } elseif ($re['addressStreet'] !== '') {
+                    $address[] = '<span>' . $re['addressStreet'] . '</span>';
+                }
+
+                if ($re['addressZip'] && $re['addressCity']) {
+                    $address[] = '<span>' . $re['addressZip'] .
+                        '</span> <span>' . $re['addressCity'] . '</span>';
+                }
+
+
+                if ($re['addressState'] !== '' && $re['addressCountry'] !== '') {
+                    $address[] = '<span>' . $re['addressState'] .
+                        '</span>, <span>' . $re['addressCountry'] . '</span>';
+                } elseif ($re['addressCountry'] !== '') {
+                    $address[] = '<span>' . $re['addressCountry'] . '</span>';
+                }
             }
 
             $resultElements[$key]['address'] = '';

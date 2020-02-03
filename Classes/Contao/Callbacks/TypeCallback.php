@@ -75,6 +75,11 @@ class TypeCallback extends Backend
         return $types;
     }
 
+    public function loadItemTypeOptions($dc)
+    {
+        return $GLOBALS['TL_LANG']['tl_c4g_data_type']['itemTypeOptions'];
+    }
+
     public function loadAvailableFieldsOptions($dc)
     {
         System::loadLanguageFile('tl_c4g_data_element');

@@ -32,7 +32,7 @@ $list->sorting()->panelLayout('filter;sort,search,limit');
 $list->label()->fields(['name', 'availableFields'])
     ->labelCallback($cbClass, 'getLabel');
 $list->addRegularOperations($dca);
-$dca->palette()->default('{data_legend},name,locstyle,availableFields,showLabels;');
+$dca->palette()->default('{data_legend},name,locstyle,availableFields,showLabels;{searchEngine_legend},itemType');
 
 $id = new IdField('id', $dca);
 
@@ -59,3 +59,12 @@ $categorySort = new NaturalField('categorySort', $dca);
 
 $availableFields = new MultiCheckboxField('availableFields', $dca);
 $availableFields->optionsCallback($cbClass, 'loadAvailableFieldsOptions');
+
+$itemType = new SelectField('itemType', $dca);
+$itemType->default('')
+    ->optionsCallback($cbClass, 'loadItemTypeOptions')
+    ->sql("varchar(100) NOT NULL default ''")
+    ->eval()
+        ->class('clr')
+        ->includeBlankOption();
+
