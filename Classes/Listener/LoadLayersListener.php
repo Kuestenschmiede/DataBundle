@@ -258,6 +258,9 @@ class LoadLayersListener
                 \System::loadLanguageFile('tl_c4g_data_element');
 
                 $popup->addEntry(strval($typeElement['name']), 'name');
+
+                $typeModel = DataTypeModel::findByPk($typeElement['type']);
+                $popup->addEntry(strval($typeModel->name), 'type');
                 if (strval($typeElement['description']) !== '') {
                     $popup->addEntry(strval($typeElement['description']), 'description');
                 }
