@@ -28,7 +28,7 @@ $strName = 'tl_c4g_data_custom_field';
 $cbClass = CustomFieldCallback::class;
 
 $dca = new DCA($strName);
-$dca->config()->onloadCallback($cbClass, 'addHint');
+$dca->config()->onloadCallback($cbClass, 'addHint')->markAsCopy('name');
 
 $list = $dca->list();
 $list->sorting()->fields(['name']);

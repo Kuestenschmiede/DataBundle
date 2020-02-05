@@ -31,7 +31,8 @@ $strName = 'tl_c4g_data_element';
 $cbClass = ElementCallback::class;
 
 $dca = new DCA($strName);
-$dca->config()->onsubmitCallback(\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator::class, 'purgeLayerApiCache');
+$dca->config()->onsubmitCallback(\con4gis\MapsBundle\Classes\Caches\C4GMapsAutomator::class, 'purgeLayerApiCache')
+    ->markAsCopy('name');
 $list = $dca->list();
 $list->sorting()->fields(['name']);
 $list->sorting()->panelLayout('filter;sort,search,limit');

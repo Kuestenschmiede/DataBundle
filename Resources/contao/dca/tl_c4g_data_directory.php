@@ -24,6 +24,7 @@ $strName = 'tl_c4g_data_directory';
 $cbClass = DirectoryCallback::class;
 
 $dca = new DCA($strName);
+$dca->config()->markAsCopy('name');
 $list = $dca->list();
 $list->sorting()->fields(['name']);
 $list->sorting()->panelLayout('filter;sort,search,limit');

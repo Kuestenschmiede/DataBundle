@@ -26,6 +26,7 @@ $strName = 'tl_c4g_data_type';
 $cbClass = TypeCallback::class;
 
 $dca = new DCA('tl_c4g_data_type');
+$dca->config()->markAsCopy('name');
 $list = $dca->list();
 $list->sorting()->fields(['name', 'availableFields']);
 $list->sorting()->panelLayout('filter;sort,search,limit');
