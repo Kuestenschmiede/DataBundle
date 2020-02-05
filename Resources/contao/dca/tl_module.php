@@ -77,7 +77,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['showFilterResetButton'] =
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['filterResetButtonCaption'] =
     [
-        'label'                   => &$GLOBALS['TL_LANG']['tl_module'][''],
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['filterResetButtonCaption'],
         'exclude'                 => true,
         'default'                 => false,
         'inputType'               => 'text',
