@@ -439,6 +439,20 @@ foreach ($GLOBALS['con4gis']['data_custom_field_types'] as $type) {
                     $class .= ' m12';
                 }
                 $field->eval()->class($class);
+            } elseif ($type === 'foreignKey') {
+                $field = new SelectField($model->alias, $dca);
+                $field->hardLabel(strval($model->name), strval($model->description))
+                    ->filter(boolval($model->filter))
+                    ->search(boolval($model->search))
+                    ->sql('int(10) NOT NULL default "0"')
+                    ->foreignKey($model->foreignTable, $model->foreignField)
+                    ->eval()
+                        ->mandatory(boolval($model->mandatory));
+                $class = strval($model->class);
+                if (boolval($model->margin) === true) {
+                    $class .= ' m12';
+                }
+                $field->eval()->class($class);
             }
         }
     }

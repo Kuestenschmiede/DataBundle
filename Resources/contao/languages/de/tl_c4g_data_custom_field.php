@@ -35,6 +35,8 @@ $GLOBALS['TL_LANG'][$strName]['linkTitle'] = ['Linkbezeichnung', 'Der Text, der 
 $GLOBALS['TL_LANG'][$strName]['linkHref'] = ['URL', 'Die URL, auf die der Link zeigt.'];
 $GLOBALS['TL_LANG'][$strName]['linkNewTab'] = ['In neuem Tab öffnen', 'Falls gesetzt, wird der Link in einem neuen Tab geöffnet.'];
 $GLOBALS['TL_LANG'][$strName]['icon'] = ['Font Awesome Icon', 'Das anzuzeigende Icon.'];
+$GLOBALS['TL_LANG'][$strName]['foreignTable'] = ['Tabelle', 'Die Tabelle, auf die der Fremdschlüssel zeigt.'];
+$GLOBALS['TL_LANG'][$strName]['foreignField'] = ['Label', 'Das Feld, anhand dessen die Zeile identifiziert wird.'];
 
 /**
  * Legends
@@ -71,6 +73,7 @@ $GLOBALS['TL_LANG']['data_custom_field_types']['multicheckbox'] = 'Mehrere Check
 $GLOBALS['TL_LANG']['data_custom_field_types']['datepicker'] = 'Datumsauswahl';
 $GLOBALS['TL_LANG']['data_custom_field_types']['link'] = 'Verlinkung';
 $GLOBALS['TL_LANG']['data_custom_field_types']['legend'] = 'Überschrift';
+$GLOBALS['TL_LANG']['data_custom_field_types']['foreignKey'] = 'Fremdschlüssel';
 
 /**
  * Class Options

@@ -56,7 +56,8 @@ $dca->palette()->selector(['type'])
     ->subPalette('type', 'multicheckbox', ",description$generalFields;{type_specific_legend},options,defaultMultiCheckbox")
     ->subPalette('type', 'datepicker', ",description$generalFields;{type_specific_legend},defaultDatePicker")
     ->subPalette('type', 'link', ",description$generalFields;{type_specific_legend},defaultCheckbox,linkTitle,linkHref,linkNewTab")
-    ->subPalette('type', 'legend', ";{frontend_legend},frontendName,frontendPopup,frontendList,frontendDetails");
+    ->subPalette('type', 'legend', ";{frontend_legend},frontendName,frontendPopup,frontendList,frontendDetails")
+    ->subPalette('type', 'foreignKey', ",description$generalFields;{type_specific_legend},foreignTable,foreignField");
 
 $id = new IdField('id', $dca);
 
@@ -238,6 +239,16 @@ $icon->eval()
 
 $icon = new TextField('frontendFilterCheckboxButtonLabelOff', $dca);
 $icon->eval()
+    ->allowHtml()
+    ->class('w50');
+
+$foreignTable = new TextField('foreignTable', $dca);
+$foreignTable->eval()
+    ->allowHtml()
+    ->class('w50');
+
+$foreignField = new TextField('foreignField', $dca);
+$foreignField->eval()
     ->allowHtml()
     ->class('w50');
 

@@ -21,6 +21,7 @@ $GLOBALS['con4gis']['data_custom_field_types'][] = 'multicheckbox';
 $GLOBALS['con4gis']['data_custom_field_types'][] = 'datepicker';
 $GLOBALS['con4gis']['data_custom_field_types'][] = 'link';
 $GLOBALS['con4gis']['data_custom_field_types'][] = 'legend';
+$GLOBALS['con4gis']['data_custom_field_types'][] = 'foreignKey';
 
 $GLOBALS['con4gis']['data']['day_option'] = [
     '0', '1', '2', '3', '4', '5', '6'

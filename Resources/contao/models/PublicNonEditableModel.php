@@ -6,6 +6,7 @@ namespace con4gis\DataBundle\Resources\contao\models;
 use con4gis\CoreBundle\Classes\Helper\ArrayHelper;
 use con4gis\DataBundle\Resources\contao\modules\PublicNonEditableModule;
 use con4gis\ProjectsBundle\Classes\Common\C4GBrickCommon;
+use Contao\Database;
 use Contao\StringUtil;
 
 class PublicNonEditableModel
@@ -222,6 +223,24 @@ class PublicNonEditableModel
                                     }
                                 }
                             }
+                        }
+                    } elseif ($model->type === 'foreignKey') {
+                        if (intval($resultElements[$key][$model->alias]) !== 0) {
+                            $stmt = Database::getInstance()->prepare(
+                                "SELECT ".
+                                $model->foreignField.
+                                " FROM ".
+                                $model->foreignTable.
+                                " WHERE id = ?"
+                            );
+                            try {
+                                $resultElements[$key][$model->alias] = $stmt->execute($resultElements[$key][$model->alias])
+                                    ->fetchAllAssoc()[0][$model->foreignField];
+                            } catch (\Throwable $throwable) {
+                                $resultElements[$key][$model->alias] = '';
+                            }
+                        } else {
+                            $resultElements[$key][$model->alias] = '';
                         }
                     }
                 }

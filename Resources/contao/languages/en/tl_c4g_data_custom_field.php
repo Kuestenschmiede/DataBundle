@@ -67,6 +67,7 @@ $GLOBALS['TL_LANG']['data_custom_field_types']['multicheckbox'] = 'Multiple Chec
 $GLOBALS['TL_LANG']['data_custom_field_types']['datepicker'] = 'Datepicker';
 $GLOBALS['TL_LANG']['data_custom_field_types']['link'] = 'Link';
 $GLOBALS['TL_LANG']['data_custom_field_types']['legend'] = 'Headline';
+$GLOBALS['TL_LANG']['data_custom_field_types']['foreignKey'] = 'Foreign Key';
 
 /**
  * Class Options
