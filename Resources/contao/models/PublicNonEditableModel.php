@@ -21,22 +21,26 @@ class PublicNonEditableModel
             $types[$rt['id']] = $rt['name'];
         }
 
-        if (PublicNonEditableModule::$type) {
-            $stmtElements = $db->prepare("SELECT * FROM tl_c4g_data_element WHERE name != '' AND type = ? ORDER BY name ASC");
-            $resultElements = $stmtElements->execute(PublicNonEditableModule::$type)->fetchAllAssoc();
+        if (!empty(PublicNonEditableModule::$type)) {
+            $resultElements = [];
+            foreach (PublicNonEditableModule::$type as $type) {
+                $stmtElements = $db->prepare("SELECT * FROM tl_c4g_data_element WHERE name != '' AND type = ? ORDER BY name ASC");
+                $resultElements = array_merge($resultElements, $stmtElements->execute($type)->fetchAllAssoc());
+            }
         } else {
-            if (PublicNonEditableModule::$directory) {
-                $directoryModel = DataDirectoryModel::findByPk(PublicNonEditableModule::$directory);
-                if ($directoryModel !== null) {
-                    $types = StringUtil::deserialize($directoryModel->types);
-                    $resultElements = [];
-                    foreach ($types as $type) {
-                        $stmtElements = $db->prepare("SELECT * FROM tl_c4g_data_element WHERE name != '' AND type = ? ORDER BY name ASC");
-                        $resultElements = array_merge($resultElements, $stmtElements->execute($type)->fetchAllAssoc());
+            if (!empty(PublicNonEditableModule::$directory)) {
+                $resultElements = [];
+                foreach (PublicNonEditableModule::$directory as $directory) {
+                    $directoryModel = DataDirectoryModel::findByPk($directory);
+                    if ($directoryModel !== null) {
+                        $types = StringUtil::deserialize($directoryModel->types);
+                        foreach ($types as $type) {
+                            $stmtElements = $db->prepare("SELECT * FROM tl_c4g_data_element WHERE name != '' AND type = ? ORDER BY name ASC");
+                            $resultElements = array_merge($resultElements, $stmtElements->execute($type)->fetchAllAssoc());
+                        }
+                    } else {
+                        continue;
                     }
-                } else {
-                    $stmtElements = $db->prepare("SELECT * FROM tl_c4g_data_element WHERE name != '' ORDER BY name ASC");
-                    $resultElements = $stmtElements->execute()->fetchAllAssoc();
                 }
             } else {
                 $stmtElements = $db->prepare("SELECT * FROM tl_c4g_data_element WHERE name != '' ORDER BY name ASC");

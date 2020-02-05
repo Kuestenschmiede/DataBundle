@@ -57,8 +57,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
     protected $loadMultiColumnResources = true;
     protected $loadMiniSearchResources = true;
 
-    public static $type = 0;
-    public static $directory = 0;
+    public static $type = [];
+    public static $directory = [];
 
     public function initBrickModule($id)
     {
@@ -134,10 +134,10 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             }
         }
 
-        static::$type = $this->c4g_data_type;
-        static::$directory = $this->c4g_data_directory;
+        static::$type = StringUtil::deserialize($this->c4g_data_type);
+        static::$directory = StringUtil::deserialize($this->c4g_data_directory);
 
-        if (!static::$type && $this->showSelectFilter) {
+        if (empty(static::$type) && $this->showSelectFilter) {
             $typeModels = DataTypeModel::findAll();
             if ($typeModels !== null) {
                 $options = [];

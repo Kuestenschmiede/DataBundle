@@ -18,8 +18,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_data_type'] =
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_data_type'],
         'inputType'               => 'select',
         'foreignKey'              => 'tl_c4g_data_type.name',
-        'eval'                    => ['includeBlankOption' => true],
-        'sql'                     => "int(10) unsigned NOT NULL default '0'"
+        'eval'                    => ['includeBlankOption' => true, 'multiple' => true, 'chosen' => true, 'class' => 'clr'],
+        'sql'                     => "text NULL"
     ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_data_directory'] =
@@ -27,8 +27,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_data_directory'] =
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_data_directory'],
         'inputType'               => 'select',
         'foreignKey'              => 'tl_c4g_data_directory.name',
-        'eval'                    => ['includeBlankOption' => true],
-        'sql'                     => "int(10) unsigned NOT NULL default '0'"
+        'eval'                    => ['includeBlankOption' => true, 'multiple' => true, 'chosen' => true, 'class' => 'clr'],
+        'sql'                     => "text NULL"
     ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['mapPage'] =
