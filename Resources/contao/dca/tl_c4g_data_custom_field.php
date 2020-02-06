@@ -21,6 +21,7 @@ use con4gis\CoreBundle\Classes\DCA\Fields\DigitField;
 use con4gis\CoreBundle\Classes\DCA\Fields\MultiColumnField;
 use con4gis\CoreBundle\Classes\DCA\Fields\MultiCheckboxField;
 use con4gis\CoreBundle\Classes\DCA\Fields\DatePickerField;
+use con4gis\CoreBundle\Classes\DCA\Fields\SQLField;
 use con4gis\DataBundle\Classes\Contao\Callbacks\CustomFieldCallback;
 use \con4gis\CoreBundle\Classes\DCA\Operations\TogglePublishedOperation;
 
@@ -252,4 +253,5 @@ $foreignField->eval()
     ->allowHtml()
     ->class('w50');
 
+$importId = new SQLField("importId", $dca, "int(20) unsigned NOT NULL default '0'");
 

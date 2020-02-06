@@ -16,6 +16,7 @@
 use con4gis\CoreBundle\Classes\DCA\DCA;
 use con4gis\CoreBundle\Classes\DCA\Fields\IdField;
 use con4gis\CoreBundle\Classes\DCA\Fields\NaturalField;
+use con4gis\CoreBundle\Classes\DCA\Fields\SQLField;
 use con4gis\CoreBundle\Classes\DCA\Fields\TextField;
 use con4gis\CoreBundle\Classes\DCA\Fields\MultiCheckboxField;
 use con4gis\DataBundle\Classes\Contao\Callbacks\DirectoryCallback;
@@ -45,4 +46,6 @@ $name->eval()
 
 $types = new MultiCheckboxField('types', $dca);
 $types->optionsCallback($cbClass, 'loadTypeOptions');
+
+$importId = new SQLField("importId", $dca, "int(20) unsigned NOT NULL default '0'");
 

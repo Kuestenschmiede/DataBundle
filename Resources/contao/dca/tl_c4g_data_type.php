@@ -17,6 +17,7 @@ use con4gis\CoreBundle\Classes\DCA\DCA;
 use con4gis\CoreBundle\Classes\DCA\Fields\IdField;
 use con4gis\CoreBundle\Classes\DCA\Fields\NaturalField;
 use con4gis\CoreBundle\Classes\DCA\Fields\SelectField;
+use con4gis\CoreBundle\Classes\DCA\Fields\SQLField;
 use con4gis\CoreBundle\Classes\DCA\Fields\TextField;
 use con4gis\CoreBundle\Classes\DCA\Fields\CheckboxField;
 use con4gis\CoreBundle\Classes\DCA\Fields\MultiCheckboxField;
@@ -68,4 +69,6 @@ $itemType->default('')
     ->eval()
         ->class('clr')
         ->includeBlankOption();
+
+$importId = new SQLField("importId", $dca, "int(20) unsigned NOT NULL default '0'");
 
