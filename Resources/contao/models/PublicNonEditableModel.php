@@ -138,7 +138,7 @@ class PublicNonEditableModel
             $resultElements[$key]['address'] = '';
             foreach ($address as $part) {
                 if ($part !== '') {
-                    $resultElements[$key]['address'] .= "<span>$part</span>";
+                    $resultElements[$key]['address'] .= "<span class=\"span-list\">$part</span>";
                 }
             }
 
@@ -251,6 +251,32 @@ class PublicNonEditableModel
             }
 
             $resultElements[$key]['searchInfo'] .= $resultElements[$key]['type'];
+        }
+
+        if (PublicNonEditableModule::$showLabelsInList) {
+            foreach ($resultElements as $key => $row) {
+                foreach ($row as $column => $value) {
+                    if (is_string($value) && $value !== '') {
+                        $customField = DataCustomFieldModel::findBy('alias', $column);
+                        if ($customField !== null) {
+                            if ($customField->type === 'text' || $customField->type === 'select' || $customField->type === 'foreignKey') {
+                                $label = $customField->frontendName ?: $customField->name ?: '';
+                                if ($label !== '') {
+                                    $resultElements[$key][$column] = '<span class="list-label">' . $label . '</span>' .
+                                        '<span class="list_value">' . $value . '</span>';
+                                }
+                            } elseif ($customField->type === 'multicheckbox') {
+                                $label = $customField->frontendName ?: $customField->name ?: '';
+                                if ($label !== '') {
+                                    $value = trim(explode(': ', $value)[1]);
+                                    $resultElements[$key][$column] = '<span class="list-label">' . $label . '</span>' .
+                                        '<span class="list_value">' . $value . '</span>';
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         return ArrayHelper::arrayToObject($resultElements);

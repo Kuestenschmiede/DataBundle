@@ -59,6 +59,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
 
     public static $type = [];
     public static $directory = [];
+    public static $showLabelsInList = true;
 
     public function initBrickModule($id)
     {
@@ -71,7 +72,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         $this->listParams->setLengthChange(false);
         $this->listParams->setPaginate(true);
 
-        $this->listParams->setWithDetails(true);
+        $this->listParams->setWithDetails($this->hideDetails !== '1');
         $this->listParams->setShowFullTextSearchInHeadline();
         $this->listParams->setShowItemType();
         $this->dialogParams->setTabContent(false);
@@ -182,133 +183,144 @@ class PublicNonEditableModule extends C4GBrickModuleParent
 
         // List
 
-        $fieldList[] = C4GTextField::create('name',
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['name'][0],
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['name'][1],
-            false, true, true, false)
-            ->setItemprop('name')
-            ->setWithoutLabel();
-
-        $fieldList[] = C4GImageField::create('image',
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['image'][0],
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['image'][1],
-            false, true, true, false)
-            ->setLightBoxField('imageLightBox')
-            ->setItemprop('image');
-
-        $fieldList[] = C4GTextField::create('address',
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['address'][0],
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['address'][1],
-            false, true, true, false)
-            ->setEncodeHtmlEntities(false)
-            ->setItemprop('address')
-            ->setItemType('http://schema.org/PostalAddress');
-
-        $fieldList[] = C4GTextField::create('businessHours',
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['businessHours'][0],
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['businessHours'][1],
-            false, true, true, false)
-            ->setSimpleTextWithoutEditing()
-            ->setEncodeHtmlEntities(false);
-
-        $fieldList[] = C4GLinkField::create('phone',
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['phone'][0],
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['phone'][1],
-            false, true, true, false)
-            ->setAddStrBeforeValue('Tel.: ')
-            ->setShowIfEmpty(false)
-            ->setLinkType(C4GLinkField::LINK_TYPE_PHONE)
-            ->setItemprop('telephone');
-
-        $fieldList[] = C4GLinkField::create('mobile',
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['mobile'][0],
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['mobile'][1],
-            false, true, true, false)
-            ->setAddStrBeforeValue('Mobil: ')
-            ->setShowIfEmpty(false)
-            ->setLinkType(C4GLinkField::LINK_TYPE_PHONE);
-
-        $fieldList[] = C4GTextField::create('fax',
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['fax'][0],
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['fax'][1],
-            false, true, true, false)
-            ->setAddStrBeforeValue('Fax: ')
-            ->setShowIfEmpty(false);
-
-        $fieldList[] = C4GLinkField::create('email',
-            strval($GLOBALS['TL_LANG']['tl_c4g_data_element']['email'][0]),
-            strval($GLOBALS['TL_LANG']['tl_c4g_data_element']['email'][1]),
-            false, true, true, false)
-            ->setAddStrBeforeValue('Email: ')
-            ->setShowIfEmpty(false)
-            ->setLinkType(C4GLinkField::LINK_TYPE_EMAIL)
-            ->setItemprop('email');
-
-        $fieldList[] = C4GLinkField::create('website',
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['website'][0],
-            $GLOBALS['TL_LANG']['tl_c4g_data_element']['website'][1],
-            false, true, true, false)
-            ->setAddStrBeforeValue('Website: ')
-            ->setShowIfEmpty(false)
-            ->setLinkType(C4GLinkField::LINK_TYPE_DEFAULT)
-            ->setNewTab()
-            ->setLabelField('websiteLabel');
-
-        $fieldList[] = C4GMultiLinkField::create('linkWizard',
-            '', '', false,
-            true, true, false);
-
-        $customFields = DataCustomFieldModel::findAll();
-
-        if ($customFields !== null) {
-            foreach ($customFields as $customField) {
-                if ($customField->frontendList === '1' && ($customField->type !== 'link' && $customField->type !== 'icon')) {
-                    $fieldList[] = C4GTextField::create($customField->alias,
-                        $customField->name,
-                        $customField->description,
-                        false, true, true, false
-                    );
+        $availableFieldsList = StringUtil::deserialize($this->availableFieldsList);
+        if (is_array($availableFieldsList)) {
+            foreach ($availableFieldsList as $availableField) {
+                $customField = DataCustomFieldModel::findBy('alias', $availableField);
+                if ($customField !== null) {
+                    if ($customField->frontendList === '1') {
+                        if ($customField->type !== 'legend') {
+                            $fieldList[] = C4GTextField::create($customField->alias,
+                                $customField->name,
+                                $customField->description,
+                                false, true, true, false
+                            )->setShowIfEmpty(false)
+                                ->setEncodeHtmlEntities(false);
+                        } else {
+                            $fieldList[] = C4GHeadlineField::create($availableField,
+                                $customField->frontendName ?: $customField->name ?: '',
+                                '', false,
+                                true, false, false);
+                        }
+                    }
+                } else {
+                    switch ($availableField) {
+                        case 'name':
+                            $fieldList[] = C4GTextField::create('name',
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['name'][0],
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['name'][1],
+                                false, true, true, false)
+                                ->setItemprop('name')
+                                ->setWithoutLabel()
+                                ->setEncodeHtmlEntities(false);
+                            break;
+                        case 'image':
+                            $fieldList[] = C4GImageField::create('image',
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['image'][0],
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['image'][1],
+                                false, true, true, false)
+                                ->setLightBoxField('imageLightBox')
+                                ->setItemprop('image');
+                            break;
+                        case 'address':
+                            $fieldList[] = C4GTextField::create('address',
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['address'][0],
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['address'][1],
+                                false, true, true, false)
+                                ->setEncodeHtmlEntities(false)
+                                ->setItemprop('address')
+                                ->setItemType('http://schema.org/PostalAddress')
+                                ->setEncodeHtmlEntities(false);
+                            break;
+                        case 'businessHours':
+                            $fieldList[] = C4GTextField::create('businessHours',
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['businessHours'][0],
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['businessHours'][1],
+                                false, true, true, false)
+                                ->setSimpleTextWithoutEditing()
+                                ->setEncodeHtmlEntities(false);
+                            break;
+                        case 'phone':
+                            $fieldList[] = C4GLinkField::create('phone',
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['phone'][0],
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['phone'][1],
+                                false, true, true, false)
+                                ->setAddStrBeforeValue('Tel.: ')
+                                ->setShowIfEmpty(false)
+                                ->setLinkType(C4GLinkField::LINK_TYPE_PHONE)
+                                ->setItemprop('telephone');
+                            break;
+                        case 'mobile':
+                            $fieldList[] = C4GLinkField::create('mobile',
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['mobile'][0],
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['mobile'][1],
+                                false, true, true, false)
+                                ->setAddStrBeforeValue(!static::$showLabelsInList ? 'Mobil: ' : 'Mobil')
+                                ->setShowIfEmpty(false)
+                                ->setLinkType(C4GLinkField::LINK_TYPE_PHONE);
+                            break;
+                        case 'fax':
+                            $fieldList[] = C4GTextField::create('fax',
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['fax'][0],
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['fax'][1],
+                                false, true, true, false)
+                                ->setAddStrBeforeValue(!static::$showLabelsInList ? 'Fax: ' : 'Fax')
+                                ->setShowIfEmpty(false)
+                                ->setEncodeHtmlEntities(false);
+                            break;
+                        case 'email':
+                            $fieldList[] = C4GLinkField::create('email',
+                                strval($GLOBALS['TL_LANG']['tl_c4g_data_element']['email'][0]),
+                                strval($GLOBALS['TL_LANG']['tl_c4g_data_element']['email'][1]),
+                                false, true, true, false)
+                                ->setAddStrBeforeValue(!static::$showLabelsInList ? 'Email: ' : 'Email')
+                                ->setShowIfEmpty(false)
+                                ->setLinkType(C4GLinkField::LINK_TYPE_EMAIL)
+                                ->setItemprop('email');
+                            break;
+                        case 'website':
+                            $fieldList[] = C4GLinkField::create('website',
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['website'][0],
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['website'][1],
+                                false, true, true, false)
+                                ->setAddStrBeforeValue(!static::$showLabelsInList ? 'Website: ' : 'Website')
+                                ->setShowIfEmpty(false)
+                                ->setLinkType(C4GLinkField::LINK_TYPE_DEFAULT)
+                                ->setNewTab()
+                                ->setLabelField('websiteLabel');
+                            break;
+                        case 'linkWizard':
+                            $fieldList[] = C4GMultiLinkField::create('linkWizard',
+                                '', '', false,
+                                true, true, false);
+                            break;
+                        case 'contact_legend':
+                            $fieldList[] = C4GHeadlineField::create($availableField,
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element'][$availableField],
+                                '', false,
+                                true, false, false);
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
 
-            $fieldList[] = C4GTextField::create('searchInfo',
-                '',
-                '',
-                false, true, true, false)
-                ->setShowIfEmpty(false)
-                ->setHidden();
+        $fieldList[] = C4GTextField::create('searchInfo',
+            '',
+            '',
+            false, true, true, false)
+            ->setShowIfEmpty(false)
+            ->setHidden();
 
+        if ($this->mapPage) {
             $fieldList[] = C4GMapLinkButtonField::create('maplink')
                 ->setTargetPageId($this->mapPage)
                 ->setButtonLabel('zur Karte')
                 ->setLongitudeColumn('geox')
                 ->setLatitudeColumn('geoy')
                 ->setnewTab();
-
-        if ($customFields !== null) {
-            foreach ($customFields as $customField) {
-                if ($customField->frontendList === '1') {
-                    if ($customField->type === 'link') {
-                        $link = C4GLinkButtonField::create($customField->alias);
-                        $link->setButtonLabel($customField->linkTitle)
-                            ->setNewTab($customField->linkNewTab === '1')
-                            ->setTargetMode(C4GLinkButtonField::TARGET_MODE_URL)
-                            ->setTargetPageUrl($customField->linkHref)
-                            ->setConditional()
-                            ->setFormField(false);
-                        $fieldList[] = $link;
-                    } elseif ($customField->type === 'icon') {
-                        $icon = C4GIconField::create($customField->alias);
-                        $icon->setIcon($customField->icon)
-                            ->setConditional()
-                            ->setFormField(false)
-                            ->setDescription($customField->description)
-                            ->setTitle($customField->frontendName ?: $customField->name);
-                        $fieldList[] = $icon;
-                    }
-                }
-            }
         }
 
         // Details
@@ -354,6 +366,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             'linkWizard_legend',
             'linkWizard'
         ];
+
+        $customFields = DataCustomFieldModel::findAll();
 
         $elementModel = DataElementModel::findByPk($this->dialogParams->getId());
         if ($elementModel !== null) {
@@ -519,14 +533,16 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             }
         }
 
-        $fieldList[] = C4GMapLinkButtonField::create('maplinkDetails')
-            ->setFormField(true)
-            ->setTableColumn(false)
-            ->setTargetPageId($this->mapPage)
-            ->setButtonLabel('zur Karte')
-            ->setLongitudeColumn('geox')
-            ->setLatitudeColumn('geoy')
-            ->setnewTab();
+        if ($this->mapPage) {
+            $fieldList[] = C4GMapLinkButtonField::create('maplinkDetails')
+                ->setFormField(true)
+                ->setTableColumn(false)
+                ->setTargetPageId($this->mapPage)
+                ->setButtonLabel('zur Karte')
+                ->setLongitudeColumn('geox')
+                ->setLatitudeColumn('geoy')
+                ->setnewTab();
+        }
 
         foreach ($customFields as $customField) {
             if ($customField->frontendFilterList === '1') {

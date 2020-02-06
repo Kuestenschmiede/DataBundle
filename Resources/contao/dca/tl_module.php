@@ -10,7 +10,13 @@
  * @link      https://www.kuestenschmiede.de
  */
 
-$GLOBALS['TL_DCA']['tl_module']['palettes']['public_noneditable'] = '{title_legend},name,headline,type;{caption_legend},captionPlural,caption;{c4g_data_type_legend},c4g_data_type,c4g_data_directory,showSelectFilter,showFilterResetButton,filterResetButtonCaption;{mapPage_legend},mapPage';
+$cbClass = \con4gis\DataBundle\Classes\Contao\Callbacks\ModuleCallback::class;
+
+$GLOBALS['TL_DCA']['tl_module']['palettes']['public_noneditable'] = '{title_legend},name,headline,type;{caption_legend},'.
+    'captionPlural,caption;{c4g_data_type_legend},c4g_data_type,c4g_data_directory,showSelectFilter,showFilterResetButton,'.
+    'filterResetButtonCaption;{c4g_expert_legend},hideDetails,showLabelsInList,availableFieldsList;{mapPage_legend},mapPage';
+
+
 $GLOBALS['TL_DCA']['tl_module']['palettes']['public_editable'] = '{title_legend},name,headline,type;';
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_data_type'] =
@@ -82,5 +88,51 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['filterResetButtonCaption'] =
         'default'                 => false,
         'inputType'               => 'text',
         'sql'                     => "varchar(255) NOT NULL default ''"
+    ];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['hideDetails'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['hideDetails'],
+        'exclude'                 => true,
+        'default'                 => false,
+        'inputType'               => 'checkbox',
+        'sql'                     => "char(1) NOT NULL default ''"
+    ];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['showLabelsInList'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['showLabelsInList'],
+        'exclude'                 => true,
+        'default'                 => false,
+        'inputType'               => 'checkbox',
+        'sql'                     => "char(1) NOT NULL default ''"
+    ];
+
+$defaultAvailableFieldsList = serialize(
+    [
+        'name',
+        'image',
+        'address',
+        'businessHours',
+        'phone',
+        'mobile',
+        'fax',
+        'email',
+        'website',
+        'linkWizard'
+    ]);
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['availableFieldsList'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['availableFieldsList'],
+        'exclude'                 => true,
+        'default'                 => $defaultAvailableFieldsList,
+        'options_callback'        => [$cbClass, 'loadAvailableFieldsOptions'],
+        'inputType'               => 'checkboxWizard',
+        'eval'                    => [
+            'class'               => 'clr',
+            'multiple'            => true,
+        ],
+        'sql'                     => "text NOT NULL default '$defaultAvailableFieldsList'"
     ];
 

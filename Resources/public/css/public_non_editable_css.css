@@ -39,6 +39,6 @@
     display: none;
 }
 
-li > span {
+li > .span-list {
     display: list-item;
 }
