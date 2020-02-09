@@ -12,11 +12,8 @@
  */
 namespace con4gis\DataBundle\Classes\Contao\Callbacks;
 
-use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\DataBundle\Resources\contao\models\DataCustomFieldModel;
-use con4gis\MapsBundle\Resources\contao\models\C4gMapLocstylesModel;
 use Contao\Backend;
-use Contao\StringUtil;
 use Contao\System;
 
 class ModuleCallback extends Backend
@@ -54,7 +51,7 @@ class ModuleCallback extends Backend
             'businessHours_legend' => '<strong>' . $GLOBALS['TL_LANG']['tl_c4g_data_type']['legend'] . $language['businessHours_legend'] . '</strong>',
             'contact_legend' => '<strong>' . $GLOBALS['TL_LANG']['tl_c4g_data_type']['legend'] . $language['contact_legend'] . '</strong>',
             'image_legend' => '<strong>' . $GLOBALS['TL_LANG']['tl_c4g_data_type']['legend'] . $language['image_legend'] . '</strong>',
-            'linkWizard_legend' => '<strong>' . $GLOBALS['TL_LANG']['tl_c4g_data_type']['legend'] . $language['linkWizard_legend'] . '</strong>'
+            'linkWizard_legend' => '<strong>' . $GLOBALS['TL_LANG']['tl_c4g_data_type']['legend'] . $language['linkWizard_legend'] . '</strong>',
 
         ];
 
