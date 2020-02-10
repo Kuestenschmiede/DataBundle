@@ -88,7 +88,13 @@ if ($types !== null) {
                 }
             }
 
+
+
             $dca->palette()->subPalette("type", $type->id, $fields);
+        }
+
+        if ($type->allowPublishing === '1') {
+            $dca->palette()->subPalette('type', $type->id, ';{published_legend},published');
         }
     }
 }
@@ -271,6 +277,8 @@ $publishTo->saveCallback($cbClass, 'saveDate')
     ->sql("varchar(10) NOT NULL default ''");
 
 $importId = new SQLField("importId", $dca, "int(20) unsigned NOT NULL default '0'");
+
+$published = new CheckboxField('published', $dca);
 
 /** Custom Fields */
 

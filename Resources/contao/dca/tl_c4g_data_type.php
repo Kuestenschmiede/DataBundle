@@ -34,7 +34,7 @@ $list->sorting()->panelLayout('filter;sort,search,limit');
 $list->label()->fields(['name', 'availableFields'])
     ->labelCallback($cbClass, 'getLabel');
 $list->addRegularOperations($dca);
-$dca->palette()->default('{data_legend},name,locstyle,availableFields,showLabels;{searchEngine_legend},itemType');
+$dca->palette()->default('{data_legend},name,locstyle,availableFields,showLabels,allowPublishing;{searchEngine_legend},itemType');
 
 $id = new IdField('id', $dca);
 
@@ -71,4 +71,6 @@ $itemType->default('')
         ->includeBlankOption();
 
 $importId = new SQLField("importId", $dca, "int(20) unsigned NOT NULL default '0'");
+
+$allowPublishing = new CheckboxField('allowPublishing', $dca);
 
