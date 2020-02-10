@@ -59,7 +59,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
 
     public static $type = [];
     public static $directory = [];
-    public static $showLabelsInList = true;
+    public static $showLabelsInList = false;
 
     public function initBrickModule($id)
     {
@@ -137,6 +137,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
 
         static::$type = StringUtil::deserialize($this->c4g_data_type);
         static::$directory = StringUtil::deserialize($this->c4g_data_directory);
+        static::$showLabelsInList = $this->showLabelsInList === '1';
 
         if (empty(static::$type) && $this->showSelectFilter) {
             $typeModels = DataTypeModel::findAll();
@@ -190,12 +191,31 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                 if ($customField !== null) {
                     if ($customField->frontendList === '1') {
                         if ($customField->type !== 'legend') {
-                            $fieldList[] = C4GTextField::create($customField->alias,
-                                $customField->name,
-                                $customField->description,
-                                false, true, true, false
-                            )->setShowIfEmpty(false)
-                                ->setEncodeHtmlEntities(false);
+                            if ($customField->type === 'link') {
+                                $link = C4GLinkButtonField::create($customField->alias);
+                                $link->setButtonLabel($customField->linkTitle)
+                                    ->setNewTab($customField->linkNewTab === '1')
+                                    ->setTargetMode(C4GLinkButtonField::TARGET_MODE_URL)
+                                    ->setTargetPageUrl($customField->linkHref)
+                                    ->setConditional()
+                                    ->setFormField(false);
+                                $fieldList[] = $link;
+                            } elseif ($customField->type === 'icon') {
+                                $icon = C4GIconField::create($customField->alias);
+                                $icon->setIcon($customField->icon)
+                                    ->setConditional()
+                                    ->setFormField(false)
+                                    ->setDescription($customField->description)
+                                    ->setTitle($customField->frontendName ?: $customField->name);
+                                $fieldList[] = $icon;
+                            } else {
+                                $fieldList[] = C4GTextField::create($customField->alias,
+                                    $customField->name,
+                                    $customField->description,
+                                    false, true, true, false
+                                )->setShowIfEmpty(false)
+                                    ->setEncodeHtmlEntities(false);
+                            }
                         } else {
                             $fieldList[] = C4GHeadlineField::create($availableField,
                                 $customField->frontendName ?: $customField->name ?: '',
