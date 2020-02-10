@@ -17,7 +17,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['public_noneditable'] = '{title_lege
     'filterResetButtonCaption;{c4g_expert_legend},hideDetails,showLabelsInList,availableFieldsList;{mapPage_legend},mapPage';
 
 
-$GLOBALS['TL_DCA']['tl_module']['palettes']['public_editable'] = '{title_legend},name,headline,type;';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['member_editable'] = '{title_legend},name,headline,type;{c4g_expert_legend},availableFieldsList;';
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_data_type'] =
     [

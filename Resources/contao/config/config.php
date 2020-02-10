@@ -4,7 +4,7 @@ use con4gis\DataBundle\Resources\contao\models\DataTypeModel;
 use con4gis\DataBundle\Resources\contao\models\DataElementModel;
 use con4gis\DataBundle\Resources\contao\models\DataCustomFieldModel;
 use con4gis\DataBundle\Resources\contao\models\DataDirectoryModel;
-use con4gis\DataBundle\Resources\contao\modules\PublicEditableModule;
+use con4gis\DataBundle\Resources\contao\modules\MemberEditableModule;
 use con4gis\DataBundle\Resources\contao\modules\PublicNonEditableModule;
 
 $GLOBALS['con4gis']['data_types'][] = 'default';
@@ -68,6 +68,6 @@ $GLOBALS['TL_MODELS']['tl_c4g_data_element'] = DataElementModel::class;
 $GLOBALS['TL_MODELS']['tl_c4g_data_custom_field'] = DataCustomFieldModel::class;
 $GLOBALS['TL_MODELS']['tl_c4g_data_directory'] = DataDirectoryModel::class;
 
-//$GLOBALS['FE_MOD']['con4gis']['public_editable'] = PublicEditableModule::class;
+$GLOBALS['FE_MOD']['con4gis']['member_editable'] = MemberEditableModule::class;
 $GLOBALS['FE_MOD']['con4gis']['public_noneditable'] = PublicNonEditableModule::class;
 asort($GLOBALS['FE_MOD']['con4gis']);
