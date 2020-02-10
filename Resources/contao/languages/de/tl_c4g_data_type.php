@@ -20,7 +20,9 @@ $GLOBALS['TL_LANG']['tl_c4g_data_type']['data_legend'] = 'Allgemeine Daten';
 $GLOBALS['TL_LANG']['tl_c4g_data_type']['legend'] = 'Überschrift: ';
 
 $GLOBALS['TL_LANG']['tl_c4g_data_type']['itemTypeOptions'] = [
-    'https://schema.org/LocalBusiness' => 'Lokales Geschäft oder Praxis'
+    'https://schema.org/LocalBusiness' => 'Lokales Geschäft oder Praxis',
+    'https://schema.org/Restaurant' => 'Restaurant',
+    'https://schema.org/TouristAttraction' => 'Sehenswürdigkeit oder Touristenattraktion'
 ];
 
 
