@@ -314,6 +314,13 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 '', '', false,
                                 true, true, false);
                             break;
+                        case 'datePublished':
+                            $fieldList[] = C4GTextField::create('datePublished',
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['datePublished'][0],
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['datePublished'][1], false,
+                                true, true, false)
+                                ->setEncodeHtmlEntities(false);
+                            break;
                         case 'contact_legend':
                             $fieldList[] = C4GHeadlineField::create($availableField,
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element'][$availableField],

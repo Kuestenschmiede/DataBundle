@@ -17,6 +17,14 @@ class MemberEditableModel
         $stmt = $db->prepare("SELECT * FROM $tableName WHERE mitglied = ?");
         $result = $stmt->execute($memberId)->fetchAllAssoc();
 
+        foreach ($result as $key => $row) {
+            if ($row['datePublished']) {
+                $result[$key]['datePublished'] = date('d.m.Y', $row['datePublished']);
+            } else {
+                $result[$key]['datePublished'] = '';
+            }
+        }
+
         return ArrayHelper::arrayToObject($result);
     }
 

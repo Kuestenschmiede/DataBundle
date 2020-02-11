@@ -279,6 +279,7 @@ $publishTo->saveCallback($cbClass, 'saveDate')
 $importId = new SQLField("importId", $dca, "int(20) unsigned NOT NULL default '0'");
 
 $published = new CheckboxField('published', $dca);
+$datePublished = new NaturalField('datePublished', $dca);
 
 /** Custom Fields */
 

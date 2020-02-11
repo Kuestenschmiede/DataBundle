@@ -251,6 +251,23 @@ class PublicNonEditableModel
             }
 
             $resultElements[$key]['searchInfo'] .= $resultElements[$key]['type'];
+
+            $label = $customField->frontendName ?: $customField->name ?: '';
+            if ($label !== '') {
+                $resultElements[$key][$column] = '<span class="list-label">' . $label . '</span>' .
+                    '<span class="list_value">' . $value . '</span>';
+            }
+
+            if ($resultElements[$key]['datePublished']) {
+                $resultElements[$key]['datePublished'] = '<span class="list-label">' .
+                    $GLOBALS['TL_LANG']['tl_c4g_data_element']['datePublished'][0] . '</span>' .
+                    '<span class="list_value">' .
+                    date('d.m.Y', $resultElements[$key]['datePublished']) .
+                    '</span>';
+            } else {
+                $resultElements[$key]['datePublished'] = '';
+            }
+
         }
 
         if (PublicNonEditableModule::$showLabelsInList) {

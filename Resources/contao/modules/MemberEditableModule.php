@@ -163,6 +163,11 @@ class MemberEditableModule extends C4GBrickModuleParent
             }
         }
 
+        $fieldList[] = C4GTextField::create('datePublished',
+            $GLOBALS['TL_LANG']['tl_c4g_data_element']['datePublished'][0],
+            $GLOBALS['TL_LANG']['tl_c4g_data_element']['datePublished'][1],
+            false, true, true, false);
+
         $publishCondition = new C4GBrickCondition(C4GBrickConditionType::METHODSWITCH, 'published', '0');
         $publishCondition->setModel(static::class);
         $publishCondition->setFunction('moreButtonPublishCondition');
@@ -235,8 +240,8 @@ class MemberEditableModule extends C4GBrickModuleParent
         $maximum = $stmt->execute($userId)->fetchAllAssoc()[0]['numberAdvertisement'];
         if ($current < $maximum) {
             $id = $this->dialogParams->getId();
-            $stmt = static::$database->prepare("UPDATE tl_c4g_data_element SET published = '1' WHERE id = ?");
-            $stmt->execute($id);
+            $stmt = static::$database->prepare("UPDATE tl_c4g_data_element SET published = '1', datePublished = ? WHERE id = ?");
+            $stmt->execute(time(), $id);
             $this->dialogParams->setId(-1);
             $action = new C4GShowListAction($this->getDialogParams(), $this->getListParams(), $this->getFieldList(), $this->getPutVars(), $this->getBrickDatabase());
             $action->setModule($this);
