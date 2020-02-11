@@ -257,9 +257,9 @@ class MemberEditableModule extends C4GBrickModuleParent
     }
 
     public static function moreButtonPublishCondition($id) {
-        $stmt = static::$database->prepare("SELECT published FROM tl_c4g_data_element WHERE id = ?");
+        $stmt = static::$database->prepare("SELECT tl_c4g_data_element.published, tl_c4g_data_type.allowPublishing FROM tl_c4g_data_element JOIN tl_c4g_data_type ON tl_c4g_data_element.type = tl_c4g_data_type.id WHERE tl_c4g_data_element.id = ?");
         $result = $stmt->execute($id)->fetchAllAssoc();
-        return $result[0]['published'] === '0';
+        return $result[0]['published'] === '0' && $result[0]['allowPublishing'] === '1';
     }
 
     public function moreButtonUnPublish() {
@@ -277,8 +277,8 @@ class MemberEditableModule extends C4GBrickModuleParent
     }
 
     public static function moreButtonUnPublishCondition($id) {
-        $stmt = static::$database->prepare("SELECT published FROM tl_c4g_data_element WHERE id = ?");
+        $stmt = static::$database->prepare("SELECT tl_c4g_data_element.published, tl_c4g_data_type.allowPublishing FROM tl_c4g_data_element JOIN tl_c4g_data_type ON tl_c4g_data_element.type = tl_c4g_data_type.id WHERE tl_c4g_data_element.id = ?");
         $result = $stmt->execute($id)->fetchAllAssoc();
-        return $result[0]['published'] === '1';
+        return $result[0]['published'] === '1' && $result[0]['allowPublishing'] === '1';
     }
 }
