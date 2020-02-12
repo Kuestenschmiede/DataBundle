@@ -3,6 +3,7 @@
 The data brick of the Contao GIS-kit **con4gis**. Extends con4gis Maps- and ProjectsBundle.
 
 Using con4gis Data, individual data structures can be displayed in lists and on the card without programming knowledge.
+
 __Features include:__
 * Data tables configurable in the Contao back end
 * Complex structures via categories and directories
