@@ -39,6 +39,7 @@ $GLOBALS['TL_LANG'][$strName]['publishFrom'] = ['Anzeigen ab', 'Das Element wird
 $GLOBALS['TL_LANG'][$strName]['publishTo'] = ['Anzeigen bis', 'Das Element wird bis zu diesem Tag im Frontend angezeigt.'];
 $GLOBALS['TL_LANG'][$strName]['published'] = ['Veröffentlicht', 'Falls gesetzt, wird das Element öffentlich im Frontend angezeigt.'];
 $GLOBALS['TL_LANG'][$strName]['datePublished'] = ['Zeitpunkt der Veröffentlichung', 'Der Zeitpunkt der Veröffentlichung, wenn der Elementtyp dieses Feature unterstützt.'];
+$GLOBALS['TL_LANG'][$strName]['ownerGroupId'] = ['Benutzergruppe (Eigentümer)', 'Die Benutzergruppe, dem das Element gehört.'];
 
 $GLOBALS['TL_LANG'][$strName]['phone'] = ['Telefonnummer', ''];
 $GLOBALS['TL_LANG'][$strName]['mobile'] = ['Mobiltelefonnummer', ''];

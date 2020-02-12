@@ -10,14 +10,14 @@ namespace con4gis\DataBundle\Resources\contao\modules;
 
 use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\CoreBundle\Classes\Callback\C4GObjectCallback;
-use con4gis\CoreBundle\Classes\ResourceLoader;
 use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\DataBundle\Resources\contao\models\DataCustomFieldModel;
+use con4gis\DataBundle\Resources\contao\models\DataElementModel;
 use con4gis\DataBundle\Resources\contao\models\MemberEditableModel;
+use con4gis\GroupsBundle\Resources\contao\models\MemberModel;
 use con4gis\ProjectsBundle\Classes\Actions\C4GShowListAction;
 use con4gis\ProjectsBundle\Classes\Buttons\C4GMoreButton;
 use con4gis\ProjectsBundle\Classes\Buttons\C4GMoreButtonEntry;
-use con4gis\ProjectsBundle\Classes\Common\C4GBrickConst;
 use con4gis\ProjectsBundle\Classes\Conditions\C4GBrickCondition;
 use con4gis\ProjectsBundle\Classes\Conditions\C4GBrickConditionType;
 use con4gis\ProjectsBundle\Classes\Database\C4GBrickDatabaseType;
@@ -33,6 +33,7 @@ use con4gis\ProjectsBundle\Classes\Permission\C4GTablePermission;
 use con4gis\ProjectsBundle\Classes\Views\C4GBrickViewType;
 use Contao\Database;
 use Contao\FrontendUser;
+use Contao\MemberGroupModel;
 use Contao\StringUtil;
 
 
@@ -81,12 +82,6 @@ class MemberEditableModule extends C4GBrickModuleParent
         $this->dialogParams->setSaveCallBack(new C4GObjectCallback($this, 'saveCallback'));
 
         static::$database = Database::getInstance();
-    }
-
-    protected function compileCss()
-    {
-        parent::compileCss();
-        ResourceLoader::loadCssResource('bundles/con4gisdata/css/public_non_editable_css.css', '');
     }
 
     public function addFields()
@@ -148,16 +143,20 @@ class MemberEditableModule extends C4GBrickModuleParent
                             break;
                     }
                 } else {
-                    if (!C4GUtils::endsWith($availableField, '_legend')) {
-                        $fieldList[] = C4GTextField::create($availableField,
-                            $GLOBALS['TL_LANG']['tl_c4g_data_element'][$availableField][0],
-                            $GLOBALS['TL_LANG']['tl_c4g_data_element'][$availableField][1],
-                            true, true, true, true);
-                    } else {
-                        $fieldList[] = C4GHeadlineField::create($availableField,
-                            $GLOBALS['TL_LANG']['tl_c4g_data_element'][$availableField],
-                            $GLOBALS['TL_LANG']['tl_c4g_data_element'][$availableField],
-                            true, false, true, false);
+                    try {
+                        if (!C4GUtils::endsWith($availableField, '_legend')) {
+                            $fieldList[] = C4GTextField::create($availableField,
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element'][$availableField][0],
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element'][$availableField][1],
+                                true, true, true, true);
+                        } else {
+                            $fieldList[] = C4GHeadlineField::create($availableField,
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element'][$availableField],
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element'][$availableField],
+                                true, false, true, false);
+                        }
+                    } catch (\Throwable $throwable) {
+                        C4gLogModel::addLogEntry('field', $availableField);
                     }
                 }
             }
@@ -203,8 +202,15 @@ class MemberEditableModule extends C4GBrickModuleParent
     }
 
     public function getC4GTablePermission($viewType) {
-        $stmt = Database::getInstance()->prepare("SELECT id FROM tl_c4g_data_element WHERE mitglied = ?");
-        $result = $stmt->execute($this->dialogParams->getMemberId())->fetchAllAssoc();
+        $memberModel = MemberModel::findByPk($this->dialogParams->getMemberId());
+        $groups = StringUtil::deserialize($memberModel->groups);
+        $where = [];
+        foreach ($groups as $group) {
+            $where[] = 'ownerGroupId = ' . $group;
+        }
+
+        $stmt = Database::getInstance()->prepare("SELECT id FROM tl_c4g_data_element WHERE " . implode(' OR ', $where));
+        $result = $stmt->execute()->fetchAllAssoc();
         $ids = [];
         foreach ($result as $row) {
             $ids[] = $row['id'];
@@ -227,18 +233,18 @@ class MemberEditableModule extends C4GBrickModuleParent
 
     public function moreButtonPublish() {
         $userId = FrontendUser::getInstance()->id;
-        C4gLogModel::addLogEntry('userId', $userId);
-        $stmt = static::$database->prepare(
-            "SELECT count(*) as current FROM `tl_c4g_data_element` ".
-            "where mitglied = ? AND published = 1"
-        );
-        $current = $stmt->execute($userId)->fetchAllAssoc()[0]['current'];
-        $stmt = static::$database->prepare(
-            "SELECT numberAdvertisement FROM `tl_member` ".
-            "where id = ?"
-        );
-        $maximum = $stmt->execute($userId)->fetchAllAssoc()[0]['numberAdvertisement'];
-        if ($current < $maximum) {
+
+        $memberModel = MemberModel::findByPk($userId);
+        $memberGroups = StringUtil::deserialize($memberModel->groups);
+        $id = $this->dialogParams->getId();
+        $elementModel = DataElementModel::findByPk($id);
+
+        $stmt = static::$database->prepare("SELECT count(*) FROM tl_c4g_data_element WHERE ownerGroupId = ? AND published = '1'");
+        $current = $stmt->execute($elementModel->ownerGroupId)->fetchAllAssoc()[0]['count(*)'];
+
+        $maximum = MemberGroupModel::findByPk($elementModel->ownerGroupId)->numberElements;
+
+        if (in_array($elementModel->ownerGroupId, $memberGroups) && $current < $maximum) {
             $id = $this->dialogParams->getId();
             $stmt = static::$database->prepare("UPDATE tl_c4g_data_element SET published = '1', datePublished = ? WHERE id = ?");
             $stmt->execute(time(), $id);
@@ -273,7 +279,6 @@ class MemberEditableModule extends C4GBrickModuleParent
         $return['title'] = 'Geunpublished';
         $return['usermessage'] = 'Das Element ist geunpublished';
         return $return;
-        return [];
     }
 
     public static function moreButtonUnPublishCondition($id) {

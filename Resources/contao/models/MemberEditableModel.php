@@ -5,6 +5,7 @@ namespace con4gis\DataBundle\Resources\contao\models;
 
 use con4gis\CoreBundle\Classes\Helper\ArrayHelper;
 use con4gis\DataBundle\Resources\contao\modules\PublicNonEditableModule;
+use con4gis\GroupsBundle\Resources\contao\models\MemberModel;
 use con4gis\ProjectsBundle\Classes\Common\C4GBrickCommon;
 use Contao\Database;
 use Contao\StringUtil;
@@ -14,7 +15,15 @@ class MemberEditableModel
     public static function find($memberId, $tableName, $database, $fieldList, $listParams) {
 
         $db = \Database::getInstance();
-        $stmt = $db->prepare("SELECT * FROM $tableName WHERE mitglied = ?");
+
+        $memberModel = MemberModel::findByPk($memberId);
+        $groups = StringUtil::deserialize($memberModel->groups);
+        $where = [];
+        foreach ($groups as $group) {
+            $where[] = 'ownerGroupId = ' . $group;
+        }
+
+        $stmt = $db->prepare("SELECT * FROM $tableName WHERE " . implode(' OR ', $where));
         $result = $stmt->execute($memberId)->fetchAllAssoc();
 
         foreach ($result as $key => $row) {
