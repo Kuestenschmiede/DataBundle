@@ -23,8 +23,13 @@ class MemberEditableModel
             $where[] = 'ownerGroupId = ' . $group;
         }
 
-        $stmt = $db->prepare("SELECT * FROM $tableName WHERE " . implode(' OR ', $where));
-        $result = $stmt->execute($memberId)->fetchAllAssoc();
+        if (sizeof($where) > 0) {
+            $stmt = $db->prepare("SELECT * FROM $tableName WHERE " . implode(' OR ', $where));
+            $result = $stmt->execute($memberId)->fetchAllAssoc();
+        } else {
+            return ArrayHelper::arrayToObject([]);
+        }
+
 
         foreach ($result as $key => $row) {
             if ($row['datePublished']) {

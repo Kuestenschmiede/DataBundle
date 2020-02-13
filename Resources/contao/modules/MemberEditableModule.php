@@ -209,8 +209,13 @@ class MemberEditableModule extends C4GBrickModuleParent
             $where[] = 'ownerGroupId = ' . $group;
         }
 
-        $stmt = Database::getInstance()->prepare("SELECT id FROM tl_c4g_data_element WHERE " . implode(' OR ', $where));
-        $result = $stmt->execute()->fetchAllAssoc();
+        if (sizeof($where) > 0) {
+            $stmt = Database::getInstance()->prepare("SELECT id FROM tl_c4g_data_element WHERE " . implode(' OR ', $where));
+            $result = $stmt->execute()->fetchAllAssoc();
+        } else {
+            return new C4GTablePermission($this->tableName, []);
+        }
+
         $ids = [];
         foreach ($result as $row) {
             $ids[] = $row['id'];
