@@ -151,6 +151,17 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                 }
                 $this->listParams->addFilterButton(new C4GSelectFilterButton($options));
             }
+        } elseif (sizeof(static::$type) > 1) {
+            foreach (static::$type as $type) {
+                $model = DataTypeModel::findByPk($type);
+                if ($model !== null) {
+                    $options[] = $model->name;
+                    ResourceLoader::loadCssResourceTag(
+                        '.filter_type_'.str_replace(' ', '', $model->name).'_parent > div:not(.filter_type_'.str_replace(' ', '', $model->name).'_child) {display: none;}'
+                    );
+                }
+            }
+            $this->listParams->addFilterButton(new C4GSelectFilterButton($options));
         }
 
         if ($this->showFilterResetButton) {
