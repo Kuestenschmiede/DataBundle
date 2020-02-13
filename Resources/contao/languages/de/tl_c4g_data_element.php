@@ -113,3 +113,5 @@ $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['MoreButtonPublish'] = 'Verö
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['MoreButtonUnPublish'] = 'Unveröffentlichen';
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['moreButtonField'] = 'Aktionen';
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['MoreButtonButtonTitle'] = '';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['yes'] = 'Ja';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['no'] = 'Nein';

@@ -103,3 +103,5 @@ $GLOBALS['TL_LANG'][$strName]['day_join'] = [
 
 /** Frontend */
 $GLOBALS['TL_LANG'][$strName]['address'] = ['Address', ''];
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['yes'] = 'Yes';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['no'] = 'No';

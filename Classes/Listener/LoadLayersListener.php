@@ -375,6 +375,13 @@ class LoadLayersListener
                             $list['linkTitle'] = $typeElement['fax'];
                             $popup->addEntry(strval($list['linkTitle']), 'fax');
                         }
+                    } elseif ($availableField === 'accessibility') {
+                        if ($typeElement['accessibility'] === '1') {
+                            $popup->addEntry($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['yes'], 'accessibility');
+                            break;
+                        } else {
+                            $popup->addEntry($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['no'], 'accessibility');
+                        }
                     } elseif ($availableField === 'email') {
                         if ($typeElement['email'] !== '') {
                             $list['linkHref'] = 'mailto:' . $typeElement['email'];
@@ -433,6 +440,14 @@ class LoadLayersListener
                                             }
 
                                             break;
+                                        case 'checkbox':
+                                            if ($typeElement[$availableField] === '1') {
+                                                $popup->addEntry($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['yes'], $availableField);
+                                                break;
+                                            } else {
+                                                $popup->addEntry($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['no'], $availableField);
+                                            }
+                                            break;
                                         case 'multicheckbox':
                                             $options = StringUtil::deserialize($model->options);
                                             $values = StringUtil::deserialize($typeElement[$availableField]);
@@ -485,8 +500,8 @@ class LoadLayersListener
                                         $n = $fieldKey + 1;
                                         $show = false;
                                         while ($i > $n) {
-                                            if (strval($typeElement[$availableFields[$n]]) !== ''
-                                                && intval($typeElement[$availableFields[$n]]) !== 0) {
+                                            if (($availableFields[$n] === 'accessibility') || (strval($typeElement[$availableFields[$n]]) !== ''
+                                                && intval($typeElement[$availableFields[$n]]) !== 0)) {
                                                 $show = true;
                                             }
                                             $n += 1;
