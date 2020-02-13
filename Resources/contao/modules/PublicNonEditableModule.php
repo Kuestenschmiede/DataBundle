@@ -321,7 +321,19 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 true, true, false)
                                 ->setEncodeHtmlEntities(false);
                             break;
+                        case 'data_legend':
+                        case 'businessHours_legend':
+                        case 'address_legend':
                         case 'contact_legend':
+                        case 'description_legend':
+                        case 'image_legend':
+                        case 'location_legend':
+                        case 'filter_legend':
+                        case 'accessibility_legend':
+                        case 'linkWizard_legend':
+                        case 'osm_legend':
+                        case 'publish_legend':
+                        case 'published_legend':
                             $fieldList[] = C4GHeadlineField::create($availableField,
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element'][$availableField],
                                 '', false,
