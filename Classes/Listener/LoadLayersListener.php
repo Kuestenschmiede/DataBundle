@@ -378,7 +378,6 @@ class LoadLayersListener
                     } elseif ($availableField === 'accessibility') {
                         if ($typeElement['accessibility'] === '1') {
                             $popup->addEntry($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['yes'], 'accessibility');
-                            break;
                         } else {
                             $popup->addEntry($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['no'], 'accessibility');
                         }
