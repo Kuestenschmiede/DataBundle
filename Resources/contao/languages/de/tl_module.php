@@ -21,8 +21,10 @@ $GLOBALS['TL_LANG']['tl_module']['filterResetButtonCaption'] = ['Text des Button
 $GLOBALS['TL_LANG']['tl_module']['hideDetails'] = ['Listendetails nicht anzeigen', 'Falls gesetzt, werden beim Klick auf ein Listenelement nicht dessen Details angezeigt.'];
 $GLOBALS['TL_LANG']['tl_module']['showLabelsInList'] = ['In der Liste Labels anzeigen', 'Falls gesetzt, werden in der Liste die Feldnamen mit angezeigt.'];
 $GLOBALS['TL_LANG']['tl_module']['availableFieldsList'] = ['Verfügbare Felder (Liste)', 'Die Felder, die in der Liste angezeigt werden.'];
+$GLOBALS['TL_LANG']['tl_module']['authorizedGroups'] = ['Authorisierte Gruppen', 'Diese Gruppen dürfen im Frontend Elemente anlegen.'];
 
 $GLOBALS['TL_LANG']['tl_module']['c4g_data_type_legend'] = 'Kategorie- & Verzeichnisoptionen';
 $GLOBALS['TL_LANG']['tl_module']['c4g_expert_legend'] = 'Experten-Einstellungen';
 $GLOBALS['TL_LANG']['tl_module']['mapPage_legend'] = 'Kartenseite';
 $GLOBALS['TL_LANG']['tl_module']['caption_legend'] = 'Titel';
+$GLOBALS['TL_LANG']['tl_module']['c4g_authorized_groups_legend'] = 'Authorisierte Gruppen';

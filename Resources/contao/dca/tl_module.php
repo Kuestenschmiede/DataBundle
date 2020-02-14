@@ -18,7 +18,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['public_noneditable'] = '{title_lege
 
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['member_editable'] =
-    '{title_legend},name,headline,type;{c4g_data_type_legend},c4g_data_type;{c4g_expert_legend},availableFieldsList;';
+    '{title_legend},name,headline,type;{c4g_data_type_legend},c4g_data_type;{c4g_authorized_groups_legend},authorizedGroups;{c4g_expert_legend},availableFieldsList';
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_data_type'] =
     [
@@ -129,6 +129,20 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['availableFieldsList'] =
         'exclude'                 => true,
         'default'                 => $defaultAvailableFieldsList,
         'options_callback'        => [$cbClass, 'loadAvailableFieldsOptions'],
+        'inputType'               => 'checkboxWizard',
+        'eval'                    => [
+            'class'               => 'clr',
+            'multiple'            => true,
+        ],
+        'sql'                     => "text NOT NULL default '$defaultAvailableFieldsList'"
+    ];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['authorizedGroups'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['authorizedGroups'],
+        'exclude'                 => true,
+        'default'                 => [],
+        'foreignKey'              => 'tl_member_group.name',
         'inputType'               => 'checkboxWizard',
         'eval'                    => [
             'class'               => 'clr',

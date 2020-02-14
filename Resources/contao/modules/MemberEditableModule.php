@@ -77,7 +77,7 @@ class MemberEditableModule extends C4GBrickModuleParent
         $this->dialogParams->setWithDescriptions(true);
         $this->dialogParams->setId($id);
 
-        $this->viewParams->setMemberKeyField('mitglied');
+        $this->viewParams->setMemberKeyField('ownerGroupId');
         $this->dialogParams->setModelDialogFunction('findByPk');
         $this->dialogParams->setSaveCallBack(new C4GObjectCallback($this, 'saveCallback'));
 
@@ -237,9 +237,24 @@ class MemberEditableModule extends C4GBrickModuleParent
         } else {
             $type = 0;
         }
-        $db = Database::getInstance();
-        $stmt = $db->prepare("UPDATE $tableName SET name = ?, type = ? WHERE id = ?");
-        $stmt->execute('Im Frontend eingetragen', $type, $insertId);
+
+        $memberModel = \Contao\MemberModel::findByPk($this->dialogParams->getMemberId());
+        $memberGroups = StringUtil::deserialize($memberModel->groups);
+        $authorizedGroups = StringUtil::deserialize($this->authorizedGroups);
+
+        $authorizedGroup = 0;
+        foreach ($memberGroups as $mGroup) {
+            if (in_array($mGroup, $authorizedGroups)) {
+                $authorizedGroup = $mGroup;
+                break;
+            }
+        }
+
+        if ($authorizedGroup > 0) {
+            $db = Database::getInstance();
+            $stmt = $db->prepare("UPDATE $tableName SET name = ?, type = ?, ownerGroupId = ? WHERE id = ?");
+            $stmt->execute('Im Frontend eingetragen', $type, $authorizedGroup, $insertId);
+        }
     }
 
     public function moreButtonPublish() {
@@ -295,6 +310,6 @@ class MemberEditableModule extends C4GBrickModuleParent
     public static function moreButtonUnPublishCondition($id) {
         $stmt = static::$database->prepare("SELECT tl_c4g_data_element.published, tl_c4g_data_type.allowPublishing FROM tl_c4g_data_element JOIN tl_c4g_data_type ON tl_c4g_data_element.type = tl_c4g_data_type.id WHERE tl_c4g_data_element.id = ?");
         $result = $stmt->execute($id)->fetchAllAssoc();
-        return $result[0]['published'] !== '0' && $result[0]['allowPublishing'] === '1';
+        return $result[0]['published'] === '1' && $result[0]['allowPublishing'] === '1';
     }
 }
