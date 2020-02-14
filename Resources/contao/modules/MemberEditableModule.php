@@ -231,9 +231,15 @@ class MemberEditableModule extends C4GBrickModuleParent
      * @param $fieldList array die Feldliste
      */
     public function saveCallback($tableName, $set, $insertId, $type, $fieldList) {
+        $types = StringUtil::deserialize($this->c4g_data_type);
+        if (is_array($types)) {
+            $type = $types[0];
+        } else {
+            $type = 0;
+        }
         $db = Database::getInstance();
-        $stmt = $db->prepare("UPDATE $tableName SET name = ?, type = 41 WHERE id = ?");
-        $stmt->execute('Im Frontend eingetragen', $insertId);
+        $stmt = $db->prepare("UPDATE $tableName SET name = ?, type = ? WHERE id = ?");
+        $stmt->execute('Im Frontend eingetragen', $type, $insertId);
     }
 
     public function moreButtonPublish() {
