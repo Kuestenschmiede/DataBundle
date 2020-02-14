@@ -94,7 +94,7 @@ if ($types !== null) {
         }
 
         if ($type->allowPublishing === '1') {
-            $dca->palette()->subPalette('type', $type->id, ';{published_legend},ownerGroupId,published');
+            $dca->palette()->subPalette('type', $type->id, ';{published_legend},ownerGroupId,datePublished,published');
         }
     }
 }
@@ -283,7 +283,10 @@ $ownerGroupId->filter()->sql('int(10) NOT NULL default "0"')
     ->foreignKey('tl_member_group', 'name')
     ->eval()->includeBlankOption();
 $published = new CheckboxField('published', $dca);
-$datePublished = new NaturalField('datePublished', $dca);
+$datePublished = new DatePickerField('datePublished', $dca);
+$datePublished->saveCallback($cbClass, 'saveDate')
+    ->loadCallback($cbClass, 'loadDate')
+    ->default(time());
 
 
 /** Custom Fields */
