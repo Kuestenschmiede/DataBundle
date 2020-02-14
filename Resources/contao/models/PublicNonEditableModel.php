@@ -5,7 +5,7 @@ namespace con4gis\DataBundle\Resources\contao\models;
 
 use con4gis\CoreBundle\Classes\Helper\ArrayHelper;
 use con4gis\DataBundle\Resources\contao\modules\PublicNonEditableModule;
-use con4gis\ProjectsBundle\Classes\Common\C4GBrickCommon;
+
 use Contao\Database;
 use Contao\StringUtil;
 
@@ -252,10 +252,23 @@ class PublicNonEditableModel
 
             $resultElements[$key]['searchInfo'] .= $resultElements[$key]['type'];
 
-            $label = $customField->frontendName ?: $customField->name ?: '';
-            if ($label !== '') {
-                $resultElements[$key][$column] = '<span class="list-label">' . $label . '</span>' .
-                    '<span class="list_value">' . $value . '</span>';
+//            $label = $customField->frontendName ?: $customField->name ?: '';
+//            if ($label !== '') {
+//                $resultElements[$key][$column] = '<span class="list-label">' . $label . '</span>' .
+//                    '<span class="list_value">' . $value . '</span>';
+//            }
+
+            if ($resultElements[$key]['ownerGroupId'] > 0) {
+                $groupModel = \Contao\MemberGroupModel::findByPk($resultElements[$key]['ownerGroupId']);
+                if ($groupModel !== null) {
+                    $resultElements[$key]['ownerGroupId'] = '<span class="list-label">' .
+                        $GLOBALS['TL_LANG']['tl_c4g_data_element']['ownerGroupId'][0] . '</span>' .
+                        '<span class="list_value">' . $groupModel->name . '</span>';
+                } else {
+                    $resultElements[$key]['ownerGroupId'] = '';
+                }
+            } else {
+                $resultElements[$key]['ownerGroupId'] = '';
             }
 
             if ($resultElements[$key]['datePublished']) {

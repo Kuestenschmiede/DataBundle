@@ -47,6 +47,8 @@ class ModuleCallback extends Backend
                 " <sup title='" . $language['linkWizard'][1] . "'>(?)</sup>",
             'datePublished' => $language['datePublished'][0] .
                 " <sup title='" . $language['datePublished'][1] . "'>(?)</sup>",
+            'ownerGroupId' => $language['ownerGroupId'][0] .
+                " <sup title='" . $language['ownerGroupId'][1] . "'>(?)</sup>",
 
             'data_legend' => '<strong>' . $GLOBALS['TL_LANG']['tl_c4g_data_type']['legend'] . $language['data_legend'] . '</strong>',
             'address_legend' => '<strong>' . $GLOBALS['TL_LANG']['tl_c4g_data_type']['legend'] . $language['address_legend'] . '</strong>',

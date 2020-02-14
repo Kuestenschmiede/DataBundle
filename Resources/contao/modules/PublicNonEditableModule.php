@@ -332,6 +332,13 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 true, true, false)
                                 ->setEncodeHtmlEntities(false);
                             break;
+                        case 'ownerGroupId':
+                            $fieldList[] = C4GTextField::create('ownerGroupId',
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['ownerGroupId'][0],
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['ownerGroupId'][1], false,
+                                true, true, false)
+                                ->setEncodeHtmlEntities(false);
+                            break;
                         case 'data_legend':
                         case 'businessHours_legend':
                         case 'address_legend':
