@@ -85,7 +85,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['filterResetButtonCaption'] =
     [
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['filterResetButtonCaption'],
         'exclude'                 => true,
-        'default'                 => false,
+        'default'                 => '',
         'inputType'               => 'text',
         'sql'                     => "varchar(255) NOT NULL default ''"
     ];
