@@ -418,10 +418,7 @@ foreach ($GLOBALS['con4gis']['data_custom_field_types'] as $type) {
                         strval($model->defaultCheckbox)))
                     ->eval()
                         ->mandatory(boolval($model->mandatory));
-                $class = strval($model->class);
-                if (boolval($model->margin) === true) {
-                    $class .= ' m12';
-                }
+                $class = strval($model->class) . 'm12';
                 $field->eval()->class($class);
             } elseif ($type === 'multicheckbox' || $type === 'filtermulticheckbox') {
                 $field = new MultiCheckboxField($model->alias, $dca);

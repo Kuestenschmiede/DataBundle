@@ -44,7 +44,7 @@ $dca->palette()->default(
 $generalFields = ';{backend_legend},filter,search,mandatory,class,margin'.
     ';{frontend_legend},frontendName,frontendPopup,frontendList,frontendDetails,frontendFilter,frontendFilterList';
 
-$generalFieldsWithoutPosition = ';{backend_legend},filter,search,mandatory'.
+$generalFieldsWithoutPosition = ';{backend_legend},filter,search,mandatory,class'.
     ';{frontend_legend},frontendName,frontendPopup,frontendList,frontendDetails,frontendFilter,frontendFilterList';
 
 $dca->palette()->selector(['type'])
