@@ -52,7 +52,9 @@ $locStyle->default('')
         ->optionsCallback($cbClass, 'getLocstyles')
         ->sql("varchar(20) NOT NULL default ''")
         ->eval()->class('clr')
-            ->submitOnChange();
+            ->submitOnChange()
+            ->chosen()
+            ->includeBlankOption();
 
 $showLabels = new CheckboxField('showLabels', $dca);
 $showLabels->default(false);
