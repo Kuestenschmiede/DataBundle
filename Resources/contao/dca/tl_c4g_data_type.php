@@ -60,7 +60,8 @@ $showLabels->default(false);
 $categorySort = new NaturalField('categorySort', $dca);
 
 $availableFields = new MultiCheckboxField('availableFields', $dca);
-$availableFields->optionsCallback($cbClass, 'loadAvailableFieldsOptions');
+$availableFields->optionsCallback($cbClass, 'loadAvailableFieldsOptions')
+    ->inputType('checkboxWizard');
 
 $itemType = new SelectField('itemType', $dca);
 $itemType->default('')
