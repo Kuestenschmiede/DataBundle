@@ -40,10 +40,13 @@ new TogglePublishedOperation($dca, $cbClass, 'toggleIcon');
 $dca->palette()->default(
     '{data_legend},name,alias,type'
 );
-$generalFields = ';{filter_search_legend},filter,search'.
-    ';{mandatory_legend},mandatory'.
-    ';{positioning_legend},class,margin'.
+
+$generalFields = ';{backend_legend},filter,search,mandatory,class,margin'.
     ';{frontend_legend},frontendName,frontendPopup,frontendList,frontendDetails,frontendFilter,frontendFilterList';
+
+$generalFieldsWithoutPosition = ';{backend_legend},filter,search,mandatory'.
+    ';{frontend_legend},frontendName,frontendPopup,frontendList,frontendDetails,frontendFilter,frontendFilterList';
+
 $dca->palette()->selector(['type'])
     ->subPalette('type', 'text', ",description$generalFields;{type_specific_legend},maxLength,defaultText")
     ->subPalette('type', 'textarea', ",description$generalFields;{type_specific_legend},maxLength,defaultTextArea")
@@ -51,7 +54,7 @@ $dca->palette()->selector(['type'])
     ->subPalette('type', 'natural', ",description$generalFields;{type_specific_legend},defaultNatural")
     ->subPalette('type', 'int', ",description$generalFields;{type_specific_legend},defaultInt")
     ->subPalette('type', 'select', ",description$generalFields;{type_specific_legend},options,defaultSelect")
-    ->subPalette('type', 'checkbox', ",description$generalFields;{type_specific_legend},defaultCheckbox,".
+    ->subPalette('type', 'checkbox', ",description$generalFieldsWithoutPosition;{type_specific_legend},defaultCheckbox,".
         "frontendFilterCheckboxStyling,frontendFilterCheckboxButtonLabelOn,frontendFilterCheckboxButtonLabelOff")
     ->subPalette('type', 'icon', ",description$generalFields;{type_specific_legend},defaultCheckbox,icon")
     ->subPalette('type', 'multicheckbox', ",description$generalFields;{type_specific_legend},options,defaultMultiCheckbox")
