@@ -42,9 +42,7 @@ $GLOBALS['TL_LANG'][$strName]['foreignField'] = ['Label', 'Das Feld, anhand dess
  * Legends
  */
 $GLOBALS['TL_LANG'][$strName]['data_legend'] = 'Allgemeine Daten';
-$GLOBALS['TL_LANG'][$strName]['filter_search_legend'] = 'Filtern und Suchen';
-$GLOBALS['TL_LANG'][$strName]['mandatory_legend'] = 'Pflichtfeld';
-$GLOBALS['TL_LANG'][$strName]['positioning_legend'] = 'Positionierung';
+$GLOBALS['TL_LANG'][$strName]['backend_legend'] = 'Backendoptionen';
 $GLOBALS['TL_LANG'][$strName]['frontend_legend'] = 'Frontendoptionen';
 $GLOBALS['TL_LANG'][$strName]['type_specific_legend'] = 'Typspezifische Optionen';
 

@@ -36,9 +36,7 @@ $GLOBALS['TL_LANG'][$strName]['icon'] = ['Font Awesome Icon', 'The icon to be sh
  * Legends
  */
 $GLOBALS['TL_LANG'][$strName]['data_legend'] = 'General data';
-$GLOBALS['TL_LANG'][$strName]['filter_search_legend'] = 'Filter and Search';
-$GLOBALS['TL_LANG'][$strName]['mandatory_legend'] = 'Mandatory Field';
-$GLOBALS['TL_LANG'][$strName]['positioning_legend'] = 'Positioning';
+$GLOBALS['TL_LANG'][$strName]['backend_legend'] = 'Backend Options';
 $GLOBALS['TL_LANG'][$strName]['frontend_legend'] = 'Frontend Options';
 $GLOBALS['TL_LANG'][$strName]['type_specific_legend'] = 'Type-specifc Options';
 

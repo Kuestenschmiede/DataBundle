@@ -40,10 +40,13 @@ new TogglePublishedOperation($dca, $cbClass, 'toggleIcon');
 $dca->palette()->default(
     '{data_legend},name,alias,type'
 );
-$generalFields = ';{filter_search_legend},filter,search'.
-    ';{mandatory_legend},mandatory'.
-    ';{positioning_legend},class,margin'.
+
+$generalFields = ';{backend_legend},filter,search,mandatory,class,margin'.
     ';{frontend_legend},frontendName,frontendPopup,frontendList,frontendDetails,frontendFilter,frontendFilterList';
+
+$generalFieldsWithoutPosition = ';{backend_legend},filter,search,mandatory,class'.
+    ';{frontend_legend},frontendName,frontendPopup,frontendList,frontendDetails,frontendFilter,frontendFilterList';
+
 $dca->palette()->selector(['type'])
     ->subPalette('type', 'text', ",description$generalFields;{type_specific_legend},maxLength,defaultText")
     ->subPalette('type', 'textarea', ",description$generalFields;{type_specific_legend},maxLength,defaultTextArea")
@@ -51,7 +54,7 @@ $dca->palette()->selector(['type'])
     ->subPalette('type', 'natural', ",description$generalFields;{type_specific_legend},defaultNatural")
     ->subPalette('type', 'int', ",description$generalFields;{type_specific_legend},defaultInt")
     ->subPalette('type', 'select', ",description$generalFields;{type_specific_legend},options,defaultSelect")
-    ->subPalette('type', 'checkbox', ",description$generalFields;{type_specific_legend},defaultCheckbox,".
+    ->subPalette('type', 'checkbox', ",description$generalFieldsWithoutPosition;{type_specific_legend},defaultCheckbox,".
         "frontendFilterCheckboxStyling,frontendFilterCheckboxButtonLabelOn,frontendFilterCheckboxButtonLabelOff")
     ->subPalette('type', 'icon', ",description$generalFields;{type_specific_legend},defaultCheckbox,icon")
     ->subPalette('type', 'multicheckbox', ",description$generalFields;{type_specific_legend},options,defaultMultiCheckbox")
@@ -62,7 +65,7 @@ $dca->palette()->selector(['type'])
 
 $id = new IdField('id', $dca);
 
-$tStamp = new NaturalField('tstamp', $dca);
+$tStamp = new SQLField('tstamp', $dca, "int(10) unsigned NOT NULL default '0'");
 
 $published = new CheckboxField('published', $dca);
 
@@ -91,21 +94,21 @@ $type->default('')
 
 $filter = new CheckboxField('filter', $dca);
 $filter->eval()
-    ->class('w50');
+    ->class('w50 m12');
 $search = new CheckboxField('search', $dca);
 $search->eval()
-    ->class('w50');
+    ->class('w50 m12');
 
 $mandatory = new CheckboxField('mandatory', $dca);
 $mandatory->eval()
-    ->class('w50');
+    ->class('clr w50 m12');
 
 $class = new SelectField('class', $dca);
 $class->default('w50')
     ->optionsCallback($cbClass, 'loadClassOptions')
     ->sql("varchar(10) NOT NULL default 'w50'")
     ->eval()
-        ->class('w50');
+        ->class('clr w50');
 
 $margin = new CheckboxField('margin', $dca);
 $margin->eval()

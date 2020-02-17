@@ -52,7 +52,9 @@ $locStyle->default('')
         ->optionsCallback($cbClass, 'getLocstyles')
         ->sql("varchar(20) NOT NULL default ''")
         ->eval()->class('clr')
-            ->submitOnChange();
+            ->submitOnChange()
+            ->chosen()
+            ->includeBlankOption();
 
 $showLabels = new CheckboxField('showLabels', $dca);
 $showLabels->default(false);
@@ -60,7 +62,8 @@ $showLabels->default(false);
 $categorySort = new NaturalField('categorySort', $dca);
 
 $availableFields = new MultiCheckboxField('availableFields', $dca);
-$availableFields->optionsCallback($cbClass, 'loadAvailableFieldsOptions');
+$availableFields->optionsCallback($cbClass, 'loadAvailableFieldsOptions')
+    ->inputType('checkboxWizard');
 
 $itemType = new SelectField('itemType', $dca);
 $itemType->default('')
