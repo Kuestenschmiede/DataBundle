@@ -381,7 +381,6 @@ class LoadLayersListener
                         } else {
                             $popup->addEntry($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['no'], 'accessibility');
                         }
-                        $popup->addEntry($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['no'], 'accessibility');
                     } elseif ($availableField === 'email') {
                         if ($typeElement['email'] !== '') {
                             $list['linkHref'] = 'mailto:' . $typeElement['email'];
