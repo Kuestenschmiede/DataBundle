@@ -94,21 +94,21 @@ $type->default('')
 
 $filter = new CheckboxField('filter', $dca);
 $filter->eval()
-    ->class('w50');
+    ->class('w50 m12');
 $search = new CheckboxField('search', $dca);
 $search->eval()
-    ->class('w50');
+    ->class('w50 m12');
 
 $mandatory = new CheckboxField('mandatory', $dca);
 $mandatory->eval()
-    ->class('w50');
+    ->class('clr w50 m12');
 
 $class = new SelectField('class', $dca);
 $class->default('w50')
     ->optionsCallback($cbClass, 'loadClassOptions')
     ->sql("varchar(10) NOT NULL default 'w50'")
     ->eval()
-        ->class('w50');
+        ->class('clr w50');
 
 $margin = new CheckboxField('margin', $dca);
 $margin->eval()
