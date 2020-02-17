@@ -65,7 +65,7 @@ $dca->palette()->selector(['type'])
 
 $id = new IdField('id', $dca);
 
-$tStamp = new NaturalField('tstamp', $dca);
+$tStamp = new SQLField('tstamp', $dca, "int(10) unsigned NOT NULL default '0'");
 
 $published = new CheckboxField('published', $dca);
 
