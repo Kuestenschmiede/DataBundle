@@ -34,6 +34,7 @@ use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GTextField;
 use con4gis\ProjectsBundle\Classes\Framework\C4GBrickModuleParent;
 use con4gis\ProjectsBundle\Classes\Lists\C4GBrickRenderMode;
 use con4gis\ProjectsBundle\Classes\Views\C4GBrickViewType;
+use Contao\Database;
 use Contao\StringUtil;
 
 
@@ -80,37 +81,39 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         $this->dialogParams->setWithDescriptions(false);
         $this->dialogParams->setId($id);
 
-        $customFields = DataCustomFieldModel::findBy('frontendFilterList', 1);
-        if ($customFields !== null) {
+        $customFields = Database::getInstance()->prepare(
+            "SELECT * FROM tl_c4g_data_custom_field WHERE frontendFilterList = '1'"
+        )->execute()->fetchAllAssoc();
+        if (sizeof($customFields) > 0) {
             foreach ($customFields as $customField) {
-                if ($customField->published === '1') {
-                    switch ($customField->type) {
+                if ($customField['published'] === '1') {
+                    switch ($customField['type']) {
                         case 'icon':
                             $this->listParams->addFilterButton(
                                 new C4GFilterButton(
-                                    $customField->icon,
-                                    $customField->frontendName ?: $customField->name ?: '',
-                                    $customField->alias
+                                    $customField['icon'],
+                                    $customField['frontendName'] ?: $customField['name'] ?: '',
+                                    $customField['alias']
                                 )
                             );
-                            $alias = $customField->alias;
+                            $alias = $customField['alias'];
                             ResourceLoader::loadCssResourceTag(
                                 '.filter_' . $alias . '_parent > div:not(.filter_' . $alias . '_child) {display: none;}'
                             );
                             break;
                         case 'checkbox':
                             $filterCheckbox = new C4GCheckboxFilterButton(
-                                $customField->frontendName ?: $customField->name,
-                                $customField->frontendName ?: $customField->name ?: '',
-                                $customField->alias
+                                $customField['frontendName'] ?: $customField['name'],
+                                $customField['frontendName'] ?: $customField['name'] ?: '',
+                                $customField['alias']
                             );
-                            $filterCheckbox->setStyle($customField->frontendFilterCheckboxStyling);
-                            $filterCheckbox->setLabelChecked($customField->frontendFilterCheckboxButtonLabelOn);
-                            $filterCheckbox->setLabelUnChecked($customField->frontendFilterCheckboxButtonLabelOff);
+                            $filterCheckbox->setStyle($customField['frontendFilterCheckboxStyling']);
+                            $filterCheckbox->setLabelChecked($customField['frontendFilterCheckboxButtonLabelOn']);
+                            $filterCheckbox->setLabelUnChecked($customField['frontendFilterCheckboxButtonLabelOff']);
                             $this->listParams->addFilterButton(
                                 $filterCheckbox
                             );
-                            $alias = $customField->alias;
+                            $alias = $customField['alias'];
                             ResourceLoader::loadCssResourceTag(
                                 '.filter_' . $alias . '_parent > div:not(.filter_' . $alias . '_child) {display: none;}'
                             );
@@ -118,12 +121,12 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                         case 'link':
                             $this->listParams->addFilterButton(
                                 new C4GFilterButton(
-                                    $customField->linkTitle,
-                                    $customField->frontendName ?: $customField->name ?: '',
-                                    $customField->alias
+                                    $customField['linkTitle'],
+                                    $customField['frontendName'] ?: $customField['name'] ?: '',
+                                    $customField['alias']
                                 )
                             );
-                            $alias = $customField->alias;
+                            $alias = $customField['alias'];
                             ResourceLoader::loadCssResourceTag(
                                 '.filter_' . $alias . '_parent > div:not(.filter_' . $alias . '_child) {display: none;}'
                             );
