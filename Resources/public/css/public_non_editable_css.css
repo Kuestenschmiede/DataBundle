@@ -65,6 +65,27 @@ li > .span-list {
     border: 0;
 }
 
+.c4g_list_filter_checkbox {
+    padding: 0 10px;
+    cursor: pointer;
+}
+
+.c4g_list_filter_checkbox:before {
+    margin-right: 10px;
+}
+
+.c4g_list_filter_checkbox:not(.checkbox_checked):before {
+    content:"\f0c8";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 100;
+}
+
+.c4g_list_filter_checkbox.checkbox_checked:before {
+    content: "\f14a";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 100;
+}
+
 /*------------------------*/
 /*----------content--------*/
 
