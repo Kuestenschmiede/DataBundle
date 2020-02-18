@@ -56,24 +56,24 @@ $locStyle->default('')
             ->chosen()
             ->includeBlankOption();
 
-$showLabels = new CheckboxField('showLabels', $dca);
-$showLabels->default(false);
-
-$categorySort = new NaturalField('categorySort', $dca);
-
 $availableFields = new MultiCheckboxField('availableFields', $dca);
 $availableFields->optionsCallback($cbClass, 'loadAvailableFieldsOptions')
     ->inputType('checkboxWizard');
+
+$showLabels = new CheckboxField('showLabels', $dca);
+$showLabels->default(false);
+
+$allowPublishing = new CheckboxField('allowPublishing', $dca);
+
+$importId = new SQLField("importId", $dca, "int(20) unsigned NOT NULL default '0'");
+
+$categorySort = new SQLField('categorySort', $dca, "int(10) unsigned NOT NULL default '0'");
 
 $itemType = new SelectField('itemType', $dca);
 $itemType->default('')
     ->optionsCallback($cbClass, 'loadItemTypeOptions')
     ->sql("varchar(100) NOT NULL default ''")
     ->eval()
-        ->class('clr')
-        ->includeBlankOption();
-
-$importId = new SQLField("importId", $dca, "int(20) unsigned NOT NULL default '0'");
-
-$allowPublishing = new CheckboxField('allowPublishing', $dca);
+    ->class('clr')
+    ->includeBlankOption();
 
