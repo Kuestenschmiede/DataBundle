@@ -144,10 +144,12 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             if ($typeModels !== null) {
                 $options = [];
                 foreach ($typeModels as $model) {
-                    $options[] = $model->name;
-                    ResourceLoader::loadCssResourceTag(
-                        '.filter_type_'.str_replace(' ', '', $model->name).'_parent > div:not(.filter_type_'.str_replace(' ', '', $model->name).'_child) {display: none;}'
-                    );
+                    if ($model->name !== '') {
+                        $options[] = $model->name;
+                        ResourceLoader::loadCssResourceTag(
+                            '.filter_type_' . str_replace(' ', '', $model->name) . '_parent > div:not(.filter_type_' . str_replace(' ', '', $model->name) . '_child) {display: none;}'
+                        );
+                    }
                 }
                 sort($options);
                 $this->listParams->addFilterButton(new C4GSelectFilterButton($options));
