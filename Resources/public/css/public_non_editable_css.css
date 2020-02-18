@@ -16,18 +16,8 @@
     display: none;
 }
 
-#c4g_brick input, #c4g_brick select {
-    background: transparent !important;
-    border: none !important;
-    margin-bottom: 0 !important;
-}
-
 .c4g_brick_list_header {
     display: none !important;
-}
-
-.c4g_brick_list_row:not(.c4g_list_search_hide) {
-    display: initial !important;
 }
 
 .c4g_multicheckbox span {
@@ -42,3 +32,113 @@
 li > .span-list {
     display: list-item;
 }
+
+/*---------header---------*/
+
+.c4gGuiDialogTitle {
+    position: relative;
+}
+
+.c4gGuiDialogTitle > span.c4g_list_headline {
+    display: block;
+    line-height: 30px;
+    margin-top: 25px;
+}
+
+.c4gGuiDialogTitle input {
+    position: absolute;
+    max-width: calc(100% - 20px);
+    right: 6px;
+    top: 6px;
+    height: 26px;
+    line-height: 26px;
+    padding: 0 4px;
+    outline: none;
+}
+
+.c4g_list_filter_buttons * {
+    display: inline-block;
+}
+
+.c4g_list_filter_buttons i.ui-button {
+    padding: 0;
+    border: 0;
+}
+
+.c4g_list_filter_checkbox {
+    padding: 0 10px;
+    cursor: pointer;
+}
+
+.c4g_list_filter_checkbox:before {
+    margin-right: 10px;
+}
+
+.c4g_list_filter_checkbox:not(.checkbox_checked):before {
+    content:"\f0c8";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 100;
+}
+
+.c4g_list_filter_checkbox.checkbox_checked:before {
+    content: "\f14a";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 100;
+}
+
+/*------------------------*/
+/*----------content--------*/
+
+.c4g_brick_list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: space-between;
+}
+
+.c4gGuiAction {
+    margin: 10px 0;
+    padding: 5px;
+    cursor: pointer;
+    max-width: 500px;
+    padding-bottom: 33px;
+}
+
+.c4gGuiAction ul {
+    position: relative;
+    display: block;
+    height: 100%;
+    padding-bottom: 33px;
+}
+
+.c4gGuiAction .link_zu_projekt_sophie, .c4gGuiAction .gutschein_einloesen, .c4gGuiAction .maplink {
+    position: absolute;
+    bottom: 0;
+}
+
+.c4gGuiAction > ul > li.maplink {
+    right: 0;
+}
+
+.c4gGuiAction .gutschein_einloesen {
+    left: 60px;
+}
+
+.c4gGuiAction  i.ui-button.ui-corner-all {
+    height: 18px;
+}
+
+@media(max-width: 700px) {
+    .c4gGuiAction {width: 100%;}
+}
+
+@media(min-width: 700px) and (max-width: 1200px) {
+    .c4gGuiAction {width: calc(100%/2 - 10px);}
+}
+
+@media(min-width: 1200px){
+    .c4gGuiAction {width: calc(100%/3 - 10px);}
+}
+
+/*----------------*/
+
