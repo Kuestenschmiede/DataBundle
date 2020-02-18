@@ -111,7 +111,7 @@ $type = new SelectField('type', $dca);
 $type->default('')
     ->optionsCallback($cbClass, 'loadTypes')
     ->sql("varchar(20) NOT NULL default ''")
-    ->filter()->search()
+    ->filter()
         ->eval()->mandatory()
         ->maxlength(20)
         ->class('clr')
