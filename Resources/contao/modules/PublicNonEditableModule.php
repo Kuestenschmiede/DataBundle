@@ -149,6 +149,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                         '.filter_type_'.str_replace(' ', '', $model->name).'_parent > div:not(.filter_type_'.str_replace(' ', '', $model->name).'_child) {display: none;}'
                     );
                 }
+                sort($options);
                 $this->listParams->addFilterButton(new C4GSelectFilterButton($options));
             }
         } elseif (sizeof(static::$type) > 1) {
@@ -161,6 +162,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                     );
                 }
             }
+            sort($options);
             $this->listParams->addFilterButton(new C4GSelectFilterButton($options));
         }
 
