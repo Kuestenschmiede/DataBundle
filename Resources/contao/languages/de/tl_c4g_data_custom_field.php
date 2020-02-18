@@ -2,7 +2,7 @@
 
 $strName = 'tl_c4g_data_custom_field';
 
-$GLOBALS['TL_LANG'][$strName]['install_tool_hint'] = 'Nach der Definition eines neuen Feldes sowie nach Änderungen ist es erforderlich, den Cache zu leeren und die Datenbank zu aktualisieren.';
+$GLOBALS['TL_LANG'][$strName]['install_tool_hint'] = 'Aufgrund von Änderungen ist es erforderlich, über den Contao Manager den Cache zu leeren und die Datenbank zu aktualisieren.';
 
 /**
  * Fields

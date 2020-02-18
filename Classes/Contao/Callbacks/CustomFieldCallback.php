@@ -13,6 +13,7 @@
 namespace con4gis\DataBundle\Classes\Contao\Callbacks;
 
 use Contao\Backend;
+use Contao\Database;
 use Contao\DataContainer;
 use Contao\Image;
 use Contao\StringUtil;
@@ -24,7 +25,145 @@ class CustomFieldCallback extends Backend
 
     public function addHint()
     {
-        Message::addInfo($GLOBALS['TL_LANG'][$this->dcaName]['install_tool_hint']);
+        $db = Database::getInstance();
+
+        $fieldNames = [
+            'Field != \'id\'',
+            'Field != \'tstamp\'',
+            'Field != \'name\'',
+            'Field != \'type\'',
+            'Field != \'parentElement\'',
+            'Field != \'loctype\'',
+            'Field != \'geox\'',
+            'Field != \'geoy\'',
+            'Field != \'geoJson\'',
+            'Field != \'description\'',
+            'Field != \'businessHours\'',
+            'Field != \'businessHoursAdditionalInfo\'',
+            'Field != \'dayFrom\'',
+            'Field != \'dayTo\'',
+            'Field != \'timeFrom\'',
+            'Field != \'timeTo\'',
+            'Field != \'addressName\'',
+            'Field != \'addressStreet\'',
+            'Field != \'addressStreetNumber\'',
+            'Field != \'addressZip\'',
+            'Field != \'addressCity\'',
+            'Field != \'addressState\'',
+            'Field != \'addressCountry\'',
+            'Field != \'phone\'',
+            'Field != \'mobile\'',
+            'Field != \'fax\'',
+            'Field != \'email\'',
+            'Field != \'website\'',
+            'Field != \'websiteLabel\'',
+            'Field != \'image\'',
+            'Field != \'imageMaxHeight\'',
+            'Field != \'imageMaxWidth\'',
+            'Field != \'imageLink\'',
+            'Field != \'imageLightBox\'',
+            'Field != \'accessibility\'',
+            'Field != \'linkWizard\'',
+            'Field != \'linkTitle\'',
+            'Field != \'linkHref\'',
+            'Field != \'linkNewTab\'',
+            'Field != \'osmId\'',
+            'Field != \'publishFrom\'',
+            'Field != \'publishTo\'',
+            'Field != \'importId\'',
+            'Field != \'ownerGroupId\'',
+            'Field != \'published\'',
+            'Field != \'datePublished\'',
+        ];
+
+        $stmt = $db->prepare("SHOW COLUMNS FROM tl_c4g_data_element WHERE " . implode(' AND ', $fieldNames));
+        $dbColumns = $stmt->execute()->fetchAllAssoc();
+
+        $stmt = $db->prepare("SELECT * FROM tl_c4g_data_custom_field WHERE type != 'legend' AND type != ''");
+        $customFields = $stmt->execute()->fetchAllAssoc();
+
+        $columnNames = [];
+        $columnTypes = [];
+        $columnDefaults = [];
+        foreach ($dbColumns as $dbColumn) {
+            $columnNames[] = $dbColumn['Field'];
+            $columnTypes[$dbColumn['Field']] = $dbColumn['Type'];
+            $columnDefaults[$dbColumn['Field']] = $dbColumn['Default'];
+        }
+
+        $customFieldNames = [];
+        $customFieldTypes = [];
+        $customFieldDefaults = [];
+        foreach ($customFields as $customField) {
+            $customFieldNames[] = $customField['alias'];
+            switch ($customField['type']) {
+                case 'text':
+                    $customFieldTypes[$customField['alias']] = 'varchar(' . $customField['maxLength'] . ')';
+                    $customFieldDefaults[$customField['alias']] = $customField['defaultText'];
+                    break;
+                case 'textarea':
+                    $customFieldTypes[$customField['alias']] = 'text';
+                    $customFieldDefaults[$customField['alias']] = $customField['defaultTextArea'];
+                    break;
+                case 'texteditor':
+                    $customFieldTypes[$customField['alias']] = 'text';
+                    $customFieldDefaults[$customField['alias']] = $customField['defaultTextEditor'];
+                    break;
+                case 'natural':
+                    $customFieldTypes[$customField['alias']] = 'int(10) unsigned';
+                    $customFieldDefaults[$customField['alias']] = $customField['defaultNatural'];
+                    break;
+                case 'int':
+                    $customFieldTypes[$customField['alias']] = 'int(10) signed';
+                    $customFieldDefaults[$customField['alias']] = $customField['defaultInt'];
+                    break;
+                case 'select':
+                    $customFieldTypes[$customField['alias']] = 'varchar(255)';
+                    $customFieldDefaults[$customField['alias']] = $customField['defaultSelect'];
+                    break;
+                case 'checkbox':
+                case 'link':
+                case 'icon':
+                    $customFieldTypes[$customField['alias']] = 'char(1)';
+                    $customFieldDefaults[$customField['alias']] = $customField['defaultCheckbox'];
+                    break;
+                case 'multicheckbox':
+                case 'filtermulticheckbox':
+                    $customFieldTypes[$customField['alias']] = 'text';
+                    $customFieldDefaults[$customField['alias']] = null;
+                    break;
+                case 'datepicker':
+                    $customFieldTypes[$customField['alias']] = 'varchar(10)';
+                    $customFieldDefaults[$customField['alias']] = $customField['defaultDatePicker'];
+                    break;
+                case 'foreignKey':
+                    $customFieldTypes[$customField['alias']] = 'int(10)';
+                    $customFieldDefaults[$customField['alias']] = '0';
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        foreach ($columnNames as $columnName) {
+            if (!in_array($columnName, $customFieldNames)) {
+                Message::addInfo($GLOBALS['TL_LANG'][$this->dcaName]['install_tool_hint']);
+                return;
+            }
+        }
+
+        foreach ($customFieldNames as $customFieldName) {
+            if (!in_array($customFieldName, $columnNames)) {
+                Message::addInfo($GLOBALS['TL_LANG'][$this->dcaName]['install_tool_hint']);
+                return;
+            } elseif ($customFieldTypes[$customFieldName] !== $columnTypes[$customFieldName]) {
+                Message::addInfo($GLOBALS['TL_LANG'][$this->dcaName]['install_tool_hint']);
+                return;
+            } elseif ($customFieldDefaults[$customFieldName] !== $columnDefaults[$customFieldName]) {
+                Message::addInfo($GLOBALS['TL_LANG'][$this->dcaName]['install_tool_hint']);
+                return;
+            }
+        }
     }
 
     public function getLabels($row)
