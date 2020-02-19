@@ -60,6 +60,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
     public static $type = [];
     public static $directory = [];
     public static $showLabelsInList = false;
+    public static $dataMode = 0;
 
     public function initBrickModule($id)
     {
@@ -138,8 +139,9 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         static::$type = StringUtil::deserialize($this->c4g_data_type);
         static::$directory = StringUtil::deserialize($this->c4g_data_directory);
         static::$showLabelsInList = $this->showLabelsInList === '1';
+        static::$dataMode = $this->c4g_data_mode;
 
-        if (empty(static::$type) && $this->showSelectFilter) {
+        if ($this->c4g_data_mode === '1' && empty(static::$type) && $this->showSelectFilter) {
             $typeModels = DataTypeModel::findAll();
             if ($typeModels !== null) {
                 $options = [];
@@ -154,7 +156,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                 sort($options);
                 $this->listParams->addFilterButton(new C4GSelectFilterButton($options));
             }
-        } elseif (sizeof(static::$type) > 1) {
+        } elseif ($this->c4g_data_mode === '1' && sizeof(static::$type) > 1 && $this->showSelectFilter) {
             foreach (static::$type as $type) {
                 $model = DataTypeModel::findByPk($type);
                 if ($model !== null) {

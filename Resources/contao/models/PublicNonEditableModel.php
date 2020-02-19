@@ -21,14 +21,14 @@ class PublicNonEditableModel
             $types[$rt['id']] = $rt['name'];
         }
 
-        if (!empty(PublicNonEditableModule::$type)) {
+        if (PublicNonEditableModule::$dataMode === '1' && !empty(PublicNonEditableModule::$type)) {
             $resultElements = [];
             foreach (PublicNonEditableModule::$type as $type) {
                 $stmtElements = $db->prepare("SELECT tl_c4g_data_element.* FROM tl_c4g_data_element JOIN tl_c4g_data_type ON tl_c4g_data_element.type = tl_c4g_data_type.id WHERE tl_c4g_data_element.name != '' AND tl_c4g_data_element.type = ? AND (tl_c4g_data_type.allowPublishing != 1 OR tl_c4g_data_element.published = 1) ORDER BY name ASC");
                 $resultElements = array_merge($resultElements, $stmtElements->execute($type)->fetchAllAssoc());
             }
         } else {
-            if (!empty(PublicNonEditableModule::$directory)) {
+            if (PublicNonEditableModule::$dataMode === '2' && !empty(PublicNonEditableModule::$directory)) {
                 $resultElements = [];
                 foreach (PublicNonEditableModule::$directory as $directory) {
                     $directoryModel = DataDirectoryModel::findByPk($directory);
