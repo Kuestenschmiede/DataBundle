@@ -21,3 +21,7 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_expert_legend'] = 'Expert settings';
 $GLOBALS['TL_LANG']['tl_module']['mapPage_legend'] = 'Map page';
 $GLOBALS['TL_LANG']['tl_module']['caption_legend'] = 'Title';
 $GLOBALS['TL_LANG']['tl_module']['c4g_authorized_groups_legend'] = 'Authorised groups';
+
+$GLOBALS['TL_LANG']['tl_module']['c4g_data_mode']['0'] = 'Load all elements';
+$GLOBALS['TL_LANG']['tl_module']['c4g_data_mode']['1'] = 'Load elements by category';
+$GLOBALS['TL_LANG']['tl_module']['c4g_data_mode']['2'] = 'Load elements by directory';

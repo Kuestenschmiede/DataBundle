@@ -10,6 +10,7 @@
  * @link      https://www.kuestenschmiede.de
  */
 
+$GLOBALS['TL_LANG']['tl_module']['c4g_data_mode'] = ['Lademodus', 'Bestimmt, welche Elemente in diesem Modul geladen werden.'];
 $GLOBALS['TL_LANG']['tl_module']['c4g_data_type'] = ['Kategorie (optional)', 'Nur Elemente dieser Kategorie werden angezeigt.'];
 $GLOBALS['TL_LANG']['tl_module']['c4g_data_directory'] = ['Verzeichnis (optional)', 'Nur Elemente in Kategorien aus diesem Verzeichnis werden angezeigt.'];
 $GLOBALS['TL_LANG']['tl_module']['mapPage'] = ['Kartenseite', ''];
@@ -28,3 +29,7 @@ $GLOBALS['TL_LANG']['tl_module']['c4g_expert_legend'] = 'Experten-Einstellungen'
 $GLOBALS['TL_LANG']['tl_module']['mapPage_legend'] = 'Kartenseite';
 $GLOBALS['TL_LANG']['tl_module']['caption_legend'] = 'Titel';
 $GLOBALS['TL_LANG']['tl_module']['c4g_authorized_groups_legend'] = 'Authorisierte Gruppen';
+
+$GLOBALS['TL_LANG']['tl_module']['c4g_data_mode_option']['0'] = 'Alle Elemente laden';
+$GLOBALS['TL_LANG']['tl_module']['c4g_data_mode_option']['1'] = 'Elemente nach Kategorien laden';
+$GLOBALS['TL_LANG']['tl_module']['c4g_data_mode_option']['2'] = 'Elemente nach Verzeichnissen laden';
