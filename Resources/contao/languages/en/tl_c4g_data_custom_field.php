@@ -27,10 +27,16 @@ $GLOBALS['TL_LANG'][$strName]['frontendPopup'] = ['Display in popup', 'If checke
 $GLOBALS['TL_LANG'][$strName]['frontendList'] = ['Display in list', 'If checked, the field is displayed in the list, if it contains a value.'];
 $GLOBALS['TL_LANG'][$strName]['frontendDetails'] = ['Display in list details', 'If checked, the field is displayed in the list details, if it contains a value.'];
 $GLOBALS['TL_LANG'][$strName]['frontendFilter'] = ['Filterable in Frontend', 'If checked, the field is filterable in the frontend.'];
+$GLOBALS['TL_LANG'][$strName]['frontendFilterList'] = ['Filterable in list (frontend)', 'If checked, the field is available in the frontend list filter.'];
+$GLOBALS['TL_LANG'][$strName]['frontendFilterCheckboxStyling'] = ['Frontend filter styling', 'Determines how the filter looks like.'];
+$GLOBALS['TL_LANG'][$strName]['frontendFilterCheckboxButtonLabelOn'] = ['Button text for active filter', 'The button text when the filter is active. Allows HTML.'];
+$GLOBALS['TL_LANG'][$strName]['frontendFilterCheckboxButtonLabelOff'] = ['Button text for inactive filter', 'The button text when the filter is inactive. Allows HTML.'];
 $GLOBALS['TL_LANG'][$strName]['linkTitle'] = ['Link title', 'The text displayed to the user.'];
 $GLOBALS['TL_LANG'][$strName]['linkHref'] = ['URL', 'The URL the link points to.'];
 $GLOBALS['TL_LANG'][$strName]['linkNewTab'] = ['Open in new tab', 'If checked, the link is opened in a new tab.'];
 $GLOBALS['TL_LANG'][$strName]['icon'] = ['Font Awesome Icon', 'The icon to be shown.'];
+$GLOBALS['TL_LANG'][$strName]['foreignTable'] = ['Table', 'The table the field points to.'];
+$GLOBALS['TL_LANG'][$strName]['foreignField'] = ['Label', 'The field used to identify the row.'];
 
 /**
  * Legends
@@ -74,3 +80,6 @@ $GLOBALS['TL_LANG']['data_custom_field_types']['foreignKey'] = 'Foreign Key';
 $GLOBALS['TL_LANG']['data_custom_field_class_options']['w50'] = 'Single column';
 $GLOBALS['TL_LANG']['data_custom_field_class_options']['w50 clr'] = 'Single column, left side';
 $GLOBALS['TL_LANG']['data_custom_field_class_options']['clr'] = 'Multicolumn';
+
+$GLOBALS['TL_LANG']['data_custom_field_frontend_filter_checkbox_styling_options']['checkbox'] = 'as checkbox';
+$GLOBALS['TL_LANG']['data_custom_field_frontend_filter_checkbox_styling_options']['button'] = 'as button';

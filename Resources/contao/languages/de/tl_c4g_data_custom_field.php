@@ -81,9 +81,5 @@ $GLOBALS['TL_LANG']['data_custom_field_class_options']['w50'] = 'Einspaltig';
 $GLOBALS['TL_LANG']['data_custom_field_class_options']['w50 clr'] = 'Einspaltig, Links';
 $GLOBALS['TL_LANG']['data_custom_field_class_options']['clr'] = 'Zweispaltig';
 
-/**
- *
- */
-
 $GLOBALS['TL_LANG']['data_custom_field_frontend_filter_checkbox_styling_options']['checkbox'] = 'als Checkbox';
 $GLOBALS['TL_LANG']['data_custom_field_frontend_filter_checkbox_styling_options']['button'] = 'als Button';
