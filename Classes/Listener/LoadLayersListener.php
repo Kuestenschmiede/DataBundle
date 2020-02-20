@@ -559,7 +559,7 @@ class LoadLayersListener
                         }
                     }
                 }
-                $properties['title'] = $typeElement['name'];
+                $properties['tooltip'] = $typeElement['name'];
                 if ($typeElement['loctype'] === 'point') {
                     $content = $fmClass->createMapStructureContent(
                         $type['locstyle'],
