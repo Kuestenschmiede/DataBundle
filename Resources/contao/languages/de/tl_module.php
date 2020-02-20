@@ -11,8 +11,8 @@
  */
 
 $GLOBALS['TL_LANG']['tl_module']['c4g_data_mode'] = ['Lademodus', 'Bestimmt, welche Elemente in diesem Modul geladen werden.'];
-$GLOBALS['TL_LANG']['tl_module']['c4g_data_type'] = ['Kategorie (optional)', 'Nur Elemente dieser Kategorie werden angezeigt.'];
-$GLOBALS['TL_LANG']['tl_module']['c4g_data_directory'] = ['Verzeichnis (optional)', 'Nur Elemente in Kategorien aus diesem Verzeichnis werden angezeigt.'];
+$GLOBALS['TL_LANG']['tl_module']['c4g_data_type'] = ['Kategorie', 'Nur Elemente dieser Kategorie werden angezeigt.'];
+$GLOBALS['TL_LANG']['tl_module']['c4g_data_directory'] = ['Verzeichnis', 'Nur Elemente in Kategorien aus diesem Verzeichnis werden angezeigt.'];
 $GLOBALS['TL_LANG']['tl_module']['mapPage'] = ['Kartenseite', ''];
 $GLOBALS['TL_LANG']['tl_module']['captionPlural'] = ['Listentitel', 'Der Titel oberhalb der Liste.'];
 $GLOBALS['TL_LANG']['tl_module']['caption'] = ['Detailtitel', 'Der Titel oberhalb der Listendetails.'];
