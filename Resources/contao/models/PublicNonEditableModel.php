@@ -93,6 +93,19 @@ class PublicNonEditableModel
 
             $resultElements[$key]['type'] = $types[$re['type']];
 
+            $directoryModels = DataDirectoryModel::findAll();
+            $elementDirectories = [];
+            if ($directoryModels !== null) {
+                foreach ($directoryModels as $directoryModel) {
+                    $directoryTypes = StringUtil::deserialize($directoryModel->types);
+                    if (!empty($directoryTypes) && in_array($typeModel->id, $directoryTypes)) {
+                        $elementDirectories[] = str_replace(' ', '', $directoryModel->name);
+                    }
+                }
+            }
+
+            $resultElements[$key]['directory'] = $elementDirectories;
+
             $address = [];
             $address[] = $re['addressName'];
             if ($resultElements[$key]['itemType'] !== '') {

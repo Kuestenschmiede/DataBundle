@@ -12,6 +12,7 @@ use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\CoreBundle\Classes\ResourceLoader;
 use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\DataBundle\Resources\contao\models\DataCustomFieldModel;
+use con4gis\DataBundle\Resources\contao\models\DataDirectoryModel;
 use con4gis\DataBundle\Resources\contao\models\DataElementModel;
 use con4gis\DataBundle\Resources\contao\models\DataTypeModel;
 use con4gis\DataBundle\Resources\contao\models\PublicNonEditableModel;
@@ -141,7 +142,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         static::$showLabelsInList = $this->showLabelsInList === '1';
         static::$dataMode = $this->c4g_data_mode;
 
-        if ($this->c4g_data_mode === '1' && empty(static::$type) && $this->showSelectFilter) {
+        if ($this->c4g_data_mode !== '2' && empty(static::$type) && $this->showSelectFilter) {
             $typeModels = DataTypeModel::findAll();
             if ($typeModels !== null) {
                 $options = [];
@@ -154,7 +155,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                     }
                 }
                 sort($options);
-                $this->listParams->addFilterButton(new C4GSelectFilterButton($options));
+                $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'type'));
             }
         } elseif ($this->c4g_data_mode === '1' && sizeof(static::$type) > 1 && $this->showSelectFilter) {
             foreach (static::$type as $type) {
@@ -167,7 +168,22 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                 }
             }
             sort($options);
-            $this->listParams->addFilterButton(new C4GSelectFilterButton($options));
+            $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'type'));
+        } elseif ($this->c4g_data_mode === '2' && sizeof(static::$directory) > 1 && $this->showSelectFilter) {
+            $directoryModels = DataDirectoryModel::findAll();
+            if ($directoryModels !== null) {
+                $options = [];
+                foreach ($directoryModels as $model) {
+                    if ($model->name !== '') {
+                        $options[] = $model->name;
+                        ResourceLoader::loadCssResourceTag(
+                            '.filter_directory_' . str_replace(' ', '', $model->name) . '_parent > div:not(.filter_directory_' . str_replace(' ', '', $model->name) . '_child) {display: none;}'
+                        );
+                    }
+                }
+                sort($options);
+                $this->listParams->addFilterButton(new c4gselectfilterbutton($options, 'directory'));
+            }
         }
 
         if ($this->showFilterResetButton) {
@@ -621,16 +637,24 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             }
         }
 
-        if (!static::$type) {
-            try {
-                $classField = new C4GDataClassField();
-                $classField->setFieldName('type');
-                $classField->setClassPrefix('filter_type_');
-                $classField->setClassSuffix('_child');
-                $fieldList[] = $classField;
-            } catch (\Throwable $throwable) {
-                C4gLogModel::addLogEntry('projects', $throwable->getMessage());
-            }
+        try {
+            $classField = new C4GDataClassField();
+            $classField->setFieldName('type');
+            $classField->setClassPrefix('filter_type_');
+            $classField->setClassSuffix('_child');
+            $fieldList[] = $classField;
+        } catch (\Throwable $throwable) {
+            C4gLogModel::addLogEntry('projects', $throwable->getMessage());
+        }
+
+        try {
+            $classField = new C4GDataClassField();
+            $classField->setFieldName('directory');
+            $classField->setClassPrefix('filter_directory_');
+            $classField->setClassSuffix('_child');
+            $fieldList[] = $classField;
+        } catch (\Throwable $throwable) {
+            C4gLogModel::addLogEntry('projects', $throwable->getMessage());
         }
 
         return $fieldList;
