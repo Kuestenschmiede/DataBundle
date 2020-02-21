@@ -35,6 +35,7 @@ use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GTextField;
 use con4gis\ProjectsBundle\Classes\Framework\C4GBrickModuleParent;
 use con4gis\ProjectsBundle\Classes\Lists\C4GBrickRenderMode;
 use con4gis\ProjectsBundle\Classes\Views\C4GBrickViewType;
+use Contao\Database;
 use Contao\StringUtil;
 
 
@@ -142,15 +143,17 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         static::$showLabelsInList = $this->showLabelsInList === '1';
         static::$dataMode = $this->c4g_data_mode;
 
-        if ($this->c4g_data_mode !== '2' && empty(static::$type) && $this->showSelectFilter) {
-            $typeModels = DataTypeModel::findAll();
-            if ($typeModels !== null) {
+        if ((($this->c4g_data_mode === '1' && empty(static::$type)) || ($this->c4g_data_mode === '2' && empty(static::$directory))
+            || ($this->c4g_data_mode === '0')) && $this->showSelectFilter) {
+            $typeStmt = Database::getInstance()->prepare("SELECT DISTINCT tl_c4g_data_type.* FROM tl_c4g_data_type JOIN tl_c4g_data_element ON tl_c4g_data_element.type = tl_c4g_data_type.id where tl_c4g_data_type.allowPublishing != '1' OR tl_c4g_data_element.published = 1");
+            $typeResult = $typeStmt->execute()->fetchAllAssoc();
+            if (!empty($typeResult)) {
                 $options = [];
-                foreach ($typeModels as $model) {
-                    if ($model->name !== '') {
-                        $options[] = $model->name;
+                foreach ($typeResult as $row) {
+                    if ($row['name'] !== '') {
+                        $options[] = $row['name'];
                         ResourceLoader::loadCssResourceTag(
-                            '.filter_type_' . str_replace(' ', '', $model->name) . '_parent > div:not(.filter_type_' . str_replace(' ', '', $model->name) . '_child) {display: none;}'
+                            '.filter_type_' . str_replace(' ', '', $row['name']) . '_parent > div:not(.filter_type_' . str_replace(' ', '', $row['name']) . '_child) {display: none;}'
                         );
                     }
                 }
