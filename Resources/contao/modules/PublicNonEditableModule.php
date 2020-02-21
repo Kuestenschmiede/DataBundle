@@ -158,6 +158,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                 $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'type'));
             }
         } elseif ($this->c4g_data_mode === '1' && sizeof(static::$type) > 1 && $this->showSelectFilter) {
+            $options = [];
             foreach (static::$type as $type) {
                 $model = DataTypeModel::findByPk($type);
                 if ($model !== null) {
@@ -170,20 +171,20 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             sort($options);
             $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'type'));
         } elseif ($this->c4g_data_mode === '2' && sizeof(static::$directory) > 1 && $this->showSelectFilter) {
-            $directoryModels = DataDirectoryModel::findAll();
-            if ($directoryModels !== null) {
-                $options = [];
-                foreach ($directoryModels as $model) {
-                    if ($model->name !== '') {
-                        $options[] = $model->name;
+            $options = [];
+            foreach (static::$directory as $directory) {
+                $directoryModel = DataDirectoryModel::findByPk($directory);
+                if ($directoryModel !== null) {
+                    if ($directoryModel->name !== '') {
+                        $options[] = $directoryModel->name;
                         ResourceLoader::loadCssResourceTag(
-                            '.filter_directory_' . str_replace(' ', '', $model->name) . '_parent > div:not(.filter_directory_' . str_replace(' ', '', $model->name) . '_child) {display: none;}'
+                            '.filter_directory_' . str_replace(' ', '', $directoryModel->name) . '_parent > div:not(.filter_directory_' . str_replace(' ', '', $directoryModel->name) . '_child) {display: none;}'
                         );
                     }
                 }
-                sort($options);
-                $this->listParams->addFilterButton(new c4gselectfilterbutton($options, 'directory'));
             }
+            sort($options);
+            $this->listParams->addFilterButton(new c4gselectfilterbutton($options, 'directory'));
         }
 
         if ($this->showFilterResetButton) {
