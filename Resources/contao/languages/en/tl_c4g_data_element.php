@@ -114,3 +114,11 @@ $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['moreButtonField'] = 'Actions
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['MoreButtonButtonTitle'] = '';
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['yes'] = 'Yes';
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['no'] = 'No';
+
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_published_title'] = 'Success';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_published_message'] = 'The element is published.';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_unpublished_title'] = 'Success';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_unpublished_message'] = 'The element is no longer published';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_maximum_title'] = 'Maximum number of advertisements';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_maximum_message'] = 'Maximum number of advertisements are already reached.';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_added_in_frontend'] = 'Added in frontend';
