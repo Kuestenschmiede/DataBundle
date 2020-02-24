@@ -37,6 +37,9 @@ $GLOBALS['TL_LANG'][$strName]['accessibility'] = ['Accessible', 'The element is 
 $GLOBALS['TL_LANG'][$strName]['osmId'] = ['OSM ID', 'The element\'s id in the Open Street Map.'];
 $GLOBALS['TL_LANG'][$strName]['publishFrom'] = ['Publish from', 'The element is displayed in the frontend from this day on.'];
 $GLOBALS['TL_LANG'][$strName]['publishTo'] = ['Publish until', 'The element is displayed in the frontend until this day.'];
+$GLOBALS['TL_LANG'][$strName]['published'] = ['Published', 'If checked, the element is shown publicly in the frontend.'];
+$GLOBALS['TL_LANG'][$strName]['datePublished'] = ['Publish date', 'The publish date, if the category supports this feature.'];
+$GLOBALS['TL_LANG'][$strName]['ownerGroupId'] = ['User group (owner)', 'The user group who owns the element.'];
 
 $GLOBALS['TL_LANG'][$strName]['phone'] = ['Phone', ''];
 $GLOBALS['TL_LANG'][$strName]['mobile'] = ['Mobile phone', ''];
@@ -48,6 +51,7 @@ $GLOBALS['TL_LANG'][$strName]['image'] = ['Image', 'An image showing the element
 $GLOBALS['TL_LANG'][$strName]['imageMaxHeight'] = ['Maximum image height (pixels)', 'The aspect ratio is retained.'];
 $GLOBALS['TL_LANG'][$strName]['imageMaxWidth'] = ['Maximum image width (pixels)', 'The aspect ratio is retained.'];
 $GLOBALS['TL_LANG'][$strName]['imageLink'] = ['Image link', 'Link the image points to.'];
+$GLOBALS['TL_LANG'][$strName]['imageLightBox'] = ['Lightbox', 'If checked, the image is shown in a lightbox on click. (If a link is set, it takes precedence.)'];
 $GLOBALS['TL_LANG'][$strName]['loctype'] = ['Location type', 'Select the type of location.'];
 $GLOBALS['TL_LANG'][$strName]['geox'] = ['Geo-X-Coordinate', 'X-coordinate (Longitude). Use the geopicker to fill both coordinates.'];
 $GLOBALS['TL_LANG'][$strName]['geoy'] = ['Geo-Y-Coordinate', 'Y-coordinate (Latitude). Use the geopicker to fill both coordinates.'];
@@ -76,6 +80,7 @@ $GLOBALS['TL_LANG'][$strName]['accessibility_legend'] = 'Accessibility';
 $GLOBALS['TL_LANG'][$strName]['linkWizard_legend'] = 'Additional Links';
 $GLOBALS['TL_LANG'][$strName]['osm_legend'] = 'Open Street Map';
 $GLOBALS['TL_LANG'][$strName]['publish_legend'] = 'Display';
+$GLOBALS['TL_LANG'][$strName]['published_legend'] = 'Published status';
 
 /**
  * Operations
@@ -109,3 +114,11 @@ $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['moreButtonField'] = 'Actions
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['MoreButtonButtonTitle'] = '';
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['yes'] = 'Yes';
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['no'] = 'No';
+
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_published_title'] = 'Success';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_published_message'] = 'The element is published.';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_unpublished_title'] = 'Success';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_unpublished_message'] = 'The element is no longer published';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_maximum_title'] = 'Maximum number of advertisements';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_maximum_message'] = 'Maximum number of advertisements are already reached.';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_added_in_frontend'] = 'Added in frontend';

@@ -19,4 +19,8 @@ $GLOBALS['TL_LANG']['tl_c4g_data_type']['data_legend'] = 'General data';
 
 $GLOBALS['TL_LANG']['tl_c4g_data_type']['legend'] = 'Headline: ';
 
-
+$GLOBALS['TL_LANG']['tl_c4g_data_type']['itemTypeOptions'] = [
+    'https://schema.org/LocalBusiness' => 'Local business or practice',
+    'https://schema.org/Restaurant' => 'Restaurant',
+    'https://schema.org/TouristAttraction' => 'Tourist attraction'
+];

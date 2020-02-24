@@ -21,27 +21,27 @@ class PublicNonEditableModel
             $types[$rt['id']] = $rt['name'];
         }
 
-        if (!empty(PublicNonEditableModule::$type)) {
+        if (PublicNonEditableModule::$dataMode === '1' && !empty(PublicNonEditableModule::$type)) {
             $resultElements = [];
             foreach (PublicNonEditableModule::$type as $type) {
                 $stmtElements = $db->prepare("SELECT tl_c4g_data_element.* FROM tl_c4g_data_element JOIN tl_c4g_data_type ON tl_c4g_data_element.type = tl_c4g_data_type.id WHERE tl_c4g_data_element.name != '' AND tl_c4g_data_element.type = ? AND (tl_c4g_data_type.allowPublishing != 1 OR tl_c4g_data_element.published = 1) ORDER BY name ASC");
                 $resultElements = array_merge($resultElements, $stmtElements->execute($type)->fetchAllAssoc());
             }
         } else {
-            if (!empty(PublicNonEditableModule::$directory)) {
+            if (PublicNonEditableModule::$dataMode === '2' && !empty(PublicNonEditableModule::$directory)) {
+                $types = [];
                 $resultElements = [];
                 foreach (PublicNonEditableModule::$directory as $directory) {
                     $directoryModel = DataDirectoryModel::findByPk($directory);
                     if ($directoryModel !== null) {
-                        $types = StringUtil::deserialize($directoryModel->types);
-                        foreach ($types as $type) {
-                            $stmtElements = $db->prepare("SELECT tl_c4g_data_element.* FROM tl_c4g_data_element JOIN tl_c4g_data_type ON tl_c4g_data_element.type = tl_c4g_data_type.id WHERE tl_c4g_data_element.name != '' AND tl_c4g_data_element.type = ? AND (tl_c4g_data_type.allowPublishing != 1 OR tl_c4g_data_element.published = 1) ORDER BY name ASC");
-                            $resultElements = array_merge($resultElements, $stmtElements->execute($type)->fetchAllAssoc());
-                        }
-                    } else {
-                        continue;
+                        $types = array_merge($types, StringUtil::deserialize($directoryModel->types));
                     }
                 }
+                $types = array_unique($types);
+                foreach ($types as $type) {
+                    $stmtElements = $db->prepare("SELECT tl_c4g_data_element.* FROM tl_c4g_data_element JOIN tl_c4g_data_type ON tl_c4g_data_element.type = tl_c4g_data_type.id WHERE tl_c4g_data_element.name != '' AND tl_c4g_data_element.type = ? AND (tl_c4g_data_type.allowPublishing != 1 OR tl_c4g_data_element.published = 1) ORDER BY name ASC");
+                }
+                $resultElements = array_merge($resultElements, $stmtElements->execute($type)->fetchAllAssoc());
             } else {
                 $stmtElements = $db->prepare("SELECT tl_c4g_data_element.* FROM tl_c4g_data_element JOIN tl_c4g_data_type ON tl_c4g_data_element.type = tl_c4g_data_type.id WHERE tl_c4g_data_element.name != '' AND (tl_c4g_data_type.allowPublishing != 1 OR tl_c4g_data_element.published = 1) ORDER BY name ASC");
                 $resultElements = $stmtElements->execute()->fetchAllAssoc();
@@ -92,6 +92,19 @@ class PublicNonEditableModel
             $resultElements[$key]['itemType'] = strval($typeModel->itemType);
 
             $resultElements[$key]['type'] = $types[$re['type']];
+
+            $directoryModels = DataDirectoryModel::findAll();
+            $elementDirectories = [];
+            if ($directoryModels !== null) {
+                foreach ($directoryModels as $directoryModel) {
+                    $directoryTypes = StringUtil::deserialize($directoryModel->types);
+                    if (!empty($directoryTypes) && in_array($typeModel->id, $directoryTypes)) {
+                        $elementDirectories[] = str_replace(' ', '', $directoryModel->name);
+                    }
+                }
+            }
+
+            $resultElements[$key]['directory'] = $elementDirectories;
 
             $address = [];
             $address[] = $re['addressName'];

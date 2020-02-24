@@ -278,12 +278,12 @@ class MemberEditableModule extends C4GBrickModuleParent
             $action = new C4GShowListAction($this->getDialogParams(), $this->getListParams(), $this->getFieldList(), $this->getPutVars(), $this->getBrickDatabase());
             $action->setModule($this);
             $return = $action->run();
-            $return['title'] = 'Gepublished';
-            $return['usermessage'] = 'Das Element ist gepublished';
+            $return['title'] = $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_published_title'];
+            $return['usermessage'] = $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_published_message'];
             return $return;
         } else {
-            $return['title'] = 'Maximale Anzeigen';
-            $return['usermessage'] = 'Die maximale Anzahl Anzeigen ist bereits erreicht.';
+            $return['title'] = $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_maximum_title'];
+            $return['usermessage'] = $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_maximum_message'];
             return $return;
         }
     }
@@ -302,8 +302,8 @@ class MemberEditableModule extends C4GBrickModuleParent
         $action = new C4GShowListAction($this->getDialogParams(), $this->getListParams(), $this->getFieldList(), $this->getPutVars(), $this->getBrickDatabase());
         $action->setModule($this);
         $return = $action->run();
-        $return['title'] = 'Geunpublished';
-        $return['usermessage'] = 'Das Element ist geunpublished';
+        $return['title'] = $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_unpublished_title'];
+        $return['usermessage'] = $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_unpublished_message'];
         return $return;
     }
 

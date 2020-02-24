@@ -111,7 +111,7 @@ $type = new SelectField('type', $dca);
 $type->default('')
     ->optionsCallback($cbClass, 'loadTypes')
     ->sql("varchar(20) NOT NULL default ''")
-    ->filter()->search()
+    ->filter()
         ->eval()->mandatory()
         ->maxlength(20)
         ->class('clr')
@@ -277,6 +277,7 @@ $publishTo->saveCallback($cbClass, 'saveDate')
     ->sql("varchar(10) NOT NULL default ''");
 
 $importId = new SQLField("importId", $dca, "int(20) unsigned NOT NULL default '0'");
+$importId->eval()->doNotCopy(true);
 
 $ownerGroupId = new SelectField('ownerGroupId', $dca);
 $ownerGroupId->filter()->sql('int(10) NOT NULL default "0"')
@@ -319,8 +320,8 @@ foreach ($GLOBALS['con4gis']['data_custom_field_types'] as $type) {
             } elseif ($type === 'textarea') {
                 $field = new TextAreaField($model->alias, $dca);
                 $field->hardLabel(strval($model->name), strval($model->description))
-                    ->filter(boolval($model->filter))
-                    ->search(boolval($model->search))
+                    ->filter(false)
+                    ->search(false)
                     ->default(strval($model->defaultTextArea))
                     ->sql(sprintf(
                         "TEXT NOT NULL DEFAULT '%s'",
@@ -328,16 +329,13 @@ foreach ($GLOBALS['con4gis']['data_custom_field_types'] as $type) {
                     ->eval()
                         ->mandatory(boolval($model->mandatory))
                         ->maxlength(intval($model->maxLength));
-                $class = strval($model->class);
-                if (boolval($model->margin) === true) {
-                    $class .= ' m12';
-                }
+                $class = 'clr';
                 $field->eval()->class($class);
             } elseif ($type === 'texteditor') {
                 $field = new TextAreaField($model->alias, $dca);
                 $field->hardLabel(strval($model->name), strval($model->description))
-                    ->filter(boolval($model->filter))
-                    ->search(boolval($model->search))
+                    ->filter(false)
+                    ->search(false)
                     ->default(strval($model->defaultTextEditor))
                     ->sql(sprintf(
                         "TEXT NULL DEFAULT '%s'",
@@ -346,10 +344,7 @@ foreach ($GLOBALS['con4gis']['data_custom_field_types'] as $type) {
                         ->mandatory(boolval($model->mandatory))
                         ->maxlength(intval($model->maxLength))
                         ->rte();
-                $class = strval($model->class);
-                if (boolval($model->margin) === true) {
-                    $class .= ' m12';
-                }
+                $class = 'clr';
                 $field->eval()->class($class);
             } elseif ($type === 'natural') {
                 $field = new NaturalField($model->alias, $dca);
@@ -387,7 +382,7 @@ foreach ($GLOBALS['con4gis']['data_custom_field_types'] as $type) {
                 $field = new SelectField($model->alias, $dca);
                 $field->hardLabel(strval($model->name), strval($model->description))
                     ->filter(boolval($model->filter))
-                    ->search(boolval($model->search))
+                    ->search(false)
                     ->default(strval($model->defaultSelect))
                     ->sql(sprintf(
                         "varchar(255) NOT NULL default '%s'",
@@ -411,7 +406,7 @@ foreach ($GLOBALS['con4gis']['data_custom_field_types'] as $type) {
                 $field = new CheckboxField($model->alias, $dca);
                 $field->hardLabel(strval($model->name), strval($model->description))
                     ->filter(boolval($model->filter))
-                    ->search(boolval($model->search))
+                    ->search(false)
                     ->default(strval($model->defaultCheckbox))
                     ->sql(sprintf(
                         "char(1) NOT NULL default '%s'",
@@ -423,8 +418,8 @@ foreach ($GLOBALS['con4gis']['data_custom_field_types'] as $type) {
             } elseif ($type === 'multicheckbox' || $type === 'filtermulticheckbox') {
                 $field = new MultiCheckboxField($model->alias, $dca);
                 $field->hardLabel(strval($model->name), strval($model->description))
-                    ->filter(boolval($model->filter))
-                    ->search(boolval($model->search))
+                    ->filter(false)
+                    ->search(false)
                     ->default(StringUtil::deserialize($model->defaultMultiCheckbox))
                     ->eval()
                         ->mandatory(boolval($model->mandatory));
@@ -442,8 +437,8 @@ foreach ($GLOBALS['con4gis']['data_custom_field_types'] as $type) {
             } elseif ($type === 'datepicker') {
                 $field = new DatePickerField($model->alias, $dca);
                 $field->hardLabel(strval($model->name), strval($model->description))
-                    ->filter(boolval($model->filter))
-                    ->search(boolval($model->search))
+                    ->filter(false)
+                    ->search(false)
                     ->saveCallback($cbClass, 'saveDate')
                     ->loadCallback($cbClass, 'loadDate')
                     ->default(strval($model->defaultDatePicker))

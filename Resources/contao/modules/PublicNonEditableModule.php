@@ -12,6 +12,7 @@ use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\CoreBundle\Classes\ResourceLoader;
 use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\DataBundle\Resources\contao\models\DataCustomFieldModel;
+use con4gis\DataBundle\Resources\contao\models\DataDirectoryModel;
 use con4gis\DataBundle\Resources\contao\models\DataElementModel;
 use con4gis\DataBundle\Resources\contao\models\DataTypeModel;
 use con4gis\DataBundle\Resources\contao\models\PublicNonEditableModel;
@@ -34,6 +35,7 @@ use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GTextField;
 use con4gis\ProjectsBundle\Classes\Framework\C4GBrickModuleParent;
 use con4gis\ProjectsBundle\Classes\Lists\C4GBrickRenderMode;
 use con4gis\ProjectsBundle\Classes\Views\C4GBrickViewType;
+use Contao\Database;
 use Contao\StringUtil;
 
 
@@ -60,6 +62,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
     public static $type = [];
     public static $directory = [];
     public static $showLabelsInList = false;
+    public static $dataMode = 0;
 
     public function initBrickModule($id)
     {
@@ -138,20 +141,27 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         static::$type = StringUtil::deserialize($this->c4g_data_type);
         static::$directory = StringUtil::deserialize($this->c4g_data_directory);
         static::$showLabelsInList = $this->showLabelsInList === '1';
+        static::$dataMode = $this->c4g_data_mode;
 
-        if (empty(static::$type) && $this->showSelectFilter) {
-            $typeModels = DataTypeModel::findAll();
-            if ($typeModels !== null) {
+        if ((($this->c4g_data_mode === '1' && empty(static::$type)) || ($this->c4g_data_mode === '2' && empty(static::$directory))
+            || ($this->c4g_data_mode === '0')) && $this->showSelectFilter) {
+            $typeStmt = Database::getInstance()->prepare("SELECT DISTINCT tl_c4g_data_type.* FROM tl_c4g_data_type JOIN tl_c4g_data_element ON tl_c4g_data_element.type = tl_c4g_data_type.id where tl_c4g_data_type.allowPublishing != '1' OR tl_c4g_data_element.published = 1");
+            $typeResult = $typeStmt->execute()->fetchAllAssoc();
+            if (!empty($typeResult)) {
                 $options = [];
-                foreach ($typeModels as $model) {
-                    $options[] = $model->name;
-                    ResourceLoader::loadCssResourceTag(
-                        '.filter_type_'.str_replace(' ', '', $model->name).'_parent > div:not(.filter_type_'.str_replace(' ', '', $model->name).'_child) {display: none;}'
-                    );
+                foreach ($typeResult as $row) {
+                    if ($row['name'] !== '') {
+                        $options[] = $row['name'];
+                        ResourceLoader::loadCssResourceTag(
+                            '.filter_type_' . str_replace(' ', '', $row['name']) . '_parent > div:not(.filter_type_' . str_replace(' ', '', $row['name']) . '_child) {display: none;}'
+                        );
+                    }
                 }
-                $this->listParams->addFilterButton(new C4GSelectFilterButton($options));
+                sort($options);
+                $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'type'));
             }
-        } elseif (sizeof(static::$type) > 1) {
+        } elseif ($this->c4g_data_mode === '1' && sizeof(static::$type) > 1 && $this->showSelectFilter) {
+            $options = [];
             foreach (static::$type as $type) {
                 $model = DataTypeModel::findByPk($type);
                 if ($model !== null) {
@@ -161,7 +171,23 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                     );
                 }
             }
-            $this->listParams->addFilterButton(new C4GSelectFilterButton($options));
+            sort($options);
+            $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'type'));
+        } elseif ($this->c4g_data_mode === '2' && sizeof(static::$directory) > 1 && $this->showSelectFilter) {
+            $options = [];
+            foreach (static::$directory as $directory) {
+                $directoryModel = DataDirectoryModel::findByPk($directory);
+                if ($directoryModel !== null) {
+                    if ($directoryModel->name !== '') {
+                        $options[] = $directoryModel->name;
+                        ResourceLoader::loadCssResourceTag(
+                            '.filter_directory_' . str_replace(' ', '', $directoryModel->name) . '_parent > div:not(.filter_directory_' . str_replace(' ', '', $directoryModel->name) . '_child) {display: none;}'
+                        );
+                    }
+                }
+            }
+            sort($options);
+            $this->listParams->addFilterButton(new c4gselectfilterbutton($options, 'directory'));
         }
 
         if ($this->showFilterResetButton) {
@@ -615,16 +641,24 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             }
         }
 
-        if (!static::$type) {
-            try {
-                $classField = new C4GDataClassField();
-                $classField->setFieldName('type');
-                $classField->setClassPrefix('filter_type_');
-                $classField->setClassSuffix('_child');
-                $fieldList[] = $classField;
-            } catch (\Throwable $throwable) {
-                C4gLogModel::addLogEntry('projects', $throwable->getMessage());
-            }
+        try {
+            $classField = new C4GDataClassField();
+            $classField->setFieldName('type');
+            $classField->setClassPrefix('filter_type_');
+            $classField->setClassSuffix('_child');
+            $fieldList[] = $classField;
+        } catch (\Throwable $throwable) {
+            C4gLogModel::addLogEntry('projects', $throwable->getMessage());
+        }
+
+        try {
+            $classField = new C4GDataClassField();
+            $classField->setFieldName('directory');
+            $classField->setClassPrefix('filter_directory_');
+            $classField->setClassSuffix('_child');
+            $fieldList[] = $classField;
+        } catch (\Throwable $throwable) {
+            C4gLogModel::addLogEntry('projects', $throwable->getMessage());
         }
 
         return $fieldList;

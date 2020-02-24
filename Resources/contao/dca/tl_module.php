@@ -12,13 +12,30 @@
 
 $cbClass = \con4gis\DataBundle\Classes\Contao\Callbacks\ModuleCallback::class;
 
+$GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'c4g_data_mode';
+
 $GLOBALS['TL_DCA']['tl_module']['palettes']['public_noneditable'] = '{title_legend},name,headline,type;{caption_legend},'.
-    'captionPlural,caption;{c4g_data_type_legend},c4g_data_type,c4g_data_directory,showSelectFilter,showFilterResetButton,'.
+    'captionPlural,caption;{c4g_data_type_legend},c4g_data_mode,showSelectFilter,showFilterResetButton,'.
     'filterResetButtonCaption;{c4g_expert_legend},hideDetails,showLabelsInList,availableFieldsList;{mapPage_legend},mapPage';
 
+$GLOBALS['TL_DCA']['tl_module']['subpalettes']['c4g_data_mode_0'] = '';
+$GLOBALS['TL_DCA']['tl_module']['subpalettes']['c4g_data_mode_1'] = 'c4g_data_type';
+$GLOBALS['TL_DCA']['tl_module']['subpalettes']['c4g_data_mode_2'] = 'c4g_data_directory';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['member_editable'] =
     '{title_legend},name,headline,type;{c4g_data_type_legend},c4g_data_type;{c4g_authorized_groups_legend},authorizedGroups;{c4g_expert_legend},availableFieldsList';
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_data_mode'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_data_mode'],
+        'exclude'                 => true,
+        'default'                 => false,
+        'inputType'               => 'radio',
+        'options'                 => ['0', '1', '2'],
+        'reference'               => &$GLOBALS['TL_LANG']['tl_module']['c4g_data_mode_option'],
+        'sql'                     => "char(1) NOT NULL default '0'",
+        'eval'                    => ['submitOnChange' => true]
+    ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_data_type'] =
     [

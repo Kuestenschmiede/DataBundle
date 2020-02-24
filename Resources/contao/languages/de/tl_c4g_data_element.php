@@ -38,7 +38,7 @@ $GLOBALS['TL_LANG'][$strName]['osmId'] = ['OSM ID', 'Die ID des Elements in der 
 $GLOBALS['TL_LANG'][$strName]['publishFrom'] = ['Anzeigen ab', 'Das Element wird ab diesem Tag im Frontend angezeigt.'];
 $GLOBALS['TL_LANG'][$strName]['publishTo'] = ['Anzeigen bis', 'Das Element wird bis zu diesem Tag im Frontend angezeigt.'];
 $GLOBALS['TL_LANG'][$strName]['published'] = ['Veröffentlicht', 'Falls gesetzt, wird das Element öffentlich im Frontend angezeigt.'];
-$GLOBALS['TL_LANG'][$strName]['datePublished'] = ['Zeitpunkt der Veröffentlichung', 'Der Zeitpunkt der Veröffentlichung, wenn der Elementtyp dieses Feature unterstützt.'];
+$GLOBALS['TL_LANG'][$strName]['datePublished'] = ['Zeitpunkt der Veröffentlichung', 'Der Zeitpunkt der Veröffentlichung, wenn die Kategorie dieses Feature unterstützt.'];
 $GLOBALS['TL_LANG'][$strName]['ownerGroupId'] = ['Benutzergruppe (Eigentümer)', 'Die Benutzergruppe, dem das Element gehört.'];
 
 $GLOBALS['TL_LANG'][$strName]['phone'] = ['Telefonnummer', ''];
@@ -115,3 +115,13 @@ $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['moreButtonField'] = 'Aktione
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['MoreButtonButtonTitle'] = '';
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['yes'] = 'Ja';
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['no'] = 'Nein';
+
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_published_title'] = 'Erfolg';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_published_message'] = 'Das Element ist veröffentlicht.';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_unpublished_title'] = 'Erfolg';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_unpublished_message'] = 'Das Element ist nicht mehr veröffentlicht.';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_maximum_title'] = 'Maximale Anzahl Anzeigen';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_maximum_message'] = 'Die maximale Anzahl Anzeigen ist bereits erreicht.';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_added_in_frontend'] = 'Im Frontend eingetragen';
+
+

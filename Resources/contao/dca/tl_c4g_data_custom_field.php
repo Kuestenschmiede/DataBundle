@@ -44,24 +44,36 @@ $dca->palette()->default(
 $generalFields = ';{backend_legend},filter,search,mandatory,class,margin'.
     ';{frontend_legend},frontendName,frontendPopup,frontendList,frontendDetails,frontendFilter,frontendFilterList';
 
-$generalFieldsWithoutPosition = ';{backend_legend},filter,search,mandatory,class'.
+$generalFieldsNoSearch = ';{backend_legend},filter,mandatory,class,margin'.
     ';{frontend_legend},frontendName,frontendPopup,frontendList,frontendDetails,frontendFilter,frontendFilterList';
+
+$generalFieldsNoSearchNoFilter = ';{backend_legend},mandatory,class,margin'.
+    ';{frontend_legend},frontendName,frontendPopup,frontendList,frontendDetails,frontendFilter,frontendFilterList';
+
+$generalFieldsNoMargin = ';{backend_legend},filter,search,mandatory,class'.
+    ';{frontend_legend},frontendName,frontendPopup,frontendList,frontendDetails,frontendFilter,frontendFilterList';
+
+$generalFieldsNoSearchNoMargin = ';{backend_legend},filter,search,mandatory,class'.
+    ';{frontend_legend},frontendName,frontendPopup,frontendList,frontendDetails,frontendFilter,frontendFilterList';
+
+$generalFieldsMinimal = ';{backend_legend},mandatory'.
+    ';{frontend_legend},frontendName,frontendPopup,frontendList,frontendDetails';
 
 $dca->palette()->selector(['type'])
     ->subPalette('type', 'text', ",description$generalFields;{type_specific_legend},maxLength,defaultText")
-    ->subPalette('type', 'textarea', ",description$generalFields;{type_specific_legend},maxLength,defaultTextArea")
-    ->subPalette('type', 'texteditor', ",description$generalFields;{type_specific_legend},maxLength,defaultTextEditor")
+    ->subPalette('type', 'textarea', ",description$generalFieldsMinimal;{type_specific_legend},maxLength,defaultTextArea")
+    ->subPalette('type', 'texteditor', ",description$generalFieldsMinimal;{type_specific_legend},maxLength,defaultTextEditor")
     ->subPalette('type', 'natural', ",description$generalFields;{type_specific_legend},defaultNatural")
     ->subPalette('type', 'int', ",description$generalFields;{type_specific_legend},defaultInt")
-    ->subPalette('type', 'select', ",description$generalFields;{type_specific_legend},options,defaultSelect")
-    ->subPalette('type', 'checkbox', ",description$generalFieldsWithoutPosition;{type_specific_legend},defaultCheckbox,".
+    ->subPalette('type', 'select', ",description$generalFieldsNoSearch;{type_specific_legend},options,defaultSelect")
+    ->subPalette('type', 'checkbox', ",description$generalFieldsNoSearchNoMargin;{type_specific_legend},defaultCheckbox,".
         "frontendFilterCheckboxStyling,frontendFilterCheckboxButtonLabelOn,frontendFilterCheckboxButtonLabelOff")
-    ->subPalette('type', 'icon', ",description$generalFields;{type_specific_legend},defaultCheckbox,icon")
-    ->subPalette('type', 'multicheckbox', ",description$generalFields;{type_specific_legend},options,defaultMultiCheckbox")
-    ->subPalette('type', 'datepicker', ",description$generalFields;{type_specific_legend},defaultDatePicker")
-    ->subPalette('type', 'link', ",description$generalFields;{type_specific_legend},defaultCheckbox,linkTitle,linkHref,linkNewTab")
+    ->subPalette('type', 'icon', ",description$generalFieldsNoSearchNoMargin;{type_specific_legend},defaultCheckbox,icon")
+    ->subPalette('type', 'multicheckbox', ",description$generalFieldsNoSearch;{type_specific_legend},options,defaultMultiCheckbox")
+    ->subPalette('type', 'datepicker', ",description$generalFieldsNoSearchNoFilter;{type_specific_legend},defaultDatePicker")
+    ->subPalette('type', 'link', ",description$generalFieldsNoSearchNoMargin;{type_specific_legend},defaultCheckbox,linkTitle,linkHref,linkNewTab")
     ->subPalette('type', 'legend', ";{frontend_legend},frontendName,frontendPopup,frontendList,frontendDetails")
-    ->subPalette('type', 'foreignKey', ",description$generalFields;{type_specific_legend},foreignTable,foreignField");
+    ->subPalette('type', 'foreignKey', ",description$generalFieldsNoSearch;{type_specific_legend},foreignTable,foreignField");
 
 $id = new IdField('id', $dca);
 
@@ -257,4 +269,5 @@ $foreignField->eval()
     ->class('w50');
 
 $importId = new SQLField("importId", $dca, "int(20) unsigned NOT NULL default '0'");
+$importId->eval()->doNotCopy(true);
 

@@ -17,7 +17,5 @@ $GLOBALS['TL_LANG']['MOD']['c4g_data_element'] = ['Data entry', 'Edit map elemen
 $GLOBALS['TL_LANG']['MOD']['c4g_data_custom_field'] = ['Custom fields', 'Edit custom fields'];
 $GLOBALS['TL_LANG']['MOD']['c4g_data_directory'] = ['Directories', 'Edit directories'];
 
-$GLOBALS['TL_LANG']['FMD']['con4gis_data'] = 'con4gis Data';
-
-$GLOBALS['TL_LANG']['FMD']['public_noneditable'] = ['(data) Listing without write access', 'List of map elements without write access'];
-$GLOBALS['TL_LANG']['FMD']['public_editable'] = ['(data) Listing with write access', 'List of map elements with write access'];
+$GLOBALS['TL_LANG']['FMD']['public_noneditable'] = ['Listing without write access', 'List of elements without write access'];
+$GLOBALS['TL_LANG']['FMD']['member_editable'] = ['Listing with write access for members', 'List of elements with write access'];
