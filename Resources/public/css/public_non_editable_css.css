@@ -58,6 +58,7 @@ li > .span-list {
 
 .c4g_list_filter_buttons * {
     display: inline-block;
+    vertical-align: bottom;
 }
 
 .c4g_list_filter_buttons i.ui-button {
