@@ -76,7 +76,7 @@ class CustomFieldCallback extends Backend
             'Field != \'datePublished\'',
         ];
 
-        $stmt = $db->prepare("SHOW COLUMNS FROM tl_c4g_data_element WHERE " . implode(' AND ', $fieldNames));
+        $stmt = $db->prepare('SHOW COLUMNS FROM tl_c4g_data_element WHERE ' . implode(' AND ', $fieldNames));
         $dbColumns = $stmt->execute()->fetchAllAssoc();
 
         $stmt = $db->prepare("SELECT * FROM tl_c4g_data_custom_field WHERE type != 'legend' AND type != ''");
@@ -100,45 +100,55 @@ class CustomFieldCallback extends Backend
                 case 'text':
                     $customFieldTypes[$customField['alias']] = 'varchar(' . $customField['maxLength'] . ')';
                     $customFieldDefaults[$customField['alias']] = $customField['defaultText'];
+
                     break;
                 case 'textarea':
                     $customFieldTypes[$customField['alias']] = 'text';
                     $customFieldDefaults[$customField['alias']] = $customField['defaultTextArea'];
+
                     break;
                 case 'texteditor':
                     $customFieldTypes[$customField['alias']] = 'text';
                     $customFieldDefaults[$customField['alias']] = $customField['defaultTextEditor'];
+
                     break;
                 case 'natural':
                     $customFieldTypes[$customField['alias']] = 'int(10) unsigned';
                     $customFieldDefaults[$customField['alias']] = $customField['defaultNatural'];
+
                     break;
                 case 'int':
                     $customFieldTypes[$customField['alias']] = 'int(10) signed';
                     $customFieldDefaults[$customField['alias']] = $customField['defaultInt'];
+
                     break;
                 case 'select':
                     $customFieldTypes[$customField['alias']] = 'varchar(255)';
                     $customFieldDefaults[$customField['alias']] = $customField['defaultSelect'];
+
                     break;
                 case 'checkbox':
                 case 'link':
                 case 'icon':
                     $customFieldTypes[$customField['alias']] = 'char(1)';
                     $customFieldDefaults[$customField['alias']] = $customField['defaultCheckbox'];
+
                     break;
                 case 'multicheckbox':
                 case 'filtermulticheckbox':
                     $customFieldTypes[$customField['alias']] = 'text';
                     $customFieldDefaults[$customField['alias']] = null;
+
                     break;
                 case 'datepicker':
                     $customFieldTypes[$customField['alias']] = 'varchar(10)';
                     $customFieldDefaults[$customField['alias']] = $customField['defaultDatePicker'];
+
                     break;
                 case 'foreignKey':
                     $customFieldTypes[$customField['alias']] = 'int(10)';
                     $customFieldDefaults[$customField['alias']] = '0';
+
                     break;
                 default:
                     break;
@@ -148,6 +158,7 @@ class CustomFieldCallback extends Backend
         foreach ($columnNames as $columnName) {
             if (!in_array($columnName, $customFieldNames)) {
                 Message::addInfo($GLOBALS['TL_LANG'][$this->dcaName]['install_tool_hint']);
+
                 return;
             }
         }
@@ -155,12 +166,15 @@ class CustomFieldCallback extends Backend
         foreach ($customFieldNames as $customFieldName) {
             if (!in_array($customFieldName, $columnNames)) {
                 Message::addInfo($GLOBALS['TL_LANG'][$this->dcaName]['install_tool_hint']);
+
                 return;
             } elseif ($customFieldTypes[$customFieldName] !== $columnTypes[$customFieldName]) {
                 Message::addInfo($GLOBALS['TL_LANG'][$this->dcaName]['install_tool_hint']);
+
                 return;
             } elseif ($customFieldDefaults[$customFieldName] !== $columnDefaults[$customFieldName]) {
                 Message::addInfo($GLOBALS['TL_LANG'][$this->dcaName]['install_tool_hint']);
+
                 return;
             }
         }
