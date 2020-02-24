@@ -89,6 +89,8 @@ li > .span-list {
 /*------------------------*/
 /*----------content--------*/
 
+
+/*-----------Blocks-------*/
 .c4g_brick_list {
     display: flex;
     flex-wrap: wrap;
@@ -96,7 +98,7 @@ li > .span-list {
     justify-content: space-between;
 }
 
-.c4gGuiAction {
+.c4g_brick_list > ul ~ .c4gGuiAction {
     margin: 10px 0;
     padding: 5px;
     cursor: pointer;
@@ -129,16 +131,37 @@ li > .span-list {
 }
 
 @media(max-width: 700px) {
-    .c4gGuiAction {width: 100%;}
+    .c4g_brick_list > ul ~ .c4gGuiAction {width: 100%;}
 }
 
 @media(min-width: 700px) and (max-width: 1200px) {
-    .c4gGuiAction {width: calc(100%/2 - 10px);}
+    .c4g_brick_list > ul ~ .c4gGuiAction {width: calc(100%/2 - 10px);}
 }
 
 @media(min-width: 1200px){
-    .c4gGuiAction {width: calc(100%/3 - 10px);}
+    .c4g_brick_list > ul ~ .c4gGuiAction {width: calc(100%/3 - 10px);}
 }
+/*----------------*/
+
+.c4g_brick_list .name {
+    font-weight: bold;
+}
+
+.c4g_brick_list .name:before {
+    content: "\f0a9";
+    font-family: "Font Awesome 5 Free";
+    margin-right: 10px;
+}
+.c4g_brick_dialog div ~ a {
+    display: block;
+    margin-bottom: .25em;
+    margin-top: .25em;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    width: 95%;
+    min-height: 27px;
+}
+
 
 /*----------------*/
 
