@@ -66,6 +66,7 @@ $showLabels->default(false);
 $allowPublishing = new CheckboxField('allowPublishing', $dca);
 
 $importId = new SQLField("importId", $dca, "int(20) unsigned NOT NULL default '0'");
+$importId->eval()->doNotCopy(true);
 
 $categorySort = new SQLField('categorySort', $dca, "int(10) unsigned NOT NULL default '0'");
 

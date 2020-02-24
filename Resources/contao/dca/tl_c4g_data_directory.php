@@ -48,4 +48,5 @@ $types = new MultiCheckboxField('types', $dca);
 $types->optionsCallback($cbClass, 'loadTypeOptions');
 
 $importId = new SQLField("importId", $dca, "int(20) unsigned NOT NULL default '0'");
+$importId->eval()->doNotCopy(true);
 

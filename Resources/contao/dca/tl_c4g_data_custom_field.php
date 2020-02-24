@@ -269,4 +269,5 @@ $foreignField->eval()
     ->class('w50');
 
 $importId = new SQLField("importId", $dca, "int(20) unsigned NOT NULL default '0'");
+$importId->eval()->doNotCopy(true);
 
