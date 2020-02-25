@@ -15,7 +15,7 @@ $cbClass = \con4gis\DataBundle\Classes\Contao\Callbacks\ModuleCallback::class;
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'c4g_data_mode';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['public_noneditable'] = '{title_legend},name,headline,type;{caption_legend},'.
-    'captionPlural,caption;{c4g_data_type_legend},c4g_data_mode,showSelectFilter,showFilterResetButton,'.
+    'captionPlural,caption;{c4g_data_type_legend},c4g_data_mode,showSelectFilter,showDirectorySelectFilter,showFilterResetButton,'.
     'filterResetButtonCaption;{c4g_expert_legend},hideDetails,showLabelsInList,availableFieldsList;{mapPage_legend},mapPage';
 
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['c4g_data_mode_0'] = '';
@@ -84,6 +84,15 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['captionPlural'] =
 $GLOBALS['TL_DCA']['tl_module']['fields']['showSelectFilter'] =
     [
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['showSelectFilter'],
+        'exclude'                 => true,
+        'default'                 => false,
+        'inputType'               => 'checkbox',
+        'sql'                     => "char(1) NOT NULL default '0'"
+    ];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['showDirectorySelectFilter'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['showDirectorySelectFilter'],
         'exclude'                 => true,
         'default'                 => false,
         'inputType'               => 'checkbox',

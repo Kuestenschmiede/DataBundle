@@ -122,3 +122,6 @@ $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_unpublished_message'
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_maximum_title'] = 'Maximum number of advertisements';
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_maximum_message'] = 'Maximum number of advertisements are already reached.';
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_added_in_frontend'] = 'Added in frontend';
+
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_directory'] = 'Filter by directory:';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_category'] = 'Filter by category:';

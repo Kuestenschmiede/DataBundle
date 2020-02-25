@@ -17,6 +17,7 @@ $GLOBALS['TL_LANG']['tl_module']['mapPage'] = ['Map page', ''];
 $GLOBALS['TL_LANG']['tl_module']['captionPlural'] = ['List title', 'The title above the list.'];
 $GLOBALS['TL_LANG']['tl_module']['caption'] = ['Detail title', 'The title above the list details.'];
 $GLOBALS['TL_LANG']['tl_module']['showSelectFilter'] = ['Show category filter in the list', 'If checked, a category filter is shown above the list.'];
+$GLOBALS['TL_LANG']['tl_module']['showDirectorySelectFilter'] = ['Show directory filter in the list', 'If checked, a directory filter is shown above the list (only if elements are loaded by directory).'];
 $GLOBALS['TL_LANG']['tl_module']['showFilterResetButton'] = ['Show button to reset the filter options', 'I checked, a button is shown above the list that will reset filter options when clicked.'];
 $GLOBALS['TL_LANG']['tl_module']['filterResetButtonCaption'] = ['Button text', 'The button text.'];
 $GLOBALS['TL_LANG']['tl_module']['hideDetails'] = ['Hide list details', 'If checked, the details are not shown when a list element is clicked.'];

@@ -158,7 +158,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                     }
                 }
                 sort($options);
-                $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'type'));
+                $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'type', $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_category'], 'c4g_list_type_filter'));
             }
         } elseif ($this->c4g_data_mode === '1' && sizeof(static::$type) > 1 && $this->showSelectFilter) {
             $options = [];
@@ -172,22 +172,42 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                 }
             }
             sort($options);
-            $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'type'));
-        } elseif ($this->c4g_data_mode === '2' && sizeof(static::$directory) > 1 && $this->showSelectFilter) {
+            $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'type', $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_category'], 'c4g_list_type_filter'));
+        } elseif ($this->c4g_data_mode === '2' && sizeof(static::$directory) > 1) {
             $options = [];
+            $typeOptions = [];
             foreach (static::$directory as $directory) {
                 $directoryModel = DataDirectoryModel::findByPk($directory);
                 if ($directoryModel !== null) {
                     if ($directoryModel->name !== '') {
                         $options[] = $directoryModel->name;
+                        $typeOptions = array_merge($typeOptions, StringUtil::deserialize($directoryModel->types));
                         ResourceLoader::loadCssResourceTag(
                             '.filter_directory_' . str_replace(' ', '', $directoryModel->name) . '_parent > div:not(.filter_directory_' . str_replace(' ', '', $directoryModel->name) . '_child) {display: none;}'
                         );
                     }
                 }
             }
-            sort($options);
-            $this->listParams->addFilterButton(new c4gselectfilterbutton($options, 'directory'));
+            if ($this->showDirectorySelectFilter) {
+                sort($options);
+                $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'directory', $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_directory'], 'c4g_list_directory_filter'));
+            }
+            $typeOptions = array_unique($typeOptions);
+            if (!empty($typeOptions) && $this->showSelectFilter) {
+                $options = [];
+                foreach ($typeOptions as $option) {
+                    $typeModel = DataTypeModel::findByPk($option);
+                    if ($typeModel !== null) {
+                        $options[] = $typeModel->name;
+                        ResourceLoader::loadCssResourceTag(
+                            '.filter_type_'.str_replace(' ', '', $typeModel->name).'_parent > div:not(.filter_type_'.str_replace(' ', '', $typeModel->name).'_child) {display: none;}'
+                        );
+                    }
+                }
+                sort($options);
+                $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'type', $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_category'], 'c4g_list_type_filter'));
+
+            }
         }
 
         if ($this->showFilterResetButton) {
