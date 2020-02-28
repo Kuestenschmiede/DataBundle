@@ -1,7 +1,7 @@
 {
     "name": "con4gis/data",
     "type": "contao-bundle",
-    "description": "A con4gis bundle.",
+    "description": "The data brick of the Contao GIS-kit con4gis.",
     "keywords": ["con4gis", "DataBundle"],
     "homepage": "https://con4gis.org",
     "license": "LGPL-3.0-or-later",
