@@ -20,7 +20,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-class con4GisDataExtension extends Extension
+class con4gisDataExtension extends Extension
 {
     /**
      * {@inheritdoc}
