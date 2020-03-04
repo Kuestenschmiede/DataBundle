@@ -10,6 +10,7 @@
  * @link      https://www.kuestenschmiede.de
  */
 
+use con4gis\CoreBundle\Classes\C4GVersionProvider;
 use con4gis\CoreBundle\Classes\DCA\DCA;
 use con4gis\CoreBundle\Classes\DCA\Fields\IdField;
 use con4gis\CoreBundle\Classes\DCA\Fields\MultiColumnField;
@@ -40,13 +41,19 @@ $list->sorting()->panelLayout('filter;sort,search,limit');
 $list->label()->fields(['name', 'type'])
     ->labelCallback($cbClass, 'getLabel');
 $list->addRegularOperations($dca);
-$dca->palette()->default('{data_legend},name,type')
-    ->selector(['type', 'loctype'])
-    ->subPalette("loctype", "point", "geox,geoy")
-    ->subPalette("loctype", "circle", "geoJson")
-    ->subPalette("loctype", "line", "geoJson")
-    ->subPalette("loctype", "polygon", "geoJson");
 
+if (C4GVersionProvider::isInstalled('con4gis/editor')) {
+    $dca->palette()->default('{data_legend},name,type')
+        ->selector(['type', 'loctype'])
+        ->subPalette("loctype", "point", "geox,geoy")
+        ->subPalette("loctype", "circle", "geoJson")
+        ->subPalette("loctype", "line", "geoJson")
+        ->subPalette("loctype", "polygon", "geoJson");
+} else {
+    $dca->palette()->default('{data_legend},name,type')
+        ->selector(['type', 'loctype'])
+        ->subPalette("loctype", "point", "geox,geoy");
+}
 $types = \con4gis\DataBundle\Resources\contao\models\DataTypeModel::findAll();
 if ($types !== null) {
     foreach ($types as $type) {
@@ -127,14 +134,25 @@ $parent->optionsCallback($cbClass, 'loadParentOptions')
         ->chosen()
         ->includeBlankOption();
 
-$locType = new SelectField('loctype', $dca);
-$locType->default('point')
-    ->options(['point', 'circle', 'line', 'polygon'])
-    ->reference('loctype_ref')
-    ->sql("varchar(20) NOT NULL default ''")
-    ->eval()->class('clr')
-    ->includeBlankOption()
-    ->submitOnChange();
+if (C4GVersionProvider::isInstalled('con4gis/editor')) {
+    $locType = new SelectField('loctype', $dca);
+    $locType->default('point')
+        ->options(['point', 'circle', 'line', 'polygon'])
+        ->reference('loctype_ref')
+        ->sql("varchar(20) NOT NULL default ''")
+        ->eval()->class('clr')
+        ->includeBlankOption()
+        ->submitOnChange();
+} else {
+    $locType = new SelectField('loctype', $dca);
+    $locType->default('point')
+        ->options(['point'])
+        ->reference('loctype_ref')
+        ->sql("varchar(20) NOT NULL default ''")
+        ->eval()->class('clr')
+        ->includeBlankOption()
+        ->submitOnChange();
+}
 
 $geoX = new TextField('geox', $dca);
 $geoX->inputType('c4g_text')
@@ -154,10 +172,12 @@ $geoY->inputType('c4g_text')
     ->maxlength(20)
     ->class('w50 wizard');
 
-$geoJson = new TextAreaField('geoJson', $dca);
-$geoJson->wizard('con4gis\EditorBundle\Classes\Contao\GeoEditor', 'getEditorLink')
-    ->eval()->class('wizard')
-    ->preserveTags();
+if (C4GVersionProvider::isInstalled('con4gis/editor')) {
+    $geoJson = new TextAreaField('geoJson', $dca);
+    $geoJson->wizard('con4gis\EditorBundle\Classes\Contao\GeoEditor', 'getEditorLink')
+        ->eval()->class('wizard')
+        ->preserveTags();
+}
 
 $description = new TextAreaField('description', $dca);
 $description->eval()->class('clr')
