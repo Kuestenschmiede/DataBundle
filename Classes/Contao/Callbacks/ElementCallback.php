@@ -120,6 +120,14 @@ class ElementCallback extends Backend
             return '';
         }
 
+        // Only show button if type supports it
+        $typeModel = DataTypeModel::findByPk($row['type']);
+        if ($typeModel !== null) {
+            if (strval($typeModel->allowPublishing) !== '1') {
+                return '';
+            }
+        }
+
         $href .= '&amp;id=' . $this->Input->get('id') . '&amp;tid=' . $row['id'] . '&amp;state=' . $row[''];
 
         if (!$row['published']) {
