@@ -126,16 +126,18 @@ class TypeCallback extends Backend
                 " <sup title='" . $language['publishTo'][1] . "'>(?)</sup>",
         ];
         $customFields = DataCustomFieldModel::findAll();
-        foreach ($customFields as $customField) {
-            if ($customField->type === 'legend') {
-                $label = '<strong>' . $GLOBALS['TL_LANG']['tl_c4g_data_type']['legend'] . strval($customField->name) . '</strong>';
-                $options[strval($customField->alias)] = $label;
-            } else {
-                $label = strval($customField->name);
-                if (strval($customField->description) !== '') {
-                    $label .= " <sup title='" . strval($customField->description) . "'>(?)</sup>";
+        if ($customFields !== null) {
+            foreach ($customFields as $customField) {
+                if ($customField->type === 'legend') {
+                    $label = '<strong>' . $GLOBALS['TL_LANG']['tl_c4g_data_type']['legend'] . strval($customField->name) . '</strong>';
+                    $options[strval($customField->alias)] = $label;
+                } else {
+                    $label = strval($customField->name);
+                    if (strval($customField->description) !== '') {
+                        $label .= " <sup title='" . strval($customField->description) . "'>(?)</sup>";
+                    }
+                    $options[strval($customField->alias)] = $label;
                 }
-                $options[strval($customField->alias)] = $label;
             }
         }
 
