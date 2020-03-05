@@ -92,6 +92,11 @@ li > .span-list {
 
 
 /*-----------Blocks-------*/
+
+div#c4g_brick ul {
+    list-style-type: none;
+}
+
 .c4g_brick_list {
     display: flex;
     flex-wrap: wrap;
@@ -100,11 +105,9 @@ li > .span-list {
 }
 
 .c4g_brick_list > ul ~ .c4gGuiAction {
-    margin: 10px 0;
-    padding: 5px;
+    padding: 10px 5px;
     cursor: pointer;
-    max-width: 500px;
-    padding-bottom: 33px;
+    padding-bottom: 45px;
 }
 
 .c4gGuiAction ul {
