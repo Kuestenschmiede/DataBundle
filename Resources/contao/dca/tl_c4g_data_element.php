@@ -28,6 +28,7 @@ use con4gis\CoreBundle\Classes\DCA\Fields\DatePickerField;
 use con4gis\DataBundle\Resources\contao\models\DataCustomFieldModel;
 use Contao\StringUtil;
 use con4gis\CoreBundle\Classes\C4GUtils;
+use \con4gis\CoreBundle\Classes\DCA\Operations\TogglePublishedOperation;
 
 $strName = 'tl_c4g_data_element';
 $cbClass = ElementCallback::class;
@@ -41,6 +42,7 @@ $list->sorting()->panelLayout('filter;sort,search,limit');
 $list->label()->fields(['name', 'type'])
     ->labelCallback($cbClass, 'getLabel');
 $list->addRegularOperations($dca);
+new TogglePublishedOperation($dca, $cbClass, 'toggleIcon');
 
 if (C4GVersionProvider::isInstalled('con4gis/editor')) {
     $dca->palette()->default('{data_legend},name,type')
