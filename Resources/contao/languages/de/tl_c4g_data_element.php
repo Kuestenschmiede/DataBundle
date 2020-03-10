@@ -60,10 +60,10 @@ $GLOBALS['TL_LANG'][$strName]['geoJson'] = ['Geo-JSON', 'Geben Sie das GeoJSON a
 /**
  * References
  */
-$GLOBALS['TL_LANG'][$strName]['loctype_ref']['point'] = "Punkt";
-$GLOBALS['TL_LANG'][$strName]['loctype_ref']['line'] = "Strecke";
-$GLOBALS['TL_LANG'][$strName]['loctype_ref']['circle'] = "Kreis";
-$GLOBALS['TL_LANG'][$strName]['loctype_ref']['polygon'] = "Polygon";
+$GLOBALS['TL_LANG'][$strName]['loctype_ref']['point'] = "Punkt (Koordinaten)";
+$GLOBALS['TL_LANG'][$strName]['loctype_ref']['line'] = "Strecke (GeoJson)";
+$GLOBALS['TL_LANG'][$strName]['loctype_ref']['circle'] = "Kreis (GeoJson)";
+$GLOBALS['TL_LANG'][$strName]['loctype_ref']['polygon'] = "Polygon (GeoJson)";
 
 /**
  * Legends

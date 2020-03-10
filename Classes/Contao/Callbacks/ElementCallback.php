@@ -17,6 +17,7 @@ use con4gis\DataBundle\Resources\contao\models\DataTypeModel;
 use con4gis\MapsBundle\Classes\Utils;
 use Contao\Backend;
 use Contao\DataContainer;
+use Contao\Image;
 
 class ElementCallback extends Backend
 {
@@ -103,5 +104,47 @@ class ElementCallback extends Backend
         }
 
         return $varValue;
+    }
+
+    public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
+    {
+        $this->import('BackendUser', 'User');
+
+        if (strlen($this->Input->get('tid'))) {
+            $this->toggleVisibility($this->Input->get('tid'), ($this->Input->get('state') != 1));
+            $this->redirect($this->getReferer());
+        }
+
+        // Check permissions AFTER checking the tid, so hacking attempts are logged
+        if (!$this->User->isAdmin && !$this->User->hasAccess($this->dcaName . '::published', 'alexf')) {
+            return '';
+        }
+
+        // Only show button if type supports it
+        $typeModel = DataTypeModel::findByPk($row['type']);
+        if ($typeModel !== null) {
+            if (strval($typeModel->allowPublishing) !== '1') {
+                return '';
+            }
+        }
+
+        $href .= '&amp;id=' . $this->Input->get('id') . '&amp;tid=' . $row['id'] . '&amp;state=' . $row[''];
+
+        if (!$row['published']) {
+            $icon = 'invisible.svg';
+        }
+
+        return '<a href="' . $this->addToUrl($href) . '" title="' . specialchars($title) . '"' . $attributes . '>' . Image::getHtml($icon, $label) . '</a> ';
+    }
+    public function toggleVisibility($id, $published)
+    {
+        // Check permissions to publish
+        if (!$this->User->isAdmin && !$this->User->hasAccess($this->dcaName . '::published', 'alexf')) {
+            $this->redirect('contao/main.php?act=error');
+        }
+
+        // Update the database
+        $this->Database->prepare('UPDATE ' . $this->dcaName . ' SET tstamp=' . time() . ", published='" . ($published ? '0' : '1') . "' WHERE id=?")
+            ->execute($id);
     }
 }

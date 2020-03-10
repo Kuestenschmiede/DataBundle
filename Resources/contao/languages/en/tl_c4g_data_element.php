@@ -60,10 +60,10 @@ $GLOBALS['TL_LANG'][$strName]['geoJson'] = ['Geo-JSON', 'Enter the GeoJSON. When
 /**
  * References
  */
-$GLOBALS['TL_LANG'][$strName]['loctype_ref']['point'] = "Point";
-$GLOBALS['TL_LANG'][$strName]['loctype_ref']['line'] = "Line";
-$GLOBALS['TL_LANG'][$strName]['loctype_ref']['circle'] = "Circle";
-$GLOBALS['TL_LANG'][$strName]['loctype_ref']['polygon'] = "Polygon";
+$GLOBALS['TL_LANG'][$strName]['loctype_ref']['point'] = "Point (Koordinaten)";
+$GLOBALS['TL_LANG'][$strName]['loctype_ref']['line'] = "Line (GeoJson)";
+$GLOBALS['TL_LANG'][$strName]['loctype_ref']['circle'] = "Circle (GeoJson)";
+$GLOBALS['TL_LANG'][$strName]['loctype_ref']['polygon'] = "Polygon (GeoJson)";
 
 /**
  * Legends
