@@ -550,7 +550,7 @@ class LoadLayersListener
                 $popupInfo = $objComments->parseBbCode($popupInfo);
                 $properties['popup'] = [
                     'content' => $popupInfo,
-                    'routing_link' => '1',
+                    'routing_link' => $dataLayer['routing_link'],
                     'async' => false,
                 ];
                 if ($availableFields && $combineFields) {
