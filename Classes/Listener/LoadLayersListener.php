@@ -78,7 +78,7 @@ class LoadLayersListener
         EventDispatcherInterface $eventDispatcher
     ) {
         $dataLayer = $event->getLayerData();
-        if (!($dataLayer['type'] === 'mpCntnt') || !($dataLayer['type'] === 'mpCntnt_directory')) {
+        if (!($dataLayer['type'] === 'mpCntnt') && !($dataLayer['type'] === 'mpCntnt_directory')) {
             return;
         }
         $objData = C4gMapsModel::findByPk($dataLayer['id']);
@@ -114,7 +114,7 @@ class LoadLayersListener
         EventDispatcherInterface $eventDispatcher
     ) {
         $dataLayer = $event->getLayerData();
-        if (!($dataLayer['type'] === 'mpCntnt') || !($dataLayer['type'] === 'mpCntnt_directory')) {
+        if (!($dataLayer['type'] === 'mpCntnt') && !($dataLayer['type'] === 'mpCntnt_directory')) {
             return;
         }
         $objLocations = [];
@@ -142,7 +142,7 @@ class LoadLayersListener
         EventDispatcherInterface $eventDispatcher
     ) {
         $dataLayer = $event->getLayerData();
-        if (!($dataLayer['type'] === 'mpCntnt' || $dataLayer['type'] === 'mpCntnt_directory')) {
+        if (!($dataLayer['type'] === 'mpCntnt') && !($dataLayer['type'] === 'mpCntnt_directory')) {
             return;
         }
         $fmClass = new C4GBrickMapFrontendParent();
