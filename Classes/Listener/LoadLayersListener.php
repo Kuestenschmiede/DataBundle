@@ -203,7 +203,11 @@ class LoadLayersListener
                 $type['name'],
                 $type['name'],
                 true,
-                $dataLayer['hide']
+                $dataLayer['hide'],
+                false,
+                false,
+                $dataLayer
+
             );
             $availableFields = unserialize($type['availableFields']);
             if ($availableFields) {
@@ -599,7 +603,9 @@ class LoadLayersListener
                     $typeElement['name'],
                     true,
                     $structureType['hide'],
-                    $content
+                    $content,
+                    false,
+                    $dataLayer
                 );
                 $geoJSON['properties']['id'] = $structureElement['id'];
                 $jsonFeatures[] = $geoJSON;
