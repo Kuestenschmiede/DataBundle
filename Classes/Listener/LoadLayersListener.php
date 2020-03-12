@@ -117,7 +117,6 @@ class LoadLayersListener
         if (!($dataLayer['type'] === 'mpCntnt') && !($dataLayer['type'] === 'mpCntnt_directory')) {
             return;
         }
-        $objLocations = [];
         $types = $event->getAdditionalData()['types'];
         $typeIds = $event->getAdditionalData()['typeIds'];
         $arrElements = [];
