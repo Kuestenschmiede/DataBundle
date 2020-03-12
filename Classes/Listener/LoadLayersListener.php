@@ -245,7 +245,7 @@ class LoadLayersListener
 
                                     break;
                                 default:
-                                    $merge[$k] = $v ? $v : $merge[$k];
+                                    $merge[$k] = $v ?: $merge[$k];
                                     if ($merge[$k] === null) {
                                         $merge[$k] = '';
                                     }
