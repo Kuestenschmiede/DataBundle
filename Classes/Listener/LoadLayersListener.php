@@ -101,7 +101,6 @@ class LoadLayersListener
                 $arrTypes[] = $objSelectedTypes->row();
             }
         }
-//        $addData = $event->getAdditionalData();
         $addData['types'] = $arrTypes;
         $addData['typeIds'] = $selectedTypes;
         $addData['dataLayer'] = $dataLayer;
