@@ -244,6 +244,12 @@ class LoadLayersListener
                                     }
 
                                     break;
+                                case 'type':
+                                    $merge[$k] = $merge[$k] ?: $v;
+                                    if ($merge[$k] === null) {
+                                        $merge[$k] = '';
+                                    }
+                                    break;
                                 default:
                                     $merge[$k] = $v ?: $merge[$k];
                                     if ($merge[$k] === null) {
