@@ -158,7 +158,7 @@ class LoadLayersListener
                         $currentTypes[] = $type;
                     }
                 }
-                $structureTypes = $this->getStructuresForTypes($types, $dataLayer, $elements);
+                $structureTypes = $this->getStructuresForTypes($currentTypes, $dataLayer, $elements);
                 $directoryStructure = $fmClass->createMapStructureElementWithIdCalc(
                     $directory['id'],
                     $dataLayer['id'],
