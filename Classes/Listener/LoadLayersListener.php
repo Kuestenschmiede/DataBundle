@@ -120,8 +120,7 @@ class LoadLayersListener
         $typeIds = $event->getAdditionalData()['typeIds'];
         $arrElements = [];
         foreach ($typeIds as $typeId) {
-            $class = $GLOBALS['TL_MODELS']['tl_c4g_data_element'];
-            $elements = $class::findPublishedBy('type', $typeId);
+            $elements = DataElementModel::findPublishedBy('type', $typeId);
             if ($elements !== null) {
                 $elements = $elements->fetchAll();
                 $arrElements[$typeId] = $elements;
