@@ -153,7 +153,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                     if ($row['name'] !== '') {
                         $options[] = $row['name'];
                         ResourceLoader::loadCssResourceTag(
-                            '.filter_type_' . str_replace(' ', '', $row['name']) . '_parent > div:not(.filter_type_' . str_replace(' ', '', $row['name']) . '_child) {display: none;}'
+                            '.filter_type_' . str_replace([' ', '/', '.', ',', '-'], '', $row['name']) . '_parent > div:not(.filter_type_' . str_replace([' ', '/', '.', ',', '-'], '', $row['name']) . '_child) {display: none;}'
                         );
                     }
                 }
@@ -167,7 +167,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                 if ($model !== null) {
                     $options[] = $model->name;
                     ResourceLoader::loadCssResourceTag(
-                        '.filter_type_'.str_replace(' ', '', $model->name).'_parent > div:not(.filter_type_'.str_replace(' ', '', $model->name).'_child) {display: none;}'
+                        '.filter_type_'.str_replace([' ', '/', '.', ',', '-'], '', $model->name).'_parent > div:not(.filter_type_'.str_replace([' ', '/', '.', ',', '-'], '', $model->name).'_child) {display: none;}'
                     );
                 }
             }
@@ -183,7 +183,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                         $options[] = $directoryModel->name;
                         $typeOptions = array_merge($typeOptions, StringUtil::deserialize($directoryModel->types));
                         ResourceLoader::loadCssResourceTag(
-                            '.filter_directory_' . str_replace(' ', '', $directoryModel->name) . '_parent > div:not(.filter_directory_' . str_replace(' ', '', $directoryModel->name) . '_child) {display: none;}'
+                            '.filter_directory_' . str_replace([' ', '/', '.', ',', '-'], '', $directoryModel->name) . '_parent > div:not(.filter_directory_' . str_replace([' ', '/', '.', ',', '-'], '', $directoryModel->name) . '_child) {display: none;}'
                         );
                     }
                 }
@@ -200,7 +200,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                     if ($typeModel !== null) {
                         $options[] = $typeModel->name;
                         ResourceLoader::loadCssResourceTag(
-                            '.filter_type_'.str_replace(' ', '', $typeModel->name).'_parent > div:not(.filter_type_'.str_replace(' ', '', $typeModel->name).'_child) {display: none;}'
+                            '.filter_type_'.str_replace([' ', '/', '.', ',', '-'], '', $typeModel->name).'_parent > div:not(.filter_type_'.str_replace([' ', '/', '.', ',', '-'], '', $typeModel->name).'_child) {display: none;}'
                         );
                     }
                 }
