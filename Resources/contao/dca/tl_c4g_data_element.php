@@ -461,8 +461,6 @@ foreach ($GLOBALS['con4gis']['data_custom_field_types'] as $type) {
                 $field->hardLabel(strval($model->name), strval($model->description))
                     ->filter(false)
                     ->search(false)
-                    ->saveCallback($cbClass, 'saveDate')
-                    ->loadCallback($cbClass, 'loadDate')
                     ->default(strval($model->defaultDatePicker))
                     ->sql(sprintf(
                         "varchar(10) NOT NULL default '%s'",

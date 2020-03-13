@@ -223,16 +223,6 @@ class CustomFieldCallback extends Backend
         return str_replace([' ', 'ä', 'ö', 'ü', 'Ä', 'Ö', 'Ü'], ['_', 'ae', 'oe', 'ue', 'ae', 'oe', 'ue'], strtolower($dca->activeRecord->name));
     }
 
-    public function saveDate($value, DataContainer $dca)
-    {
-        return strtotime($value);
-    }
-
-    public function loadDate($value, DataContainer $dca)
-    {
-        return date('m/d/Y', $value);
-    }
-
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
     {
         $this->import('BackendUser', 'User');
