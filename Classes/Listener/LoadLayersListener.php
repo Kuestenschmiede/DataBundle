@@ -120,11 +120,23 @@ class LoadLayersListener
         $typeIds = $event->getAdditionalData()['typeIds'];
         $arrElements = [];
         foreach ($typeIds as $typeId) {
-            $elements = DataElementModel::findPublishedBy('type', $typeId);
-            if ($elements !== null) {
-                $elements = $elements->fetchAll();
-                $arrElements[$typeId] = $elements;
+            $key = array_search($typeId, array_column($types, 'id'));
+            $type = $types[$key];
+            if ($type['allowPublishing']) {
+                $elements = DataElementModel::findRealPublishedBy('type', $typeId);
+                if ($elements !== null) {
+                    $elements = $elements->fetchAll();
+                    $arrElements[$typeId] = $elements;
+                }
             }
+            else {
+                $elements = DataElementModel::findPublishedBy('type', $typeId);
+                if ($elements !== null) {
+                    $elements = $elements->fetchAll();
+                    $arrElements[$typeId] = $elements;
+                }
+            }
+
         }
 
         $addData = $event->getAdditionalData();
