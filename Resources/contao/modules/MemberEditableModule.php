@@ -121,11 +121,11 @@ class MemberEditableModule extends C4GBrickModuleParent
 
                             $fieldList[] = $field;
                             break;
-                        case 'multicolumn':
+                        case 'multicheckbox':
                             $field = C4GMultiCheckboxField::create($customField->alias,
                                 $customField->frontendName ?: $customField->name ?: '',
                                 $customField->description ?: '',
-                                true, true, true, true);
+                                true, false, true, true);
 
                             $options = StringUtil::deserialize($customField->options);
                             $optionsFormatted = [];
