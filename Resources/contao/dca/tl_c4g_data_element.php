@@ -289,12 +289,10 @@ $osmId = new NaturalField('osmId', $dca);
 $osmId->eval()->class('clr');
 
 $publishFrom = new DatePickerField('publishFrom', $dca);
-$publishFrom->saveCallback($cbClass, 'saveDate')
-    ->sql("varchar(10) NOT NULL default ''");
+$publishFrom->sql("varchar(10) NOT NULL default ''");
 
 $publishTo = new DatePickerField('publishTo', $dca);
-$publishTo->saveCallback($cbClass, 'saveDate')
-    ->sql("varchar(10) NOT NULL default ''");
+$publishTo->sql("varchar(10) NOT NULL default ''");
 
 $importId = new SQLField("importId", $dca, "int(20) unsigned NOT NULL default '0'");
 $importId->eval()->doNotCopy(true);
