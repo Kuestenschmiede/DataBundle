@@ -290,12 +290,10 @@ $osmId->eval()->class('clr');
 
 $publishFrom = new DatePickerField('publishFrom', $dca);
 $publishFrom->saveCallback($cbClass, 'saveDate')
-    ->loadCallback($cbClass, 'loadDate')
     ->sql("varchar(10) NOT NULL default ''");
 
 $publishTo = new DatePickerField('publishTo', $dca);
 $publishTo->saveCallback($cbClass, 'saveDate')
-    ->loadCallback($cbClass, 'loadDate')
     ->sql("varchar(10) NOT NULL default ''");
 
 $importId = new SQLField("importId", $dca, "int(20) unsigned NOT NULL default '0'");
@@ -307,9 +305,7 @@ $ownerGroupId->filter()->sql('int(10) NOT NULL default 0')
     ->eval()->includeBlankOption();
 $published = new CheckboxField('published', $dca);
 $datePublished = new DatePickerField('datePublished', $dca);
-$datePublished->saveCallback($cbClass, 'saveDate')
-    ->loadCallback($cbClass, 'loadDate')
-    ->default(time());
+$datePublished->default(time());
 
 
 /** Custom Fields */
