@@ -168,7 +168,8 @@ class MemberEditableModule extends C4GBrickModuleParent
         $fieldList[] = C4GTextField::create('datePublished',
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['datePublished'][0],
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['datePublished'][1],
-            false, true, true, false);
+            false, true, true, false)
+            ->setComparable(false);
 
         $publishCondition = new C4GBrickCondition(C4GBrickConditionType::METHODSWITCH, 'published', '0');
         $publishCondition->setModel(static::class);
