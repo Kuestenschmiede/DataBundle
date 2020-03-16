@@ -118,6 +118,9 @@ class MemberEditableModule extends C4GBrickModuleParent
                                 ];
                             }
                             $field->setOptions($optionsFormatted);
+                            if ($customField->defaultSelect !== '') {
+                                $field->setDefaultOptionId(strval($customField->defaultSelect));
+                            }
 
                             $fieldList[] = $field;
                             break;
