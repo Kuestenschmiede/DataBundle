@@ -289,14 +289,10 @@ $osmId = new NaturalField('osmId', $dca);
 $osmId->eval()->class('clr');
 
 $publishFrom = new DatePickerField('publishFrom', $dca);
-$publishFrom->saveCallback($cbClass, 'saveDate')
-    ->loadCallback($cbClass, 'loadDate')
-    ->sql("varchar(10) NOT NULL default ''");
+$publishFrom->sql("varchar(10) NOT NULL default ''");
 
 $publishTo = new DatePickerField('publishTo', $dca);
-$publishTo->saveCallback($cbClass, 'saveDate')
-    ->loadCallback($cbClass, 'loadDate')
-    ->sql("varchar(10) NOT NULL default ''");
+$publishTo->sql("varchar(10) NOT NULL default ''");
 
 $importId = new SQLField("importId", $dca, "int(20) unsigned NOT NULL default '0'");
 $importId->eval()->doNotCopy(true);
@@ -307,9 +303,7 @@ $ownerGroupId->filter()->sql('int(10) NOT NULL default 0')
     ->eval()->includeBlankOption();
 $published = new CheckboxField('published', $dca);
 $datePublished = new DatePickerField('datePublished', $dca);
-$datePublished->saveCallback($cbClass, 'saveDate')
-    ->loadCallback($cbClass, 'loadDate')
-    ->default(time());
+$datePublished->default(time());
 
 
 /** Custom Fields */
@@ -435,7 +429,7 @@ foreach ($GLOBALS['con4gis']['data_custom_field_types'] as $type) {
                         strval($model->defaultCheckbox)))
                     ->eval()
                         ->mandatory(boolval($model->mandatory));
-                $class = strval($model->class) . 'm12';
+                $class = strval($model->class) . ' m12';
                 $field->eval()->class($class);
             } elseif ($type === 'multicheckbox' || $type === 'filtermulticheckbox') {
                 $field = new MultiCheckboxField($model->alias, $dca);
@@ -461,8 +455,6 @@ foreach ($GLOBALS['con4gis']['data_custom_field_types'] as $type) {
                 $field->hardLabel(strval($model->name), strval($model->description))
                     ->filter(false)
                     ->search(false)
-                    ->saveCallback($cbClass, 'saveDate')
-                    ->loadCallback($cbClass, 'loadDate')
                     ->default(strval($model->defaultDatePicker))
                     ->sql(sprintf(
                         "varchar(10) NOT NULL default '%s'",

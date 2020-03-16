@@ -216,8 +216,6 @@ $defaultMultiCheckbox->optionsCallback($cbClass, 'loadDefaultoptions')
 
 $defaultDatePicker = new DatePickerField('defaultDatePicker', $dca);
 $defaultDatePicker->label('default')
-    ->saveCallback($cbClass, 'saveDate')
-    ->loadCallback($cbClass, 'loadDate')
     ->sql("varchar(10) NOT NULL default ''");
 
 $linkTitle = new TextField('linkTitle', $dca);

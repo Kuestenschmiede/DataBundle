@@ -101,7 +101,6 @@ class LoadLayersListener
                 $arrTypes[] = $objSelectedTypes->row();
             }
         }
-//        $addData = $event->getAdditionalData();
         $addData['types'] = $arrTypes;
         $addData['typeIds'] = $selectedTypes;
         $addData['dataLayer'] = $dataLayer;
@@ -117,13 +116,11 @@ class LoadLayersListener
         if (!($dataLayer['type'] === 'mpCntnt') && !($dataLayer['type'] === 'mpCntnt_directory')) {
             return;
         }
-        $objLocations = [];
         $types = $event->getAdditionalData()['types'];
         $typeIds = $event->getAdditionalData()['typeIds'];
         $arrElements = [];
         foreach ($typeIds as $typeId) {
-            $class = $GLOBALS['TL_MODELS']['tl_c4g_data_element'];
-            $elements = $class::findPublishedBy('type', $typeId);
+            $elements = DataElementModel::findPublishedBy('type', $typeId);
             if ($elements !== null) {
                 $elements = $elements->fetchAll();
                 $arrElements[$typeId] = $elements;
@@ -161,7 +158,7 @@ class LoadLayersListener
                         $currentTypes[] = $type;
                     }
                 }
-                $structureTypes = $this->getStructuresForTypes($types, $dataLayer, $elements);
+                $structureTypes = $this->getStructuresForTypes($currentTypes, $dataLayer, $elements);
                 $directoryStructure = $fmClass->createMapStructureElementWithIdCalc(
                     $directory['id'],
                     $dataLayer['id'],
@@ -245,8 +242,14 @@ class LoadLayersListener
                                     }
 
                                     break;
+                                case 'type':
+                                    $merge[$k] = $merge[$k] ?: $v;
+                                    if ($merge[$k] === null) {
+                                        $merge[$k] = '';
+                                    }
+                                    break;
                                 default:
-                                    $merge[$k] = $v ? $v : $merge[$k];
+                                    $merge[$k] = $v ?: $merge[$k];
                                     if ($merge[$k] === null) {
                                         $merge[$k] = '';
                                     }
