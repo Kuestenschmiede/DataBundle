@@ -44,6 +44,16 @@ class DataElementModel extends Model
             return null;
         }
     }
+    public static function findRealPublishedBy($field, $value) {
+        $database = Database::getInstance();
+        $stmt = $database->prepare("SELECT * FROM tl_c4g_data_element "."
+        WHERE ($field = ?) AND published = '1'");
+        try {
+            return static::createCollectionFromDbResult($stmt->execute($value, time(), time()), static::$strTable);
+        } catch (Throwable $throwable) {
+            return null;
+        }
+    }
 
     public function string($property) : string {
         return strval($this->$property);
