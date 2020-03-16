@@ -243,6 +243,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
 
         $availableFieldsList = StringUtil::deserialize($this->availableFieldsList);
         if (is_array($availableFieldsList)) {
+            $numberOfHeadlines = 0;
             foreach ($availableFieldsList as $availableField) {
                 $customField = DataCustomFieldModel::findBy('alias', $availableField);
                 if ($customField !== null) {
@@ -274,10 +275,13 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                     ->setEncodeHtmlEntities(false);
                             }
                         } else {
-                            $fieldList[] = C4GHeadlineField::create($availableField,
+                            $numberOfHeadlines += 1;
+                            $headline = C4GHeadlineField::create($availableField,
                                 $customField->frontendName ?: $customField->name ?: '',
                                 '', false,
                                 true, false, false);
+                            $headline->setNumber($numberOfHeadlines);
+                            $fieldList[] = $headline;
                         }
                     }
                 } else {
@@ -398,10 +402,13 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                         case 'osm_legend':
                         case 'publish_legend':
                         case 'published_legend':
-                            $fieldList[] = C4GHeadlineField::create($availableField,
+                            $numberOfHeadlines += 1;
+                            $headline = C4GHeadlineField::create($availableField,
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element'][$availableField],
                                 '', false,
                                 true, false, false);
+                            $headline->setNumber($numberOfHeadlines);
+                            $fieldList[] = $headline;
                             break;
                         default:
                             break;
