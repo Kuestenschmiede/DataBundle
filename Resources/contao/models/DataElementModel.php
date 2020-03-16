@@ -49,7 +49,7 @@ class DataElementModel extends Model
         $stmt = $database->prepare("SELECT * FROM tl_c4g_data_element "."
         WHERE ($field = ?) AND published = '1'");
         try {
-            return static::createCollectionFromDbResult($stmt->execute($value, time(), time()), static::$strTable);
+            return static::createCollectionFromDbResult($stmt->execute($value), static::$strTable);
         } catch (Throwable $throwable) {
             return null;
         }
