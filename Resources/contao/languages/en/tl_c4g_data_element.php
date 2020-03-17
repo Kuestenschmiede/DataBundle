@@ -92,6 +92,8 @@ $GLOBALS['TL_LANG'][$strName]['edit'] = ["Edit map element with ID %s", "Edit ma
 $GLOBALS['TL_LANG'][$strName]['copy'] = ["Copy map element with ID %s", "Copy map element with ID %s"];
 $GLOBALS['TL_LANG'][$strName]['delete'] = ["Delete map element with ID %s", "Delete map element with ID %s"];
 
+$GLOBALS['TL_LANG'][$strName]['notice_already_max_published_elements'] = "This group has already reached the maximum number of published elements.";
+
 $GLOBALS['TL_LANG'][$strName]['day_reference'] = [
     '0' => 'Monday',
     '1' => 'Tuesday',

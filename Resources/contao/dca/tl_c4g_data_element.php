@@ -299,9 +299,11 @@ $importId->eval()->doNotCopy(true);
 
 $ownerGroupId = new SelectField('ownerGroupId', $dca);
 $ownerGroupId->filter()->sql('int(10) NOT NULL default 0')
+    ->default('0')
     ->foreignKey('tl_member_group', 'name')
     ->eval()->includeBlankOption();
 $published = new CheckboxField('published', $dca);
+$published->saveCallback($cbClass, 'validatePublishing');
 $datePublished = new DatePickerField('datePublished', $dca);
 $datePublished->default(time());
 

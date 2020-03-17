@@ -92,6 +92,8 @@ $GLOBALS['TL_LANG'][$strName]['edit'] = ["Kartenelement mit ID %s bearbeiten", "
 $GLOBALS['TL_LANG'][$strName]['copy'] = ["Kartenelement mit ID %s kopieren", "Kartenelement mit ID %s kopieren"];
 $GLOBALS['TL_LANG'][$strName]['delete'] = ["Kartenelement mit ID %s löschen", "Kartenelement mit ID %s löschen"];
 
+$GLOBALS['TL_LANG'][$strName]['notice_already_max_published_elements'] = "Diese Gruppe hat bereits die maximale Anzahl veröffentlichter Elemente errreicht.";
+
 $GLOBALS['TL_LANG'][$strName]['day_reference'] = [
     '0' => 'Montag',
     '1' => 'Dienstag',
