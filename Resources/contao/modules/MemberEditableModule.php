@@ -57,6 +57,8 @@ class MemberEditableModule extends C4GBrickModuleParent
     protected $loadMultiColumnResources = false;
     protected $loadMiniSearchResources = false;
 
+    protected $memberGroupModel = null;
+
     private static $database = null;
 
     public function initBrickModule($id)
@@ -86,6 +88,16 @@ class MemberEditableModule extends C4GBrickModuleParent
 
     public function addFields()
     {
+        $memberModel = MemberModel::findByPk($this->dialogParams->getMemberId());
+        $memberGroups = StringUtil::deserialize($memberModel->groups);
+        $authorizedGroups = StringUtil::deserialize($this->authorizedGroups);
+        foreach ($memberGroups as $group) {
+            if (in_array($group, $authorizedGroups)) {
+                $this->memberGroupModel = MemberGroupModel::findByPk($group);
+                break;
+            }
+        }
+
         $fieldList = [];
 
         $fieldList[] = C4GKeyField::create('id', '', '', false);
@@ -148,15 +160,25 @@ class MemberEditableModule extends C4GBrickModuleParent
                 } else {
                     try {
                         if (!C4GUtils::endsWith($availableField, '_legend')) {
-                            $fieldList[] = C4GTextField::create($availableField,
+                            $field = C4GTextField::create($availableField,
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element'][$availableField][0],
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element'][$availableField][1],
                                 true, true, true, true);
+                            $fieldList[] = $field;
+                            switch ($availableField) {
+                                case 'mobile':
+                                case 'email':
+                                    $field->setDefaultValue(strval($this->memberGroupModel->$availableField));
+                                    break;
+                                default:
+                                    break;
+                            }
                         } else {
-                            $fieldList[] = C4GHeadlineField::create($availableField,
+                            $field = C4GHeadlineField::create($availableField,
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element'][$availableField],
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element'][$availableField],
                                 true, false, true, false);
+                            $fieldList[] = $field;
                         }
                     } catch (\Throwable $throwable) {
                         C4gLogModel::addLogEntry('field', $availableField);
