@@ -128,15 +128,13 @@ class LoadLayersListener
                     $elements = $elements->fetchAll();
                     $arrElements[$typeId] = $elements;
                 }
-            }
-            else {
+            } else {
                 $elements = DataElementModel::findPublishedBy('type', $typeId);
                 if ($elements !== null) {
                     $elements = $elements->fetchAll();
                     $arrElements[$typeId] = $elements;
                 }
             }
-
         }
 
         $addData = $event->getAdditionalData();
@@ -259,6 +257,7 @@ class LoadLayersListener
                                     if ($merge[$k] === null) {
                                         $merge[$k] = '';
                                     }
+
                                     break;
                                 default:
                                     $merge[$k] = $v ?: $merge[$k];

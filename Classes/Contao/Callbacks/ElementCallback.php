@@ -102,10 +102,10 @@ class ElementCallback extends Backend
         if ($value) {
             if (intval($dc->activeRecord->ownerGroupId) > 0) {
                 $database = Database::getInstance();
-                $select = "SELECT count(*) as current FROM tl_c4g_data_element where ownerGroupId = ? AND published = 1 AND type = ? AND id != ?";
+                $select = 'SELECT count(*) as current FROM tl_c4g_data_element where ownerGroupId = ? AND published = 1 AND type = ? AND id != ?';
                 $stmt = $database->prepare($select);
                 $current = $stmt->execute($dc->activeRecord->ownerGroupId, $dc->activeRecord->type, $dc->activeRecord->id)->fetchAllAssoc()[0]['current'];
-                $stmt = $database->prepare("SELECT numberElements as allowed FROM `tl_member_group` where id = ?");
+                $stmt = $database->prepare('SELECT numberElements as allowed FROM `tl_member_group` where id = ?');
                 $allowed = $stmt->execute($dc->activeRecord->ownerGroupId)->fetchAllAssoc()[0]['allowed'];
                 if ($current >= $allowed) {
                     throw new \Exception($GLOBALS['TL_LANG']['tl_c4g_data_element']['notice_already_max_published_elements']);
