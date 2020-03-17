@@ -5,6 +5,7 @@ $strName = 'tl_c4g_data_element';
 /**
  * Fields
  */
+$GLOBALS['TL_LANG'][$strName]['id'] = ['ID', ''];
 $GLOBALS['TL_LANG'][$strName]['name'] = ['Title', 'Enter a name for this element.'];
 $GLOBALS['TL_LANG'][$strName]['description'] = ['Description', 'Enter a description for this element.'];
 $GLOBALS['TL_LANG'][$strName]['type'] = ['Category', 'The category is displayed in the frontend and determines which fields are available.'];

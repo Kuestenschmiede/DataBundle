@@ -5,6 +5,7 @@ $strName = 'tl_c4g_data_element';
 /**
  * Fields
  */
+$GLOBALS['TL_LANG'][$strName]['id'] = ['ID', ''];
 $GLOBALS['TL_LANG'][$strName]['name'] = ['Bezeichnung', 'Geben Sie die Bezeichnung für dieses Element ein.'];
 $GLOBALS['TL_LANG'][$strName]['description'] = ['Beschreibung', 'Geben Sie einen Beschreibungstext für dieses Element ein.'];
 $GLOBALS['TL_LANG'][$strName]['location'] = ['Lokation des Elements', 'Wählen Sie die Lokation aus, in der das Element liegt.'];
