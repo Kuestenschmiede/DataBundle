@@ -13,6 +13,8 @@
 
 namespace con4gis\DataBundle\Classes\Listener;
 
+use con4gis\DataBundle\Classes\Popup\Popup;
+use con4gis\DataBundle\Resources\contao\models\DataTypeModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
@@ -61,7 +63,7 @@ class LoadAreaFeaturesListener
                 $inClause = ' AND type IN(' . implode(',', $typeSelection) . ')';
                 $sqlLoc = " WHERE geox BETWEEN " . $bounds['left']->getLng() . " AND " . $bounds['right']->getLng() . " AND geoy BETWEEN " . $bounds['lower']->getLat() . " AND " . $bounds['upper']->getLat();
                 $sqlWhere = " AND (publishFrom >= ? OR publishFrom = '') AND (publishTo < ? OR publishTo = '') AND published='1'";
-                $sqlSelect = " id,geox, geoy, name AS label, name AS tooltip";
+                $sqlSelect = '*, name AS label, name AS tooltip';//" id, type, geox, geoy, name AS label, name AS tooltip";
                 $strQuery = 'SELECT' . $sqlSelect . ' FROM tl_c4g_data_element' . $sqlLoc . $inClause . $sqlWhere;
                 $pointFeatures = \Database::getInstance()->prepare($strQuery)->execute(time(), time())->fetchAllAssoc();
                 $responseFeatures = [];
@@ -70,6 +72,11 @@ class LoadAreaFeaturesListener
                 foreach ($pointFeatures as $pointFeature) {
                     $pTemp = new LatLng($pointFeature['geoy'], $pointFeature['geox']);
                     if ($pTemp->getDistance($point) < $distance) {
+                        $objSelectedType = DataTypeModel::findByPk($pointFeature['type']);
+                        $availableFields = unserialize($objSelectedType->availableFields);
+                        $popup = new Popup();
+                        $popup->generatePopup($pointFeature, $availableFields);
+                        $pointFeature['popup'] = $popup->getPopupString();
                         $responseFeatures[] = $pointFeature;
                         $locations[] = [$pTemp->getLng(), $pTemp->getLat()];
                     }
