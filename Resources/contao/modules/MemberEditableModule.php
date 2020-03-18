@@ -168,6 +168,7 @@ class MemberEditableModule extends C4GBrickModuleParent
                                 true, true, true, true);
                             $fieldList[] = $field;
                             switch ($availableField) {
+                                case 'phone':
                                 case 'mobile':
                                 case 'email':
                                     $field->setDefaultValue(strval($this->memberGroupModel->$availableField));
