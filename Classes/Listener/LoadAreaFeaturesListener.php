@@ -59,10 +59,11 @@ class LoadAreaFeaturesListener
             if ($objLayer->location_type == 'mpCntnt') {
                 $typeSelection = unserialize($objLayer->typeSelection);
                 $inClause = ' AND type IN(' . implode(',', $typeSelection) . ')';
-                $sqlLoc = ' WHERE geox BETWEEN ' . $bounds['left']->getLng() . ' AND ' . $bounds['right']->getLng() . ' AND geoy BETWEEN ' . $bounds['lower']->getLat() . ' AND ' . $bounds['upper']->getLat();
-                $sqlSelect = "id,geox, geoy, name AS label, name AS tooltip";
-                $strQuery = 'SELECT ' . $sqlSelect . ' FROM tl_c4g_data_element' . $sqlLoc . $inClause;
-                $pointFeatures = \Database::getInstance()->prepare($strQuery)->execute()->fetchAllAssoc();
+                $sqlLoc = " WHERE geox BETWEEN " . $bounds['left']->getLng() . " AND " . $bounds['right']->getLng() . " AND geoy BETWEEN " . $bounds['lower']->getLat() . " AND " . $bounds['upper']->getLat();
+                $sqlWhere = " AND (publishFrom >= ? OR publishFrom = '') AND (publishTo < ? OR publishTo = '') AND published='1'";
+                $sqlSelect = " id,geox, geoy, name AS label, name AS tooltip";
+                $strQuery = 'SELECT' . $sqlSelect . ' FROM tl_c4g_data_element' . $sqlLoc . $inClause . $sqlWhere;
+                $pointFeatures = \Database::getInstance()->prepare($strQuery)->execute(time(), time())->fetchAllAssoc();
                 $responseFeatures = [];
                 $locations = [];
                 $locations[] = [$point->getLng(), $point->getLat()];
