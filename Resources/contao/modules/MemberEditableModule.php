@@ -56,6 +56,7 @@ class MemberEditableModule extends C4GBrickModuleParent
     protected $loadCkEditor5Resources = false;
     protected $loadMultiColumnResources = false;
     protected $loadMiniSearchResources = false;
+    protected $loadHistoryPushResources = true;
 
     protected $memberGroupModel = null;
 
