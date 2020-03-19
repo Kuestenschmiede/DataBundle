@@ -26,7 +26,7 @@ class LoadRouteFeaturesListener
         if ($objLayer->location_type == 'mpCntnt') {
             $typeSelection = unserialize($objLayer->typeSelection);
             $inClause = ' AND type IN(' . implode(',', $typeSelection) . ')';
-            $sqlSelect = " *, name AS label, name AS tooltip";
+            $sqlSelect = ' *, name AS label, name AS tooltip';
             $sqlWhere = " AND (publishFrom >= ? OR publishFrom = '') AND (publishTo < ? OR publishTo = '') AND published='1'";
 
             foreach ($points as $point) {
@@ -34,7 +34,7 @@ class LoadRouteFeaturesListener
 
                 $sqlLoc = ' WHERE geox BETWEEN ' . $bounds['left']->getLng() . ' AND ' . $bounds['right']->getLng() . ' AND geoy BETWEEN ' . $bounds['lower']->getLat() . ' AND ' . $bounds['upper']->getLat();
 
-                $strQuery = "SELECT " . $sqlSelect . " FROM tl_c4g_data_element" . $sqlLoc . $inClause . $sqlWhere;
+                $strQuery = 'SELECT ' . $sqlSelect . ' FROM tl_c4g_data_element' . $sqlLoc . $inClause . $sqlWhere;
                 $featurePoint = \Database::getInstance()->prepare($strQuery)->execute(time(), time())->fetchAllAssoc();
                 if (!$this->checkIfArrayContainsFeature($featurePoint[0], $features)) {
                     foreach ($featurePoint as $key => $singleFeature) {

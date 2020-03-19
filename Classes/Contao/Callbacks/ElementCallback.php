@@ -80,7 +80,7 @@ class ElementCallback extends Backend
         $memberGroupModel = MemberGroupModel::findByPk($value);
         if ($memberGroupModel !== null) {
             $database = Database::getInstance();
-            $stmt = $database->prepare("UPDATE tl_c4g_data_element SET phone = ?, mobile = ?, email = ? WHERE id = ? AND ownerGroupId != ?");
+            $stmt = $database->prepare('UPDATE tl_c4g_data_element SET phone = ?, mobile = ?, email = ? WHERE id = ? AND ownerGroupId != ?');
             $stmt->execute(strval($memberGroupModel->phone), strval($memberGroupModel->mobile), strval($memberGroupModel->email), $id, $value);
         } else {
             $database = Database::getInstance();
