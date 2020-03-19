@@ -14,7 +14,6 @@ use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\DataBundle\Resources\contao\models\DataCustomFieldModel;
 use con4gis\DataBundle\Resources\contao\models\DataElementModel;
 use con4gis\DataBundle\Resources\contao\models\MemberEditableModel;
-use con4gis\GroupsBundle\Resources\contao\models\MemberModel;
 use con4gis\ProjectsBundle\Classes\Actions\C4GShowListAction;
 use con4gis\ProjectsBundle\Classes\Buttons\C4GMoreButton;
 use con4gis\ProjectsBundle\Classes\Buttons\C4GMoreButtonEntry;
@@ -34,6 +33,7 @@ use con4gis\ProjectsBundle\Classes\Views\C4GBrickViewType;
 use Contao\Database;
 use Contao\FrontendUser;
 use Contao\MemberGroupModel;
+use Contao\MemberModel;
 use Contao\StringUtil;
 
 
