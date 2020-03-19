@@ -3,6 +3,11 @@
 namespace con4gis\DataBundle\Classes\Popup;
 
 use con4gis\CoreBundle\Classes\C4GUtils;
+use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
+use con4gis\DataBundle\Resources\contao\models\DataCustomFieldModel;
+use con4gis\DataBundle\Resources\contao\models\DataTypeModel;
+use Contao\FilesModel;
+use Contao\StringUtil;
 
 class Popup
 {
@@ -11,6 +16,280 @@ class Popup
     public function getPopupString()
     {
         return '<ul>' . $this->popupString . '</ul>';
+    }
+    public function generatePopup($typeElement, $availableFields)
+    {
+        \System::loadLanguageFile('tl_c4g_data_element');
+
+        $this->addEntry(strval($typeElement['name']), 'name');
+
+        $typeModel = DataTypeModel::findByPk($typeElement['type']);
+        $this->addEntry(strval($typeModel->name), 'type');
+        if (strval($typeElement['description']) !== '') {
+            $this->addEntry(strval($typeElement['description']), 'description');
+        }
+        $addressIsSet = false;
+
+        foreach ($availableFields as $fieldKey => $availableField) {
+            if (($availableField === 'addressName' ||
+                $availableField === 'addressStreet' ||
+                $availableField === 'addressStreetNumber' ||
+                $availableField === 'addressZip' ||
+                $availableField === 'addressCity')
+            ) {
+                if ($addressIsSet === false) {
+                    $addressIsSet = true;
+                    $address = [];
+                    if ($typeElement['addressName'] !== '') {
+                        $address[] = $typeElement['addressName'];
+                    }
+                    if ($typeElement['addressStreet'] !== '') {
+                        if ($typeElement['addressStreetNumber'] !== '0') {
+                            $address[] = $typeElement['addressStreet'] . ' ' .
+                                $typeElement['addressStreetNumber'];
+                        } else {
+                            $address[] = $typeElement['addressStreet'];
+                        }
+                    }
+                    if ($typeElement['addressZip'] !== '' && $typeElement['addressCity'] !== '') {
+                        $address[] = $typeElement['addressZip'] . ' ' . $typeElement['addressCity'];
+                    }
+                    $this->addEntry(implode(', ', $address), 'address');
+                }
+            } elseif ($availableField === 'image') {
+                if (is_string($typeElement['image']) === true) {
+                    $fileModel = FilesModel::findByUuid($typeElement['image']);
+                    if ($fileModel !== null) {
+                        $this->addImageEntry($fileModel->path, $typeElement['imageMaxHeight'], $typeElement['imageMaxWidth'], 'image', strval($typeElement['imageLink']));
+                    } else {
+                        C4gLogModel::addLogEntry('data', 'Popupimage of element ' . $typeElement['id'] . ' with uuid ' . $typeElement['image'] . ' not found.');
+                    }
+                }
+            } elseif ($availableField === 'businessHours') {
+                $businessTimes = \StringUtil::deserialize($typeElement['businessHours']);
+                if (!empty($businessTimes) || $typeElement['businessHoursAdditionalInfo'] !== '') {
+                    $timeString = [];
+                    $showBusinessTimes = false;
+                    foreach ($businessTimes as $key => $time) {
+                        $timeString[$key] = '';
+                        if ($time['dayFrom'] !== '' && $time['timeFrom'] !== '' && $time['timeTo'] !== '') {
+                            $timeString[$key] .= $GLOBALS['TL_LANG']['tl_c4g_data_element']['day_reference'][$time['dayFrom']];
+                            if ($time['dayTo'] !== $time['dayFrom'] && $time['dayTo'] !== '') {
+                                if (abs(intval($time['dayTo']) - intval($time['dayFrom'])) > 1) {
+                                    $join = $GLOBALS['TL_LANG']['tl_c4g_data_element']['day_join']['to'];
+                                } else {
+                                    $join = $GLOBALS['TL_LANG']['tl_c4g_data_element']['day_join']['and'];
+                                }
+
+                                $timeString[$key] .= " $join " . $GLOBALS['TL_LANG']['tl_c4g_data_element']['day_reference'][$time['dayTo']];
+                            }
+                            $timeString[$key] .= ': ' . date('H:i', $time['timeFrom']) .
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['timeCaption'] .
+                                ' - ' . date('H:i', $time['timeTo']) .
+                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['timeCaption'];
+                            $showBusinessTimes = true;
+                        }
+                    }
+                    if ($showBusinessTimes === true) {
+                        $bH = [];
+                        $entries = [];
+                        foreach ($timeString as $string) {
+                            $explode = explode(': ', $string);
+                            $key = $explode[0];
+                            if (isset($bH[$key]) === true) {
+                                $bH[$key] .= ', ' . $explode[1];
+                            } else {
+                                $bH[$key] = $explode[1];
+                            }
+                        }
+                        foreach ($bH as $k => $v) {
+                            if (!empty($v)) {
+                                $entries[] = $k . ': ' . $v;
+                            } else {
+                                $entries[] = $k;
+                            }
+                        }
+                        foreach ($entries as $entry) {
+                            $this->addEntry(strval($entry), 'businessHours');
+                        }
+                    }
+                    if ($typeElement['businessHoursAdditionalInfo'] !== '') {
+                        $this->addEntry(strval($typeElement['businessHoursAdditionalInfo']), 'businessHours');
+                    }
+                }
+            } elseif ($availableField === 'linkWizard') {
+                foreach (StringUtil::deserialize($typeElement['linkWizard']) as $link) {
+                    $this->addLinkEntry(strval($link['linkTitle']), 'link', strval($link['linkHref']), $link['linkNewTab']);
+                }
+            } elseif ($availableField === 'phone') {
+                if ($typeElement['phone'] !== '') {
+                    $list['linkHref'] = 'tel:' . $typeElement['phone'];
+                    $list['linkTitle'] = 'Tel.: ' . $typeElement['phone'];
+                    $this->addLinkEntry(strval($list['linkTitle']), 'phone', strval($list['linkHref']));
+                }
+            } elseif ($availableField === 'mobile') {
+                if ($typeElement['mobile'] !== '') {
+                    $list['linkHref'] = 'tel:' . $typeElement['mobile'];
+                    $list['linkTitle'] = 'Mobil: ' . $typeElement['mobile'];
+                    $this->addLinkEntry(strval($list['linkTitle']), 'mobile', strval($list['linkHref']));
+                }
+            } elseif ($availableField === 'fax') {
+                if ($typeElement['fax'] !== '') {
+                    $list['linkHref'] = '';
+                    $list['linkTitle'] = $typeElement['fax'];
+                    $this->addEntry(strval($list['linkTitle']), 'fax');
+                }
+            } elseif ($availableField === 'accessibility') {
+                if ($typeElement['accessibility'] === '1') {
+                    $this->addEntry($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['yes'], 'accessibility');
+                } else {
+                    $this->addEntry($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['no'], 'accessibility');
+                }
+            } elseif ($availableField === 'email') {
+                if ($typeElement['email'] !== '') {
+                    $list['linkHref'] = 'mailto:' . $typeElement['email'];
+                    $list['linkTitle'] = 'Email: ' . $typeElement['email'];
+                    $this->addLinkEntry(strval($list['linkTitle']), 'email', strval($list['linkHref']));
+                }
+            } elseif ($availableField === 'website') {
+                if (!C4GUtils::startsWith($typeElement['website'], 'http')) {
+                    $list['linkHref'] = 'http://' . $typeElement['website'];
+                } else {
+                    $list['linkHref'] = $typeElement['website'];
+                }
+                $list['linkHref'] = $typeElement['website'];
+                $list['linkTitle'] = $typeElement['website'];
+                $this->addLinkEntry(strval($list['linkTitle']), 'website', strval($list['linkHref']));
+            } else {
+                $model = DataCustomFieldModel::findBy('alias', $availableField);
+                if ($model !== null) {
+                    if ($model->published === '1' && $model->frontendPopup === '1') {
+                        if (strval($model->type) === 'legend' && (strval($model->frontendName) !== '' || strval($model->name) !== '')) {
+                            $i = $fieldKey + 1;
+                            while ($i < count($availableFields)) {
+                                $legendModel = DataCustomFieldModel::findBy('alias', $availableFields[$i]);
+                                if ($legendModel !== null && $legendModel->published === '1' && $legendModel->type === 'legend') {
+                                    break;
+                                }
+                                if (C4GUtils::endsWith($availableFields[$i], '_legend') === true) {
+                                    break;
+                                }
+                                $i += 1;
+                            }
+                            $n = $fieldKey + 1;
+                            $show = false;
+                            while ($i > $n) {
+                                if (strval($typeElement[$availableFields[$n]]) !== ''
+                                    && intval($typeElement[$availableFields[$n]]) !== 0) {
+                                    $show = true;
+                                }
+                                $n += 1;
+                            }
+                            if ($show === true) {
+                                $this->addEntry(strval($model->frontendName ?: $model->name), 'legend');
+                            }
+                        } elseif (strval($model->type) !== 'legend') {
+                            switch ($model->type) {
+                                case 'select':
+                                    $options = StringUtil::deserialize($model->options);
+                                    if (is_array($options)) {
+                                        foreach ($options as $option) {
+                                            if ($option['key'] === $typeElement[$availableField]) {
+                                                $this->addEntry($option['value'], $availableField);
+
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                    break;
+                                case 'checkbox':
+                                    if ($typeElement[$availableField] === '1') {
+                                        $this->addEntry($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['yes'], $availableField);
+
+                                        break;
+                                    }
+                                    $this->addEntry($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['no'], $availableField);
+
+                                    break;
+                                case 'multicheckbox':
+                                    $options = StringUtil::deserialize($model->options);
+                                    $values = StringUtil::deserialize($typeElement[$availableField]);
+                                    $display = [];
+                                    if (is_array($options) && is_array($values)) {
+                                        foreach ($values as $value) {
+                                            foreach ($options as $option) {
+                                                if ($value === $option['key']) {
+                                                    $display[] = $option['value'];
+
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (!empty($display)) {
+                                        $this->addEntry($model->name . ': ' . implode(', ', $display), $availableField);
+                                    }
+
+                                    break;
+                                case 'datepicker':
+                                    $this->addEntry(date('d.m.Y', $typeElement[$availableField]), $availableField);
+
+                                    break;
+                                default:
+                                    $this->addEntry(strval($typeElement[$availableField]), $availableField);
+                            }
+                        }
+                    }
+                } else {
+                    if (C4GUtils::endsWith($availableField, '_legend') === true) {
+                        switch ($availableField) {
+                            case 'address_legend':
+                            case 'image_legend':
+                            case 'linkWizard_legend':
+                            case 'publish_legend':
+                                break;
+                            default:
+                                $i = $fieldKey + 1;
+                                while ($i < count($availableFields)) {
+                                    $legendModel = DataCustomFieldModel::findBy('alias', $availableFields[$i]);
+                                    if ($legendModel !== null && $model->published === '1' && $legendModel->type === 'legend') {
+                                        break;
+                                    }
+                                    if (C4GUtils::endsWith($availableFields[$i], '_legend') === true) {
+                                        break;
+                                    }
+                                    $i += 1;
+                                }
+                                $n = $fieldKey + 1;
+                                $show = false;
+                                while ($i > $n) {
+                                    if (($availableFields[$n] === 'accessibility') || (strval($typeElement[$availableFields[$n]]) !== ''
+                                            && intval($typeElement[$availableFields[$n]]) !== 0)) {
+                                        $show = true;
+                                    }
+                                    $n += 1;
+                                }
+                                if ($show === true) {
+                                    if (strval($GLOBALS['TL_LANG']['tl_c4g_data_element'][$availableField]) !== '') {
+                                        $this->addEntry(
+                                            strval($GLOBALS['TL_LANG']['tl_c4g_data_element'][$availableField]),
+                                            $availableField
+                                        );
+                                    }
+                                }
+
+                                break;
+                        }
+                    } elseif (strval($typeElement[$availableField]) !== '' &&
+                        intval($typeElement[$availableField]) !== 0) {
+                        $this->addEntry(
+                            strval($typeElement[$availableField]),
+                            $availableField);
+                    }
+                }
+            }
+        }
     }
 
     protected function buildTag(string $tagName, string $content = '', array $attributes = [], bool $close = true)
