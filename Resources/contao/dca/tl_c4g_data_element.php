@@ -301,7 +301,8 @@ $ownerGroupId = new SelectField('ownerGroupId', $dca);
 $ownerGroupId->filter()->sql('int(10) NOT NULL default 0')
     ->default('0')
     ->foreignKey('tl_member_group', 'name')
-    ->eval()->includeBlankOption();
+    ->saveCallback($cbClass, 'loadMemberGroupData')
+    ->eval()->includeBlankOption()->submitOnChange();
 $published = new CheckboxField('published', $dca);
 $published->saveCallback($cbClass, 'validatePublishing');
 $datePublished = new DatePickerField('datePublished', $dca);
