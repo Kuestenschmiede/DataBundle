@@ -26,16 +26,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class LoadAreaFeaturesListener
 {
-    private $areaService;
-
-    /**
-     * LoadAreaFeaturesListener constructor.
-     * @param $areaService
-     */
-    public function __construct(AreaService $areaService)
-    {
-        $this->areaService = $areaService;
-    }
 
     public function onLoadAreaFeaturesGetFeatures(
         LoadAreaFeaturesEvent $event,
@@ -81,8 +71,8 @@ class LoadAreaFeaturesListener
                         $locations[] = [$pTemp->getLng(), $pTemp->getLat()];
                     }
                 }
-
-                $performMatrix = $this->areaService->performMatrix($objMapsProfile, $profile, $locations);
+                $areaService = new AreaService();
+                $performMatrix = $areaService->performMatrix($objMapsProfile, $profile, $locations);
                 if ($performMatrix) {
                     $requestData = \GuzzleHttp\json_decode($performMatrix, true);
                     $type = $requestData['responseType'] ?: $type;
