@@ -17,7 +17,6 @@ use con4gis\DataBundle\Classes\Popup\Popup;
 use con4gis\DataBundle\Resources\contao\models\DataTypeModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
-use con4gis\MapsBundle\Resources\contao\models\C4gMapTablesModel;
 use con4gis\RoutingBundle\Classes\Event\LoadAreaFeaturesEvent;
 use con4gis\RoutingBundle\Classes\LatLng;
 use con4gis\RoutingBundle\Classes\Services\AreaService;
@@ -51,7 +50,7 @@ class LoadAreaFeaturesListener
             if ($objLayer->location_type == 'mpCntnt') {
                 $typeSelection = unserialize($objLayer->typeSelection);
                 $inClause = ' AND type IN(' . implode(',', $typeSelection) . ')';
-                $sqlLoc = " WHERE geox BETWEEN " . $bounds['left']->getLng() . " AND " . $bounds['right']->getLng() . " AND geoy BETWEEN " . $bounds['lower']->getLat() . " AND " . $bounds['upper']->getLat();
+                $sqlLoc = ' WHERE geox BETWEEN ' . $bounds['left']->getLng() . ' AND ' . $bounds['right']->getLng() . ' AND geoy BETWEEN ' . $bounds['lower']->getLat() . ' AND ' . $bounds['upper']->getLat();
                 $sqlWhere = " AND (publishFrom >= ? OR publishFrom = '') AND (publishTo < ? OR publishTo = '') AND published='1'";
                 $sqlSelect = '*, name AS label, name AS tooltip';//" id, type, geox, geoy, name AS label, name AS tooltip";
                 $strQuery = 'SELECT' . $sqlSelect . ' FROM tl_c4g_data_element' . $sqlLoc . $inClause . $sqlWhere;

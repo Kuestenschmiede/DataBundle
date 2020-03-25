@@ -14,6 +14,7 @@ namespace con4gis\DataBundle\Classes\Contao\Callbacks;
 
 use con4gis\DataBundle\Resources\contao\models\DataElementModel;
 use con4gis\DataBundle\Resources\contao\models\DataTypeModel;
+use con4gis\GroupsBundle\Resources\contao\models\MemberGroupModel;
 use con4gis\MapsBundle\Classes\Utils;
 use Contao\Backend;
 use Contao\Database;
@@ -71,6 +72,23 @@ class ElementCallback extends Backend
     public function changeFileBinToUuid($fieldValue, DataContainer $dc)
     {
         return \StringUtil::binToUuid($fieldValue);
+    }
+
+    public function loadMemberGroupData($value, $dc)
+    {
+        $id = $dc->activeRecord->id;
+        $memberGroupModel = MemberGroupModel::findByPk($value);
+        if ($memberGroupModel !== null) {
+            $database = Database::getInstance();
+            $stmt = $database->prepare('UPDATE tl_c4g_data_element SET phone = ?, mobile = ?, email = ? WHERE id = ? AND ownerGroupId != ?');
+            $stmt->execute(strval($memberGroupModel->phone), strval($memberGroupModel->mobile), strval($memberGroupModel->email), $id, $value);
+        } else {
+            $database = Database::getInstance();
+            $stmt = $database->prepare("UPDATE tl_c4g_data_element SET phone = '', mobile = '', email = '' WHERE id = ?");
+            $stmt->execute($id);
+        }
+
+        return $value;
     }
 
     /**

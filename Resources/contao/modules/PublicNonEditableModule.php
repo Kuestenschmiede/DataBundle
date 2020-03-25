@@ -58,6 +58,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
     protected $loadCkEditor5Resources = true;
     protected $loadMultiColumnResources = true;
     protected $loadMiniSearchResources = true;
+    protected $loadHistoryPushResources = true;
 
     public static $type = [];
     public static $directory = [];

@@ -12,11 +12,8 @@
  */
 namespace con4gis\DataBundle\Classes\Listener;
 
-use con4gis\CoreBundle\Classes\C4GUtils;
-use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\DataBundle\Classes\Event\LoadPropertiesEvent;
 use con4gis\DataBundle\Classes\Popup\Popup;
-use con4gis\DataBundle\Resources\contao\models\DataCustomFieldModel;
 use con4gis\DataBundle\Resources\contao\models\DataDirectoryModel;
 use con4gis\DataBundle\Resources\contao\models\DataElementModel;
 use con4gis\DataBundle\Resources\contao\models\DataTypeModel;
@@ -26,7 +23,6 @@ use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
 use con4gis\ProjectsBundle\Classes\Maps\C4GBrickMapFrontendParent;
 use Contao\Controller;
 use Contao\Database;
-use Contao\FilesModel;
 use Contao\StringUtil;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

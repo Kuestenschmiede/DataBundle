@@ -29,11 +29,11 @@ services:
       - { name: kernel.event_listener, event: maps.filters.load, method: onLoadFeatureFilters, priority: 422 }
     arguments:
       - "@con4gis.filter_service"
-  routing.onLoadRouteFeaturesGetFeatures:
+  data.onLoadRouteFeaturesGetFeatures:
     class: con4gis\DataBundle\Classes\Listener\LoadRouteFeaturesListener
     tags:
       - { name: kernel.event_listener, event: load.route.features, method: onLoadRouteFeaturesGetFeatures, priority: 1024 }
-  routing.onLoadAreaFeaturesGetFeatures:
+  data.onLoadAreaFeaturesGetFeatures:
     class: con4gis\DataBundle\Classes\Listener\LoadAreaFeaturesListener
     tags:
       - { name: kernel.event_listener, event: load.area.features, method: onLoadAreaFeaturesGetFeatures, priority: 1024 }

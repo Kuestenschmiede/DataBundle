@@ -5,9 +5,9 @@ namespace con4gis\DataBundle\Resources\contao\models;
 
 use con4gis\CoreBundle\Classes\Helper\ArrayHelper;
 use con4gis\DataBundle\Resources\contao\modules\PublicNonEditableModule;
-use con4gis\GroupsBundle\Resources\contao\models\MemberModel;
 use con4gis\ProjectsBundle\Classes\Common\C4GBrickCommon;
 use Contao\Database;
+use Contao\MemberModel;
 use Contao\StringUtil;
 
 class MemberEditableModel
