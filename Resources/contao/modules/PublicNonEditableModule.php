@@ -159,7 +159,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                     }
                 }
                 sort($options);
-                $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'type', $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_category'], 'c4g_list_type_filter'));
+                $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'type', $this->selectFilterLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_category'], 'c4g_list_type_filter', intval($this->labelMode)));
             }
         } elseif ($this->c4g_data_mode === '1' && sizeof(static::$type) > 1 && $this->showSelectFilter) {
             $options = [];
@@ -173,7 +173,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                 }
             }
             sort($options);
-            $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'type', $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_category'], 'c4g_list_type_filter'));
+            $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'type', $this->selectFilterLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_category'], 'c4g_list_type_filter', intval($this->labelMode)));
         } elseif ($this->c4g_data_mode === '2' && sizeof(static::$directory) > 1) {
             $options = [];
             $typeOptions = [];
@@ -191,7 +191,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             }
             if ($this->showDirectorySelectFilter) {
                 sort($options);
-                $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'directory', $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_directory'], 'c4g_list_directory_filter'));
+                $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'directory', $this->directorySelectFilterLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_directory'], 'c4g_list_directory_filter', intval($this->labelMode)));
             }
             $typeOptions = array_unique($typeOptions);
             if (!empty($typeOptions) && $this->showSelectFilter) {
@@ -206,7 +206,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                     }
                 }
                 sort($options);
-                $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'type', $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_category'], 'c4g_list_type_filter'));
+                $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'type', $this->selectFilterLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_category'], 'c4g_list_type_filter', intval($this->labelMode)));
 
             }
         }

@@ -15,7 +15,7 @@ $cbClass = \con4gis\DataBundle\Classes\Contao\Callbacks\ModuleCallback::class;
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'c4g_data_mode';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['public_noneditable'] = '{title_legend},name,headline,type;{caption_legend},'.
-    'captionPlural,caption;{c4g_data_type_legend},c4g_data_mode,showSelectFilter,showDirectorySelectFilter,showFilterResetButton,'.
+    'captionPlural,caption;{c4g_data_type_legend},c4g_data_mode,showSelectFilter,selectFilterLabel,showDirectorySelectFilter,directorySelectFilterLabel,labelMode,showFilterResetButton,'.
     'filterResetButtonCaption;{c4g_expert_legend},hideDetails,showLabelsInList,availableFieldsList;{mapPage_legend},mapPage';
 
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['c4g_data_mode_0'] = '';
@@ -90,6 +90,14 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['showSelectFilter'] =
         'sql'                     => "char(1) NOT NULL default '0'"
     ];
 
+$GLOBALS['TL_DCA']['tl_module']['fields']['selectFilterLabel'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['selectFilterLabel'],
+        'exclude'                 => true,
+        'inputType'               => 'text',
+        'sql'                     => "varchar(255) NOT NULL default ''"
+    ];
+
 $GLOBALS['TL_DCA']['tl_module']['fields']['showDirectorySelectFilter'] =
     [
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['showDirectorySelectFilter'],
@@ -97,6 +105,24 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['showDirectorySelectFilter'] =
         'default'                 => false,
         'inputType'               => 'checkbox',
         'sql'                     => "char(1) NOT NULL default '0'"
+    ];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['directorySelectFilterLabel'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['directorySelectFilterLabel'],
+        'exclude'                 => true,
+        'inputType'               => 'text',
+        'sql'                     => "varchar(255) NOT NULL default ''"
+    ];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['labelMode'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['labelMode'],
+        'exclude'                 => true,
+        'inputType'               => 'select',
+        'options'                 => ['0', '1', '2'],
+        'reference'               => &$GLOBALS['TL_LANG']['tl_module']['labelMode_option'],
+        'sql'                     => "varchar(255) NOT NULL default ''"
     ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['showFilterResetButton'] =
