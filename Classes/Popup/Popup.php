@@ -212,6 +212,14 @@ class Popup
                                     $this->addEntry($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['no'], $availableField);
 
                                     break;
+                                case 'icon':
+                                    if ($typeElement[$availableField] === '1' && strval($model->icon) !== '') {
+                                        $this->addEntry(strval($model->icon), $availableField);
+
+                                        break;
+                                    }
+
+                                    break;
                                 case 'multicheckbox':
                                     $options = StringUtil::deserialize($model->options);
                                     $values = StringUtil::deserialize($typeElement[$availableField]);
