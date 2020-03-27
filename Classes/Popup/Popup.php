@@ -220,6 +220,14 @@ class Popup
                                     }
 
                                     break;
+                                case 'link':
+                                    if ($typeElement[$availableField] === '1' && strval($model->linkTitle) !== '' && strval($model->linkHref) !== '') {
+                                        $this->addLinkEntry(strval($model->linkTitle), strval($model->alias), strval($model->linkHref), true);
+
+                                        break;
+                                    }
+
+                                    break;
                                 case 'multicheckbox':
                                     $options = StringUtil::deserialize($model->options);
                                     $values = StringUtil::deserialize($typeElement[$availableField]);
