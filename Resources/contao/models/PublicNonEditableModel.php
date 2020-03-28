@@ -3,9 +3,11 @@
 
 namespace con4gis\DataBundle\Resources\contao\models;
 
+use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\CoreBundle\Classes\Helper\ArrayHelper;
 use con4gis\DataBundle\Resources\contao\modules\PublicNonEditableModule;
 
+use con4gis\ProjectsBundle\Classes\Common\C4GBrickCommon;
 use Contao\Database;
 use Contao\StringUtil;
 
@@ -47,6 +49,9 @@ class PublicNonEditableModel
                 $resultElements = $stmtElements->execute()->fetchAllAssoc();
             }
         }
+
+        //ToDo find solution per sql for better performance
+        $resultElements = ArrayHelper::sortArrayByFields($resultElements,array('name'=>SORT_ASC));
 
         foreach ($resultElements as $key => $re) {
 

@@ -136,7 +136,7 @@ class Popup
             } elseif ($availableField === 'fax') {
                 if ($typeElement['fax'] !== '') {
                     $list['linkHref'] = '';
-                    $list['linkTitle'] = $typeElement['fax'];
+                    $list['linkTitle'] = 'FAX: ' . $typeElement['fax'];
                     $this->addEntry(strval($list['linkTitle']), 'fax');
                 }
             } elseif ($availableField === 'accessibility') {
@@ -148,7 +148,7 @@ class Popup
             } elseif ($availableField === 'email') {
                 if ($typeElement['email'] !== '') {
                     $list['linkHref'] = 'mailto:' . $typeElement['email'];
-                    $list['linkTitle'] = 'Email: ' . $typeElement['email'];
+                    $list['linkTitle'] = 'E-Mail: ' . $typeElement['email'];
                     $this->addLinkEntry(strval($list['linkTitle']), 'email', strval($list['linkHref']));
                 }
             } elseif ($availableField === 'website') {
@@ -158,7 +158,9 @@ class Popup
                     $list['linkHref'] = $typeElement['website'];
                 }
                 $list['linkHref'] = $typeElement['website'];
-                $list['linkTitle'] = $typeElement['website'];
+
+                $title = $typeElement['websiteLabel'] ? $typeElement['websiteLabel'] : $typeElement['website'];
+                $list['linkTitle'] = 'Website: ' . $title;
                 $this->addLinkEntry(strval($list['linkTitle']), 'website', strval($list['linkHref']));
             } else {
                 $model = DataCustomFieldModel::findBy('alias', $availableField);

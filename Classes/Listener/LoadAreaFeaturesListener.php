@@ -25,7 +25,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class LoadAreaFeaturesListener
 {
-
     public function onLoadAreaFeaturesGetFeatures(
         LoadAreaFeaturesEvent $event,
         $eventName,
