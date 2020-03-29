@@ -474,7 +474,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             'fax',
             'email',
             'website',
-            'linkWizard_legend',
+//            'linkWizard_legend',
             'linkWizard'
         ];
 
@@ -489,7 +489,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                     if (!in_array($availableField, $availableFieldsDetails, true)) {
                         if ($customFields !== null) {
                             foreach ($customFields as $customField) {
-                                if ($customField->alias === $availableField && ($customField->frontendDetails === '1' || $customField->type === 'legend')) {
+                                if ($customField->alias === $availableField && ($customField->frontendDetails === '1')) {
                                     $availableFieldsDetails[] = $availableField;
                                 }
                             }
@@ -499,7 +499,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             }
         } elseif ($customFields !== null) {
             foreach ($customFields as $customField) {
-                if ($customField->frontendDetails === '1' || $customField->type === 'legend') {
+                if ($customField->frontendDetails === '1') {
                     $availableFieldsDetails[] = $customField->alias;
                 }
             }
