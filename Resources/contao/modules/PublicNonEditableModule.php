@@ -355,7 +355,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 strval($GLOBALS['TL_LANG']['tl_c4g_data_element']['email'][0]),
                                 strval($GLOBALS['TL_LANG']['tl_c4g_data_element']['email'][1]),
                                 false, true, true, false)
-                                ->setAddStrBeforeValue(!static::$showLabelsInList ? 'Email: ' : 'Email')
+                                ->setAddStrBeforeValue(!static::$showLabelsInList ? 'E-Mail: ' : 'E-Mail')
                                 ->setShowIfEmpty(false)
                                 ->setLinkType(C4GLinkField::LINK_TYPE_EMAIL)
                                 ->setItemprop('email');
@@ -566,7 +566,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['email'][0],
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['email'][1],
                             true, false, true, false)
-                            ->setAddStrBeforeValue('Email: ')
+                            ->setAddStrBeforeValue('E-Mail: ')
                             ->setShowIfEmpty(false)
                             ->setLinkType(C4GLinkField::LINK_TYPE_EMAIL);
                         break;
@@ -650,7 +650,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                 ->setFormField(true)
                 ->setTableColumn(false)
                 ->setTargetPageId($this->mapPage)
-                ->setButtonLabel('zur Karte')
+                ->setButtonLabel('zur Karte') //ToDo Language
                 ->setLongitudeColumn('geox')
                 ->setLatitudeColumn('geoy')
                 ->setnewTab();
