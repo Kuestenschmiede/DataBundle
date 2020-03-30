@@ -29,11 +29,11 @@ class ElementCallback extends Backend
     {
         $arrTypes = [];
         $arrTypes[''] = '-';
-        $types = DataTypeModel::findAll();
+        $database = Database::getInstance();
+        $stmt = $database->prepare("SELECT id, name FROM tl_c4g_data_type WHERE name != '' ORDER BY name");
+        $types = $stmt->execute()->fetchAllAssoc();
         foreach ($types as $type) {
-            if ($type->name !== '') {
-                $arrTypes[$type->id] = $type->name;
-            }
+            $arrTypes[$type['id']] = $type['name'];
         }
 
         return $arrTypes;
