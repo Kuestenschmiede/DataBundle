@@ -127,7 +127,7 @@ $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_maximum_title'] = 'M
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_maximum_message'] = 'Die maximale Anzahl Anzeigen ist bereits erreicht.';
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_added_in_frontend'] = 'Im Frontend eingetragen';
 
-$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_directory'] = 'Nach Verzeichnis filtern:';
-$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_category'] = 'Nach Kategorie filtern:';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_directory'] = 'Alle Verzeichnisse';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_category'] = 'Alle Kategorien';
 
 
