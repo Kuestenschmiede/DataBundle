@@ -95,13 +95,13 @@ $GLOBALS['TL_LANG'][$strName]['delete'] = ["Kartenelement mit ID %s löschen", "
 $GLOBALS['TL_LANG'][$strName]['notice_already_max_published_elements'] = "Diese Gruppe hat bereits die maximale Anzahl veröffentlichter Elemente errreicht.";
 
 $GLOBALS['TL_LANG'][$strName]['day_reference'] = [
-    '0' => 'Montag',
-    '1' => 'Dienstag',
-    '2' => 'Mittwoch',
-    '3' => 'Donnerstag',
-    '4' => 'Freitag',
-    '5' => 'Samstag',
-    '6' => 'Sonntag'
+    '0' => 'Mo',
+    '1' => 'Di',
+    '2' => 'Mi',
+    '3' => 'Do',
+    '4' => 'Fr',
+    '5' => 'Sa',
+    '6' => 'So'
 ];
 
 $GLOBALS['TL_LANG'][$strName]['day_join'] = [
