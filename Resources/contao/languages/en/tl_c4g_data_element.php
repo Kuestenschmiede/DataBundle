@@ -128,3 +128,9 @@ $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['element_added_in_frontend'] 
 
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_directory'] = 'All directories';
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_category'] = 'All categories';
+
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['tel'] = 'Tel.';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['mobile'] = 'Mobile';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['fax'] = 'Fax';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['email'] = 'E-Mail';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['website'] = 'Website';
