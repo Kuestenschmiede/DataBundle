@@ -540,7 +540,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['phone'][0],
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['phone'][1],
                             true, false, true, false)
-                            ->setAddStrBeforeValue('Tel.: ')
+                            ->setAddStrBeforeValue($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['tel'].': ')
                             ->setShowIfEmpty(false)
                             ->setLinkType(C4GLinkField::LINK_TYPE_PHONE);
                         break;
@@ -549,7 +549,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['mobile'][0],
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['mobile'][1],
                             true, false, true, false)
-                            ->setAddStrBeforeValue('Mobil: ')
+                            ->setAddStrBeforeValue($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['mobile'].': ')
                             ->setShowIfEmpty(false)
                             ->setLinkType(C4GLinkField::LINK_TYPE_PHONE);
                         break;
@@ -558,7 +558,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['fax'][0],
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['fax'][1],
                             true, false, true, false)
-                            ->setAddStrBeforeValue('Fax: ')
+                            ->setAddStrBeforeValue($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['fax'].': ')
                             ->setShowIfEmpty(false);
                         break;
                     case 'email':
@@ -566,7 +566,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['email'][0],
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['email'][1],
                             true, false, true, false)
-                            ->setAddStrBeforeValue('E-Mail: ')
+                            ->setAddStrBeforeValue($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['email'].': ')
                             ->setShowIfEmpty(false)
                             ->setLinkType(C4GLinkField::LINK_TYPE_EMAIL);
                         break;
@@ -575,7 +575,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['website'][0],
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['website'][1],
                             true, false, true, false)
-                            ->setAddStrBeforeValue('Website: ')
+                            ->setAddStrBeforeValue($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['website'].': ')
                             ->setShowIfEmpty(false)
                             ->setLinkType(C4GLinkField::LINK_TYPE_DEFAULT)
                             ->setNewTab()
