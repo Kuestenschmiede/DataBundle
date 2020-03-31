@@ -22,6 +22,12 @@ $GLOBALS['TL_LANG']['tl_module']['showFilterResetButton'] = ['Show button to res
 $GLOBALS['TL_LANG']['tl_module']['filterResetButtonCaption'] = ['Button text', 'The button text.'];
 $GLOBALS['TL_LANG']['tl_module']['hideDetails'] = ['Hide list details', 'If checked, the details are not shown when a list element is clicked.'];
 $GLOBALS['TL_LANG']['tl_module']['showLabelsInList'] = ['Show labels in list', 'If checked, field names are shown in the list as well.'];
+$GLOBALS['TL_LANG']['tl_module']['phoneLabel'] = ['Phone field label', 'Is shown in front of the phone number. Accepts HTML. If nothing is set, a default text is shown.'];
+$GLOBALS['TL_LANG']['tl_module']['mobileLabel'] = ['Mobile field label', 'Is shown in front of the mobile number. Accepts HTML. If nothing is set, a default text is shown.'];
+$GLOBALS['TL_LANG']['tl_module']['faxLabel'] = ['Fax field label', 'Is shown in front of the fax number. Accepts HTML. If nothing is set, a default text is shown.'];
+$GLOBALS['TL_LANG']['tl_module']['emailLabel'] = ['Email field label', 'Is shown in front of the email address. Accepts HTML. If nothing is set, a default text is shown.'];
+$GLOBALS['TL_LANG']['tl_module']['websiteLabel'] = ['Website field label', 'Is shown in front of the website link. Accepts HTML. If nothing is set, a default text is shown.'];
+
 $GLOBALS['TL_LANG']['tl_module']['availableFieldsList'] = ['Available fields (list)', 'The fields shown in the list.'];
 $GLOBALS['TL_LANG']['tl_module']['authorizedGroups'] = ['Authorised groups', 'These groups may add elements in the frontend.'];
 

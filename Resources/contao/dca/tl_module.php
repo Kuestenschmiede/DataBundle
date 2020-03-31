@@ -16,7 +16,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'c4g_data_mode';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['public_noneditable'] = '{title_legend},name,headline,type;{caption_legend},'.
     'captionPlural,caption;{c4g_data_type_legend},c4g_data_mode,showSelectFilter,selectFilterLabel,showDirectorySelectFilter,directorySelectFilterLabel,labelMode,showFilterResetButton,'.
-    'filterResetButtonCaption;{c4g_expert_legend},hideDetails,showLabelsInList,availableFieldsList;{mapPage_legend},mapPage';
+    'filterResetButtonCaption;{c4g_expert_legend},hideDetails,showLabelsInList,phoneLabel,mobileLabel,faxLabel,emailLabel,websiteLabel,availableFieldsList;{mapPage_legend},mapPage';
 
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['c4g_data_mode_0'] = '';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['c4g_data_mode_1'] = 'c4g_data_type';
@@ -159,6 +159,56 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['showLabelsInList'] =
         'default'                 => false,
         'inputType'               => 'checkbox',
         'sql'                     => "char(1) NOT NULL default ''"
+    ];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['phoneLabel'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['phoneLabel'],
+        'exclude'                 => true,
+        'default'                 => false,
+        'inputType'               => 'text',
+        'eval'                    => ['allowHtml' => true],
+        'sql'                     => "varchar(255) NOT NULL default ''"
+    ];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['mobileLabel'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['mobileLabel'],
+        'exclude'                 => true,
+        'default'                 => false,
+        'inputType'               => 'text',
+        'eval'                    => ['allowHtml' => true],
+        'sql'                     => "varchar(255) NOT NULL default ''"
+    ];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['faxLabel'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['faxLabel'],
+        'exclude'                 => true,
+        'default'                 => false,
+        'inputType'               => 'text',
+        'eval'                    => ['allowHtml' => true],
+        'sql'                     => "varchar(255) NOT NULL default ''"
+    ];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['emailLabel'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['emailLabel'],
+        'exclude'                 => true,
+        'default'                 => false,
+        'inputType'               => 'text',
+        'eval'                    => ['allowHtml' => true],
+        'sql'                     => "varchar(255) NOT NULL default ''"
+    ];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['websiteLabel'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['websiteLabel'],
+        'exclude'                 => true,
+        'default'                 => false,
+        'inputType'               => 'text',
+        'eval'                    => ['allowHtml' => true],
+        'sql'                     => "varchar(255) NOT NULL default ''"
     ];
 
 $defaultAvailableFieldsList = serialize(

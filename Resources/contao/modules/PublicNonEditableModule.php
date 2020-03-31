@@ -323,53 +323,84 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 ->setEncodeHtmlEntities(false);
                             break;
                         case 'phone':
-                            $fieldList[] = C4GLinkField::create('phone',
+                            $field = C4GLinkField::create('phone',
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['phone'][0],
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['phone'][1],
                                 false, true, true, false)
-                                ->setAddStrBeforeValue($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['tel'].': ')
                                 ->setShowIfEmpty(false)
                                 ->setLinkType(C4GLinkField::LINK_TYPE_PHONE)
                                 ->setItemprop('telephone');
+
+                            if ($this->phoneLabel) {
+                                $field->setAddStrBeforeValue($this->phoneLabel);
+                            } else {
+                                $field->setAddStrBeforeValue(!static::$showLabelsInList ? $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['tel'].': ' : $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['tel']);
+                            }
+                            $fieldList[] = $field;
+
                             break;
                         case 'mobile':
-                            $fieldList[] = C4GLinkField::create('mobile',
+                            $field = C4GLinkField::create('mobile',
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['mobile'][0],
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['mobile'][1],
                                 false, true, true, false)
-                                ->setAddStrBeforeValue(!static::$showLabelsInList ? $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['mobile'].': ' : $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['mobile'])
                                 ->setShowIfEmpty(false)
                                 ->setLinkType(C4GLinkField::LINK_TYPE_PHONE);
+
+                            if ($this->mobileLabel) {
+                                $field->setAddStrBeforeValue($this->mobileLabel);
+                            } else {
+                                $field->setAddStrBeforeValue(!static::$showLabelsInList ? $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['mobile'].': ' : $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['mobile']);
+                            }
+                            $fieldList[] = $field;
                             break;
                         case 'fax':
-                            $fieldList[] = C4GTextField::create('fax',
+                            $field = C4GTextField::create('fax',
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['fax'][0],
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['fax'][1],
                                 false, true, true, false)
-                                ->setAddStrBeforeValue(!static::$showLabelsInList ? $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['fax'].': ' : $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['fax'])
                                 ->setShowIfEmpty(false)
                                 ->setEncodeHtmlEntities(false);
+
+                            if ($this->faxLabel) {
+                                $field->setAddStrBeforeValue($this->faxLabel);
+                            } else {
+                                $field->setAddStrBeforeValue(!static::$showLabelsInList ? $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['fax'].': ' : $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['fax']);
+                            }
+                            $fieldList[] = $field;
                             break;
                         case 'email':
-                            $fieldList[] = C4GLinkField::create('email',
+                            $field = C4GLinkField::create('email',
                                 strval($GLOBALS['TL_LANG']['tl_c4g_data_element']['email'][0]),
                                 strval($GLOBALS['TL_LANG']['tl_c4g_data_element']['email'][1]),
                                 false, true, true, false)
-                                ->setAddStrBeforeValue(!static::$showLabelsInList ? $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['email'].': ' : $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['email'])
                                 ->setShowIfEmpty(false)
                                 ->setLinkType(C4GLinkField::LINK_TYPE_EMAIL)
                                 ->setItemprop('email');
+
+                            if ($this->emailLabel) {
+                                $field->setAddStrBeforeValue($this->emailLabel);
+                            } else {
+                                $field->setAddStrBeforeValue(!static::$showLabelsInList ? $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['email'].': ' : $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['email']);
+                            }
+                            $fieldList[] = $field;
                             break;
                         case 'website':
-                            $fieldList[] = C4GLinkField::create('website',
+                            $field = C4GLinkField::create('website',
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['website'][0],
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['website'][1],
                                 false, true, true, false)
-                                ->setAddStrBeforeValue(!static::$showLabelsInList ? $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['website'].': ' : $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['website'])
                                 ->setShowIfEmpty(false)
                                 ->setLinkType(C4GLinkField::LINK_TYPE_DEFAULT)
                                 ->setNewTab()
                                 ->setLabelField('websiteLabel');
+
+                            if ($this->websiteLabel) {
+                                $field->setAddStrBeforeValue($this->websiteLabel);
+                            } else {
+                                $field->setAddStrBeforeValue(!static::$showLabelsInList ? $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['website'].': ' : $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['website']);
+                            }
+                            $fieldList[] = $field;
                             break;
                         case 'linkWizard':
                             $fieldList[] = C4GMultiLinkField::create('linkWizard',
@@ -540,7 +571,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['phone'][0],
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['phone'][1],
                             true, false, true, false)
-                            ->setAddStrBeforeValue($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['tel'].': ')
+                            ->setAddStrBeforeValue($this->phoneLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['tel'].': ')
                             ->setShowIfEmpty(false)
                             ->setLinkType(C4GLinkField::LINK_TYPE_PHONE);
                         break;
@@ -549,7 +580,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['mobile'][0],
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['mobile'][1],
                             true, false, true, false)
-                            ->setAddStrBeforeValue($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['mobile'].': ')
+                            ->setAddStrBeforeValue($this->mobileLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['mobile'].': ')
                             ->setShowIfEmpty(false)
                             ->setLinkType(C4GLinkField::LINK_TYPE_PHONE);
                         break;
@@ -558,7 +589,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['fax'][0],
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['fax'][1],
                             true, false, true, false)
-                            ->setAddStrBeforeValue($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['fax'].': ')
+                            ->setAddStrBeforeValue($this->faxLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['fax'].': ')
                             ->setShowIfEmpty(false);
                         break;
                     case 'email':
@@ -566,7 +597,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['email'][0],
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['email'][1],
                             true, false, true, false)
-                            ->setAddStrBeforeValue($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['email'].': ')
+                            ->setAddStrBeforeValue($this->emailLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['email'].': ')
                             ->setShowIfEmpty(false)
                             ->setLinkType(C4GLinkField::LINK_TYPE_EMAIL);
                         break;
@@ -575,7 +606,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['website'][0],
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['website'][1],
                             true, false, true, false)
-                            ->setAddStrBeforeValue($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['website'].': ')
+                            ->setAddStrBeforeValue($this->websiteLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['website'].': ')
                             ->setShowIfEmpty(false)
                             ->setLinkType(C4GLinkField::LINK_TYPE_DEFAULT)
                             ->setNewTab()

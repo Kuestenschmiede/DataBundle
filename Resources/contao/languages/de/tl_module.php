@@ -25,6 +25,11 @@ $GLOBALS['TL_LANG']['tl_module']['showFilterResetButton'] = ['Button zum Zurück
 $GLOBALS['TL_LANG']['tl_module']['filterResetButtonCaption'] = ['Text des Buttons', 'Der Text des Buttons.'];
 $GLOBALS['TL_LANG']['tl_module']['hideDetails'] = ['Listendetails nicht anzeigen', 'Falls gesetzt, werden beim Klick auf ein Listenelement nicht dessen Details angezeigt.'];
 $GLOBALS['TL_LANG']['tl_module']['showLabelsInList'] = ['In der Liste Labels anzeigen', 'Falls gesetzt, werden in der Liste die Feldnamen mit angezeigt.'];
+$GLOBALS['TL_LANG']['tl_module']['phoneLabel'] = ['Telefonfeldbezeichnung', 'Wird vor der Telefonnummer angezeigt. Akzeptiert HTML. Ist nichts angegeben, wird ein Standardtext ausgegeben.'];
+$GLOBALS['TL_LANG']['tl_module']['mobileLabel'] = ['Mobiltelefonfeldbezeichnung', 'Wird vor der Mobiltelefonnummer angezeigt. Akzeptiert HTML. Ist nichts angegeben, wird ein Standardtext ausgegeben.'];
+$GLOBALS['TL_LANG']['tl_module']['faxLabel'] = ['Faxfeldbezeichnung', 'Wird vor der Faxnummer angezeigt. Akzeptiert HTML. Ist nichts angegeben, wird ein Standardtext ausgegeben.'];
+$GLOBALS['TL_LANG']['tl_module']['emailLabel'] = ['Emailfeldbezeichnung', 'Wird vor der E-Mailadresse angezeigt. Akzeptiert HTML. Ist nichts angegeben, wird ein Standardtext ausgegeben.'];
+$GLOBALS['TL_LANG']['tl_module']['websiteLabel'] = ['Websitefeldbezeichnung', 'Wird vor dem Link zur Website angezeigt. Akzeptiert HTML. Ist nichts angegeben, wird ein Standardtext ausgegeben.'];
 $GLOBALS['TL_LANG']['tl_module']['availableFieldsList'] = ['Verfügbare Felder (Liste)', 'Die Felder, die in der Liste angezeigt werden.'];
 $GLOBALS['TL_LANG']['tl_module']['authorizedGroups'] = ['Authorisierte Gruppen', 'Diese Gruppen dürfen im Frontend Elemente anlegen.'];
 
