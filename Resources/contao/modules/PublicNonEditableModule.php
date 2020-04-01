@@ -27,6 +27,7 @@ use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GHeadlineField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GIconField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GImageField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GKeyField;
+use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GLabelField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GLinkButtonField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GLinkField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GMapLinkButtonField;
@@ -639,12 +640,13 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             ->setLinkType(C4GLinkField::LINK_TYPE_PHONE);
                         break;
                     case 'fax':
-                        $brickField = C4GTextField::create('fax',
+                        $brickField = C4GLinkField::create('fax',
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['fax'][0],
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['fax'][1],
                             true, false, true, false)
                             ->setAddStrBeforeValue($this->faxLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['fax'].': ')
-                            ->setShowIfEmpty(false);
+                            ->setShowIfEmpty(false)
+                            ->setLinkType(C4GLinkField::LINK_TYPE_PHONE);
                         break;
                     case 'email':
                         $brickField = C4GLinkField::create('email',
