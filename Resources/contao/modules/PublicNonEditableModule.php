@@ -245,6 +245,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         $availableFieldsList = StringUtil::deserialize($this->availableFieldsList);
         if (is_array($availableFieldsList)) {
             $numberOfHeadlines = 0;
+            $headline = null;
             foreach ($availableFieldsList as $availableField) {
                 $customField = DataCustomFieldModel::findBy('alias', $availableField);
                 if ($customField !== null) {
@@ -259,6 +260,9 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                     ->setConditional()
                                     ->setFormField(false);
                                 $fieldList[] = $link;
+                                if ($headline instanceof C4GHeadlineField) {
+                                    $headline->addAssociatedField($link);
+                                }
                             } elseif ($customField->type === 'icon') {
                                 $icon = C4GIconField::create($customField->alias);
                                 $icon->setIcon($customField->icon)
@@ -267,13 +271,20 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                     ->setDescription($customField->description)
                                     ->setTitle($customField->frontendName ?: $customField->name);
                                 $fieldList[] = $icon;
+                                if ($headline instanceof C4GHeadlineField) {
+                                    $headline->addAssociatedField($icon);
+                                }
                             } else {
-                                $fieldList[] = C4GTextField::create($customField->alias,
+                                $text = C4GTextField::create($customField->alias,
                                     $customField->name,
                                     $customField->description,
                                     false, true, true, false
                                 )->setShowIfEmpty(false)
                                     ->setEncodeHtmlEntities(false);
+                                $fieldList[] = $text;
+                                if ($headline instanceof C4GHeadlineField) {
+                                    $headline->addAssociatedField($text);
+                                }
                             }
                         } else {
                             $numberOfHeadlines += 1;
@@ -288,24 +299,32 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                 } else {
                     switch ($availableField) {
                         case 'name':
-                            $fieldList[] = C4GTextField::create('name',
+                            $field = C4GTextField::create('name',
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['name'][0],
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['name'][1],
                                 false, true, true, false)
                                 ->setItemprop('name')
                                 ->setWithoutLabel()
                                 ->setEncodeHtmlEntities(false);
+                            $fieldList[] = $field;
+                            if ($headline instanceof C4GHeadlineField) {
+                                $headline->addAssociatedField($field);
+                            }
                             break;
                         case 'image':
-                            $fieldList[] = C4GImageField::create('image',
+                            $field = C4GImageField::create('image',
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['image'][0],
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['image'][1],
                                 false, true, true, false)
                                 ->setLightBoxField('imageLightBox')
                                 ->setItemprop('image');
+                            $fieldList[] = $field;
+                            if ($headline instanceof C4GHeadlineField) {
+                                $headline->addAssociatedField($field);
+                            }
                             break;
                         case 'address':
-                            $fieldList[] = C4GTextField::create('address',
+                            $field = C4GTextField::create('address',
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['address'][0],
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['address'][1],
                                 false, true, true, false)
@@ -313,14 +332,22 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 ->setItemprop('address')
                                 ->setItemType('http://schema.org/PostalAddress')
                                 ->setEncodeHtmlEntities(false);
+                            $fieldList[] = $field;
+                            if ($headline instanceof C4GHeadlineField) {
+                                $headline->addAssociatedField($field);
+                            }
                             break;
                         case 'businessHours':
-                            $fieldList[] = C4GTextField::create('businessHours',
+                            $field = C4GTextField::create('businessHours',
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['businessHours'][0],
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['businessHours'][1],
                                 false, true, true, false)
                                 ->setSimpleTextWithoutEditing()
                                 ->setEncodeHtmlEntities(false);
+                            $fieldList[] = $field;
+                            if ($headline instanceof C4GHeadlineField) {
+                                $headline->addAssociatedField($field);
+                            }
                             break;
                         case 'phone':
                             $field = C4GLinkField::create('phone',
@@ -337,6 +364,9 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 $field->setAddStrBeforeValue(!static::$showLabelsInList ? $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['tel'].': ' : $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['tel']);
                             }
                             $fieldList[] = $field;
+                            if ($headline instanceof C4GHeadlineField) {
+                                $headline->addAssociatedField($field);
+                            }
 
                             break;
                         case 'mobile':
@@ -353,6 +383,9 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 $field->setAddStrBeforeValue(!static::$showLabelsInList ? $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['mobile'].': ' : $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['mobile']);
                             }
                             $fieldList[] = $field;
+                            if ($headline instanceof C4GHeadlineField) {
+                                $headline->addAssociatedField($field);
+                            }
                             break;
                         case 'fax':
                             $field = C4GTextField::create('fax',
@@ -368,6 +401,9 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 $field->setAddStrBeforeValue(!static::$showLabelsInList ? $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['fax'].': ' : $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['fax']);
                             }
                             $fieldList[] = $field;
+                            if ($headline instanceof C4GHeadlineField) {
+                                $headline->addAssociatedField($field);
+                            }
                             break;
                         case 'email':
                             $field = C4GLinkField::create('email',
@@ -384,6 +420,9 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 $field->setAddStrBeforeValue(!static::$showLabelsInList ? $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['email'].': ' : $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['email']);
                             }
                             $fieldList[] = $field;
+                            if ($headline instanceof C4GHeadlineField) {
+                                $headline->addAssociatedField($field);
+                            }
                             break;
                         case 'website':
                             $field = C4GLinkField::create('website',
@@ -401,25 +440,40 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 $field->setAddStrBeforeValue(!static::$showLabelsInList ? $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['website'].': ' : $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['website']);
                             }
                             $fieldList[] = $field;
+                            if ($headline instanceof C4GHeadlineField) {
+                                $headline->addAssociatedField($field);
+                            }
                             break;
                         case 'linkWizard':
-                            $fieldList[] = C4GMultiLinkField::create('linkWizard',
+                            $field = C4GMultiLinkField::create('linkWizard',
                                 '', '', false,
                                 true, true, false);
+                            $fieldList[] = $field;
+                            if ($headline instanceof C4GHeadlineField) {
+                                $headline->addAssociatedField($field);
+                            }
                             break;
                         case 'datePublished':
-                            $fieldList[] = C4GTextField::create('datePublished',
+                            $field = C4GTextField::create('datePublished',
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['datePublished'][0],
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['datePublished'][1], false,
                                 true, true, false)
                                 ->setEncodeHtmlEntities(false);
+                            $fieldList[] = $field;
+                            if ($headline instanceof C4GHeadlineField) {
+                                $headline->addAssociatedField($field);
+                            }
                             break;
                         case 'ownerGroupId':
-                            $fieldList[] = C4GTextField::create('ownerGroupId',
+                            $field = C4GTextField::create('ownerGroupId',
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['ownerGroupId'][0],
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['ownerGroupId'][1], false,
                                 true, true, false)
                                 ->setEncodeHtmlEntities(false);
+                            $fieldList[] = $field;
+                            if ($headline instanceof C4GHeadlineField) {
+                                $headline->addAssociatedField($field);
+                            }
                             break;
                         case 'data_legend':
                         case 'businessHours_legend':
