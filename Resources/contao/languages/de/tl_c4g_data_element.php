@@ -135,5 +135,6 @@ $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['mobile'] = 'Mobil';
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['fax'] = 'Fax';
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['email'] = 'E-Mail';
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['website'] = 'Website';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['toMap'] = 'zur Karte';
 
 

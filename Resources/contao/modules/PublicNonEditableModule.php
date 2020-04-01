@@ -459,7 +459,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         if ($this->mapPage) {
             $fieldList[] = C4GMapLinkButtonField::create('maplink')
                 ->setTargetPageId($this->mapPage)
-                ->setButtonLabel('zur Karte')
+                ->setButtonLabel($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['toMap'])
                 ->setLongitudeColumn('geox')
                 ->setLatitudeColumn('geoy')
                 ->setnewTab();
@@ -681,7 +681,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                 ->setFormField(true)
                 ->setTableColumn(false)
                 ->setTargetPageId($this->mapPage)
-                ->setButtonLabel('zur Karte') //ToDo Language
+                ->setButtonLabel($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['toMap'])
                 ->setLongitudeColumn('geox')
                 ->setLatitudeColumn('geoy')
                 ->setnewTab();
