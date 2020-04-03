@@ -17,5 +17,5 @@ $GLOBALS['TL_LANG']['MOD']['c4g_data_element'] = ['Datenerfassung', 'Karteneleme
 $GLOBALS['TL_LANG']['MOD']['c4g_data_custom_field'] = ['Eigene Felder', 'Benutzerdefinierte Felder bearbeiten'];
 $GLOBALS['TL_LANG']['MOD']['c4g_data_directory'] = ['Verzeichnisse', 'Verzeichnisse bearbeiten'];
 
-$GLOBALS['TL_LANG']['FMD']['public_noneditable'] = ['Auflistung ohne Schreibzugriff', 'Darstellung der Elemente ohne Schreibzugriff'];
-$GLOBALS['TL_LANG']['FMD']['member_editable'] = ['Auflistung mit Schreibzugriff für Mitglieder', 'Darstellung der Elemente mit Schreibzugriff'];
+$GLOBALS['TL_LANG']['FMD']['public_noneditable'] = ['(data) Auflistung ohne Schreibzugriff', 'Darstellung der Elemente ohne Schreibzugriff'];
+$GLOBALS['TL_LANG']['FMD']['member_editable'] = ['(data) Auflistung mit Schreibzugriff für Mitglieder', 'Darstellung der Elemente mit Schreibzugriff'];

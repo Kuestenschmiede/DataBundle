@@ -86,11 +86,11 @@ $GLOBALS['TL_LANG'][$strName]['published_legend'] = 'Veröffentlichungsstatus';
 /**
  * Operations
  */
-$GLOBALS['TL_LANG'][$strName]['new'] = ["Neues Kartenelement erstellen", "Neues Kartenelement erstellen"];
-$GLOBALS['TL_LANG'][$strName]['show'] = ["Kartenelementdetails", "Kartenelement mit ID %s anzeigen"];
-$GLOBALS['TL_LANG'][$strName]['edit'] = ["Kartenelement mit ID %s bearbeiten", "Kartenelement mit ID %s bearbeiten"];
-$GLOBALS['TL_LANG'][$strName]['copy'] = ["Kartenelement mit ID %s kopieren", "Kartenelement mit ID %s kopieren"];
-$GLOBALS['TL_LANG'][$strName]['delete'] = ["Kartenelement mit ID %s löschen", "Kartenelement mit ID %s löschen"];
+$GLOBALS['TL_LANG'][$strName]['new'] = ["Neues Datenelement erstellen", "Neues Datenelement erstellen"];
+$GLOBALS['TL_LANG'][$strName]['show'] = ["Datenelementdetails", "Datenelement mit ID %s anzeigen"];
+$GLOBALS['TL_LANG'][$strName]['edit'] = ["Datenelement mit ID %s bearbeiten", "Datenelement mit ID %s bearbeiten"];
+$GLOBALS['TL_LANG'][$strName]['copy'] = ["Datenelement mit ID %s kopieren", "Datenelement mit ID %s kopieren"];
+$GLOBALS['TL_LANG'][$strName]['delete'] = ["Datenelement mit ID %s löschen", "Datenelement mit ID %s löschen"];
 
 $GLOBALS['TL_LANG'][$strName]['notice_already_max_published_elements'] = "Diese Gruppe hat bereits die maximale Anzahl veröffentlichter Elemente errreicht.";
 

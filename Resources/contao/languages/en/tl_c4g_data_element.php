@@ -86,11 +86,11 @@ $GLOBALS['TL_LANG'][$strName]['published_legend'] = 'Published status';
 /**
  * Operations
  */
-$GLOBALS['TL_LANG'][$strName]['new'] = ["Create new map element", "Create new map element"];
-$GLOBALS['TL_LANG'][$strName]['show'] = ["Map element details", "Show map element with ID %s"];
-$GLOBALS['TL_LANG'][$strName]['edit'] = ["Edit map element with ID %s", "Edit map element with ID %s"];
-$GLOBALS['TL_LANG'][$strName]['copy'] = ["Copy map element with ID %s", "Copy map element with ID %s"];
-$GLOBALS['TL_LANG'][$strName]['delete'] = ["Delete map element with ID %s", "Delete map element with ID %s"];
+$GLOBALS['TL_LANG'][$strName]['new'] = ["Create new data element", "Create new data element"];
+$GLOBALS['TL_LANG'][$strName]['show'] = ["Data element details", "Show data element with ID %s"];
+$GLOBALS['TL_LANG'][$strName]['edit'] = ["Edit data element with ID %s", "Edit data element with ID %s"];
+$GLOBALS['TL_LANG'][$strName]['copy'] = ["Copy data element with ID %s", "Copy data element with ID %s"];
+$GLOBALS['TL_LANG'][$strName]['delete'] = ["Delete data element with ID %s", "Delete data element with ID %s"];
 
 $GLOBALS['TL_LANG'][$strName]['notice_already_max_published_elements'] = "This group has already reached the maximum number of published elements.";
 

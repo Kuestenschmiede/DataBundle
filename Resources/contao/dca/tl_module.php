@@ -165,7 +165,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['phoneLabel'] =
     [
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['phoneLabel'],
         'exclude'                 => true,
-        'default'                 => false,
+        'default'                 => '',
         'inputType'               => 'text',
         'eval'                    => ['allowHtml' => true],
         'sql'                     => "varchar(255) NOT NULL default ''"
@@ -175,7 +175,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['mobileLabel'] =
     [
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['mobileLabel'],
         'exclude'                 => true,
-        'default'                 => false,
+        'default'                 => '',
         'inputType'               => 'text',
         'eval'                    => ['allowHtml' => true],
         'sql'                     => "varchar(255) NOT NULL default ''"
@@ -185,7 +185,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['faxLabel'] =
     [
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['faxLabel'],
         'exclude'                 => true,
-        'default'                 => false,
+        'default'                 => '',
         'inputType'               => 'text',
         'eval'                    => ['allowHtml' => true],
         'sql'                     => "varchar(255) NOT NULL default ''"
@@ -195,7 +195,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['emailLabel'] =
     [
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['emailLabel'],
         'exclude'                 => true,
-        'default'                 => false,
+        'default'                 => '',
         'inputType'               => 'text',
         'eval'                    => ['allowHtml' => true],
         'sql'                     => "varchar(255) NOT NULL default ''"
@@ -205,7 +205,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['websiteLabel'] =
     [
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['websiteLabel'],
         'exclude'                 => true,
-        'default'                 => false,
+        'default'                 => '',
         'inputType'               => 'text',
         'eval'                    => ['allowHtml' => true],
         'sql'                     => "varchar(255) NOT NULL default ''"

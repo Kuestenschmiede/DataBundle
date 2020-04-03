@@ -10,3 +10,4 @@ $GLOBALS['TL_LANG']['tl_c4g_data_directory'] = [
     'delete' => ["Delete directory with ID %s", "Delete directory with ID %s"]
 ];
 
+$GLOBALS['TL_LANG']['tl_c4g_data_directory']['data_legend'] = 'General data';

@@ -61,8 +61,8 @@ class Popup
                     $fileModel = FilesModel::findByUuid($typeElement['image']);
                     if ($fileModel !== null) {
                         $serverName = $_SERVER['SERVER_NAME'];
-                        if (!C4GUtils::endsWith("/", $serverName)) {
-                            $serverName .= "/";
+                        if (!C4GUtils::endsWith('/', $serverName)) {
+                            $serverName .= '/';
                         }
                         $this->addImageEntry($serverName . $fileModel->path, $typeElement['imageMaxHeight'], $typeElement['imageMaxWidth'], 'image', strval($typeElement['imageLink']));
                     } else {
