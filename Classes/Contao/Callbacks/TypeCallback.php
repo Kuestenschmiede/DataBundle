@@ -23,7 +23,11 @@ class TypeCallback extends Backend
 {
     public function getLocstyles()
     {
-        $locstyles = C4gMapLocstylesModel::findAll();
+        $t = 'tl_c4g_map_locstyles';
+        $arrOptions = [
+            'order' => "$t.name ASC",
+        ];
+        $locstyles = C4gMapLocstylesModel::findAll($arrOptions);
         $arrLocstyles = [];
         foreach ($locstyles as $locstyle) {
             $arrLocstyles[$locstyle->id] = $locstyle->name;
