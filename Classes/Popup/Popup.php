@@ -60,11 +60,7 @@ class Popup
                 if (is_string($typeElement['image']) === true) {
                     $fileModel = FilesModel::findByUuid($typeElement['image']);
                     if ($fileModel !== null) {
-                        $serverName = $_SERVER['SERVER_NAME'];
-                        if (!C4GUtils::endsWith('/', $serverName)) {
-                            $serverName .= '/';
-                        }
-                        $this->addImageEntry($serverName . $fileModel->path, $typeElement['imageMaxHeight'], $typeElement['imageMaxWidth'], 'image', strval($typeElement['imageLink']));
+                        $this->addImageEntry($fileModel->path, $typeElement['imageMaxHeight'], $typeElement['imageMaxWidth'], 'image', strval($typeElement['imageLink']));
                     } else {
                         C4gLogModel::addLogEntry('data', 'Popupimage of element ' . $typeElement['id'] . ' with uuid ' . $typeElement['image'] . ' not found.');
                     }
