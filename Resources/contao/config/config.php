@@ -71,3 +71,5 @@ $GLOBALS['TL_MODELS']['tl_c4g_data_directory'] = DataDirectoryModel::class;
 $GLOBALS['FE_MOD']['con4gis']['member_editable'] = MemberEditableModule::class;
 $GLOBALS['FE_MOD']['con4gis']['public_noneditable'] = PublicNonEditableModule::class;
 asort($GLOBALS['FE_MOD']['con4gis']);
+
+$GLOBALS['TL_HOOKS']['replaceInsertTags'][] = [\con4gis\DataBundle\Classes\Hooks\ReplaceInsertTags::class, 'replaceTag'];
