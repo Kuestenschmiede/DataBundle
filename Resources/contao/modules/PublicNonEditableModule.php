@@ -686,7 +686,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element'][$field][0],
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element'][$field][1],
                                 true, false, true, false)
-                                ->setShowIfEmpty(false);
+                                ->setShowIfEmpty(false)
+                                ->setReplaceInsertTag(true);
                         } catch (\Throwable $throwable) {
                             C4gLogModel::addLogEntry(
                                 'data',
@@ -722,7 +723,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             strval($model->name),
                             strval($model->description),
                             true, false, true, false)
-                            ->setShowIfEmpty(false);
+                            ->setShowIfEmpty(false)
+                            ->setReplaceInsertTag(true);
                         $fieldList[] = $brickField;
                         if ($legend !== null && $brickField !== null) {
                             $legend->addAssociatedField($brickField);
