@@ -14,7 +14,7 @@ namespace con4gis\DataBundle\Classes\Contao\Callbacks;
 
 use con4gis\DataBundle\Resources\contao\models\DataElementModel;
 use con4gis\DataBundle\Resources\contao\models\DataTypeModel;
-use con4gis\GroupsBundle\Resources\contao\models\MemberGroupModel;
+use Contao\MemberGroupModel;
 use con4gis\MapsBundle\Classes\Utils;
 use Contao\Backend;
 use Contao\Database;
