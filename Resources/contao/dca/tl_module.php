@@ -70,7 +70,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['caption'] =
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['caption'],
         'exclude'                 => true,
         'inputType'               => 'text',
-        'sql'                     => "varchar(255) NOT NULL default ''"
+        'sql'                     => "varchar(254) NOT NULL default ''"
     ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['captionPlural'] =
@@ -78,7 +78,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['captionPlural'] =
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['captionPlural'],
         'exclude'                 => true,
         'inputType'               => 'text',
-        'sql'                     => "varchar(255) NOT NULL default ''"
+        'sql'                     => "varchar(254) NOT NULL default ''"
     ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['showSelectFilter'] =
@@ -95,7 +95,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['selectFilterLabel'] =
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['selectFilterLabel'],
         'exclude'                 => true,
         'inputType'               => 'text',
-        'sql'                     => "varchar(255) NOT NULL default ''"
+        'sql'                     => "varchar(254) NOT NULL default ''"
     ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['showDirectorySelectFilter'] =
@@ -112,7 +112,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['directorySelectFilterLabel'] =
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['directorySelectFilterLabel'],
         'exclude'                 => true,
         'inputType'               => 'text',
-        'sql'                     => "varchar(255) NOT NULL default ''"
+        'sql'                     => "varchar(254) NOT NULL default ''"
     ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['labelMode'] =
@@ -122,7 +122,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['labelMode'] =
         'inputType'               => 'select',
         'options'                 => ['0', '1', '2'],
         'reference'               => &$GLOBALS['TL_LANG']['tl_module']['labelMode_option'],
-        'sql'                     => "varchar(255) NOT NULL default ''"
+        'sql'                     => "varchar(254) NOT NULL default ''"
     ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['showFilterResetButton'] =
@@ -140,7 +140,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['filterResetButtonCaption'] =
         'exclude'                 => true,
         'default'                 => '',
         'inputType'               => 'text',
-        'sql'                     => "varchar(255) NOT NULL default ''"
+        'sql'                     => "varchar(254) NOT NULL default ''"
     ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['hideDetails'] =
@@ -168,7 +168,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['phoneLabel'] =
         'default'                 => '',
         'inputType'               => 'text',
         'eval'                    => ['allowHtml' => true],
-        'sql'                     => "varchar(255) NOT NULL default ''"
+        'sql'                     => "varchar(254) NOT NULL default ''"
     ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['mobileLabel'] =
@@ -178,7 +178,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['mobileLabel'] =
         'default'                 => '',
         'inputType'               => 'text',
         'eval'                    => ['allowHtml' => true],
-        'sql'                     => "varchar(255) NOT NULL default ''"
+        'sql'                     => "varchar(254) NOT NULL default ''"
     ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['faxLabel'] =
@@ -188,7 +188,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['faxLabel'] =
         'default'                 => '',
         'inputType'               => 'text',
         'eval'                    => ['allowHtml' => true],
-        'sql'                     => "varchar(255) NOT NULL default ''"
+        'sql'                     => "varchar(254) NOT NULL default ''"
     ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['emailLabel'] =
@@ -198,7 +198,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['emailLabel'] =
         'default'                 => '',
         'inputType'               => 'text',
         'eval'                    => ['allowHtml' => true],
-        'sql'                     => "varchar(255) NOT NULL default ''"
+        'sql'                     => "varchar(254) NOT NULL default ''"
     ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['websiteLabel'] =
@@ -208,7 +208,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['websiteLabel'] =
         'default'                 => '',
         'inputType'               => 'text',
         'eval'                    => ['allowHtml' => true],
-        'sql'                     => "varchar(255) NOT NULL default ''"
+        'sql'                     => "varchar(254) NOT NULL default ''"
     ];
 
 $defaultAvailableFieldsList = serialize(
@@ -236,7 +236,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['availableFieldsList'] =
             'class'               => 'clr',
             'multiple'            => true,
         ],
-        'sql'                     => "text NOT NULL default '$defaultAvailableFieldsList'"
+        'sql'                     => "text NOT NULL default ".$defaultAvailableFieldsList
     ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['authorizedGroups'] =
@@ -250,6 +250,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['authorizedGroups'] =
             'class'               => 'clr',
             'multiple'            => true,
         ],
-        'sql'                     => "text NOT NULL default '$defaultAvailableFieldsList'"
+        'sql'                     => "text NULL"
     ];
 
