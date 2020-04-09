@@ -19,7 +19,11 @@ class DirectoryCallback extends Backend
 {
     public function loadTypeOptions($dc)
     {
-        $types = DataTypeModel::findAll();
+        $t = 'tl_c4g_data_type';
+        $arrOptions = [
+            'order' => "$t.name ASC",
+        ];
+        $types = DataTypeModel::findAll($arrOptions);
         $options = [];
         if ($types !== null) {
             foreach ($types as $type) {
