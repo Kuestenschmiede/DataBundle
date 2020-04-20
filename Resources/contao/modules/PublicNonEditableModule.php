@@ -543,7 +543,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['description'][0],
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['description'][1],
             true, false, true, false)
-            ->setSimpleTextWithoutEditing();
+            ->setSimpleTextWithoutEditing()
+            ->setReplaceInsertTag();
 
         $availableFieldsDetails = [
             'image',
