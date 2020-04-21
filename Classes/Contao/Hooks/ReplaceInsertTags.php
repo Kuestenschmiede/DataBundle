@@ -11,7 +11,7 @@
   * @link       https://www.con4gis.org
   */
 
-namespace con4gis\DataBundle\Classes\Hooks;
+namespace con4gis\DataBundle\Classes\Contao\Hooks;
 
 use Contao\Database;
 

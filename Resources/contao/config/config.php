@@ -72,4 +72,4 @@ $GLOBALS['FE_MOD']['con4gis']['member_editable'] = MemberEditableModule::class;
 $GLOBALS['FE_MOD']['con4gis']['public_noneditable'] = PublicNonEditableModule::class;
 asort($GLOBALS['FE_MOD']['con4gis']);
 
-$GLOBALS['TL_HOOKS']['replaceInsertTags'][] = [\con4gis\DataBundle\Classes\Hooks\ReplaceInsertTags::class, 'replaceTag'];
+$GLOBALS['TL_HOOKS']['replaceInsertTags'][] = [\con4gis\DataBundle\Classes\Contao\Hooks\ReplaceInsertTags::class, 'replaceTag'];
