@@ -213,7 +213,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         }
 
         if ($this->showFilterResetButton) {
-            $this->listParams->addFilterButton(new C4GFilterResetButton($this->filterResetButtonCaption ?: '', $this->filterResetButtonCaption ?: ''));
+            $this->listParams->addFilterButton(new C4GFilterResetButton($this->filterResetButtonCaption ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['reset_filter'], $this->filterResetButtonCaption ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['reset_filter']));
         }
 
         if (strval($this->caption) !== '') {
