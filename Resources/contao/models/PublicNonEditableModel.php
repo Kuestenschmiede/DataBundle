@@ -384,6 +384,7 @@ class PublicNonEditableModel
 
         $typeModel = DataTypeModel::findByPk($array['type']);
         $array['type'] = $typeModel->name;
+        $array['itemType'] = strval($typeModel->itemType);
 
         $timeString = [];
         $businessTimes = \StringUtil::deserialize($array['businessHours']);

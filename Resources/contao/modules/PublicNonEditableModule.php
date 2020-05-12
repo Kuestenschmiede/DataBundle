@@ -344,6 +344,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['businessHours'][1],
                                 false, true, true, false)
                                 ->setSimpleTextWithoutEditing()
+                                ->setItemprop('openingHours')
+                                ->setItemType('http://schema.org/LocalBusiness')
                                 ->setEncodeHtmlEntities(false);
                             $fieldList[] = $field;
                             if ($headline instanceof C4GHeadlineField) {
@@ -357,7 +359,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 false, true, true, false)
                                 ->setShowIfEmpty(false)
                                 ->setLinkType(C4GLinkField::LINK_TYPE_PHONE)
-                                ->setItemprop('telephone');
+                                ->setItemprop('telephone')
+                                ->setItemType('http://schema.org/telephone');
 
                             if ($this->phoneLabel) {
                                 $field->setAddStrBeforeValue($this->phoneLabel);
@@ -376,7 +379,9 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['mobile'][1],
                                 false, true, true, false)
                                 ->setShowIfEmpty(false)
-                                ->setLinkType(C4GLinkField::LINK_TYPE_PHONE);
+                                ->setLinkType(C4GLinkField::LINK_TYPE_PHONE)
+                                ->setItemprop('telephone')
+                                ->setItemType('http://schema.org/telephone');
 
                             if ($this->mobileLabel) {
                                 $field->setAddStrBeforeValue($this->mobileLabel);
@@ -394,6 +399,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['fax'][1],
                                 false, true, true, false)
                                 ->setShowIfEmpty(false)
+                                ->setItemprop('faxNumber')
+                                ->setItemType('http://schema.org/faxNumber')
                                 ->setEncodeHtmlEntities(false);
 
                             if ($this->faxLabel) {
@@ -413,7 +420,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 false, true, true, false)
                                 ->setShowIfEmpty(false)
                                 ->setLinkType(C4GLinkField::LINK_TYPE_EMAIL)
-                                ->setItemprop('email');
+                                ->setItemprop('email')
+                                ->setItemType('http://schema.org/email');
 
                             if ($this->emailLabel) {
                                 $field->setAddStrBeforeValue($this->emailLabel);
@@ -433,7 +441,9 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 ->setShowIfEmpty(false)
                                 ->setLinkType(C4GLinkField::LINK_TYPE_DEFAULT)
                                 ->setNewTab()
-                                ->setLabelField('websiteLabel');
+                                ->setLabelField('websiteLabel')
+                                ->setItemprop('url')
+                                ->setItemType('http://schema.org/url');
 
                             if ($this->websiteLabel) {
                                 $field->setAddStrBeforeValue($this->websiteLabel);
@@ -459,7 +469,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['datePublished'][0],
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['datePublished'][1], false,
                                 true, true, false)
-                                ->setEncodeHtmlEntities(false);
+                                ->setEncodeHtmlEntities(false)
+                                ->setItemprop('datePublished');
                             $fieldList[] = $field;
                             if ($headline instanceof C4GHeadlineField) {
                                 $headline->addAssociatedField($field);
@@ -470,7 +481,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['ownerGroupId'][0],
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['ownerGroupId'][1], false,
                                 true, true, false)
-                                ->setEncodeHtmlEntities(false);
+                                ->setEncodeHtmlEntities(false)
+                                ->setItemprop('ownerGroupId');
                             $fieldList[] = $field;
                             if ($headline instanceof C4GHeadlineField) {
                                 $headline->addAssociatedField($field);
@@ -514,6 +526,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         if ($this->mapPage) {
             $fieldList[] = C4GMapLinkButtonField::create('maplink')
                 ->setTargetPageId($this->mapPage)
+                ->setItemprop('maplink')
                 ->setButtonLabel($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['toMap'])
                 ->setLongitudeColumn('geox')
                 ->setLatitudeColumn('geoy')
@@ -531,20 +544,25 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['type'][0],
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['type'][1],
             true, false, true, false)
-            ->setWithoutLabel();
+            ->setWithoutLabel()
+            ->setItemprop('type')
+            ->setItemType('http://schema.org/Thing');
 
         $fieldList[] = C4GTextField::create('name',
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['name'][0],
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['name'][1],
             true, false, true, false)
-            ->setWithoutLabel();
+            ->setWithoutLabel()
+            ->setItemprop('name')
+            ->setItemType('http://schema.org/name');
 
         $fieldList[] = C4GTextField::create('description',
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['description'][0],
             $GLOBALS['TL_LANG']['tl_c4g_data_element']['description'][1],
             true, false, true, false)
             ->setSimpleTextWithoutEditing()
-            ->setReplaceInsertTag();
+            ->setItemprop('description')
+            ->setItemType('http://schema.org/description');
 
         $availableFieldsDetails = [
             'image',
@@ -619,6 +637,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['businessHours'][1],
                             true, false, true, false)
                             ->setSimpleTextWithoutEditing()
+                            ->setItemprop('businessHours')
                             ->setEncodeHtmlEntities(false)
                             ->setShowIfEmpty(false);
                         break;
@@ -629,6 +648,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             true, false, true, false)
                             ->setAddStrBeforeValue($this->phoneLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['tel'].': ')
                             ->setShowIfEmpty(false)
+                            ->setItemprop('phone')
                             ->setLinkType(C4GLinkField::LINK_TYPE_PHONE);
                         break;
                     case 'mobile':
@@ -638,6 +658,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             true, false, true, false)
                             ->setAddStrBeforeValue($this->mobileLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['mobile'].': ')
                             ->setShowIfEmpty(false)
+                            ->setItemprop('mobile')
                             ->setLinkType(C4GLinkField::LINK_TYPE_PHONE);
                         break;
                     case 'fax':
@@ -647,6 +668,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             true, false, true, false)
                             ->setAddStrBeforeValue($this->faxLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['fax'].': ')
                             ->setShowIfEmpty(false)
+                            ->setItemprop('fax')
                             ->setLinkType(C4GLinkField::LINK_TYPE_PHONE);
                         break;
                     case 'email':
@@ -656,6 +678,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             true, false, true, false)
                             ->setAddStrBeforeValue($this->emailLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['email'].': ')
                             ->setShowIfEmpty(false)
+                            ->setItemprop('email')
                             ->setLinkType(C4GLinkField::LINK_TYPE_EMAIL);
                         break;
                     case 'website':
@@ -666,6 +689,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             ->setAddStrBeforeValue($this->websiteLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['website'].': ')
                             ->setShowIfEmpty(false)
                             ->setLinkType(C4GLinkField::LINK_TYPE_DEFAULT)
+                            ->setItemprop('website')
                             ->setNewTab()
                             ->setLabelField('websiteLabel');
                         break;
@@ -687,8 +711,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element'][$field][0],
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element'][$field][1],
                                 true, false, true, false)
-                                ->setShowIfEmpty(false)
-                                ->setReplaceInsertTag(true);
+                                ->setShowIfEmpty(false);
                         } catch (\Throwable $throwable) {
                             C4gLogModel::addLogEntry(
                                 'data',
@@ -724,8 +747,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             strval($model->name),
                             strval($model->description),
                             true, false, true, false)
-                            ->setShowIfEmpty(false)
-                            ->setReplaceInsertTag(true);
+                            ->setShowIfEmpty(false);
                         $fieldList[] = $brickField;
                         if ($legend !== null && $brickField !== null) {
                             $legend->addAssociatedField($brickField);
@@ -739,6 +761,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             $fieldList[] = C4GMapLinkButtonField::create('maplinkDetails')
                 ->setFormField(true)
                 ->setTableColumn(false)
+                ->setItemprop('maplink')
                 ->setTargetPageId($this->mapPage)
                 ->setButtonLabel($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['toMap'])
                 ->setLongitudeColumn('geox')

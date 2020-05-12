@@ -58,7 +58,6 @@ $GLOBALS['TL_LANG'][$strName]['delete'] = ["Delete field with ID %s", "Delete fi
 /**
  * Custom Field Types
  */
-
 $GLOBALS['TL_LANG']['data_custom_field_types']['text'] = 'Single line of text';
 $GLOBALS['TL_LANG']['data_custom_field_types']['textarea'] = 'Multiple lines of text';
 $GLOBALS['TL_LANG']['data_custom_field_types']['texteditor'] = 'Multiple lines of text with editor';
