@@ -65,6 +65,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
     public static $directory = [];
     public static $showLabelsInList = false;
     public static $dataMode = 0;
+    public static $orderByFields = ['name'];
 
     public function initBrickModule($id)
     {
@@ -144,6 +145,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         static::$directory = StringUtil::deserialize($this->c4g_data_directory);
         static::$showLabelsInList = $this->showLabelsInList === '1';
         static::$dataMode = $this->c4g_data_mode;
+        static::$orderByFields = StringUtil::deserialize($this->c4g_order_by_fields) ?: ['name'];
 
         if ((($this->c4g_data_mode === '1' && empty(static::$type)) || ($this->c4g_data_mode === '2' && empty(static::$directory))
             || ($this->c4g_data_mode === '0')) && $this->showSelectFilter) {

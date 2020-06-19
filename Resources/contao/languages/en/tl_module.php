@@ -31,6 +31,7 @@ $GLOBALS['TL_LANG']['tl_module']['faxLabel'] = ['fax field description', 'Displa
 $GLOBALS['TL_LANG']['tl_module']['emailLabel'] = ['email field label', 'Displayed before the email address. Accepts HTML. If nothing is specified, a default text is output.'];
 $GLOBALS['TL_LANG']['tl_module']['websiteLabel'] = ['website field label', 'Displayed before the link to the website. Accepts HTML. If nothing is specified, a default text is output.'];
 $GLOBALS['TL_LANG']['tl_module']['availableFieldsList'] = ['Available fields (list)', 'The fields that are displayed in the list.'];
+$GLOBALS['TL_LANG']['tl_module']['c4g_order_by_fields'] = ['Order by', 'Orders the list by the given fields.'];
 $GLOBALS['TL_LANG']['tl_module']['authorizedGroups'] = ['Authorized Groups', 'These groups may create elements in the frontend.'];
 
 $GLOBALS['TL_LANG']['tl_module']['c4g_data_type_legend'] = 'Category';

@@ -16,7 +16,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'c4g_data_mode';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['public_noneditable'] = '{title_legend},name,headline,type;{caption_legend},'.
     'captionPlural,caption;{c4g_data_type_legend},c4g_data_mode,showSelectFilter,selectFilterLabel,showDirectorySelectFilter,directorySelectFilterLabel,labelMode,showFilterResetButton,'.
-    'filterResetButtonCaption;{c4g_expert_legend},hideDetails,showLabelsInList,phoneLabel,mobileLabel,faxLabel,emailLabel,websiteLabel,availableFieldsList;{mapPage_legend},mapPage';
+    'filterResetButtonCaption;{c4g_expert_legend},hideDetails,showLabelsInList,phoneLabel,mobileLabel,faxLabel,emailLabel,websiteLabel,availableFieldsList,c4g_order_by_fields;{mapPage_legend},mapPage';
 
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['c4g_data_mode_0'] = '';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['c4g_data_mode_1'] = 'c4g_data_type';
@@ -237,6 +237,20 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['availableFieldsList'] =
             'multiple'            => true,
         ],
         'sql'                     => "text NOT NULL default ".$defaultAvailableFieldsList
+    ];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['c4g_order_by_fields'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_order_by_fields'],
+        'exclude'                 => true,
+        'default'                 => serialize(['name']),
+        'options_callback'        => [$cbClass, 'loadOrderByFieldsOptions'],
+        'inputType'               => 'checkboxWizard',
+        'eval'                    => [
+            'class'               => 'clr',
+            'multiple'            => true,
+        ],
+        'sql'                     => "text NOT NULL default ".serialize(['name'])
     ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['authorizedGroups'] =

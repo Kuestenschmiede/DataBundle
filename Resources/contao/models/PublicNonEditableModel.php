@@ -5,6 +5,7 @@ namespace con4gis\DataBundle\Resources\contao\models;
 
 use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\CoreBundle\Classes\Helper\ArrayHelper;
+use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\DataBundle\Resources\contao\modules\PublicNonEditableModule;
 
 use con4gis\ProjectsBundle\Classes\Common\C4GBrickCommon;
@@ -22,11 +23,13 @@ class PublicNonEditableModel
         foreach ($resultTypes as $rt) {
             $types[$rt['id']] = $rt['name'];
         }
+        $orderByFields = implode(', ', PublicNonEditableModule::$orderByFields);
+        C4gLogModel::addLogEntry('fields', $orderByFields);
 
         if (PublicNonEditableModule::$dataMode === '1' && !empty(PublicNonEditableModule::$type)) {
             $resultElements = [];
             foreach (PublicNonEditableModule::$type as $type) {
-                $stmtElements = $db->prepare("SELECT tl_c4g_data_element.* FROM tl_c4g_data_element JOIN tl_c4g_data_type ON tl_c4g_data_element.type = tl_c4g_data_type.id WHERE (tl_c4g_data_element.name != '' OR tl_c4g_data_element.published = 1) AND tl_c4g_data_element.type = ? AND (tl_c4g_data_type.allowPublishing != 1 OR tl_c4g_data_element.published = 1) ORDER BY name ASC");
+                $stmtElements = $db->prepare("SELECT tl_c4g_data_element.* FROM tl_c4g_data_element JOIN tl_c4g_data_type ON tl_c4g_data_element.type = tl_c4g_data_type.id WHERE (tl_c4g_data_element.name != '' OR tl_c4g_data_element.published = 1) AND tl_c4g_data_element.type = ? AND (tl_c4g_data_type.allowPublishing != 1 OR tl_c4g_data_element.published = 1) ORDER BY $orderByFields ASC");
                 $resultElements = array_merge($resultElements, $stmtElements->execute($type)->fetchAllAssoc());
             }
         } else {
@@ -41,17 +44,23 @@ class PublicNonEditableModel
                 }
                 $dirTypes = array_unique($dirTypes);
                 foreach ($dirTypes as $type) {
-                    $stmtElements = $db->prepare("SELECT tl_c4g_data_element.* FROM tl_c4g_data_element JOIN tl_c4g_data_type ON tl_c4g_data_element.type = tl_c4g_data_type.id WHERE (tl_c4g_data_element.name != '' OR tl_c4g_data_element.published = 1) AND tl_c4g_data_element.type = ? AND (tl_c4g_data_type.allowPublishing != 1 OR tl_c4g_data_element.published = 1) ORDER BY name ASC");
+                    $stmtElements = $db->prepare("SELECT tl_c4g_data_element.* FROM tl_c4g_data_element JOIN tl_c4g_data_type ON tl_c4g_data_element.type = tl_c4g_data_type.id WHERE (tl_c4g_data_element.name != '' OR tl_c4g_data_element.published = 1) AND tl_c4g_data_element.type = ? AND (tl_c4g_data_type.allowPublishing != 1 OR tl_c4g_data_element.published = 1) ORDER BY $orderByFields ASC");
                     $resultElements = array_merge($resultElements, $stmtElements->execute($type)->fetchAllAssoc());
                 }
             } else {
-                $stmtElements = $db->prepare("SELECT tl_c4g_data_element.* FROM tl_c4g_data_element JOIN tl_c4g_data_type ON tl_c4g_data_element.type = tl_c4g_data_type.id WHERE (tl_c4g_data_element.name != '' OR tl_c4g_data_element.published = 1) AND (tl_c4g_data_type.allowPublishing != 1 OR tl_c4g_data_element.published = 1) ORDER BY name ASC");
+                $stmtElements = $db->prepare("SELECT tl_c4g_data_element.* FROM tl_c4g_data_element JOIN tl_c4g_data_type ON tl_c4g_data_element.type = tl_c4g_data_type.id WHERE (tl_c4g_data_element.name != '' OR tl_c4g_data_element.published = 1) AND (tl_c4g_data_type.allowPublishing != 1 OR tl_c4g_data_element.published = 1) ORDER BY $orderByFields ASC");
                 $resultElements = $stmtElements->execute()->fetchAllAssoc();
             }
         }
 
         //ToDo find solution per sql for better performance
-        $resultElements = ArrayHelper::sortArrayByFields($resultElements,array('name'=>SORT_ASC));
+        $orderByFields = [];
+        foreach (PublicNonEditableModule::$orderByFields as $v) {
+            $orderByFields[$v] = SORT_ASC;
+        }
+        C4gLogModel::recursivelyLogArray($orderByFields);
+        $resultElements = ArrayHelper::sortArrayByFields($resultElements, $orderByFields);
+        C4gLogModel::recursivelyLogArray($resultElements);
 
         foreach ($resultElements as $key => $re) {
 

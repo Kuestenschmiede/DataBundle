@@ -77,4 +77,50 @@ class ModuleCallback extends Backend
 
         return $options;
     }
+
+    public function loadOrderByFieldsOptions($dc) {
+        System::loadLanguageFile('tl_c4g_data_element');
+        System::loadLanguageFile('tl_c4g_data_type');
+        $language = $GLOBALS['TL_LANG']['tl_c4g_data_element'];
+        $options = [
+
+            'name' => $language['name'][0] .
+                " <sup title='" . $language['name'][1] . "'>(?)</sup>",
+            'image' => $language['image'][0] .
+                " <sup title='" . $language['image'][1] . "'>(?)</sup>",
+            'address' => $language['address'][0] .
+                " <sup title='" . $language['address'][1] . "'>(?)</sup>",
+            'businessHours' => $language['businessHours'][0] .
+                " <sup title='" . $language['businessHours'][1] . "'>(?)</sup>",
+            'phone' => $language['phone'][0] .
+                " <sup title='" . $language['phone'][1] . "'>(?)</sup>",
+            'mobile' => $language['mobile'][0] .
+                " <sup title='" . $language['mobile'][1] . "'>(?)</sup>",
+            'fax' => $language['fax'][0] .
+                " <sup title='" . $language['fax'][1] . "'>(?)</sup>",
+            'email' => $language['email'][0] .
+                " <sup title='" . $language['email'][1] . "'>(?)</sup>",
+            'website' => $language['website'][0] .
+                " <sup title='" . $language['website'][1] . "'>(?)</sup>",
+            'linkWizard' => $language['linkWizard'][0] .
+                " <sup title='" . $language['linkWizard'][1] . "'>(?)</sup>",
+            'datePublished' => $language['datePublished'][0] .
+                " <sup title='" . $language['datePublished'][1] . "'>(?)</sup>",
+            'ownerGroupId' => $language['ownerGroupId'][0] .
+                " <sup title='" . $language['ownerGroupId'][1] . "'>(?)</sup>",
+        ];
+
+        $customFields = DataCustomFieldModel::findAll();
+        foreach ($customFields as $customField) {
+            if ($customField->frontendList === '1') {
+                $label = strval($customField->name);
+                if (strval($customField->description) !== '') {
+                    $label .= " <sup title='" . strval($customField->description) . "'>(?)</sup>";
+                }
+                $options[strval($customField->alias)] = $label;
+            }
+        }
+
+        return $options;
+    }
 }
