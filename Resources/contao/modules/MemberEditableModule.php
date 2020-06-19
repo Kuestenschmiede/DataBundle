@@ -144,6 +144,7 @@ class MemberEditableModule extends C4GBrickModuleParent
                                 $customField->frontendName ?: $customField->name ?: '',
                                 $customField->description ?: '',
                                 true, false, true, true);
+                            $field->setSort(false);
 
                             $options = StringUtil::deserialize($customField->options);
                             $optionsFormatted = [];
