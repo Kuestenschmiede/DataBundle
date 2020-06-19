@@ -20,6 +20,7 @@ use Contao\Backend;
 use Contao\Database;
 use Contao\DataContainer;
 use Contao\Image;
+use Contao\StringUtil;
 
 class ElementCallback extends Backend
 {
@@ -162,7 +163,7 @@ class ElementCallback extends Backend
             $icon = 'invisible.svg';
         }
 
-        return '<a href="' . $this->addToUrl($href) . '" title="' . specialchars($title) . '"' . $attributes . '>' . Image::getHtml($icon, $label) . '</a> ';
+        return '<a href="' . $this->addToUrl($href) . '" title="' . StringUtil::specialchars($title) . '"' . $attributes . '>' . Image::getHtml($icon, $label) . '</a> ';
     }
     public function toggleVisibility($id, $published)
     {
