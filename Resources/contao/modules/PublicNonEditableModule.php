@@ -469,8 +469,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['datePublished'][0],
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['datePublished'][1], false,
                                 true, true, false)
-                                ->setEncodeHtmlEntities(false)
-                                ->setItemprop('datePublished');
+                                ->setEncodeHtmlEntities(false);
                             $fieldList[] = $field;
                             if ($headline instanceof C4GHeadlineField) {
                                 $headline->addAssociatedField($field);
@@ -481,8 +480,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['ownerGroupId'][0],
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element']['ownerGroupId'][1], false,
                                 true, true, false)
-                                ->setEncodeHtmlEntities(false)
-                                ->setItemprop('ownerGroupId');
+                                ->setEncodeHtmlEntities(false);
                             $fieldList[] = $field;
                             if ($headline instanceof C4GHeadlineField) {
                                 $headline->addAssociatedField($field);
