@@ -3,12 +3,8 @@
 
 namespace con4gis\DataBundle\Resources\contao\models;
 
-use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\CoreBundle\Classes\Helper\ArrayHelper;
-use con4gis\CoreBundle\Resources\contao\models\C4gLogModel;
 use con4gis\DataBundle\Resources\contao\modules\PublicNonEditableModule;
-
-use con4gis\ProjectsBundle\Classes\Common\C4GBrickCommon;
 use Contao\Database;
 use Contao\StringUtil;
 
@@ -24,7 +20,6 @@ class PublicNonEditableModel
             $types[$rt['id']] = $rt['name'];
         }
         $orderByFields = implode(', ', PublicNonEditableModule::$orderByFields);
-        C4gLogModel::addLogEntry('fields', $orderByFields);
 
         if (PublicNonEditableModule::$dataMode === '1' && !empty(PublicNonEditableModule::$type)) {
             $resultElements = [];
@@ -58,9 +53,7 @@ class PublicNonEditableModel
         foreach (PublicNonEditableModule::$orderByFields as $v) {
             $orderByFields[$v] = SORT_ASC;
         }
-        C4gLogModel::recursivelyLogArray($orderByFields);
         $resultElements = ArrayHelper::sortArrayByFields($resultElements, $orderByFields);
-        C4gLogModel::recursivelyLogArray($resultElements);
 
         foreach ($resultElements as $key => $re) {
 
