@@ -135,6 +135,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             );
                             break;
                         case 'multicheckbox':
+                        case 'select':
                             $options = [];
                             foreach (StringUtil::deserialize($customField->options) as $value) {
                                 $options[] = $value['value'];
@@ -151,6 +152,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             );
                             $alias = $customField->alias;
                             foreach ($options as $option) {
+                                $option = str_replace([' ', '/', '.', ',', '-', '&'], '', $option);
                                 ResourceLoader::loadCssResourceTag(
                                     '.filter_' . $alias . '_' . $option . '_parent > div:not(.filter_' . $alias .  '_' . $option . '_child) {display: none;}'
                                 );
@@ -797,6 +799,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                     $options = ['1', 1];
                     switch ($customField->type) {
                         case 'multicheckbox':
+                        case 'select':
                             foreach (StringUtil::deserialize($customField->options) as $value) {
                                 $options[] = $value['value'];
                             }

@@ -312,6 +312,7 @@ class PublicNonEditableModel
                             if ($customField->type === 'text' || $customField->type === 'select' || $customField->type === 'foreignKey') {
                                 $label = $customField->frontendName ?: $customField->name ?: '';
                                 if ($label !== '') {
+                                    $resultElements[$key][$column.'_value'] = $value;
                                     $resultElements[$key][$column] = '<span class="list-label">' . $label . '</span>' .
                                         '<span class="list_value">' . $value . '</span>';
                                 }
