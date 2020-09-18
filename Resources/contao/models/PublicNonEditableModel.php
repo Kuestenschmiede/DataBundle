@@ -229,7 +229,7 @@ class PublicNonEditableModel
                                         }
                                     }
                                 }
-                                $resultElements[$key][$model->alias] = $model->name . ": " . implode(', ', $displayValues);
+                                $resultElements[$key][$model->alias] = $model->name . " " . implode(', ', $displayValues);
                             }
                         } else {
                             $resultElements[$key][$model->alias] = StringUtil::deserialize($resultElements[$key][$model->alias]);
