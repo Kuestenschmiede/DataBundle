@@ -83,7 +83,7 @@ $published = new CheckboxField('published', $dca);
 
 $name = new TextField('name', $dca);
 $name->filter()->search();
-$name->eval()->class('w50')->mandatory();
+$name->eval()->class('w50')->mandatory()->preserveTags();
 
 $alias = new TextField('alias', $dca);
 $alias->saveCallback($cbClass, 'saveAlias');
@@ -127,7 +127,7 @@ $margin->eval()
     ->class('w50 m12');
 
 $frontendName = new TextField('frontendName', $dca);
-$frontendName->eval()->class('clr');
+$frontendName->eval()->class('clr')->preserveTags();
 
 $frontendPopup = new CheckboxField('frontendPopup', $dca);
 $frontendPopup->default(true)
