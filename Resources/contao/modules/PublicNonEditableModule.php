@@ -747,7 +747,8 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             strval($model->name),
                             strval($model->description),
                             true, false, true, false)
-                            ->setShowIfEmpty(false);
+                            ->setShowIfEmpty(false)
+                            ->setSimpleTextWithoutEditing();
                         $fieldList[] = $brickField;
                         if ($legend !== null && $brickField !== null) {
                             $legend->addAssociatedField($brickField);
