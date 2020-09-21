@@ -226,7 +226,7 @@ class PublicNonEditableModel
                                         }
                                     }
                                 }
-                                $resultElements[$key][$model->alias] = $model->name . " " . implode(', ', $displayValues);
+                                $resultElements[$key][$model->alias] =  ($model->frontendName ?: $model->name) . "" . implode(', ', $displayValues);
                             }
                         } else {
                             $resultElements[$key][$model->alias] = StringUtil::deserialize($resultElements[$key][$model->alias]);
@@ -460,7 +460,7 @@ class PublicNonEditableModel
                             }
                         }
                         if (!empty($displayValues)) {
-                            $array[$customField->alias] = $customField->name . ": " . implode(', ', $displayValues);
+                            $array[$customField->alias] = ($customField->frontendName ?: $customField->name) . "" . implode(', ', $displayValues);
                         }
                     }
                 }
