@@ -184,7 +184,6 @@ class PublicNonEditableModel
             }
 
             $bH = [];
-            $entries = [];
             foreach ($timeString as $string) {
                 $explode = explode(': ', $string);
                 $k = $explode[0];
@@ -194,20 +193,20 @@ class PublicNonEditableModel
                     $bH[$k] = $explode[1];
                 }
             }
-            foreach ($bH as $k => $v) {
-                if (!empty($v)) {
-                    $entries[] = $k.': '.$v;
-                } else {
-                    $entries[] = $k;
-                }
+
+            foreach ($bH as $h => $entry) {
+                $resultElements[$key]['businessHours'] .=
+                    '<li class="c4g_brick_list_column c4g_brick_list_row_column businessHours">'.
+                    '<div class="day">'.$h.'</div>'.
+                    '<div class="hour">'.$entry.'</div>'.
+                    '</li>';
             }
 
             if ($re['businessHoursAdditionalInfo'] !== '') {
-                $entries[] = $re['businessHoursAdditionalInfo'];
-            }
-
-            foreach ($entries as $entry) {
-                $resultElements[$key]['businessHours'] .= '<li class="c4g_brick_list_column c4g_brick_list_row_column businessHours">'.$entry.'</li>';
+                $resultElements[$key]['businessHours'] .=
+                    '<li class="c4g_brick_list_column c4g_brick_list_row_column businessHours">'.
+                    '<div class="additionalInfo">'.$re['businessHoursAdditionalInfo'].'</div>'.
+                    '</li>';
             }
 
             $resultElements[$key]['searchInfo'] = '';
@@ -410,7 +409,6 @@ class PublicNonEditableModel
         }
 
         $bH = [];
-        $entries = [];
         foreach ($timeString as $string) {
             $explode = explode(': ', $string);
             $k = $explode[0];
@@ -420,22 +418,19 @@ class PublicNonEditableModel
                 $bH[$k] = $explode[1];
             }
         }
-        foreach ($bH as $k => $v) {
-            if (!empty($v)) {
-                $entries[] = $k.': '.$v;
-            } else {
-                $entries[] = $k;
-            }
+        foreach ($bH as $h => $entry) {
+            $array['businessHours'] .=
+                '<li class="c4g_brick_list_column c4g_brick_list_row_column businessHours">'.
+                '<div class="day">'.$h.'</div>'.
+                '<div class="hour">'.$entry.'</div>'.
+                '</li>';
         }
 
         if ($array['businessHoursAdditionalInfo'] !== '') {
-            $entries[] = $array['businessHoursAdditionalInfo'];
-        }
-
-        foreach ($entries as $entry) {
-            if (trim($entry) !== '') {
-                $array['businessHours'] .= '<li class="c4g_brick_list_column c4g_brick_list_row_column businessHours">'.$entry.'</li>';
-            }
+            $array['businessHours'] .=
+                '<li class="c4g_brick_list_column c4g_brick_list_row_column businessHours">'.
+                '<div class="additionalInfo">'.$array['businessHoursAdditionalInfo'].'</div>'.
+                '</li>';
         }
 
         $customFields = DataCustomFieldModel::findAll();
