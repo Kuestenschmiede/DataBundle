@@ -202,7 +202,7 @@ class PublicNonEditableModel
                     '</li>';
             }
 
-            if ($re['businessHoursAdditionalInfo'] !== '') {
+            if ($re['businessHoursAdditionalInfo'] !== '' && $array['businessHoursAdditionalInfo'] !== null) {
                 $resultElements[$key]['businessHours'] .=
                     '<li class="c4g_brick_list_column c4g_brick_list_row_column businessHours">'.
                     '<div class="additionalInfo">'.$re['businessHoursAdditionalInfo'].'</div>'.
@@ -426,7 +426,7 @@ class PublicNonEditableModel
                 '</li>';
         }
 
-        if ($array['businessHoursAdditionalInfo'] !== '') {
+        if ($array['businessHoursAdditionalInfo'] !== '' && $array['businessHoursAdditionalInfo'] !== null) {
             $array['businessHours'] .=
                 '<li class="c4g_brick_list_column c4g_brick_list_row_column businessHours">'.
                 '<div class="additionalInfo">'.$array['businessHoursAdditionalInfo'].'</div>'.
