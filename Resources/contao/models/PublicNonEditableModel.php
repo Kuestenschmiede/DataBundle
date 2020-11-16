@@ -4,6 +4,7 @@
 namespace con4gis\DataBundle\Resources\contao\models;
 
 use con4gis\CoreBundle\Classes\Helper\ArrayHelper;
+use con4gis\DataBundle\Classes\Event\LoadAdditionalListDataEvent;
 use con4gis\DataBundle\Resources\contao\modules\PublicNonEditableModule;
 use Contao\Database;
 use Contao\StringUtil;
@@ -301,6 +302,13 @@ class PublicNonEditableModel
                 $resultElements[$key]['datePublished'] = '';
             }
 
+        }
+
+        foreach ($resultElements as $key => $row) {
+            $event = new LoadAdditionalListDataEvent($row);
+            $dispatcher = \Contao\System::getContainer()->get('event_dispatcher');
+            $dispatcher->dispatch($event::NAME, $event);
+            $resultElements[$key] = $event->getRow();
         }
 
         if (PublicNonEditableModule::$showLabelsInList) {
