@@ -81,6 +81,7 @@ class PublicNonEditableModule extends C4GBrickModuleParent
         $this->listParams->setWithDetails($this->hideDetails !== '1');
         $this->listParams->setShowFullTextSearchInHeadline();
         $this->listParams->setShowItemType();
+        $this->listParams->setMiniSearchNotice($GLOBALS['TL_LANG']['tl_c4g_data_element']['minisearch_notice']);
         $this->dialogParams->setTabContent(false);
         $this->dialogParams->setWithLabels(false);
         $this->dialogParams->setWithDescriptions(false);
