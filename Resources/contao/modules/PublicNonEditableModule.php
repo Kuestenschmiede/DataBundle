@@ -547,6 +547,13 @@ class PublicNonEditableModule extends C4GBrickModuleParent
             ->setShowIfEmpty(false)
             ->setHidden();
 
+        $fieldList[] = C4GTextField::create('searchInfoSubordinate',
+            '',
+            '',
+            false, true, true, false)
+            ->setShowIfEmpty(false)
+            ->setHidden();
+
         if ($this->mapPage) {
             $fieldList[] = C4GMapLinkButtonField::create('maplink')
                 ->setTargetPageId($this->mapPage)

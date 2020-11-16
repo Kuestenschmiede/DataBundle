@@ -272,12 +272,7 @@ class PublicNonEditableModel
             }
 
             $resultElements[$key]['searchInfo'] .= $resultElements[$key]['type'];
-
-//            $label = $customField->frontendName ?: $customField->name ?: '';
-//            if ($label !== '') {
-//                $resultElements[$key][$column] = '<span class="list-label">' . $label . '</span>' .
-//                    '<span class="list_value">' . $value . '</span>';
-//            }
+            $resultElements[$key]['searchInfoSubordinate'] = '';
 
             if ($resultElements[$key]['ownerGroupId'] > 0) {
                 $groupModel = \Contao\MemberGroupModel::findByPk($resultElements[$key]['ownerGroupId']);
@@ -301,7 +296,6 @@ class PublicNonEditableModel
             } else {
                 $resultElements[$key]['datePublished'] = '';
             }
-
         }
 
         foreach ($resultElements as $key => $row) {
