@@ -43,7 +43,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_data_type'] =
         'exclude'                 => true,
         'inputType'               => 'select',
         'foreignKey'              => 'tl_c4g_data_type.name',
-        'eval'                    => ['includeBlankOption' => true, 'multiple' => true, 'chosen' => true, 'class' => 'clr'],
+        'eval'                    => ['includeBlankOption' => true, 'multiple' => true, 'chosen' => true, 'tl_class' => 'clr'],
         'sql'                     => "text NULL"
     ];
 
@@ -53,7 +53,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_data_directory'] =
         'exclude'                 => true,
         'inputType'               => 'select',
         'foreignKey'              => 'tl_c4g_data_directory.name',
-        'eval'                    => ['includeBlankOption' => true, 'multiple' => true, 'chosen' => true, 'class' => 'clr'],
+        'eval'                    => ['includeBlankOption' => true, 'multiple' => true, 'chosen' => true, 'tl_class' => 'clr'],
         'sql'                     => "text NULL"
     ];
 
