@@ -19,7 +19,7 @@
     "require": {
         "php": "^7.1",
         "contao/core-bundle": "^4.4",
-        "con4gis/maps": "^7.1",
+        "con4gis/maps": "^7.2",
         "con4gis/projects": "^2.0"
     },
     "conflict": {

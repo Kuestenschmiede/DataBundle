@@ -47,7 +47,7 @@ $GLOBALS['BE_MOD']['con4gis'] = array_merge($GLOBALS['BE_MOD']['con4gis'], [
     'c4g_data_element' => [
         'brick' => 'data',
         'tables' => ['tl_c4g_data_element'],
-        'javascript' => '/bundles/con4giseditor/js/c4g-backend-helper.js',
+        /*'javascript' => '/bundles/con4giseditor/js/c4g-backend-helper.js',*/
         'stylesheet' => [
             'bundles/con4gisdata/css/backend_data_element.css'
         ],
