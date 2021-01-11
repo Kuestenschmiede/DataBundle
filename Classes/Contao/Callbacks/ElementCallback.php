@@ -78,15 +78,41 @@ class ElementCallback extends Backend
     public function loadMemberGroupData($value, $dc)
     {
         $id = $dc->activeRecord->id;
-        $memberGroupModel = MemberGroupModel::findByPk($value);
-        if ($memberGroupModel !== null) {
-            $database = Database::getInstance();
-            $stmt = $database->prepare('UPDATE tl_c4g_data_element SET phone = ?, mobile = ?, email = ? WHERE id = ? AND ownerGroupId != ?');
-            $stmt->execute(strval($memberGroupModel->phone), strval($memberGroupModel->mobile), strval($memberGroupModel->email), $id, $value);
+        $newMemberGroupModel = MemberGroupModel::findByPk($value);
+        $database = Database::getInstance();
+        $stmt = $database->prepare('SELECT ownerGroupId FROM tl_c4g_data_element WHERE id = ?');
+        $oldValue = $stmt->execute($id)->fetchAssoc()['ownerGroupId'];
+        $oldMemberGroupModel = MemberGroupModel::findByPk($oldValue);
+        $newPhone = strval($newMemberGroupModel->phone);
+        $newMobile = strval($newMemberGroupModel->mobile);
+        $newEmail = strval($newMemberGroupModel->email);
+        $oldPhone = strval($oldMemberGroupModel->phone);
+        $oldMobile = strval($oldMemberGroupModel->mobile);
+        $oldEmail = strval($oldMemberGroupModel->email);
+
+        if ($newMemberGroupModel !== null) {
+            $database->prepare(
+                'UPDATE tl_c4g_data_element SET phone = ? WHERE id = ? AND ownerGroupId = ? '.
+                'AND (phone IS NULL OR LENGTH(phone) = 0 OR phone = ?)'
+            )->execute($newPhone, $id, $oldValue, $oldPhone);
+            $database->prepare(
+                'UPDATE tl_c4g_data_element SET mobile = ? WHERE id = ? AND ownerGroupId = ? '.
+                'AND (mobile IS NULL OR LENGTH(mobile) = 0 OR mobile = ?)'
+            )->execute($newMobile, $id, $oldValue, $oldMobile);
+            $database->prepare(
+                'UPDATE tl_c4g_data_element SET email = ? WHERE id = ? AND ownerGroupId = ? '.
+                'AND (email IS NULL OR LENGTH(email) = 0 OR email = ?)'
+            )->execute($newEmail, $id, $oldValue, $oldEmail);
         } else {
-            $database = Database::getInstance();
-            $stmt = $database->prepare("UPDATE tl_c4g_data_element SET phone = '', mobile = '', email = '' WHERE id = ?");
-            $stmt->execute($id);
+            $database->prepare(
+                'UPDATE tl_c4g_data_element SET phone = ? WHERE id = ? AND phone = ?'
+            )->execute($newPhone, $id, $oldPhone);
+            $database->prepare(
+                'UPDATE tl_c4g_data_element SET mobile = ? WHERE id = ? AND mobile = ?'
+            )->execute($newMobile, $id, $oldMobile);
+            $database->prepare(
+                'UPDATE tl_c4g_data_element SET email = ? WHERE id = ? AND email = ?'
+            )->execute($newEmail, $id, $oldEmail);
         }
 
         return $value;
