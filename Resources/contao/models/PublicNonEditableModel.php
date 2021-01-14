@@ -321,7 +321,7 @@ class PublicNonEditableModel
                             } elseif ($customField->type === 'multicheckbox') {
                                 $label = $customField->frontendName ?: $customField->name ?: '';
                                 if ($label !== '') {
-                                    $value = trim(explode(': ', $value)[1]);
+                                    $value = substr($value, strlen($label));
                                     $resultElements[$key][$column.'_value'] = $value;
                                     $resultElements[$key][$column] = '<span class="list-label">' . $label . '</span>' .
                                         '<span class="list_value">' . $value . '</span>';
