@@ -819,6 +819,11 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                             $fieldList[] = $classField;
                             break;
                         default:
+                            $classField = new C4GClassField();
+                            $classField->setFieldName($customField->alias)
+                                ->setStyleClass('filter_'.$customField->alias.'_child')
+                                ->setOptions(['1', 1]);
+                            $fieldList[] = $classField;
                             break;
                     }
                 } catch (\Throwable $throwable) {
