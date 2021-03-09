@@ -286,7 +286,7 @@ class LoadLayersListener
                 $popupInfo = Controller::replaceInsertTags($popupInfo, false);
                 $popupInfo = str_replace(['{{request_token}}', '[{]', '[}]'], [REQUEST_TOKEN, '{{', '}}'], $popupInfo);
                 $popupInfo = Controller::replaceDynamicScriptTags($popupInfo);
-                $objComments = new \Comments();
+                $objComments = new \Contao\Comments();
                 $popupInfo = $objComments->parseBbCode($popupInfo);
                 $properties['popup'] = [
                     'content' => $popupInfo,

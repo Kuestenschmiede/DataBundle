@@ -10,6 +10,7 @@
  * @copyright  Küstenschmiede GmbH Software & Design
  * @link       https://www.con4gis.org
  */
+
 namespace con4gis\DataBundle\Classes\Event;
 
 use con4gis\DataBundle\Classes\Popup\Popup;

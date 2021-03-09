@@ -41,7 +41,7 @@ class LoadAreaFeaturesListener
         $bounds = $point->getLatLngBounds($point, $distance);
 
         $objLayer = C4gMapsModel::findById($layerId);
-        $routerConfigRepo = \System::getContainer()->get('doctrine.orm.default_entity_manager')
+        $routerConfigRepo = \Contao\System::getContainer()->get('doctrine.orm.default_entity_manager')
             ->getRepository(RoutingConfiguration::class);
         $routerConfig = $routerConfigRepo->findOneBy(['id' => $objMapsProfile->routerConfig]);
         if ($routerConfig instanceof RoutingConfiguration) {
@@ -53,7 +53,7 @@ class LoadAreaFeaturesListener
                 $sqlWhere = " AND (publishFrom >= ? OR publishFrom = '') AND (publishTo < ? OR publishTo = '') AND published='1'";
                 $sqlSelect = '*, name AS label, name AS tooltip';//" id, type, geox, geoy, name AS label, name AS tooltip";
                 $strQuery = 'SELECT' . $sqlSelect . ' FROM tl_c4g_data_element' . $sqlLoc . $inClause . $sqlWhere;
-                $pointFeatures = \Database::getInstance()->prepare($strQuery)->execute(time(), time())->fetchAllAssoc();
+                $pointFeatures = \Contao\Database::getInstance()->prepare($strQuery)->execute(time(), time())->fetchAllAssoc();
                 $responseFeatures = [];
                 $locations = [];
                 $locations[] = [$point->getLng(), $point->getLat()];

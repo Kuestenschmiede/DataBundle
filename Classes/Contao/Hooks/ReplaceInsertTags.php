@@ -64,9 +64,9 @@ class ReplaceInsertTags
                 if ($query->numRows) {
                     switch ($fieldName) {
                         case 'image':
-                            $file = \FilesModel::findByUuid($query->$fieldName);
+                            $file = \Contao\FilesModel::findByUuid($query->$fieldName);
                             if ($file) {
-                                $image = \Image::get($file->path, auto, 40);
+                                $image = \Contao\Image::get($file->path, auto, 40);
 
                                 return '<div class="ce_image block" id="c4g_data_image_' . $id . '">' .
                                     '<figure class="image_container" itemscope="" itemtype="http://schema.org/ImageObject">' .

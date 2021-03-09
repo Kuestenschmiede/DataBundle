@@ -78,7 +78,8 @@ class ModuleCallback extends Backend
         return $options;
     }
 
-    public function loadOrderByFieldsOptions($dc) {
+    public function loadOrderByFieldsOptions($dc)
+    {
         System::loadLanguageFile('tl_c4g_data_element');
         System::loadLanguageFile('tl_c4g_data_type');
         $language = $GLOBALS['TL_LANG']['tl_c4g_data_element'];

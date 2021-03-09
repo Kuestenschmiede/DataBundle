@@ -92,15 +92,15 @@ class ElementCallback extends Backend
 
         if ($newMemberGroupModel !== null) {
             $database->prepare(
-                'UPDATE tl_c4g_data_element SET phone = ? WHERE id = ? AND ownerGroupId = ? '.
+                'UPDATE tl_c4g_data_element SET phone = ? WHERE id = ? AND ownerGroupId = ? ' .
                 'AND (phone IS NULL OR LENGTH(phone) = 0 OR phone = ?)'
             )->execute($newPhone, $id, $oldValue, $oldPhone);
             $database->prepare(
-                'UPDATE tl_c4g_data_element SET mobile = ? WHERE id = ? AND ownerGroupId = ? '.
+                'UPDATE tl_c4g_data_element SET mobile = ? WHERE id = ? AND ownerGroupId = ? ' .
                 'AND (mobile IS NULL OR LENGTH(mobile) = 0 OR mobile = ?)'
             )->execute($newMobile, $id, $oldValue, $oldMobile);
             $database->prepare(
-                'UPDATE tl_c4g_data_element SET email = ? WHERE id = ? AND ownerGroupId = ? '.
+                'UPDATE tl_c4g_data_element SET email = ? WHERE id = ? AND ownerGroupId = ? ' .
                 'AND (email IS NULL OR LENGTH(email) = 0 OR email = ?)'
             )->execute($newEmail, $id, $oldValue, $oldEmail);
         } else {

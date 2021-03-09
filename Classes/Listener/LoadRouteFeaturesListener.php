@@ -1,4 +1,15 @@
 <?php
+/*
+ * This file is part of con4gis,
+ * the gis-kit for Contao CMS.
+ *
+ * @package    con4gis
+ * @version    7
+ * @author     con4gis contributors (see "authors.txt")
+ * @license    LGPL-3.0-or-later
+ * @copyright  Küstenschmiede GmbH Software & Design
+ * @link       https://www.con4gis.org
+ */
 
 namespace con4gis\DataBundle\Classes\Listener;
 
@@ -35,7 +46,7 @@ class LoadRouteFeaturesListener
                 $sqlLoc = ' WHERE geox BETWEEN ' . $bounds['left']->getLng() . ' AND ' . $bounds['right']->getLng() . ' AND geoy BETWEEN ' . $bounds['lower']->getLat() . ' AND ' . $bounds['upper']->getLat();
 
                 $strQuery = 'SELECT ' . $sqlSelect . ' FROM tl_c4g_data_element' . $sqlLoc . $inClause . $sqlWhere;
-                $featurePoint = \Database::getInstance()->prepare($strQuery)->execute(time(), time())->fetchAllAssoc();
+                $featurePoint = \Contao\Database::getInstance()->prepare($strQuery)->execute(time(), time())->fetchAllAssoc();
                 if (!$this->checkIfArrayContainsFeature($featurePoint[0], $features)) {
                     foreach ($featurePoint as $key => $singleFeature) {
                         $objSelectedType = DataTypeModel::findByPk($singleFeature['type']);
