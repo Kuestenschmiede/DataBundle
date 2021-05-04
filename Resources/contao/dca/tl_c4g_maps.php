@@ -20,7 +20,7 @@ $cbClass = MapsCallback::class;
 //ToDo map implementation
 $routing = '';
 
-if (C4GVersionProvider::isInstalled('con4gis/routing')) {
+if (C4GVersionProvider::isInstalled('con4gis/maps')) {
     $routing = ',routing_to';
 }
 
