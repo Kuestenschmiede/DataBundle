@@ -36,6 +36,7 @@ use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GMoreButtonField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GMultiCheckboxField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GSelectField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GTextField;
+use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GTrixEditorField;
 use con4gis\ProjectsBundle\Classes\Framework\C4GBrickModuleParent;
 use con4gis\ProjectsBundle\Classes\Lists\C4GBrickRenderMode;
 use con4gis\ProjectsBundle\Classes\Permission\C4GTablePermission;
@@ -63,10 +64,11 @@ class MemberEditableModule extends C4GBrickModuleParent
     protected $loadMoreButtonResources = true;
     protected $jQueryUseMaps = false;
     protected $jQueryUseMapsEditor = false;
-    protected $loadCkEditor5Resources = false;
     protected $loadMultiColumnResources = false;
     protected $loadMiniSearchResources = false;
     protected $loadHistoryPushResources = true;
+    protected $loadTrixEditorResources = true;
+    protected $trixEditorResourceParams = [];
 
     protected $memberGroupModel = null;
 
@@ -167,6 +169,12 @@ class MemberEditableModule extends C4GBrickModuleParent
                             $field->setOptions($optionsFormatted);
 
                             $fieldList[] = $field;
+                            break;
+                        case 'texteditor':
+                            $fieldList[] = C4GTrixEditorField::create($customField->alias,
+                                $customField->frontendName ?: $customField->name ?: '',
+                                $customField->description ?: '',
+                                true, false, true, true);
                             break;
                         default:
                             break;
