@@ -15,10 +15,10 @@ use con4gis\DataBundle\Classes\Popup\Popup;
 use con4gis\DataBundle\Resources\contao\models\DataTypeModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
-use con4gis\RoutingBundle\Classes\Event\LoadAreaFeaturesEvent;
-use con4gis\RoutingBundle\Classes\LatLng;
-use con4gis\RoutingBundle\Classes\Services\AreaService;
-use con4gis\RoutingBundle\Entity\RoutingConfiguration;
+use con4gis\MapsBundle\Classes\Event\LoadAreaFeaturesEvent;
+use con4gis\MapsBundle\Classes\LatLng;
+use con4gis\MapsBundle\Classes\Services\AreaService;
+use con4gis\MapsBundle\Entity\RoutingConfiguration;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class LoadAreaFeaturesListener
