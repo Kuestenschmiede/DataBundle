@@ -12,7 +12,7 @@
 namespace con4gis\DataBundle\Resources\contao\models;
 
 use con4gis\CoreBundle\Classes\Helper\ArrayHelper;
-use con4gis\DataBundle\Classes\Event\LoadAdditionalListDataEvent;
+use con4gis\DataBundle\Classes\Events\LoadAdditionalListDataEvent;
 use con4gis\DataBundle\Resources\contao\modules\PublicNonEditableModule;
 use Contao\Database;
 use Contao\StringUtil;

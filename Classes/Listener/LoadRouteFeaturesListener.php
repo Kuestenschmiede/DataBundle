@@ -15,7 +15,7 @@ use con4gis\DataBundle\Classes\Popup\Popup;
 use con4gis\DataBundle\Resources\contao\models\DataTypeModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapProfilesModel;
 use con4gis\MapsBundle\Resources\contao\models\C4gMapsModel;
-use con4gis\MapsBundle\Classes\Event\LoadRouteFeaturesEvent;
+use con4gis\MapsBundle\Classes\Events\LoadRouteFeaturesEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class LoadRouteFeaturesListener

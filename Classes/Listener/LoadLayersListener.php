@@ -10,7 +10,7 @@
  */
 namespace con4gis\DataBundle\Classes\Listener;
 
-use con4gis\DataBundle\Classes\Event\LoadPropertiesEvent;
+use con4gis\DataBundle\Classes\Events\LoadPropertiesEvent;
 use con4gis\DataBundle\Classes\Popup\Popup;
 use con4gis\DataBundle\Resources\contao\models\DataDirectoryModel;
 use con4gis\DataBundle\Resources\contao\models\DataElementModel;

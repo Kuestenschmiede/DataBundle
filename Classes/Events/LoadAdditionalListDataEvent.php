@@ -9,7 +9,7 @@
  * @link https://www.con4gis.org
  */
 
-namespace con4gis\DataBundle\Classes\Event;
+namespace con4gis\DataBundle\Classes\Events;
 
 use Symfony\Component\EventDispatcher\Event;
 
