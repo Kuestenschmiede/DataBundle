@@ -812,32 +812,34 @@ class PublicNonEditableModule extends C4GBrickModuleParent
                 ->setnewTab();
         }
 
-        foreach ($customFields as $customField) {
-            if ($customField->frontendFilterList === '1') {
-                try {
-                    $options = ['1', 1];
-                    switch ($customField->type) {
-                        case 'multicheckbox':
-                        case 'select':
-                            foreach (StringUtil::deserialize($customField->options) as $value) {
-                                $options[] = $value['value'];
-                            }
-                            $classField = new C4GDataClassField();
-                            $classField->setFieldName($customField->alias.'_value')
-                                ->setClassPrefix('filter_'.$customField->alias.'_')
-                                ->setClassSuffix('_child');
-                            $fieldList[] = $classField;
-                            break;
-                        default:
-                            $classField = new C4GClassField();
-                            $classField->setFieldName($customField->alias)
-                                ->setStyleClass('filter_'.$customField->alias.'_child')
-                                ->setOptions(['1', 1]);
-                            $fieldList[] = $classField;
-                            break;
+        if ($customFields && (count($customFields) > 0)) {
+            foreach ($customFields as $customField) {
+                if ($customField->frontendFilterList === '1') {
+                    try {
+                        $options = ['1', 1];
+                        switch ($customField->type) {
+                            case 'multicheckbox':
+                            case 'select':
+                                foreach (StringUtil::deserialize($customField->options) as $value) {
+                                    $options[] = $value['value'];
+                                }
+                                $classField = new C4GDataClassField();
+                                $classField->setFieldName($customField->alias . '_value')
+                                    ->setClassPrefix('filter_' . $customField->alias . '_')
+                                    ->setClassSuffix('_child');
+                                $fieldList[] = $classField;
+                                break;
+                            default:
+                                $classField = new C4GClassField();
+                                $classField->setFieldName($customField->alias)
+                                    ->setStyleClass('filter_' . $customField->alias . '_child')
+                                    ->setOptions(['1', 1]);
+                                $fieldList[] = $classField;
+                                break;
+                        }
+                    } catch (\Throwable $throwable) {
+                        C4gLogModel::addLogEntry('projects', $throwable->getMessage());
                     }
-                } catch (\Throwable $throwable) {
-                    C4gLogModel::addLogEntry('projects', $throwable->getMessage());
                 }
             }
         }
