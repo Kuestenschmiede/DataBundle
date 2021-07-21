@@ -13,3 +13,4 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['mpCntnt']  = '[data] Daten nac
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['mpCntnt_directory']  = '[data] Daten nach Verzeichnis';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['typeSelection'] = ['Datenkategorien', 'Die eigenen Daten werden anhand der ausgewählten Kategorien dargestellt.'];
 $GLOBALS['TL_LANG']['tl_c4g_maps']['directorySelection'] = ['Datenverzeichnisse', 'Die eigenen Daten werden anhand der ausgewählten Verzeichnisse dargestellt.'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['directLink'] = ['Direktverlinkung', 'Bei eingetragener Website wird diese beim Klick auf das Element in der Karte direkt aufgerufen.'];

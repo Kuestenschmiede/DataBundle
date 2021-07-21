@@ -62,6 +62,7 @@ class LoadLayersListener
         }
         $addData = $event->getAdditionalData();
         $addData['directoryTypeIds'] = $typeIds;
+        $addData['directLink'] = $objDataLayer->directLink;
         $addData['directories'] = $arrDirectories;
         $event->setAdditionalData($addData);
     }
@@ -77,6 +78,8 @@ class LoadLayersListener
         }
         $objData = C4gMapsModel::findByPk($dataLayer['id']);
         $addData = $event->getAdditionalData();
+        $addData['directLink'] = $objData->directLink;
+
         if ($addData['directoryTypeIds']) {
             $selectedTypes = [];
             foreach ($addData['directoryTypeIds'] as $arrIds) {
@@ -150,6 +153,7 @@ class LoadLayersListener
         $addData = $event->getAdditionalData();
         $types = $addData['types'];
         $directories = $addData['directories'];
+        $dataLayer['directLink'] = $addData['directLink'];
         $directoryTypeIds = $addData['directoryTypeIds'];
         $elements = $addData['elements'];
         $directoryStructures = [];
@@ -302,6 +306,9 @@ class LoadLayersListener
                     }
                 }
                 $properties['tooltip'] = $typeElement['name'];
+                if ($dataLayer['directLink'] && $typeElement['website']) {
+                    $properties['loc_linkurl'] = $typeElement['website'];
+                }
                 if ($typeElement['loctype'] === 'point') {
                     $content = $fmClass->createMapStructureContent(
                         $type['locstyle'],
@@ -331,6 +338,7 @@ class LoadLayersListener
                     );
                     $geoJSON = $this->layerService->createGeoJSONFeature($properties, null, null, $typeElement['geoJson']);
                 }
+
                 $structureElement = $fmClass->createMapStructureElementWithIdCalc(
                     $typeElement['id'],
                     $structureType['id'],

@@ -13,3 +13,4 @@ $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['mpCntnt']  = '[data] By catego
 $GLOBALS['TL_LANG']['tl_c4g_maps']['references']['mpCntnt_directory']  = '[data] By directory';
 $GLOBALS['TL_LANG']['tl_c4g_maps']['typeSelection'] = ['Categories of data', 'Your own data is displayed according to the selected categories.'];
 $GLOBALS['TL_LANG']['tl_c4g_maps']['directorySelection'] = ['Data directories', 'The own data is displayed according to the selected directories.'];
+$GLOBALS['TL_LANG']['tl_c4g_maps']['directLink'] = ['Direct Link', 'If the element has a website the website is openend directly when clicking the element.'];

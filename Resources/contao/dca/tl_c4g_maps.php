@@ -21,8 +21,8 @@ if (C4GVersionProvider::isInstalled('con4gis/maps')) {
     $routing = ',routing_to';
 }
 
-$GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['mpCntnt'] = "{general_legend},name,location_type;{location_legend},initial_opened,filterByBaseLayer,tDontShowIfEmpty,data_layername,typeSelection,data_hidelayer,hide_when_in_tab,exemptFromFilter,exemptFromRealFilter,hideInStarboard".$routing.";{protection_legend:hide},protect_element;{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit;";
-$GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['mpCntnt_directory'] = "{general_legend},name,location_type;{location_legend},initial_opened,filterByBaseLayer,tDontShowIfEmpty,data_layername,directorySelection,data_hidelayer,hide_when_in_tab,exemptFromFilter,exemptFromRealFilter,hideInStarboard;{protection_legend:hide},protect_element;{expert_legend:hide},excludeFromSingleLayer,be_optimize_checkboxes_limit;";
+$GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['mpCntnt'] = "{general_legend},name,location_type;{location_legend},initial_opened,filterByBaseLayer,tDontShowIfEmpty,data_layername,typeSelection,data_hidelayer,hide_when_in_tab,exemptFromFilter,exemptFromRealFilter,hideInStarboard".$routing.";{protection_legend:hide},protect_element;{expert_legend:hide},directLink,excludeFromSingleLayer,be_optimize_checkboxes_limit;";
+$GLOBALS['TL_DCA']['tl_c4g_maps']['palettes']['mpCntnt_directory'] = "{general_legend},name,location_type;{location_legend},initial_opened,filterByBaseLayer,tDontShowIfEmpty,data_layername,directorySelection,data_hidelayer,hide_when_in_tab,exemptFromFilter,exemptFromRealFilter,hideInStarboard;{protection_legend:hide},protect_element;{expert_legend:hide},directLink,excludeFromSingleLayer,be_optimize_checkboxes_limit;";
 
 $GLOBALS['TL_DCA']['tl_c4g_maps']['fields']['typeSelection'] = [
     'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['typeSelection'],
@@ -40,4 +40,11 @@ $GLOBALS['TL_DCA']['tl_c4g_maps']['fields']['directorySelection'] = [
     'eval'                    => ['mandatory'=>true, 'tl_class'=>'clr', 'chosen' => true, 'multiple' => true],
     'options_callback'        => [$cbClass, 'getConfiguredDirectories'],
     'sql'                     => "blob NULL default ''"
+];
+$GLOBALS['TL_DCA']['tl_c4g_maps']['fields']['directLink'] = [
+    'label'                   => &$GLOBALS['TL_LANG']['tl_c4g_maps']['directLink'],
+    'exclude'                 => true,
+    'default'                 => false,
+    'inputType'               => 'checkbox',
+    'sql'                     => "char(1) NOT NULL default ''"
 ];
