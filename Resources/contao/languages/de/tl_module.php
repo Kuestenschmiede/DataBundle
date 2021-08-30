@@ -41,6 +41,7 @@ $GLOBALS['TL_LANG']['tl_module']['faxLabel'] = ['Faxfeldbezeichnung', 'Wird vor 
 $GLOBALS['TL_LANG']['tl_module']['emailLabel'] = ['Emailfeldbezeichnung', 'Wird vor der E-Mailadresse angezeigt. Akzeptiert HTML. Ist nichts angegeben, wird ein Standardtext ausgegeben.'];
 $GLOBALS['TL_LANG']['tl_module']['websiteLabel'] = ['Websitefeldbezeichnung', 'Wird vor dem Link zur Website angezeigt. Akzeptiert HTML. Ist nichts angegeben, wird ein Standardtext ausgegeben.'];
 $GLOBALS['TL_LANG']['tl_module']['availableFieldsList'] = ['Verfügbare Felder (Liste)', 'Die Felder, die in der Liste angezeigt werden.'];
+$GLOBALS['TL_LANG']['tl_module']['availableFieldsListNonEditable'] = ['Unbearbeitbare Felder', 'Diese Felder können nicht bearbeitet werden, werden aber in der Liste gezeigt.'];
 $GLOBALS['TL_LANG']['tl_module']['c4g_order_by_fields'] = ['Ordnen nach', 'Ordnet die Liste nach den angegebenen Feldern.'];
 $GLOBALS['TL_LANG']['tl_module']['authorizedGroups'] = ['Authorisierte Gruppen', 'Diese Gruppen dürfen im Frontend Elemente anlegen.'];
 

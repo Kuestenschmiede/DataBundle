@@ -116,22 +116,24 @@ class MemberEditableModule extends C4GBrickModuleParent
         $fieldList[] = C4GKeyField::create('id', '', '', false);
 
         $availableFields = StringUtil::deserialize($this->availableFieldsList);
+        $availableFieldsNonEditable = StringUtil::deserialize($this->availableFieldsListNonEditable,true);
         if ($availableFields !== null) {
             foreach ($availableFields as $availableField) {
                 $customField = DataCustomFieldModel::findBy('alias', $availableField);
+                $editable = !in_array($availableField, $availableFieldsNonEditable);
                 if ($customField !== null) {
                     switch ($customField->type) {
                         case 'text':
                             $fieldList[] = C4GTextField::create($customField->alias,
                                 $customField->frontendName ?: $customField->name ?: '',
                                 $customField->description ?: '',
-                                true, true, true, true);
+                                true, true, true, $editable);
                             break;
                         case 'select':
                             $field = C4GSelectField::create($customField->alias,
                                 $customField->frontendName ?: $customField->name ?: '',
                                 $customField->description ?: '',
-                                true, true, true, true)
+                                true, true, true, $editable)
                                 ->setChosen(true);
 
                             $options = StringUtil::deserialize($customField->options);
@@ -155,7 +157,7 @@ class MemberEditableModule extends C4GBrickModuleParent
                             $field = C4GMultiCheckboxField::create($customField->alias,
                                 $customField->frontendName ?: $customField->name ?: '',
                                 $customField->description ?: '',
-                                true, false, true, true);
+                                true, false, true, $editable);
                             $field->setSort(false);
 
                             $options = StringUtil::deserialize($customField->options);
@@ -174,7 +176,7 @@ class MemberEditableModule extends C4GBrickModuleParent
                             $fieldList[] = C4GTrixEditorField::create($customField->alias,
                                 $customField->frontendName ?: $customField->name ?: '',
                                 $customField->description ?: '',
-                                true, false, true, true);
+                                true, false, true, $editable);
                             break;
                         default:
                             break;
@@ -185,13 +187,14 @@ class MemberEditableModule extends C4GBrickModuleParent
                             $field = C4GTextField::create($availableField,
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element'][$availableField][0],
                                 $GLOBALS['TL_LANG']['tl_c4g_data_element'][$availableField][1],
-                                true, true, true, true);
+                                true, true, true, $editable);
                             $fieldList[] = $field;
                             switch ($availableField) {
                                 case 'phone':
                                 case 'mobile':
                                 case 'email':
                                     $field->setDefaultValue(strval($this->memberGroupModel->$availableField));
+
                                     break;
                                 default:
                                     break;

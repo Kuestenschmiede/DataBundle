@@ -10,8 +10,10 @@
  */
 namespace con4gis\DataBundle\Classes\Contao\Callbacks;
 
+use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\DataBundle\Resources\contao\models\DataCustomFieldModel;
 use Contao\Backend;
+use Contao\StringUtil;
 use Contao\System;
 
 class ModuleCallback extends Backend
@@ -69,6 +71,27 @@ class ModuleCallback extends Backend
                         $label .= " <sup title='" . strval($customField->description) . "'>(?)</sup>";
                     }
                     $options[strval($customField->alias)] = $label;
+                }
+            }
+        }
+
+        return $options;
+    }
+
+    public function loadAvailableFieldsNonEditableOptions($dc)
+    {
+        $availableFields = StringUtil::deserialize($dc->activeRecord->availableFieldsList, true);
+        $language = $GLOBALS['TL_LANG']['tl_c4g_data_element'];
+        $options = [];
+        foreach ($availableFields as $field) {
+            if (!C4GUtils::endsWith($field, '_legend')) {
+                if (is_array($language[$field]) && !empty($language[$field][0])) {
+                    $options[$field] = $language[$field][0];
+                } else {
+                    $customField = DataCustomFieldModel::findOneBy('alias', $field);
+                    if ($customField->type !== 'legend' && strval($customField->name) !== '') {
+                        $options[$field] = strval($customField->name);
+                    }
                 }
             }
         }
