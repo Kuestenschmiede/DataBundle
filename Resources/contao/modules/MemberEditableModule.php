@@ -27,6 +27,7 @@ use con4gis\DataBundle\Resources\contao\models\MemberEditableModel;
 use con4gis\ProjectsBundle\Classes\Actions\C4GShowListAction;
 use con4gis\ProjectsBundle\Classes\Buttons\C4GMoreButton;
 use con4gis\ProjectsBundle\Classes\Buttons\C4GMoreButtonEntry;
+use con4gis\ProjectsBundle\Classes\Common\C4GBrickConst;
 use con4gis\ProjectsBundle\Classes\Conditions\C4GBrickCondition;
 use con4gis\ProjectsBundle\Classes\Conditions\C4GBrickConditionType;
 use con4gis\ProjectsBundle\Classes\Database\C4GBrickDatabaseType;
@@ -38,6 +39,7 @@ use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GSelectField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GTextField;
 use con4gis\ProjectsBundle\Classes\Fieldtypes\C4GTrixEditorField;
 use con4gis\ProjectsBundle\Classes\Framework\C4GBrickModuleParent;
+use con4gis\ProjectsBundle\Classes\Lists\C4GBrickListParams;
 use con4gis\ProjectsBundle\Classes\Lists\C4GBrickRenderMode;
 use con4gis\ProjectsBundle\Classes\Permission\C4GTablePermission;
 use con4gis\ProjectsBundle\Classes\Views\C4GBrickViewType;
@@ -84,6 +86,9 @@ class MemberEditableModule extends C4GBrickModuleParent
         $this->listParams->setDisplayLength(50);
         $this->listParams->setLengthChange(false);
         $this->listParams->setPaginate(true);
+        if ($this->allowCreateRows) {
+            $this->listParams->deleteButton(C4GBrickConst::BUTTON_ADD);
+        }
 
         $this->listParams->setShowItemType();
         $this->listParams->setShowToolTips(false);
@@ -91,6 +96,9 @@ class MemberEditableModule extends C4GBrickModuleParent
         $this->dialogParams->setWithLabels(true);
         $this->dialogParams->setWithDescriptions(true);
         $this->dialogParams->setId($id);
+        if ($this->allowDeleteRows) {
+            $this->dialogParams->deleteButton(C4GBrickConst::BUTTON_DELETE);
+        }
 
         $this->viewParams->setMemberKeyField('ownerGroupId');
         $this->dialogParams->setModelDialogFunction('findByPk');

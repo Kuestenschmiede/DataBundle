@@ -33,7 +33,7 @@ $GLOBALS['TL_DCA']['tl_module']['subpalettes']['c4g_data_mode_1'] = 'c4g_data_ty
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['c4g_data_mode_2'] = 'c4g_data_directory';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['member_editable'] =
-    '{title_legend},name,headline,type;{c4g_data_type_legend},c4g_data_type;{c4g_authorized_groups_legend},authorizedGroups;{c4g_expert_legend},availableFieldsList,availableFieldsListNonEditable';
+    '{title_legend},name,headline,type;{c4g_data_type_legend},c4g_data_type;{c4g_authorized_groups_legend},authorizedGroups;{c4g_expert_legend},availableFieldsList,availableFieldsListNonEditable,allowCreateRows,allowDeleteRows';
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_data_mode'] =
     [
@@ -259,6 +259,23 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['availableFieldsListNonEditable'] =
             'multiple'            => true,
         ],
         'sql'                     => "text NOT NULL default ''"
+    ];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['allowCreateRows'] =
+    [
+        'exclude'                 => true,
+        'inputType'               => 'checkbox',
+        'eval'                    => [
+            'class'               => 'clr'
+        ],
+        'sql'                     => "char(1) NOT NULL default ''"
+    ];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['allowDeleteRows'] =
+    [
+        'exclude'                 => true,
+        'inputType'               => 'checkbox',
+        'sql'                     => "char(1) NOT NULL default ''"
     ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_order_by_fields'] =
