@@ -307,6 +307,10 @@ class MemberEditableModule extends C4GBrickModuleParent
             $stmt = $db->prepare("UPDATE $tableName SET name = ?, type = ?, ownerGroupId = ? WHERE id = ?");
             $stmt->execute('Im Frontend eingetragen', $type, $authorizedGroup, $insertId);
         }
+
+        $db = Database::getInstance();
+        $stmt = $db->prepare("UPDATE $tableName SET datePublished = ? WHERE id = ? AND published = 1");
+        $stmt->execute(time(), $insertId);
     }
 
     public function moreButtonPublish() {
