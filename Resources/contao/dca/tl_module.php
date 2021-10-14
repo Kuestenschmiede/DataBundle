@@ -251,6 +251,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['availableFieldsList'] =
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['availableFieldsListNonEditable'] =
     [
+        'default'                 => serialize([]),
         'exclude'                 => true,
         'options_callback'        => [$cbClass, 'loadAvailableFieldsNonEditableOptions'],
         'inputType'               => 'checkbox',
@@ -258,7 +259,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['availableFieldsListNonEditable'] =
             'class'               => 'clr',
             'multiple'            => true,
         ],
-        'sql'                     => "text NOT NULL default ''"
+        'sql'                     => "text NOT NULL default '".serialize([])."'"
     ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['allowCreateRows'] =
