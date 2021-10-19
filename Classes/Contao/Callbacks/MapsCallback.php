@@ -10,9 +10,11 @@
  */
 namespace con4gis\DataBundle\Classes\Contao\Callbacks;
 
+use con4gis\DataBundle\Resources\contao\models\DataCustomFieldModel;
 use con4gis\DataBundle\Resources\contao\models\DataDirectoryModel;
 use con4gis\DataBundle\Resources\contao\models\DataTypeModel;
 use Contao\Backend;
+use Contao\System;
 
 class MapsCallback extends Backend
 {
@@ -44,5 +46,56 @@ class MapsCallback extends Backend
         }
 
         return $arrTypes;
+    }
+    public function getSearchFields($multiColumnWizard) {
+        $arrColumnTypes = [
+            'label' => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['searchFields']['name'],
+            'inputType' => 'select',
+            'eval' => ['chosen' => true, 'includeBlankOption' => true, 'style' => 'min-width:200px;width:200px;', 'tl_class' => 'w50'],
+        ];
+        $dc = [];
+        $arrOptions = $this->loadAvailableFieldsOptions($dc);
+        $arrColumnTypes['options'] = $arrOptions;
+
+        $arrColumnWeight = [
+            'label' => &$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['searchFields']['weight'],
+            'inputType' => 'text',
+            'default' => '20',
+            'eval' => ['regxp'=>  'digit','tl_class' => 'w50'],
+        ];
+        $return = [
+            'name' => $arrColumnTypes,
+            'weight' => $arrColumnWeight,
+        ];
+
+        return $return;
+    }
+
+    public function loadAvailableFieldsOptions($dc)
+    {
+        System::loadLanguageFile('tl_c4g_data_element');
+        $language = $GLOBALS['TL_LANG']['tl_c4g_data_element'];
+        $options = [
+            'name' => $language['name'][0],
+            'addressName' => $language['addressName'][0],
+            'addressStreet' => $language['addressStreet'][0],
+            'addressStreetNumber' => $language['addressStreetNumber'][0],
+            'addressZip' => $language['addressZip'][0],
+            'addressCity' => $language['addressCity'][0],
+            'addressState' => $language['addressState'][0],
+            'addressCountry' => $language['addressCountry'][0],
+            'description' => $language['description'][0]
+        ];
+        $customFields = DataCustomFieldModel::findAll();
+        if ($customFields !== null) {
+            foreach ($customFields as $customField) {
+                if ($customField->type === 'text' || $customField->type === 'textarea' || $customField->type === 'texteditor') {
+                    $label = strval($customField->name);
+                    $options[strval($customField->alias)] = $label;
+                }
+            }
+        }
+
+        return $options;
     }
 }

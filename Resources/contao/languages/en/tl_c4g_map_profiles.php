@@ -10,3 +10,7 @@
  */
 
 $GLOBALS['TL_LANG']['tl_c4g_map_profiles']['filterTypeData'] = ['Display filters paralel', 'Choose wether you want to display the filter next to each other instead of in a dropdown.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['ownGeosearch'] = ['Search with own results', 'Add own results to the geosearch.'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['searchFields'] = ['Choose search fields', 'Choose the fields to be searched'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['searchFields']['name'] = ['Search field', 'Choose the field to be searched'];
+$GLOBALS['TL_LANG']['tl_c4g_map_profiles']['searchFields']['weight'] = ['Weight on search', 'Weight on search'];
