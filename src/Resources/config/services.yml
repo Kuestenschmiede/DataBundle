@@ -1,0 +1,73 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  con4gis\DataBundle\Controller\MemberEditableController:
+    arguments:
+      - '%kernel.project_dir%'
+      - "@session"
+      - "@contao.framework"
+    public: true
+    tags:
+      - { name: contao.frontend_module,category: con4gis,template: mod_c4g_brick,type: MemberEditable }
+
+  con4gis\DataBundle\Controller\PublicNonEditableController:
+    arguments:
+      - '%kernel.project_dir%'
+      - "@session"
+      - "@contao.framework"
+    public: true
+    tags:
+      - { name: contao.frontend_module,category: con4gis,template: mod_c4g_brick,type: PublicNonEditable }
+
+  data.onLoadLayersLoadDirectories:
+    class: con4gis\DataBundle\Classes\Listener\LoadLayersListener
+    tags:
+      - { name: kernel.event_listener, event: maps.layers.load, method: onLoadLayersLoadDirectories, priority: 3004 }
+    arguments:
+      - "@con4gis.layer_service"
+  data.onLoadLayersLoadTypes:
+    class: con4gis\DataBundle\Classes\Listener\LoadLayersListener
+    tags:
+      - { name: kernel.event_listener, event: maps.layers.load, method: onLoadLayersLoadTypes, priority: 3003 }
+    arguments:
+      - "@con4gis.layer_service"
+  data.onLoadLayersLoadElements:
+    class: con4gis\DataBundle\Classes\Listener\LoadLayersListener
+    tags:
+      - { name: kernel.event_listener, event: maps.layers.load, method: onLoadLayersLoadElements, priority: 3001 }
+    arguments:
+      - "@con4gis.layer_service"
+  data.onLoadLayersCreateMapStructures:
+    class: con4gis\DataBundle\Classes\Listener\LoadLayersListener
+    tags:
+      - { name: kernel.event_listener, event: maps.layers.load, method: onLoadLayersCreateMapStructures, priority: 3000 }
+    arguments:
+      - "@con4gis.layer_service"
+  data.onLoadFeatureFilterCreateTagFilter:
+    class: con4gis\DataBundle\Classes\Listener\LoadFeatureFilterListener
+    tags:
+      - { name: kernel.event_listener, event: maps.filters.load, method: onLoadFeatureFilters, priority: 422 }
+    arguments:
+      - "@con4gis.filter_service"
+  data.onLoadRouteFeaturesGetFeatures:
+    class: con4gis\DataBundle\Classes\Listener\LoadRouteFeaturesListener
+    tags:
+      - { name: kernel.event_listener, event: load.route.features, method: onLoadRouteFeaturesGetFeatures, priority: 1024 }
+  data.onLoadAreaFeaturesGetFeatures:
+    class: con4gis\DataBundle\Classes\Listener\LoadAreaFeaturesListener
+    tags:
+      - { name: kernel.event_listener, event: load.area.features, method: onLoadAreaFeaturesGetFeatures, priority: 1024 }
+
+  data.onPerformSearchDoIt:
+    class: con4gis\DataBundle\Classes\Listener\PerformSearchListener
+    tags:
+      - { name: kernel.event_listener, event: maps.search.perform, method: onPerformSearchDoIt, priority: 422 }
+    arguments:
+      - "@request_stack"
+
+  data.onLoadMapDataDoIt:
+    class: con4gis\DataBundle\Classes\Listener\LoadMapDataListener
+    tags:
+      - { name: kernel.event_listener, event: maps.mapdata.load, method: onLoadMapDataDoIt, priority: 6900 }
