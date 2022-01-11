@@ -14,12 +14,10 @@ namespace con4gis\DataBundle\Classes\Models;
 use con4gis\CoreBundle\Classes\Helper\ArrayHelper;
 use con4gis\DataBundle\Classes\Events\LoadAdditionalListDataEvent;
 use con4gis\DataBundle\Controller\PublicNonEditableController;
-use con4gis\ProjectsBundle\Classes\Framework\C4GBaseController;
 use Contao\Database;
-use Contao\Model;
 use Contao\StringUtil;
 
-class PublicNonEditableModel extends Model
+class PublicNonEditableModel
 {
     public static function find() {
 
