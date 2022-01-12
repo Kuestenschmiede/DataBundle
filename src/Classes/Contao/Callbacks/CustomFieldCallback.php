@@ -111,12 +111,12 @@ class CustomFieldCallback extends Backend
 
                     break;
                 case 'natural':
-                    $customFieldTypes[$customField['alias']] = 'int(10) unsigned';
+                    $customFieldTypes[$customField['alias']] = 'int unsigned';
                     $customFieldDefaults[$customField['alias']] = $customField['defaultNatural'];
 
                     break;
                 case 'int':
-                    $customFieldTypes[$customField['alias']] = 'int(10) signed';
+                    $customFieldTypes[$customField['alias']] = 'int';
                     $customFieldDefaults[$customField['alias']] = $customField['defaultInt'];
 
                     break;
