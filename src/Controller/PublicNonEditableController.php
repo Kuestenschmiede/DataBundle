@@ -93,6 +93,12 @@ class PublicNonEditableController extends C4GBaseController
 
     public function initBrickModule($id)
     {
+        static::$type = StringUtil::deserialize($this->model->c4g_data_type);
+        static::$directory = StringUtil::deserialize($this->model->c4g_data_directory);
+        static::$showLabelsInList = $this->model->showLabelsInList === '1';
+        static::$dataMode = $this->model->c4g_data_mode;
+        static::$orderByFields = StringUtil::deserialize($this->model->c4g_order_by_fields) ?: ['name'];
+
         parent::initBrickModule($id);
 
         //Parameter zur Liste
@@ -102,7 +108,7 @@ class PublicNonEditableController extends C4GBaseController
         $this->listParams->setLengthChange(false);
         $this->listParams->setPaginate(true);
 
-        $this->listParams->setWithDetails($this->hideDetails !== '1');
+        $this->listParams->setWithDetails($this->model->hideDetails !== '1');
         $this->listParams->setShowFullTextSearchInHeadline();
         $this->listParams->setShowItemType();
         $this->listParams->setMiniSearchNotice($GLOBALS['TL_LANG']['tl_c4g_data_element']['minisearch_notice']);
@@ -190,14 +196,8 @@ class PublicNonEditableController extends C4GBaseController
             }
         }
 
-        static::$type = StringUtil::deserialize($this->c4g_data_type);
-        static::$directory = StringUtil::deserialize($this->c4g_data_directory);
-        static::$showLabelsInList = $this->showLabelsInList === '1';
-        static::$dataMode = $this->c4g_data_mode;
-        static::$orderByFields = StringUtil::deserialize($this->c4g_order_by_fields) ?: ['name'];
-
-        if ((($this->c4g_data_mode === '1' && empty(static::$type)) || ($this->c4g_data_mode === '2' && empty(static::$directory))
-            || ($this->c4g_data_mode === '0')) && $this->showSelectFilter) {
+        if ((($this->model->c4g_data_mode === '1' && empty(static::$type)) || ($this->model->c4g_data_mode === '2' && empty(static::$directory))
+            || ($this->model->c4g_data_mode === '0')) && $this->model->showSelectFilter) {
             $typeStmt = Database::getInstance()->prepare("SELECT DISTINCT tl_c4g_data_type.* FROM tl_c4g_data_type JOIN tl_c4g_data_element ON tl_c4g_data_element.type = tl_c4g_data_type.id where tl_c4g_data_type.allowPublishing != '1' OR tl_c4g_data_element.published = 1");
             $typeResult = $typeStmt->execute()->fetchAllAssoc();
             if (!empty($typeResult)) {
@@ -211,9 +211,9 @@ class PublicNonEditableController extends C4GBaseController
                     }
                 }
                 sort($options);
-                $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'type', $this->selectFilterLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_category'], 'c4g_list_type_filter', intval($this->labelMode)));
+                $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'type', $this->model->selectFilterLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_category'], 'c4g_list_type_filter', intval($this->labelMode)));
             }
-        } elseif ($this->c4g_data_mode === '1' && sizeof(static::$type) > 1 && $this->showSelectFilter) {
+        } elseif ($this->model->c4g_data_mode === '1' && sizeof(static::$type) > 1 && $this->model->showSelectFilter) {
             $options = [];
             foreach (static::$type as $type) {
                 $model = DataTypeModel::findByPk($type);
@@ -225,8 +225,8 @@ class PublicNonEditableController extends C4GBaseController
                 }
             }
             sort($options);
-            $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'type', $this->selectFilterLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_category'], 'c4g_list_type_filter', intval($this->labelMode)));
-        } elseif ($this->c4g_data_mode === '2' && sizeof(static::$directory) > 1) {
+            $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'type', $this->model->selectFilterLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_category'], 'c4g_list_type_filter', intval($this->labelMode)));
+        } elseif ($this->model->c4g_data_mode === '2' && sizeof(static::$directory) > 1) {
             $options = [];
             $typeOptions = [];
             foreach (static::$directory as $directory) {
@@ -241,12 +241,12 @@ class PublicNonEditableController extends C4GBaseController
                     }
                 }
             }
-            if ($this->showDirectorySelectFilter) {
+            if ($this->model->showDirectorySelectFilter) {
                 sort($options);
-                $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'directory', $this->directorySelectFilterLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_directory'], 'c4g_list_directory_filter', intval($this->labelMode)));
+                $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'directory', $this->model->directorySelectFilterLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_directory'], 'c4g_list_directory_filter', intval($this->model->labelMode)));
             }
             $typeOptions = array_unique($typeOptions);
-            if (!empty($typeOptions) && $this->showSelectFilter) {
+            if (!empty($typeOptions) && $this->model->showSelectFilter) {
                 $options = [];
                 foreach ($typeOptions as $option) {
                     $typeModel = DataTypeModel::findByPk($option);
@@ -258,25 +258,25 @@ class PublicNonEditableController extends C4GBaseController
                     }
                 }
                 sort($options);
-                $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'type', $this->selectFilterLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_category'], 'c4g_list_type_filter', intval($this->labelMode)));
+                $this->listParams->addFilterButton(new C4GSelectFilterButton($options, 'type', $this->model->selectFilterLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['filter_by_category'], 'c4g_list_type_filter', intval($this->model->labelMode)));
 
             }
         }
 
-        if ($this->showFilterResetButton) {
-            $this->listParams->addFilterButton(new C4GFilterResetButton($this->filterResetButtonCaption ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['reset_filter'], $this->filterResetButtonCaption ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['reset_filter']));
+        if ($this->model->showFilterResetButton) {
+            $this->listParams->addFilterButton(new C4GFilterResetButton($this->model->filterResetButtonCaption ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['reset_filter'], $this->model->filterResetButtonCaption ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['reset_filter']));
         }
 
-        if (strval($this->caption) !== '') {
-            $this->dialogParams->setBrickCaption(strval($this->caption));
+        if (strval($this->model->caption) !== '') {
+            $this->dialogParams->setBrickCaption(strval($this->model->caption));
         }
 
-        if (strval($this->captionPlural) !== '') {
-            $this->dialogParams->setBrickCaptionPlural(strval($this->captionPlural));
+        if (strval($this->model->captionPlural) !== '') {
+            $this->dialogParams->setBrickCaptionPlural(strval($this->model->captionPlural));
         }
 
-        if (strval($this->itemType) !== '') {
-            $this->listParams->setItemType($this->itemType);
+        if (strval($this->model->itemType) !== '') {
+            $this->listParams->setItemType($this->model->itemType);
         }
     }
 
@@ -294,7 +294,7 @@ class PublicNonEditableController extends C4GBaseController
 
         // List
 
-        $availableFieldsList = StringUtil::deserialize($this->availableFieldsList);
+        $availableFieldsList = StringUtil::deserialize($this->model->availableFieldsList);
         if (is_array($availableFieldsList)) {
             $numberOfHeadlines = 0;
             $headline = null;
@@ -412,8 +412,8 @@ class PublicNonEditableController extends C4GBaseController
                                 ->setItemprop('telephone')
                                 ->setItemType('http://schema.org/telephone');
 
-                            if ($this->phoneLabel) {
-                                $field->setAddStrBeforeValue($this->phoneLabel);
+                            if ($this->model->phoneLabel) {
+                                $field->setAddStrBeforeValue($this->model->phoneLabel);
                             } else {
                                 $field->setAddStrBeforeValue(!static::$showLabelsInList ? $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['tel'].': ' : $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['tel']);
                             }
@@ -433,8 +433,8 @@ class PublicNonEditableController extends C4GBaseController
                                 ->setItemprop('telephone')
                                 ->setItemType('http://schema.org/telephone');
 
-                            if ($this->mobileLabel) {
-                                $field->setAddStrBeforeValue($this->mobileLabel);
+                            if ($this->model->mobileLabel) {
+                                $field->setAddStrBeforeValue($this->model->mobileLabel);
                             } else {
                                 $field->setAddStrBeforeValue(!static::$showLabelsInList ? $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['mobile'].': ' : $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['mobile']);
                             }
@@ -453,8 +453,8 @@ class PublicNonEditableController extends C4GBaseController
                                 ->setItemType('http://schema.org/faxNumber')
                                 ->setEncodeHtmlEntities(false);
 
-                            if ($this->faxLabel) {
-                                $field->setAddStrBeforeValue($this->faxLabel);
+                            if ($this->model->faxLabel) {
+                                $field->setAddStrBeforeValue($this->model->faxLabel);
                             } else {
                                 $field->setAddStrBeforeValue(!static::$showLabelsInList ? $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['fax'].': ' : $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['fax']);
                             }
@@ -473,8 +473,8 @@ class PublicNonEditableController extends C4GBaseController
                                 ->setItemprop('email')
                                 ->setItemType('http://schema.org/email');
 
-                            if ($this->emailLabel) {
-                                $field->setAddStrBeforeValue($this->emailLabel);
+                            if ($this->model->emailLabel) {
+                                $field->setAddStrBeforeValue($this->model->emailLabel);
                             } else {
                                 $field->setAddStrBeforeValue(!static::$showLabelsInList ? $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['email'].': ' : $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['email']);
                             }
@@ -495,8 +495,8 @@ class PublicNonEditableController extends C4GBaseController
                                 ->setItemprop('url')
                                 ->setItemType('http://schema.org/url');
 
-                            if ($this->websiteLabel) {
-                                $field->setAddStrBeforeValue($this->websiteLabel);
+                            if ($this->model->websiteLabel) {
+                                $field->setAddStrBeforeValue($this->model->websiteLabel);
                             } else {
                                 $field->setAddStrBeforeValue(!static::$showLabelsInList ? $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['website'].': ' : $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['website']);
                             }
@@ -579,9 +579,9 @@ class PublicNonEditableController extends C4GBaseController
             ->setShowIfEmpty(false)
             ->setHidden();
 
-        if ($this->mapPage) {
+        if ($this->model->mapPage) {
             $fieldList[] = C4GMapLinkButtonField::create('maplink')
-                ->setTargetPageId($this->mapPage)
+                ->setTargetPageId($this->model->mapPage)
                 ->setItemprop('maplink')
                 ->setButtonLabel($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['toMap'])
                 ->setLongitudeColumn('geox')
@@ -635,7 +635,6 @@ class PublicNonEditableController extends C4GBaseController
             'fax',
             'email',
             'website',
-//            'linkWizard_legend',
             'linkWizard'
         ];
 
@@ -702,7 +701,7 @@ class PublicNonEditableController extends C4GBaseController
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['phone'][0],
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['phone'][1],
                             true, false, true, false)
-                            ->setAddStrBeforeValue($this->phoneLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['tel'].': ')
+                            ->setAddStrBeforeValue($this->model->phoneLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['tel'].': ')
                             ->setShowIfEmpty(false)
                             ->setItemprop('phone')
                             ->setLinkType(C4GLinkField::LINK_TYPE_PHONE);
@@ -712,7 +711,7 @@ class PublicNonEditableController extends C4GBaseController
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['mobile'][0],
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['mobile'][1],
                             true, false, true, false)
-                            ->setAddStrBeforeValue($this->mobileLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['mobile'].': ')
+                            ->setAddStrBeforeValue($this->model->mobileLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['mobile'].': ')
                             ->setShowIfEmpty(false)
                             ->setItemprop('mobile')
                             ->setLinkType(C4GLinkField::LINK_TYPE_PHONE);
@@ -722,7 +721,7 @@ class PublicNonEditableController extends C4GBaseController
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['fax'][0],
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['fax'][1],
                             true, false, true, false)
-                            ->setAddStrBeforeValue($this->faxLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['fax'].': ')
+                            ->setAddStrBeforeValue($this->model->faxLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['fax'].': ')
                             ->setShowIfEmpty(false)
                             ->setItemprop('fax')
                             ->setLinkType(C4GLinkField::LINK_TYPE_PHONE);
@@ -732,7 +731,7 @@ class PublicNonEditableController extends C4GBaseController
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['email'][0],
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['email'][1],
                             true, false, true, false)
-                            ->setAddStrBeforeValue($this->emailLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['email'].': ')
+                            ->setAddStrBeforeValue($this->model->emailLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['email'].': ')
                             ->setShowIfEmpty(false)
                             ->setItemprop('email')
                             ->setLinkType(C4GLinkField::LINK_TYPE_EMAIL);
@@ -742,7 +741,7 @@ class PublicNonEditableController extends C4GBaseController
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['website'][0],
                             $GLOBALS['TL_LANG']['tl_c4g_data_element']['website'][1],
                             true, false, true, false)
-                            ->setAddStrBeforeValue($this->websiteLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['website'].': ')
+                            ->setAddStrBeforeValue($this->model->websiteLabel ?: $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['website'].': ')
                             ->setShowIfEmpty(false)
                             ->setLinkType(C4GLinkField::LINK_TYPE_DEFAULT)
                             ->setItemprop('website')
@@ -814,12 +813,12 @@ class PublicNonEditableController extends C4GBaseController
             }
         }
 
-        if ($this->mapPage) {
+        if ($this->model->mapPage) {
             $fieldList[] = C4GMapLinkButtonField::create('maplinkDetails')
                 ->setFormField(true)
                 ->setTableColumn(false)
                 ->setItemprop('maplink')
-                ->setTargetPageId($this->mapPage)
+                ->setTargetPageId($this->model->mapPage)
                 ->setButtonLabel($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['toMap'])
                 ->setLongitudeColumn('geox')
                 ->setLatitudeColumn('geoy')
