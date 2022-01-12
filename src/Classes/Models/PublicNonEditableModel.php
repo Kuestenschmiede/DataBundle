@@ -275,6 +275,15 @@ class PublicNonEditableModel
                         } else {
                             $resultElements[$key][$model->alias] = '';
                         }
+                    } elseif ($model->type === 'datepicker') {
+                        if (intval($resultElements[$key][$model->alias]) !== 0) {
+                            $resultElements[$key][$model->alias] = date(
+                                'd.m.Y',
+                                $resultElements[$key][$model->alias]
+                            );
+                        } else {
+                            $resultElements[$key][$model->alias] = '';
+                        }
                     }
                 }
             }
@@ -319,7 +328,12 @@ class PublicNonEditableModel
                     if (is_string($value) && $value !== '') {
                         $customField = DataCustomFieldModel::findBy('alias', $column);
                         if ($customField !== null) {
-                            if ($customField->type === 'text' || $customField->type === 'select' || $customField->type === 'foreignKey') {
+                            if (
+                                $customField->type === 'text' ||
+                                $customField->type === 'select' ||
+                                $customField->type === 'foreignKey' ||
+                                $customField->type === 'datepicker'
+                            ) {
                                 $label = $customField->frontendName ?: $customField->name ?: '';
                                 if ($label !== '') {
                                     $resultElements[$key][$column.'_value'] = $value;
@@ -481,6 +495,15 @@ class PublicNonEditableModel
                         if (!empty($displayValues)) {
                             $array[$customField->alias] = ($customField->frontendName ?: $customField->name) . "" . implode(', ', $displayValues);
                         }
+                    }
+                } elseif ($customField->type === 'datepicker') {
+                    if (intval($array[$customField->alias]) !== 0) {
+                        $array[$customField->alias] = date(
+                            'd.m.Y',
+                            $array[$customField->alias]
+                        );
+                    } else {
+                        $array[$customField->alias] = '';
                     }
                 }
             }
