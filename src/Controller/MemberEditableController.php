@@ -124,7 +124,7 @@ class MemberEditableController extends C4GBaseController
         static::$database = Database::getInstance();
     }
 
-    public function addFields()
+    public function addFields() : array
     {
         $memberModel = MemberModel::findByPk($this->dialogParams->getMemberId());
         $memberGroups = StringUtil::deserialize($memberModel->groups);

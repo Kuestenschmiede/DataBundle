@@ -287,7 +287,7 @@ class PublicNonEditableController extends C4GBaseController
         ResourceLoader::loadCssResource('bundles/con4gisdata/dist/css/public_non_editable.min.css', '');
     }
 
-    public function addFields()
+    public function addFields() : array
     {
         $fieldList = [];
 
