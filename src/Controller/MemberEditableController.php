@@ -5,7 +5,7 @@
  * @version 8
  * @author con4gis contributors (see "authors.txt")
  * @license LGPL-3.0-or-later
- * @copyright (c) 2010-2021, by Küstenschmiede GmbH Software & Design
+ * @copyright (c) 2010-2022, by Küstenschmiede GmbH Software & Design
  * @link https://www.con4gis.org
  */
 
@@ -272,7 +272,7 @@ class MemberEditableController extends C4GBaseController
             '', false, true, false, false,
             [
                 'moreButton' => $moreButton,
-                'buttonTitle' => $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['MoreButtonButtonTitle'],
+                'buttonTitle' => &$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['MoreButtonButtonTitle'],
             ]);
 
         return $fieldList;
