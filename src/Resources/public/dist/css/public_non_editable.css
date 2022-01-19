@@ -1,5 +1,5 @@
 @charset "UTF-8";
-#c4g_condition input.formdata {
+.c4g__form-group input.formdata {
   margin-bottom: 20px
 }
 .c4g_multicheckbox span input {
