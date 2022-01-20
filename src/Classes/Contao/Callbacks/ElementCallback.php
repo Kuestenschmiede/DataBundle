@@ -70,7 +70,7 @@ class ElementCallback extends Backend
 
     public function changeFileBinToUuid($fieldValue, DataContainer $dc)
     {
-        return \StringUtil::binToUuid($fieldValue);
+        return $fieldValue ? \StringUtil::binToUuid($fieldValue) : '';
     }
 
     public function loadMemberGroupData($value, $dc)
