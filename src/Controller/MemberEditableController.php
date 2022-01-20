@@ -129,6 +129,9 @@ class MemberEditableController extends C4GBaseController
         $memberModel = MemberModel::findByPk($this->dialogParams->getMemberId());
         $memberGroups = StringUtil::deserialize($memberModel->groups);
         $authorizedGroups = StringUtil::deserialize($this->model->authorizedGroups);
+        if (empty($authorizedGroups)) {
+            throw new \RuntimeException('Missing required module option authorizedGroups.');
+        }
         foreach ($memberGroups as $group) {
             if (in_array($group, $authorizedGroups)) {
                 $this->memberGroupModel = MemberGroupModel::findByPk($group);
@@ -318,7 +321,9 @@ class MemberEditableController extends C4GBaseController
         $memberModel = \Contao\MemberModel::findByPk($this->dialogParams->getMemberId());
         $memberGroups = StringUtil::deserialize($memberModel->groups);
         $authorizedGroups = StringUtil::deserialize($this->model->authorizedGroups);
-
+        if (empty($authorizedGroups)) {
+            throw new \RuntimeException('Missing required module option authorizedGroups.');
+        }
         $authorizedGroup = 0;
         foreach ($memberGroups as $mGroup) {
             if (in_array($mGroup, $authorizedGroups)) {

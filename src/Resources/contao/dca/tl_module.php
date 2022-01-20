@@ -306,6 +306,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['authorizedGroups'] =
         'eval'                    => [
             'class'               => 'clr',
             'multiple'            => true,
+            'mandatory'           => true
         ],
         'sql'                     => "text NULL"
     ];
