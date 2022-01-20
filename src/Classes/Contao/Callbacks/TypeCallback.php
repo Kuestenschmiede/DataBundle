@@ -12,7 +12,7 @@ namespace con4gis\DataBundle\Classes\Contao\Callbacks;
 
 use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\DataBundle\Classes\Models\DataCustomFieldModel;
-use con4gis\DataBundle\Classes\Models\C4gMapLocstylesModel;
+use con4gis\MapsBundle\Resources\contao\models\C4gMapLocstylesModel;
 use Contao\Backend;
 use Contao\StringUtil;
 use Contao\System;
