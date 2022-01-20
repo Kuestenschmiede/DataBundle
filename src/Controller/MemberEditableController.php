@@ -103,7 +103,7 @@ class MemberEditableController extends C4GBaseController
         $this->listParams->setDisplayLength(50);
         $this->listParams->setLengthChange(false);
         $this->listParams->setPaginate(true);
-        if ($this->allowCreateRows) {
+        if ($this->model->allowCreateRows) {
             $this->listParams->deleteButton(C4GBrickConst::BUTTON_ADD);
         }
 
@@ -113,7 +113,7 @@ class MemberEditableController extends C4GBaseController
         $this->dialogParams->setWithLabels(true);
         $this->dialogParams->setWithDescriptions(true);
         $this->dialogParams->setId($id);
-        if ($this->allowDeleteRows) {
+        if ($this->model->allowDeleteRows) {
             $this->dialogParams->deleteButton(C4GBrickConst::BUTTON_DELETE);
         }
 
@@ -128,7 +128,7 @@ class MemberEditableController extends C4GBaseController
     {
         $memberModel = MemberModel::findByPk($this->dialogParams->getMemberId());
         $memberGroups = StringUtil::deserialize($memberModel->groups);
-        $authorizedGroups = StringUtil::deserialize($this->authorizedGroups);
+        $authorizedGroups = StringUtil::deserialize($this->model->authorizedGroups);
         foreach ($memberGroups as $group) {
             if (in_array($group, $authorizedGroups)) {
                 $this->memberGroupModel = MemberGroupModel::findByPk($group);
@@ -140,8 +140,8 @@ class MemberEditableController extends C4GBaseController
 
         $fieldList[] = C4GKeyField::create('id', '', '', false);
 
-        $availableFields = StringUtil::deserialize($this->availableFieldsList);
-        $availableFieldsNonEditable = StringUtil::deserialize($this->availableFieldsListNonEditable,true);
+        $availableFields = StringUtil::deserialize($this->model->availableFieldsList);
+        $availableFieldsNonEditable = StringUtil::deserialize($this->model->availableFieldsListNonEditable,true);
         if ($availableFields !== null) {
             foreach ($availableFields as $availableField) {
                 $customField = DataCustomFieldModel::findBy('alias', $availableField);
@@ -308,7 +308,7 @@ class MemberEditableController extends C4GBaseController
      * @param $fieldList array die Feldliste
      */
     public function saveCallback($tableName, $set, $insertId, $type, $fieldList) {
-        $types = StringUtil::deserialize($this->c4g_data_type);
+        $types = StringUtil::deserialize($this->model->c4g_data_type);
         if (is_array($types)) {
             $type = $types[0];
         } else {
@@ -317,7 +317,7 @@ class MemberEditableController extends C4GBaseController
 
         $memberModel = \Contao\MemberModel::findByPk($this->dialogParams->getMemberId());
         $memberGroups = StringUtil::deserialize($memberModel->groups);
-        $authorizedGroups = StringUtil::deserialize($this->authorizedGroups);
+        $authorizedGroups = StringUtil::deserialize($this->model->authorizedGroups);
 
         $authorizedGroup = 0;
         foreach ($memberGroups as $mGroup) {
