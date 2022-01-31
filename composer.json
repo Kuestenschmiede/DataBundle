@@ -18,8 +18,8 @@
     },
     "require": {
         "contao/core-bundle": "^4.9",
-        "con4gis/maps": "^v8.1.0",
-        "con4gis/projects": "^v3.1.0"
+        "con4gis/maps": "^8.1.0",
+        "con4gis/projects": "^4.0.0"
     },
     "conflict": {
         "contao/core": "*",
