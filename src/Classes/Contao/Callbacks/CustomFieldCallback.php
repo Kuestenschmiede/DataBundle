@@ -170,7 +170,10 @@ class CustomFieldCallback extends Backend
                 Message::addInfo($GLOBALS['TL_LANG'][$this->dcaName]['install_tool_hint']);
 
                 return;
-            } elseif ($customFieldDefaults[$customFieldName] !== $columnDefaults[$customFieldName]) {
+            } elseif (
+                $customFieldDefaults[$customFieldName] !== $columnDefaults[$customFieldName] &&
+                (int) $customFieldDefaults[$customFieldName] !== (int) $columnDefaults[$customFieldName]
+            ) {
                 Message::addInfo($GLOBALS['TL_LANG'][$this->dcaName]['install_tool_hint']);
 
                 return;
