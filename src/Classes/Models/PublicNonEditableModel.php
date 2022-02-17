@@ -71,7 +71,7 @@ class PublicNonEditableModel
                     $re
                 ];
                 while (intval($toMerge[0]['parentElement']) > 0) {
-                    array_unshift($toMerge, DataElementModel::findByPk([$toMerge[0]['parentElement']])->row());
+                    array_unshift($toMerge, DataElementModel::findByPk($toMerge[0]['parentElement'])->row());
                 }
 
                 $merge = [];
