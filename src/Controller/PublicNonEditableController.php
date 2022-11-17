@@ -84,6 +84,7 @@ class PublicNonEditableController extends C4GBaseController
     protected $loadMultiColumnResources = true;
     protected $loadMiniSearchResources = true;
     protected $loadHistoryPushResources = true;
+    protected $loadHistoryBrickPushResources = false;
 
     public static $type = [];
     public static $directory = [];
