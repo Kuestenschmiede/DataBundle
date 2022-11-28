@@ -16,6 +16,8 @@ use con4gis\DataBundle\Classes\Events\LoadAdditionalListDataEvent;
 use con4gis\DataBundle\Controller\PublicNonEditableController;
 use Contao\Database;
 use Contao\StringUtil;
+use Exception;
+use stdClass;
 
 class PublicNonEditableModel
 {
@@ -510,5 +512,27 @@ class PublicNonEditableModel
         }
 
         return ArrayHelper::arrayToObject($array);
+    }
+
+    /**
+     * @param string $field
+     * @param string $value
+     * @return bool|stdClass
+     * @throws Exception
+     */
+    public static function findBy(string $field, string $value)
+    {
+        $database = Database::getInstance();
+        $fields = $database->listFields('tl_c4g_data_element');
+        if (in_array($field, $fields)) {
+            $statement = $database->prepare(
+                "SELECT id FROM tl_c4g_data_element WHERE $field = ?"
+            );
+            $result = $statement->execute($value)->fetchAssoc();
+            if ($result !== false) {
+                return self::findByPk($result['id']);
+            }
+        }
+        throw new Exception();
     }
 }

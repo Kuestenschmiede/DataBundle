@@ -84,13 +84,14 @@ class PublicNonEditableController extends C4GBaseController
     protected $loadMultiColumnResources = true;
     protected $loadMiniSearchResources = true;
     protected $loadHistoryPushResources = true;
-    protected $loadHistoryBrickPushResources = false;
+    protected $loadHistoryBrickPushResources = true;
 
     public static $type = [];
     public static $directory = [];
     public static $showLabelsInList = false;
     public static $dataMode = 0;
     public static $orderByFields = ['name'];
+
 
     public function initBrickModule($id)
     {
