@@ -33,7 +33,11 @@ class PerformSearchListener
         if ($profile && $profile->ownGeosearch) {
             $arrColumns = unserialize($profile->searchFields);
 
-            $arrDBResult = SearchApi::searchDatabase($arrParams['q'], $arrColumns, 'tl_c4g_data_element', $this->Database);
+            //hotfix with empty name
+            if (count($arrColumns) && $arrColumns[0]['name']) {
+                $arrDBResult = SearchApi::searchDatabase($arrParams['q'], $arrColumns, 'tl_c4g_data_element', $this->Database);
+            }
+
             $arrResults = [];
             foreach ($arrDBResult as $dBResult) {
                 $address = $dBResult['addressName'] ?: $dBResult['name'];
