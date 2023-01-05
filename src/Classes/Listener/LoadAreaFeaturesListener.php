@@ -70,7 +70,7 @@ class LoadAreaFeaturesListener
                 $areaService = new AreaService();
                 $performMatrix = $areaService->performMatrix($objMapsProfile, $profile, $locations);
                 if ($performMatrix) {
-                    $requestData = \GuzzleHttp\json_decode($performMatrix, true);
+                    $requestData = \json_decode($performMatrix, true);
                     $type = $requestData['responseType'] ?: $type;
                 } else {
                     $requestData = [];
