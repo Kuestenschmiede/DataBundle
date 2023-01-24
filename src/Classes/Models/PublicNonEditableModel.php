@@ -524,7 +524,8 @@ class PublicNonEditableModel
     {
         $database = Database::getInstance();
         $fields = $database->listFields('tl_c4g_data_element');
-        if (in_array($field, $fields)) {
+        $columns = array_column($fields, 'name');
+        if (array_search($field, $columns) >= 0) {
             $statement = $database->prepare(
                 "SELECT id FROM tl_c4g_data_element WHERE $field = ?"
             );
