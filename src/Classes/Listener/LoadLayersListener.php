@@ -281,7 +281,7 @@ class LoadLayersListener
 
                 $properties = $propertiesEvent->getProperties();
 
-                $label = $type['showLabels'] === '1' ? $typeElement['name'] : '';
+                $label = $type['showLabels'] === '1' ? html_entity_decode($typeElement['name']) : '';
 
                 $stringClass = $GLOBALS['con4gis']['stringClass'];
                 $popupInfo = $stringClass::toHtml5($popup->getPopupString());
