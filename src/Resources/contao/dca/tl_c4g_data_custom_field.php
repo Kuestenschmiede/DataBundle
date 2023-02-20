@@ -24,6 +24,7 @@ use con4gis\CoreBundle\Classes\DCA\DCA;
 use con4gis\CoreBundle\Classes\DCA\Fields\IdField;
 use con4gis\CoreBundle\Classes\DCA\Fields\NaturalField;
 use con4gis\CoreBundle\Classes\DCA\Fields\SelectField;
+use con4gis\CoreBundle\Classes\DCA\Fields\ImageField;
 use con4gis\CoreBundle\Classes\DCA\Fields\TextField;
 use con4gis\CoreBundle\Classes\DCA\Fields\TextAreaField;
 use con4gis\CoreBundle\Classes\DCA\Fields\CheckboxField;
@@ -78,7 +79,7 @@ $dca->palette()->selector(['type'])
     ->subPalette('type', 'select', ",description$generalFieldsNoSearch;{type_specific_legend},options,defaultSelect")
     ->subPalette('type', 'checkbox', ",description$generalFieldsNoSearchNoMargin;{type_specific_legend},defaultCheckbox,".
         "frontendFilterCheckboxStyling,frontendFilterCheckboxButtonLabelOn,frontendFilterCheckboxButtonLabelOff")
-    ->subPalette('type', 'icon', ",description$generalFieldsNoSearchNoMargin;{type_specific_legend},defaultCheckbox,icon")
+    ->subPalette('type', 'icon', ",description$generalFieldsNoSearchNoMargin;{type_specific_legend},defaultCheckbox,icon,customIcon")
     ->subPalette('type', 'multicheckbox', ",description$generalFieldsNoSearch;{type_specific_legend},options,defaultMultiCheckbox")
     ->subPalette('type', 'datepicker', ",description$generalFieldsNoSearchNoFilter;{type_specific_legend},defaultDatePicker")
     ->subPalette('type', 'link', ",description$generalFieldsNoSearchNoMargin;{type_specific_legend},defaultCheckbox,linkTitle,linkHref,linkNewTab")
@@ -245,8 +246,10 @@ $linkNewTab->eval()
 $icon = new TextField('icon', $dca);
 $icon->eval()
     ->allowHtml()
-    ->mandatory()
     ->class('clr');
+
+$image = new ImageField('customIcon', $dca);
+$image->saveCallback($cbClass, 'changeFileBinToUuid');
 
 $frontendFilterCheckboxStyling = new SelectField('frontendFilterCheckboxStyling', $dca);
 $frontendFilterCheckboxStyling->optionsCallback($cbClass, 'loadFrontendFilterCheckboxStylingOptions')

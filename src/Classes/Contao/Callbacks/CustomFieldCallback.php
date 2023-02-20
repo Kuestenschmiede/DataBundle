@@ -209,6 +209,10 @@ class CustomFieldCallback extends Backend
 
         return $formattedOptions;
     }
+    public function changeFileBinToUuid($fieldValue, DataContainer $dc)
+    {
+        return $fieldValue ? \StringUtil::binToUuid($fieldValue) : '';
+    }
 
     public function loadFrontendFilterCheckboxStylingOptions($dca)
     {

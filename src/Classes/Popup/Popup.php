@@ -224,8 +224,15 @@ class Popup
 
                                     break;
                                 case 'icon':
-                                    if ($typeElement[$availableField] === '1' && strval($model->icon) !== '') {
-                                        $this->addEntry(strval($model->icon), $availableField);
+                                    if ($typeElement[$availableField] === '1' ) {
+                                        if (strval($model->icon) !== '') {
+                                            $this->addEntry(strval($model->icon), $availableField);
+                                        }
+                                        else if ($model->customIcon && FilesModel::findByUuid($model->customIcon)) {
+                                            $img = FilesModel::findByUuid($model->customIcon)->path;
+                                            $content = '<img src="'. $img .'"></img>';
+                                            $this->addEntry($content, $availableField);
+                                        }
 
                                         break;
                                     }

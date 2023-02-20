@@ -319,7 +319,7 @@ class PublicNonEditableController extends C4GBaseController
                                 }
                             } elseif ($customField->type === 'icon') {
                                 $icon = C4GIconField::create($customField->alias);
-                                $icon->setIcon($customField->icon)
+                                $icon->setIcon(strlen($customField->icon) > 0 ? $customField->icon : $customField->customIcon)
                                     ->setConditional()
                                     ->setFormField(false)
                                     ->setDescription($customField->description)
