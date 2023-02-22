@@ -129,12 +129,12 @@ div#c4g_brick ul {
 }
 @media (min-width:700px) and (max-width:1200px) {
   .c4g_brick_list > ul ~ .c4gGuiAction {
-    width: calc(100%/2 - 10px)
+    width: calc(50% - 10px)
   }
 }
 @media (min-width:1200px) {
   .c4g_brick_list > ul ~ .c4gGuiAction {
-    width: calc(100%/3 - 10px)
+    width: calc(33.3333333333% - 10px)
   }
 }
 .c4g_brick_list .name {
