@@ -133,7 +133,7 @@ class Popup
             } elseif ($availableField === 'phone') {
                 if ($typeElement['phone'] !== '') {
                     $list['linkHref'] = 'tel:' . $typeElement['phone'];
-                    $list['linkTitle'] = 'Tel.: ' . $typeElement['phone'];
+                    $list['linkTitle'] = $typeElement['phone'];
                     $this->addLinkEntry(strval($list['linkTitle']), 'phone', strval($list['linkHref']));
                 }
             } elseif ($availableField === 'mobile') {
@@ -157,7 +157,7 @@ class Popup
             } elseif ($availableField === 'email') {
                 if ($typeElement['email'] !== '') {
                     $list['linkHref'] = 'mailto:' . $typeElement['email'];
-                    $list['linkTitle'] = 'E-Mail: ' . $typeElement['email'];
+                    $list['linkTitle'] = $typeElement['email'];
                     $this->addLinkEntry(strval($list['linkTitle']), 'email', strval($list['linkHref']));
                 }
             } elseif ($availableField === 'website') {
@@ -169,7 +169,7 @@ class Popup
                 $list['linkHref'] = $typeElement['website'];
 
                 $title = $typeElement['websiteLabel'] ? $typeElement['websiteLabel'] : $typeElement['website'];
-                $list['linkTitle'] = 'Website: ' . $title;
+                $list['linkTitle'] = $title;
                 $this->addLinkEntry(strval($list['linkTitle']), 'website', strval($list['linkHref']));
             } else {
                 $model = DataCustomFieldModel::findBy('alias', $availableField);
