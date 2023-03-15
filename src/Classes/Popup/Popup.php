@@ -355,7 +355,7 @@ class Popup
             return;
         }
 
-        if (!C4GUtils::startsWith($href, 'http') && !C4GUtils::startsWith($href, 'mailto')) {
+        if (!C4GUtils::startsWith($href, 'http') && !C4GUtils::startsWith($href, 'mailto') && !C4GUtils::startsWith($href, 'tel')) {
             $href = 'http://' . $href;
         }
 
