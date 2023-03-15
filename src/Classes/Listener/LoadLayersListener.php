@@ -353,6 +353,8 @@ class LoadLayersListener
                     false,
                     $dataLayer
                 );
+                $objMaps = C4gMapsModel::findByPk($dataLayer['id']);
+                $structureElement['zoomTo'] = $objMaps->zoomTo;
                 $geoJSON['properties']['id'] = $structureElement['id'];
                 $jsonFeatures[] = $geoJSON;
                 $structureElems[] = $structureElement;
