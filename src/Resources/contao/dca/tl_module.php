@@ -262,7 +262,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['availableFieldsListNonEditable'] =
             'class'               => 'clr',
             'multiple'            => true,
         ],
-        'sql'                     => "text NOT NULL default '".serialize([])."'"
+        'sql'                     => "text NOT NULL"
     ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['allowCreateRows'] =
