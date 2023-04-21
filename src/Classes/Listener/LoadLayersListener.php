@@ -361,6 +361,9 @@ class LoadLayersListener
             }
 
             $structureType = $fmClass->createMapStructureChilds($structureType, $structureElems);
+            if (count($types) === 1) {
+                $structureType['hideInStarboard'] = true;
+            }
 //            $globalJSON = [
 //                'type' => 'FeatureCollection',
 //                'features' => $jsonFeatures,
