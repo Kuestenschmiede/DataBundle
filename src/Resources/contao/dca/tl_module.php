@@ -29,7 +29,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'c4g_data_mode';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes'][PublicNonEditableController::TYPE] = '{title_legend},name,headline,type;{caption_legend},'.
     'captionPlural,caption;{c4g_data_type_legend},c4g_data_mode,showSelectFilter,selectFilterLabel,showDirectorySelectFilter,directorySelectFilterLabel,labelMode,showFilterResetButton,'.
-    'filterResetButtonCaption;{c4g_expert_legend},hideDetails,showLabelsInList,phoneLabel,mobileLabel,faxLabel,emailLabel,websiteLabel,availableFieldsList,c4g_order_by_fields;{mapPage_legend},mapPage';
+    'filterResetButtonCaption;{c4g_expert_legend},hideDetails,showLabelsInList,phoneLabel,mobileLabel,faxLabel,emailLabel,websiteLabel,availableFieldsList,c4g_order_by_fields;{mapPage_legend},mapPage,redirectPage,fieldForRedirect';
 
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['c4g_data_mode_0'] = '';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['c4g_data_mode_1'] = 'c4g_data_type';
@@ -73,6 +73,13 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_data_directory'] =
 $GLOBALS['TL_DCA']['tl_module']['fields']['mapPage'] =
     [
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['mapPage'],
+        'exclude'                 => true,
+        'inputType'               => 'pageTree',
+        'sql'                     => "int(10) unsigned NOT NULL default '0'"
+    ];
+$GLOBALS['TL_DCA']['tl_module']['fields']['redirectPage'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['redirectPage'],
         'exclude'                 => true,
         'inputType'               => 'pageTree',
         'sql'                     => "int(10) unsigned NOT NULL default '0'"
@@ -294,6 +301,19 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_order_by_fields'] =
             'multiple'            => true,
         ],
         'sql'                     => "text NOT NULL default ".serialize(['name'])
+    ];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['fieldForRedirect'] =
+    [
+        'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fieldForRedirect'],
+        'exclude'                 => true,
+        'default'                 => serialize(['name']),
+        'options_callback'        => [$cbClass, 'getFieldForRedirect'],
+        'inputType'               => 'select',
+        'eval'                    => [
+            'class'               => 'clr',
+        ],
+        'sql'                     => "text NOT NULL default ''"
     ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['authorizedGroups'] =

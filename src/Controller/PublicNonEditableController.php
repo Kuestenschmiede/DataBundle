@@ -580,7 +580,12 @@ class PublicNonEditableController extends C4GBaseController
             false, true, true, false)
             ->setShowIfEmpty(false)
             ->setHidden();
-
+        if ($this->model->redirectPage) {
+            $fieldList[] = C4GLinkButtonField::create('link')
+                ->setTargetPageId($this->model->redirectPage)
+                ->setButtonLabel($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['redirect'])
+                ->setTargetModifier($this->model->fieldForRedirect);
+        }
         if ($this->model->mapPage) {
             $fieldList[] = C4GMapLinkButtonField::create('maplink')
                 ->setTargetPageId($this->model->mapPage)

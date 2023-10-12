@@ -98,7 +98,21 @@ class ModuleCallback extends Backend
 
         return $options;
     }
+    public function getFieldForRedirect ($dc) {
+        $options = [
+            'id' => "id"
+        ];
+        $customFields = DataCustomFieldModel::findAll();
+        foreach ($customFields as $customField) {
+            $label = strval($customField->name);
+            if (strval($customField->description) !== '') {
+                $label .= " <sup title='" . strval($customField->description) . "'>(?)</sup>";
+            }
+            $options[strval($customField->alias)] = $label;
+        }
 
+        return $options;
+    }
     public function loadOrderByFieldsOptions($dc)
     {
         System::loadLanguageFile('tl_c4g_data_element');

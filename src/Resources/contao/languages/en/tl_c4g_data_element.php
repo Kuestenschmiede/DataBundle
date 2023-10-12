@@ -145,4 +145,4 @@ $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['mobile'] = 'Mobile';
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['fax'] = 'Fax';
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['email'] = 'E-Mail';
 $GLOBALS['TL_LANG']['con4gis']['data']['frontend']['website'] = 'Website';
-$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['toMap'] = 'go to Map';
+$GLOBALS['TL_LANG']['con4gis']['data']['frontend']['toMap'] = 'details';
