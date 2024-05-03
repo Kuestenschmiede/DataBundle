@@ -291,7 +291,7 @@ class LoadLayersListener
                 $objComments = new \Contao\Comments();
                 $popupInfo = $objComments->parseBbCode($popupInfo);
                 $properties['popup'] = [
-                    'content' => $popupInfo,
+                    'content' => html_entity_decode($popupInfo),
                     'routing_link' => $dataLayer['routing_link'],
                     'async' => false,
                 ];
@@ -314,7 +314,7 @@ class LoadLayersListener
                         $type['locstyle'],
                         $typeElement['geox'],
                         $typeElement['geoy'],
-                        $popup->getPopupString(),
+                        html_entity_decode($popup->getPopupString()),
                         $label,
                         $typeElement['name'],
                         null,
@@ -328,7 +328,7 @@ class LoadLayersListener
                     $content = $fmClass->createMapStructureContentFromGeoJson(
                         $type['locstyle'],
                         $typeElement['geoJson'],
-                        $popup->getPopupString(),
+                        html_entity_decode($popup->getPopupString()),
                         $typeElement['name'],
                         $typeElement['name'],
                         null,
