@@ -32,7 +32,9 @@ class PerformSearchListener
         $profile = C4gMapProfilesModel::findByPk($profileId);
         if ($profile && $profile->ownGeosearch) {
             $arrColumns = unserialize($profile->searchFields);
-
+            if (!$arrColumns) {
+                return;
+            }
             //hotfix with empty name
             if (count($arrColumns) && $arrColumns[0]['name']) {
                 $arrDBResult = SearchApi::searchDatabase($arrParams['q'], $arrColumns, 'tl_c4g_data_element', $this->Database);
