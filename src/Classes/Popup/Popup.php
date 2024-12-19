@@ -92,10 +92,13 @@ class Popup
 
                                 $timeString[$key] .= " $join " . $GLOBALS['TL_LANG']['tl_c4g_data_element']['day_reference'][$time['dayTo']];
                             }
-                            $timeString[$key] .= ': ' . date('H:i', $time['timeFrom']) .
-                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['timeCaption'] .
-                                ' - ' . date('H:i', $time['timeTo']) .
-                                $GLOBALS['TL_LANG']['tl_c4g_data_element']['timeCaption'];
+                            if ($time['timeFrom'] && $time['timeTo']) {
+                                $timeString[$key] .= ': ' . date('H:i', intval($time['timeFrom'])) .
+                                    $GLOBALS['TL_LANG']['tl_c4g_data_element']['timeCaption'] .
+                                    ' - ' . date('H:i', intval($time['timeTo'])) .
+                                    $GLOBALS['TL_LANG']['tl_c4g_data_element']['timeCaption'];
+                            }
+
                             $showBusinessTimes = true;
                         }
                     }
