@@ -1,4 +1,7 @@
 # con4gis-DataBundle
+> [!IMPORTANT]  
+> We are not actively developing this con4gis module. Further development orders are possible.
+
 ## Overview
 The data brick of the Contao GIS-kit **con4gis**. Extends con4gis Maps- and ProjectsBundle.
 
