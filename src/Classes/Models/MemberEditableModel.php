@@ -21,7 +21,7 @@ class MemberEditableModel
 {
     public static function find($memberId, $tableName, $database, $fieldList, $listParams) {
 
-        $db = \Database::getInstance();
+        $db = Database::getInstance();
 
         $memberModel = MemberModel::findByPk($memberId);
         $groups = StringUtil::deserialize($memberModel->groups);
@@ -57,5 +57,10 @@ class MemberEditableModel
         } else {
             return ArrayHelper::arrayToObject([]);
         }
+    }
+
+    public static function findBy($field, $value)
+    {
+        return DataElementModel::findBy($field, $value);
     }
 }

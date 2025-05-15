@@ -534,6 +534,7 @@ class PublicNonEditableModel
                 return self::findByPk($result['id']);
             }
         }
-        throw new Exception();
+//        throw new Exception();
+        return false;
     }
 }

@@ -6,7 +6,7 @@ services:
   con4gis\DataBundle\Controller\MemberEditableController:
     arguments:
       - '%kernel.project_dir%'
-      - "@session"
+      - "@request_stack"
       - "@contao.framework"
     public: true
     tags:
@@ -15,7 +15,7 @@ services:
   con4gis\DataBundle\Controller\PublicNonEditableController:
     arguments:
       - '%kernel.project_dir%'
-      - "@session"
+      - "@request_stack"
       - "@contao.framework"
     public: true
     tags:
