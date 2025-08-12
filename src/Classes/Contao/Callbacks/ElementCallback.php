@@ -193,13 +193,14 @@ class ElementCallback extends Backend
     }
     public function toggleVisibility($id, $published)
     {
+        $user = BackendUser::getInstance();
         // Check permissions to publish
-        if (!$this->User->isAdmin && !$this->User->hasAccess($this->dcaName . '::published', 'alexf')) {
+        if (!$user->isAdmin && !$user->hasAccess($this->dcaName . '::published', 'alexf')) {
             $this->redirect('contao/main.php?act=error');
         }
 
         // Update the database
-        $this->Database->prepare('UPDATE ' . $this->dcaName . ' SET tstamp=' . time() . ", published='" . ($published ? '0' : '1') . "' WHERE id=?")
+        Database::getInstance()->prepare('UPDATE ' . $this->dcaName . ' SET tstamp=' . time() . ", published='" . ($published ? '0' : '1') . "' WHERE id=?")
             ->execute($id);
     }
 }

@@ -11,9 +11,11 @@
 namespace con4gis\DataBundle\Classes\Contao\Callbacks;
 
 use Contao\Backend;
+use Contao\BackendUser;
 use Contao\Database;
 use Contao\DataContainer;
 use Contao\Image;
+use Contao\Input;
 use Contao\StringUtil;
 use Contao\Message;
 
@@ -211,7 +213,7 @@ class CustomFieldCallback extends Backend
     }
     public function changeFileBinToUuid($fieldValue, DataContainer $dc)
     {
-        return $fieldValue ? \StringUtil::binToUuid($fieldValue) : '';
+        return $fieldValue ? StringUtil::binToUuid($fieldValue) : '';
     }
 
     public function loadFrontendFilterCheckboxStylingOptions($dca)
@@ -230,35 +232,37 @@ class CustomFieldCallback extends Backend
 
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
     {
-        $this->import('BackendUser', 'User');
+        $user = BackendUser::getInstance();
 
-        if (strlen($this->Input->get('tid'))) {
-            $this->toggleVisibility($this->Input->get('tid'), ($this->Input->get('state') != 1));
+        if (strlen(Input::get('tid'))) {
+            $this->toggleVisibility(Input::get('tid'), (Input::get('state') != 1));
             $this->redirect($this->getReferer());
         }
 
         // Check permissions AFTER checking the tid, so hacking attempts are logged
-        if (!$this->User->isAdmin && !$this->User->hasAccess($this->dcaName . '::published', 'alexf')) {
+        if (!$user->isAdmin && !$user->hasAccess($this->dcaName . '::published', 'alexf')) {
             return '';
         }
 
-        $href .= '&amp;id=' . $this->Input->get('id') . '&amp;tid=' . $row['id'] . '&amp;state='.($row['published'] ? '' : 1);
+        $href .= '&amp;id=' . Input::get('id') . '&amp;tid=' . $row['id'] . '&amp;state='.($row['published'] ? '' : 1);
 
         if (!$row['published']) {
             $icon = 'invisible.svg';
         }
 
-        return '<a href="' . $this->addToUrl($href) . '" title="' . specialchars($title) . '"' . $attributes . '>' . Image::getHtml($icon, $label) . '</a> ';
+        return '<a href="' . $this->addToUrl($href) . '" title="' . StringUtil::specialchars($title) . '"' . $attributes . '>' . Image::getHtml($icon, $label) . '</a> ';
     }
+
     public function toggleVisibility($id, $published)
     {
+        $user = BackendUser::getInstance();
         // Check permissions to publish
-        if (!$this->User->isAdmin && !$this->User->hasAccess($this->dcaName . '::published', 'alexf')) {
+        if (!$user->isAdmin && !$user->hasAccess($this->dcaName . '::published', 'alexf')) {
             $this->redirect('contao/main.php?act=error');
         }
 
         // Update the database
-        $this->Database->prepare('UPDATE ' . $this->dcaName . ' SET tstamp=' . time() . ", published='" . ($published ? '0' : '1') . "' WHERE id=?")
+        Database::getInstance()->prepare('UPDATE ' . $this->dcaName . ' SET tstamp=' . time() . ", published='" . ($published ? '0' : '1') . "' WHERE id=?")
             ->execute($id);
     }
 }
