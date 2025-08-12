@@ -47,6 +47,7 @@ use Contao\FrontendUser;
 use Contao\MemberGroupModel;
 use Contao\MemberModel;
 use Contao\StringUtil;
+use Contao\System;
 
 
 class MemberEditableController extends C4GBaseController
@@ -252,7 +253,7 @@ class MemberEditableController extends C4GBaseController
         $unPublishCondition->setModel(static::class);
         $unPublishCondition->setFunction('moreButtonUnPublishCondition');
 
-        \System::loadLanguageFile('tl_c4g_data_element');
+        System::loadLanguageFile('tl_c4g_data_element');
         $moreButtonEntryPublish = new C4GMoreButtonEntry();
         $moreButtonEntryPublish->setTitle($GLOBALS['TL_LANG']['con4gis']['data']['frontend']['MoreButtonPublish']);
         $moreButtonEntryPublish->setCallable(C4GMoreButtonEntry::CALLMODE_OBJECT, [$this, 'moreButtonPublish']);

@@ -17,7 +17,7 @@
         "issues": "https://github.com/Kuestenschmiede/DataBundle/issues"
     },
     "require": {
-        "contao/core-bundle": "^4.9",
+        "contao/core-bundle": "^4.13 || ^5.3",
         "con4gis/maps": "^10.1.4",
         "con4gis/projects": "^5.0"
     },

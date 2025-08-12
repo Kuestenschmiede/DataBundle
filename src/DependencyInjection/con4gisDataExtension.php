@@ -30,7 +30,7 @@ class con4gisDataExtension extends Extension
         );
         $loader->load('services.yml');
     }
-    public function getAlias()
+    public function getAlias(): string
     {
         return "con4gis_data";
     }

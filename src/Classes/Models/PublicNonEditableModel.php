@@ -23,7 +23,7 @@ class PublicNonEditableModel
 {
     public static function find() {
 
-        $db = \Database::getInstance();
+        $db = Database::getInstance();
         $stmtTypes = $db->prepare("SELECT * FROM tl_c4g_data_type");
         $resultTypes = $stmtTypes->execute()->fetchAllAssoc();
         $types = [];
@@ -174,7 +174,7 @@ class PublicNonEditableModel
             }
 
             $timeString = [];
-            $businessTimes = \StringUtil::deserialize($re['businessHours']);
+            $businessTimes = StringUtil::deserialize($re['businessHours']);
             $resultElements[$key]['businessHours'] = '';
             foreach ($businessTimes as $k => $time) {
                 $timeString[$k] = '';
@@ -417,7 +417,7 @@ class PublicNonEditableModel
         $array['itemType'] = strval($typeModel->itemType);
 
         $timeString = [];
-        $businessTimes = \StringUtil::deserialize($array['businessHours']);
+        $businessTimes = StringUtil::deserialize($array['businessHours']);
         $array['businessHours'] = '';
         foreach ($businessTimes as $k => $time) {
             $timeString[$k] = '';

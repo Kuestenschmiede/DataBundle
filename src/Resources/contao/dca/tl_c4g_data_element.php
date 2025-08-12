@@ -36,6 +36,7 @@ use con4gis\CoreBundle\Classes\DCA\Fields\DigitField;
 use con4gis\CoreBundle\Classes\DCA\Fields\MultiCheckboxField;
 use con4gis\CoreBundle\Classes\DCA\Fields\DatePickerField;
 use con4gis\DataBundle\Classes\Models\DataCustomFieldModel;
+use Contao\Database;
 use Contao\StringUtil;
 use con4gis\CoreBundle\Classes\C4GUtils;
 use \con4gis\CoreBundle\Classes\DCA\Operations\TogglePublishedOperation;

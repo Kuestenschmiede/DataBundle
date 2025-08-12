@@ -11,6 +11,7 @@
 
 namespace con4gis\DataBundle\Classes\Models;
 
+use con4gis\CoreBundle\Classes\C4GUtils;
 use con4gis\CoreBundle\Classes\Helper\ArrayHelper;
 use con4gis\ProjectsBundle\Classes\Common\C4GBrickCommon;
 use Contao\Database;
@@ -25,18 +26,17 @@ class MemberEditableModel
 
         $memberModel = MemberModel::findByPk($memberId);
         $groups = StringUtil::deserialize($memberModel->groups);
-        $where = [];
-        foreach ($groups as $group) {
-            $where[] = 'ownerGroupId = ' . $group;
+
+        if ($tableName === "") {
+            $tableName = "tl_c4g_data_element";
         }
 
-        if (sizeof($where) > 0) {
-            $stmt = $db->prepare("SELECT * FROM $tableName WHERE " . implode(' OR ', $where));
-            $result = $stmt->execute($memberId)->fetchAllAssoc();
+        if ($groups !== null && count($groups) > 0) {
+            $sql = "SELECT * FROM $tableName WHERE ownerGroupId " . C4GUtils::buildInString($groups);
+            $result = $db->prepare($sql)->execute(...$groups)->fetchAllAssoc();
         } else {
             return ArrayHelper::arrayToObject([]);
         }
-
 
         foreach ($result as $key => $row) {
             if ($row['datePublished']) {

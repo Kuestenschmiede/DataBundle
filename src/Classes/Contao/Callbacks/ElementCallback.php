@@ -12,6 +12,8 @@ namespace con4gis\DataBundle\Classes\Contao\Callbacks;
 
 use con4gis\DataBundle\Classes\Models\DataElementModel;
 use con4gis\DataBundle\Classes\Models\DataTypeModel;
+use Contao\BackendUser;
+use Contao\Input;
 use Contao\MemberGroupModel;
 use con4gis\MapsBundle\Classes\Utils;
 use Contao\Backend;
@@ -70,7 +72,7 @@ class ElementCallback extends Backend
 
     public function changeFileBinToUuid($fieldValue, DataContainer $dc)
     {
-        return $fieldValue ? \StringUtil::binToUuid($fieldValue) : '';
+        return $fieldValue ? StringUtil::binToUuid($fieldValue) : '';
     }
 
     public function loadMemberGroupData($value, $dc)
@@ -161,15 +163,15 @@ class ElementCallback extends Backend
 
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
     {
-        $this->import('BackendUser', 'User');
+        $user = BackendUser::getInstance();
 
-        if (strlen($this->Input->get('tid'))) {
-            $this->toggleVisibility($this->Input->get('tid'), ($this->Input->get('state') != 1));
+        if (strlen(Input::get('tid'))) {
+            $this->toggleVisibility(Input::get('tid'), (Input::get('state') != 1));
             $this->redirect($this->getReferer());
         }
 
         // Check permissions AFTER checking the tid, so hacking attempts are logged
-        if (!$this->User->isAdmin && !$this->User->hasAccess($this->dcaName . '::published', 'alexf')) {
+        if (!$user->isAdmin && !$user->hasAccess($this->dcaName . '::published', 'alexf')) {
             return '';
         }
 
@@ -181,7 +183,7 @@ class ElementCallback extends Backend
             }
         }
 
-        $href .= '&amp;id=' . $this->Input->get('id') . '&amp;tid=' . $row['id'] . '&amp;state='.($row['published'] ? '' : 1);
+        $href .= '&amp;id=' . Input::get('id') . '&amp;tid=' . $row['id'] . '&amp;state='.($row['published'] ? '' : 1);
 
         if (!$row['published']) {
             $icon = 'invisible.svg';

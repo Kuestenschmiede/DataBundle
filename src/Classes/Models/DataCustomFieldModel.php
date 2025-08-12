@@ -31,7 +31,7 @@ class DataCustomFieldModel extends Model
         if (!Database::getInstance()->tableExists(static::$strTable)) {
             return null;
         }
-        return parent::findBy(['published'], ['1'], $arrOptions);
+        return parent::findBy('published', '1', $arrOptions);
     }
 
     /**
