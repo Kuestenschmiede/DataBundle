@@ -67,55 +67,59 @@ if (C4GVersionProvider::isInstalled('con4gis/editor')) {
         ->selector(['type','loctype'])
         ->subPalette("loctype","point","geox,geoy");
 }
-$types = \con4gis\DataBundle\Classes\Models\DataTypeModel::findAll();
-if ($types !== null) {
-    foreach ($types as $type) {
-        $paletteString = "parentElement;{location_legend},loctype;{description_legend},description";
-        if ($type->availableFields !== null) {
-            $availableFields = StringUtil::deserialize($type->availableFields);
-            $fields = '';
-            $database = Database::getInstance();
-            $stmt = $database->prepare("SELECT DISTINCT alias FROM tl_c4g_data_custom_field");
-            $result = $stmt->execute()->fetchAllAssoc();
-            $aliases = [];
-            foreach ($result as $r) {
-                $aliases[] = $r['alias'];
+$database = \Contao\Database::getInstance();
+if ($database->tableExists('tl_c4g_data_type')) {
+    $stmt = $database->prepare("SELECT * FROM tl_c4g_data_type");
+    $result = $stmt->execute();
+    if ($result->numRows > 0) {
+        $aliases = [];
+        if ($database->tableExists('tl_c4g_data_custom_field')) {
+            $stmtAliases = $database->prepare("SELECT alias FROM tl_c4g_data_custom_field");
+            $resAliases = $stmtAliases->execute();
+            while ($resAliases->next()) {
+                $aliases[] = $resAliases->alias;
             }
-            foreach ($availableFields as $availableField) {
-                if (in_array($availableField, $aliases) === true) {
-                    $model = DataCustomFieldModel::findOneBy('alias', $availableField);
-                    if ($model->type === 'legend') {
-                        $fields .= ';{'.strval($model->name).'}';
+        }
+
+        while ($result->next()) {
+            $paletteString = "parentElement;{location_legend},loctype;{description_legend},description";
+            if ($result->availableFields !== null) {
+                $availableFields = StringUtil::deserialize($result->availableFields);
+                $fields = '';
+                foreach ($availableFields as $availableField) {
+                    if (in_array($availableField, $aliases) === true) {
+                        $stmtModel = $database->prepare("SELECT type, name FROM tl_c4g_data_custom_field WHERE alias = ?");
+                        $resModel = $stmtModel->execute($availableField);
+                        if ($resModel->next()) {
+                            if ($resModel->type === 'legend') {
+                                $fields .= ';{' . strval($resModel->name) . '}';
+                            } else {
+                                $fields .= ',' . $availableField;
+                            }
+                        }
+                    } else if (C4GUtils::endsWith($availableField, 'legend') === true) {
+                        $fields .= ';{' . $availableField . '}';
                     } else {
-                        $fields .= ','.$availableField;
+                        $fields .= ',' . $availableField;
                     }
-                } else {
-                    if (C4GUtils::endsWith($availableField,'legend') === true) {
-                        $fields .= ';{'.$availableField.'}';
-                    } else {
-                        $fields .= ','.$availableField;
+                    if ($availableField === 'businessHours') {
+                        $fields .= ',businessHoursAdditionalInfo';
+                    } elseif ($availableField === 'image') {
+                        $fields .= ',imageMaxHeight,imageMaxWidth,imageLink,imageLightBox';
                     }
                 }
-                if ($availableField === 'businessHours') {
-                    $fields .= ',businessHoursAdditionalInfo';
-                } elseif ($availableField === 'image') {
-                    $fields .= ',imageMaxHeight,imageMaxWidth,imageLink,imageLightBox';
-                }
+                $paletteString .= $fields;
             }
-            $paletteString .= $fields;
+            if ($result->allowPublishing === '1') {
+                $paletteString .= ';{published_legend},ownerGroupId,datePublished,published';
+            }
+            $paletteString = str_replace([',;', ';;', ';,', ',,'], [';', ';', ';', ','], $paletteString);
+            while (preg_match('/;{[^}]+}$/', $paletteString)) {
+                $paletteString = preg_replace('/;{[^}]+}$/', '', $paletteString);
+            }
+            $paletteString = rtrim($paletteString, ',;');
+            $dca->palette()->subPalette("type", $result->id, $paletteString);
         }
-
-        if ($type->allowPublishing === '1') {
-            $paletteString .= ';{published_legend},ownerGroupId,datePublished,published';
-        }
-
-        $paletteString = str_replace([',','',',',''], [',','','',''], $paletteString);
-        while (preg_match('/;{[^}]+}$/', $paletteString)) {
-            $paletteString = preg_replace('/;{[^}]+}$/','', $paletteString);
-        }
-        $paletteString = rtrim($paletteString,'');
-
-        $dca->palette()->subPalette("type", $type->id, $paletteString);
     }
 }
 
@@ -322,117 +326,117 @@ $datePublished->default(time());
 
 /** Custom Fields */
 
-$customFields = [];
-
-foreach ($GLOBALS['con4gis']['data_custom_field_types'] as $type) {
-    $customFields = DataCustomFieldModel::findBy('type', $type);
-
-    if ($customFields !== null) {
-        foreach ($customFields as $model) {
-            if ($type === 'text') {
-                $field = new TextField($model->alias, $dca);
-                $field->hardLabel(strval($model->name), strval($model->description))
-                    ->filter(boolval($model->filter))
-                    ->search(boolval($model->search))
-                    ->default(strval($model->defaultText))
-                    ->sql(sprintf(
-                        "varchar(%s) NOT NULL DEFAULT '%s'",
-                        strval($model->maxLength),
-                        strval($model->defaultText)))
-                    ->eval()
-                    ->mandatory(boolval($model->mandatory))
-                    ->maxlength(intval($model->maxLength));
-                $class = strval($model->class);
-                if (boolval($model->margin) === true) {
-                    $class .= ' m12';
+if ($database->tableExists('tl_c4g_data_custom_field')) {
+    $stmtFields = $database->prepare("SELECT * FROM tl_c4g_data_custom_field");
+    $customFields = $stmtFields->execute();
+    while ($customFields->next()) {
+        $model = $customFields;
+        $type = $model->type;
+        if ($type === 'text') {
+            $field = new TextField($model->alias, $dca);
+            $field->hardLabel(strval($model->name), strval($model->description))
+                ->filter(boolval($model->filter))
+                ->search(boolval($model->search))
+                ->default(strval($model->defaultText))
+                ->sql(sprintf(
+                    "varchar(%s) NOT NULL DEFAULT '%s'",
+                    strval($model->maxLength ?: 255),
+                    strval($model->defaultText)))
+                ->eval()
+                ->mandatory(boolval($model->mandatory))
+                ->maxlength(intval($model->maxLength ?: 255));
+            $class = strval($model->class);
+            if (boolval($model->margin) === true) {
+                $class .= ' m12';
+            }
+            $field->eval()->class($class);
+        } elseif ($type === 'textarea') {
+            $field = new TextAreaField($model->alias, $dca);
+            $field->hardLabel(strval($model->name), strval($model->description))
+                ->filter(false)
+                ->search(false)
+                ->default(strval($model->defaultTextArea))
+                ->sql(sprintf(
+                    "TEXT NOT NULL DEFAULT '%s'",
+                    strval($model->defaultTextArea)))
+                ->eval()
+                ->mandatory(boolval($model->mandatory))
+                ->maxlength(intval($model->maxLength));
+            $class = 'clr';
+            $field->eval()->class($class);
+        } elseif ($type === 'texteditor') {
+            $field = new TextAreaField($model->alias, $dca);
+            $field->hardLabel(strval($model->name), strval($model->description))
+                ->filter(false)
+                ->search(false)
+                ->default(strval($model->defaultTextEditor))
+                ->sql(sprintf(
+                    "TEXT NULL DEFAULT '%s'",
+                    strval($model->defaultTextEditor)))
+                ->eval()
+                ->mandatory(boolval($model->mandatory))
+                ->maxlength(intval($model->maxLength))
+                ->rte();
+            $class = 'clr';
+            $field->eval()->class($class);
+        } elseif ($type === 'natural') {
+            $field = new NaturalField($model->alias, $dca);
+            $field->hardLabel(strval($model->name), strval($model->description))
+                ->filter(boolval($model->filter))
+                ->search(boolval($model->search))
+                ->default(strval($model->defaultNatural))
+                ->sql(sprintf(
+                    "int(10) unsigned NOT NULL default '%s'",
+                    strval($model->defaultNatural)))
+                ->eval()
+                ->mandatory(boolval($model->mandatory));
+            $class = strval($model->class);
+            if (boolval($model->margin) === true) {
+                $class .= ' m12';
+            }
+            $field->eval()->class($class);
+        } elseif ($type === 'int') {
+            $field = new DigitField($model->alias, $dca);
+            $field->hardLabel(strval($model->name), strval($model->description))
+                ->filter(boolval($model->filter))
+                ->search(boolval($model->search))
+                ->default(strval($model->defaultInt))
+                ->sql(sprintf(
+                    "int(10) signed NOT NULL default '%s'",
+                    strval($model->defaultInt)))
+                ->eval()
+                ->mandatory(boolval($model->mandatory));
+            $class = strval($model->class);
+            if (boolval($model->margin) === true) {
+                $class .= ' m12';
+            }
+            $field->eval()->class($class);
+        } elseif ($type === 'select') {
+            $field = new SelectField($model->alias, $dca);
+            $field->hardLabel(strval($model->name), strval($model->description))
+                ->filter(boolval($model->filter))
+                ->search(false)
+                ->default(strval($model->defaultSelect))
+                ->sql(sprintf(
+                    "varchar(255) NOT NULL default '%s'",
+                    strval($model->defaultSelect)))
+                ->eval()
+                ->mandatory(boolval($model->mandatory));
+            $class = strval($model->class);
+            if (boolval($model->margin) === true) {
+                $class .= ' m12';
+            }
+            $field->eval()->class($class);
+            $options = StringUtil::deserialize($model->options);
+            if ($options !== null) {
+                $formattedOptions = [];
+                foreach ($options as $option) {
+                    $formattedOptions[$option['key']] = $option['value'];
                 }
-                $field->eval()->class($class);
-            } elseif ($type === 'textarea') {
-                $field = new TextAreaField($model->alias, $dca);
-                $field->hardLabel(strval($model->name), strval($model->description))
-                    ->filter(false)
-                    ->search(false)
-                    ->default(strval($model->defaultTextArea))
-                    ->sql(sprintf(
-                        "TEXT NOT NULL DEFAULT '%s'",
-                        strval($model->defaultTextArea)))
-                    ->eval()
-                        ->mandatory(boolval($model->mandatory))
-                        ->maxlength(intval($model->maxLength));
-                $class = 'clr';
-                $field->eval()->class($class);
-            } elseif ($type === 'texteditor') {
-                $field = new TextAreaField($model->alias, $dca);
-                $field->hardLabel(strval($model->name), strval($model->description))
-                    ->filter(false)
-                    ->search(false)
-                    ->default(strval($model->defaultTextEditor))
-                    ->sql(sprintf(
-                        "TEXT NULL DEFAULT '%s'",
-                        strval($model->defaultTextEditor)))
-                    ->eval()
-                        ->mandatory(boolval($model->mandatory))
-                        ->maxlength(intval($model->maxLength))
-                        ->rte();
-                $class = 'clr';
-                $field->eval()->class($class);
-            } elseif ($type === 'natural') {
-                $field = new NaturalField($model->alias, $dca);
-                $field->hardLabel(strval($model->name), strval($model->description))
-                    ->filter(boolval($model->filter))
-                    ->search(boolval($model->search))
-                    ->default(strval($model->defaultNatural))
-                    ->sql(sprintf(
-                        "int(10) unsigned NOT NULL default '%s'",
-                        strval($model->defaultNatural)))
-                    ->eval()
-                        ->mandatory(boolval($model->mandatory));
-                $class = strval($model->class);
-                if (boolval($model->margin) === true) {
-                    $class .= ' m12';
-                }
-                $field->eval()->class($class);
-            } elseif ($type === 'int') {
-                $field = new DigitField($model->alias, $dca);
-                $field->hardLabel(strval($model->name), strval($model->description))
-                    ->filter(boolval($model->filter))
-                    ->search(boolval($model->search))
-                    ->default(strval($model->defaultInt))
-                    ->sql(sprintf(
-                        "int(10) signed NOT NULL default '%s'",
-                        strval($model->defaultInt)))
-                    ->eval()
-                        ->mandatory(boolval($model->mandatory));
-                $class = strval($model->class);
-                if (boolval($model->margin) === true) {
-                    $class .= ' m12';
-                }
-                $field->eval()->class($class);
-            } elseif ($type === 'select') {
-                $field = new SelectField($model->alias, $dca);
-                $field->hardLabel(strval($model->name), strval($model->description))
-                    ->filter(boolval($model->filter))
-                    ->search(false)
-                    ->default(strval($model->defaultSelect))
-                    ->sql(sprintf(
-                        "varchar(255) NOT NULL default '%s'",
-                        strval($model->defaultSelect)))
-                    ->eval()
-                        ->mandatory(boolval($model->mandatory));
-                $class = strval($model->class);
-                if (boolval($model->margin) === true) {
-                    $class .= ' m12';
-                }
-                $field->eval()->class($class);
-                $options = StringUtil::deserialize($model->options);
-                if ($options !== null) {
-                    $formattedOptions = [];
-                    foreach ($options as $option) {
-                        $formattedOptions[$option['key']] = $option['value'];
-                    }
-                    $field->options($formattedOptions);
-                }
-            } elseif ($type === 'checkbox' || $type === 'link' || $type === 'icon') {
+                $field->options($formattedOptions);
+            }
+        } elseif ($type === 'checkbox' || $type === 'link' || $type === 'icon') {
+            if ($type === 'checkbox' || $type === 'icon') {
                 $field = new CheckboxField($model->alias, $dca);
                 $field->hardLabel(strval($model->name), strval($model->description))
                     ->filter(boolval($model->filter))
@@ -442,59 +446,79 @@ foreach ($GLOBALS['con4gis']['data_custom_field_types'] as $type) {
                         "char(1) NOT NULL default '%s'",
                         strval($model->defaultCheckbox)))
                     ->eval()
-                        ->mandatory(boolval($model->mandatory));
-                $class = strval($model->class) . ' m12';
-                $field->eval()->class($class);
-            } elseif ($type === 'multicheckbox' || $type === 'filtermulticheckbox') {
-                $field = new MultiCheckboxField($model->alias, $dca);
+                    ->mandatory(boolval($model->mandatory));
+            } else {
+                $field = new TextField($model->alias, $dca);
                 $field->hardLabel(strval($model->name), strval($model->description))
                     ->filter(false)
                     ->search(false)
-                    ->default(StringUtil::deserialize($model->defaultMultiCheckbox))
+                    ->default(strval($model->defaultLink))
+                    ->sql(sprintf(
+                        "varchar(255) NOT NULL default '%s'",
+                        strval($model->defaultLink)))
                     ->eval()
-                        ->mandatory(boolval($model->mandatory));
-                $class = strval($model->class);
-                if (boolval($model->margin) === true) {
-                    $class .= ' m12';
-                }
-                $field->eval()->class($class);
-                $options = StringUtil::deserialize($model->options);
+                    ->mandatory(boolval($model->mandatory))
+                    ->rgxp('url');
+            }
+            $class = strval($model->class) . ' m12';
+            $field->eval()->class($class);
+        } elseif ($type === 'multicheckbox' || $type === 'filtermulticheckbox') {
+            $field = new MultiCheckboxField($model->alias, $dca);
+            $field->hardLabel(strval($model->name), strval($model->description))
+                ->filter(false)
+                ->search(false)
+                ->default(StringUtil::deserialize($model->defaultMultiCheckbox))
+                ->eval()
+                ->mandatory(boolval($model->mandatory));
+            $class = strval($model->class);
+            if (boolval($model->margin) === true) {
+                $class .= ' m12';
+            }
+            $field->eval()->class($class);
+            $options = StringUtil::deserialize($model->options);
+            if ($options !== null) {
                 $formattedOptions = [];
                 foreach ($options as $option) {
                     $formattedOptions[$option['key']] = $option['value'];
                 }
                 $field->options($formattedOptions);
-            } elseif ($type === 'datepicker') {
-                $field = new DatePickerField($model->alias, $dca);
-                $field->hardLabel(strval($model->name), strval($model->description))
-                    ->filter(false)
-                    ->search(false)
-                    ->default(strval($model->defaultDatePicker))
-                    ->sql(sprintf(
-                        "varchar(10) NOT NULL default '%s'",
-                        strval($model->defaultDatePicker)))
-                    ->eval()
-                        ->mandatory(boolval($model->mandatory));
-                $class = strval($model->class);
-                if (boolval($model->margin) === true) {
-                    $class .= ' m12';
-                }
-                $field->eval()->class($class);
-            } elseif ($type === 'foreignKey') {
-                $field = new SelectField($model->alias, $dca);
-                $field->hardLabel(strval($model->name), strval($model->description))
-                    ->filter(boolval($model->filter))
-                    ->search(boolval($model->search))
-                    ->sql('int(10) NOT NULL default "0"')
-                    ->foreignKey($model->foreignTable, $model->foreignField)
-                    ->eval()
-                        ->mandatory(boolval($model->mandatory));
-                $class = strval($model->class);
-                if (boolval($model->margin) === true) {
-                    $class .= ' m12';
-                }
-                $field->eval()->class($class);
             }
+        } elseif ($type === 'datepicker') {
+            $field = new DatePickerField($model->alias, $dca);
+            $field->hardLabel(strval($model->name), strval($model->description))
+                ->filter(false)
+                ->search(false)
+                ->default(strval($model->defaultDatePicker))
+                ->sql(sprintf(
+                    "varchar(10) NOT NULL default '%s'",
+                    strval($model->defaultDatePicker)))
+                ->eval()
+                ->mandatory(boolval($model->mandatory));
+            $class = strval($model->class);
+            if (boolval($model->margin) === true) {
+                $class .= ' m12';
+            }
+            $field->eval()->class($class);
+        } elseif ($type === 'media') {
+            $field = new ImageField($model->alias, $dca);
+            $field->hardLabel(strval($model->name), strval($model->description))
+                ->sql("binary(16) NULL")
+                ->eval()
+                ->mandatory(boolval($model->mandatory));
+        } elseif ($type === 'foreignKey') {
+            $field = new SelectField($model->alias, $dca);
+            $field->hardLabel(strval($model->name), strval($model->description))
+                ->filter(boolval($model->filter))
+                ->search(boolval($model->search))
+                ->sql('int(10) NOT NULL default "0"')
+                ->foreignKey($model->foreignTable, $model->foreignField)
+                ->eval()
+                ->mandatory(boolval($model->mandatory));
+            $class = strval($model->class);
+            if (boolval($model->margin) === true) {
+                $class .= ' m12';
+            }
+            $field->eval()->class($class);
         }
     }
 }
