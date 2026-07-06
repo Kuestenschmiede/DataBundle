@@ -17,8 +17,8 @@
         "issues": "https://github.com/Kuestenschmiede/DataBundle/issues"
     },
     "require": {
-        "contao/core-bundle": "^4.13 || ^5.3",
-        "con4gis/maps": "^10.1.4",
+        "contao/core-bundle": "^5.3",
+        "con4gis/maps": "^10.3",
         "con4gis/projects": "^5.0"
     },
     "conflict": {
@@ -45,7 +45,7 @@
     "extra": {
         "contao-manager-plugin": "con4gis\\DataBundle\\ContaoManager\\Plugin",
         "branch-alias": {
-            "dev-main": "1.3.x-dev"
+            "dev-main": "1.4.x-dev"
         }
     }
 }

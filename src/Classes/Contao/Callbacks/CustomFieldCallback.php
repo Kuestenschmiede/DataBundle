@@ -258,7 +258,7 @@ class CustomFieldCallback extends Backend
         $user = BackendUser::getInstance();
         // Check permissions to publish
         if (!$user->isAdmin && !$user->hasAccess($this->dcaName . '::published', 'alexf')) {
-            $this->redirect('contao/main.php?act=error');
+            throw new \Contao\CoreBundle\Exception\AccessDeniedException();
         }
 
         // Update the database
