@@ -44,7 +44,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_data_mode'] =
         'exclude'                 => true,
         'default'                 => false,
         'inputType'               => 'radio',
-        'options'                 => ['0', '1', '2'],
+        'options'                 => ['0','1','2'],
         'reference'               => &$GLOBALS['TL_LANG']['tl_module']['c4g_data_mode_option'],
         'sql'                     => "char(1) NOT NULL default '0'",
         'eval'                    => ['submitOnChange' => true]
@@ -56,7 +56,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_data_type'] =
         'exclude'                 => true,
         'inputType'               => 'select',
         'foreignKey'              => 'tl_c4g_data_type.name',
-        'eval'                    => ['includeBlankOption' => true, 'multiple' => true, 'chosen' => true, 'tl_class' => 'clr'],
+        'eval'                    => ['includeBlankOption' => true,'multiple' => true,'chosen' => true,'tl_class' => 'clr'],
         'sql'                     => "text NULL"
     ];
 
@@ -66,7 +66,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_data_directory'] =
         'exclude'                 => true,
         'inputType'               => 'select',
         'foreignKey'              => 'tl_c4g_data_directory.name',
-        'eval'                    => ['includeBlankOption' => true, 'multiple' => true, 'chosen' => true, 'tl_class' => 'clr'],
+        'eval'                    => ['includeBlankOption' => true,'multiple' => true,'chosen' => true,'tl_class' => 'clr'],
         'sql'                     => "text NULL"
     ];
 
@@ -140,7 +140,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['labelMode'] =
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['labelMode'],
         'exclude'                 => true,
         'inputType'               => 'select',
-        'options'                 => ['0', '1', '2'],
+        'options'                 => ['0','1','2'],
         'reference'               => &$GLOBALS['TL_LANG']['tl_module']['labelMode_option'],
         'sql'                     => "varchar(1) NOT NULL default ''"
     ];
@@ -250,11 +250,12 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['availableFieldsList'] =
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['availableFieldsList'],
         'exclude'                 => true,
         'default'                 => $defaultAvailableFieldsList,
-        'options_callback'        => [$cbClass, 'loadAvailableFieldsOptions'],
+        'options_callback'        => [$cbClass,'loadAvailableFieldsOptions'],
         'inputType'               => 'checkboxWizard',
         'eval'                    => [
             'class'               => 'clr',
             'multiple'            => true,
+            'allowHtml'           => true,
         ],
         'sql'                     => "text NOT NULL default ".$defaultAvailableFieldsList
     ];
@@ -263,7 +264,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['availableFieldsListNonEditable'] =
     [
         'default'                 => serialize([]),
         'exclude'                 => true,
-        'options_callback'        => [$cbClass, 'loadAvailableFieldsNonEditableOptions'],
+        'options_callback'        => [$cbClass,'loadAvailableFieldsNonEditableOptions'],
         'inputType'               => 'checkbox',
         'eval'                    => [
             'class'               => 'clr',
@@ -294,11 +295,12 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['c4g_order_by_fields'] =
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['c4g_order_by_fields'],
         'exclude'                 => true,
         'default'                 => serialize(['name']),
-        'options_callback'        => [$cbClass, 'loadOrderByFieldsOptions'],
+        'options_callback'        => [$cbClass,'loadOrderByFieldsOptions'],
         'inputType'               => 'checkboxWizard',
         'eval'                    => [
             'class'               => 'clr',
             'multiple'            => true,
+            'allowHtml'           => true,
         ],
         'sql'                     => "text NOT NULL default ".serialize(['name'])
     ];
@@ -308,10 +310,11 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['fieldForRedirect'] =
         'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fieldForRedirect'],
         'exclude'                 => true,
         'default'                 => serialize(['name']),
-        'options_callback'        => [$cbClass, 'getFieldForRedirect'],
+        'options_callback'        => [$cbClass,'getFieldForRedirect'],
         'inputType'               => 'select',
         'eval'                    => [
             'class'               => 'clr',
+            'allowHtml'           => true,
         ],
         'sql'                     => "text NOT NULL default ''"
     ];

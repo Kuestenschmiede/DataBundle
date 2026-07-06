@@ -26,10 +26,10 @@ $cbClass = TypeCallback::class;
 $dca = new DCA('tl_c4g_data_type');
 $dca->config()->markAsCopy('name');
 $list = $dca->list();
-$list->sorting()->fields(['name', 'availableFields']);
+$list->sorting()->fields(['name','availableFields']);
 $list->sorting()->panelLayout('filter;sort,search,limit');
-$list->label()->fields(['name', 'availableFields'])
-    ->labelCallback($cbClass, 'getLabel');
+$list->label()->fields(['name','availableFields'])
+    ->labelCallback($cbClass,'getLabel');
 $list->addRegularOperations($dca);
 $dca->palette()->default('{data_legend},name,locstyle,availableFields,showLabels,allowPublishing;{searchEngine_legend},itemType');
 
@@ -46,7 +46,7 @@ $name->eval()
 
 $locStyle = new SelectField('locstyle', $dca);
 $locStyle->default('')
-        ->optionsCallback($cbClass, 'getLocstyles')
+        ->optionsCallback($cbClass,'getLocstyles')
         ->sql("varchar(20) NOT NULL default ''")
         ->eval()->class('clr')
             ->submitOnChange()
@@ -54,22 +54,23 @@ $locStyle->default('')
             ->includeBlankOption();
 
 $availableFields = new MultiCheckboxField('availableFields', $dca);
-$availableFields->optionsCallback($cbClass, 'loadAvailableFieldsOptions')
-    ->inputType('checkboxWizard');
+$availableFields->optionsCallback($cbClass,'loadAvailableFieldsOptions')
+    ->inputType('checkboxWizard')
+    ->eval()->allowHtml();
 
 $showLabels = new CheckboxField('showLabels', $dca);
 $showLabels->default(false);
 
 $allowPublishing = new CheckboxField('allowPublishing', $dca);
 
-$importId = new SQLField("importId", $dca, "int(20) unsigned NOT NULL default '0'");
+$importId = new SQLField("importId", $dca,"int(20) unsigned NOT NULL default '0'");
 $importId->eval()->doNotCopy(true);
 
-$categorySort = new SQLField('categorySort', $dca, "int(10) unsigned NOT NULL default '0'");
+$categorySort = new SQLField('categorySort', $dca,"int(10) unsigned NOT NULL default '0'");
 
 $itemType = new SelectField('itemType', $dca);
 $itemType->default('')
-    ->optionsCallback($cbClass, 'loadItemTypeOptions')
+    ->optionsCallback($cbClass,'loadItemTypeOptions')
     ->sql("varchar(100) NOT NULL default ''")
     ->eval()
     ->class('clr')

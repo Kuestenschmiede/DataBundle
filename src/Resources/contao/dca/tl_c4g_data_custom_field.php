@@ -40,14 +40,14 @@ $strName = 'tl_c4g_data_custom_field';
 $cbClass = CustomFieldCallback::class;
 
 $dca = new DCA($strName);
-$dca->config()->onloadCallback($cbClass, 'addHint')->markAsCopy('name');
+$dca->config()->onloadCallback($cbClass,'addHint')->markAsCopy('name');
 
 $list = $dca->list();
 $list->sorting()->fields(['name']);
 $list->sorting()->panelLayout('filter;sort,search,limit');
-$list->label()->fields(['name', 'type'])->labelCallback($cbClass, 'getLabels');
+$list->label()->fields(['name','type'])->labelCallback($cbClass,'getLabels');
 $list->addRegularOperations($dca);
-new TogglePublishedOperation($dca, $cbClass, 'toggleIcon');
+new TogglePublishedOperation($dca, $cbClass,'toggleIcon');
 $dca->palette()->default(
     '{data_legend},name,alias,type'
 );
@@ -71,24 +71,24 @@ $generalFieldsMinimal = ';{backend_legend},mandatory'.
     ';{frontend_legend},frontendName,frontendPopup,frontendList,frontendDetails';
 
 $dca->palette()->selector(['type'])
-    ->subPalette('type', 'text', ",description$generalFields;{type_specific_legend},maxLength,defaultText")
-    ->subPalette('type', 'textarea', ",description$generalFieldsMinimal;{type_specific_legend},maxLength,defaultTextArea")
-    ->subPalette('type', 'texteditor', ",description$generalFieldsMinimal;{type_specific_legend},maxLength,defaultTextEditor")
-    ->subPalette('type', 'natural', ",description$generalFields;{type_specific_legend},defaultNatural")
-    ->subPalette('type', 'int', ",description$generalFields;{type_specific_legend},defaultInt")
-    ->subPalette('type', 'select', ",description$generalFieldsNoSearch;{type_specific_legend},options,defaultSelect")
-    ->subPalette('type', 'checkbox', ",description$generalFieldsNoSearchNoMargin;{type_specific_legend},defaultCheckbox,".
+    ->subPalette('type','text',"description$generalFields;{type_specific_legend},maxLength,defaultText")
+    ->subPalette('type','textarea',"description$generalFieldsMinimal;{type_specific_legend},maxLength,defaultTextArea")
+    ->subPalette('type','texteditor',"description$generalFieldsMinimal;{type_specific_legend},maxLength,defaultTextEditor")
+    ->subPalette('type','natural',"description$generalFields;{type_specific_legend},defaultNatural")
+    ->subPalette('type','int',"description$generalFields;{type_specific_legend},defaultInt")
+    ->subPalette('type','select',"description$generalFieldsNoSearch;{type_specific_legend},options,defaultSelect")
+    ->subPalette('type','checkbox',"description$generalFieldsNoSearchNoMargin;{type_specific_legend},defaultCheckbox,".
         "frontendFilterCheckboxStyling,frontendFilterCheckboxButtonLabelOn,frontendFilterCheckboxButtonLabelOff")
-    ->subPalette('type', 'icon', ",description$generalFieldsNoSearchNoMargin;{type_specific_legend},defaultCheckbox,icon,customIcon")
-    ->subPalette('type', 'multicheckbox', ",description$generalFieldsNoSearch;{type_specific_legend},options,defaultMultiCheckbox")
-    ->subPalette('type', 'datepicker', ",description$generalFieldsNoSearchNoFilter;{type_specific_legend},defaultDatePicker")
-    ->subPalette('type', 'link', ",description$generalFieldsNoSearchNoMargin;{type_specific_legend},defaultCheckbox,linkTitle,linkHref,linkNewTab")
-    ->subPalette('type', 'legend', ";{frontend_legend},frontendName,frontendPopup,frontendList,frontendDetails")
-    ->subPalette('type', 'foreignKey', ",description$generalFieldsNoSearch;{type_specific_legend},foreignTable,foreignField");
+    ->subPalette('type','icon',"description$generalFieldsNoSearchNoMargin;{type_specific_legend},defaultCheckbox,icon,customIcon")
+    ->subPalette('type','multicheckbox',"description$generalFieldsNoSearch;{type_specific_legend},options,defaultMultiCheckbox")
+    ->subPalette('type','datepicker',"description$generalFieldsNoSearchNoFilter;{type_specific_legend},defaultDatePicker")
+    ->subPalette('type','link',"description$generalFieldsNoSearchNoMargin;{type_specific_legend},defaultCheckbox,linkTitle,linkHref,linkNewTab")
+    ->subPalette('type','legend',"{frontend_legend},frontendName,frontendPopup,frontendList,frontendDetails")
+    ->subPalette('type','foreignKey',"description$generalFieldsNoSearch;{type_specific_legend},foreignTable,foreignField");
 
 $id = new IdField('id', $dca);
 
-$tStamp = new SQLField('tstamp', $dca, "int(10) unsigned NOT NULL default '0'");
+$tStamp = new SQLField('tstamp', $dca,"int(10) unsigned NOT NULL default '0'");
 
 $published = new CheckboxField('published', $dca);
 
@@ -97,7 +97,7 @@ $name->filter()->search();
 $name->eval()->class('w50')->mandatory()->preserveTags();
 
 $alias = new TextField('alias', $dca);
-$alias->saveCallback($cbClass, 'saveAlias');
+$alias->saveCallback($cbClass,'saveAlias');
 $alias->eval()->class('w50')
     ->unique();
 
@@ -106,7 +106,7 @@ $description->eval()->class('clr');
 
 $type = new SelectField('type', $dca);
 $type->default('')
-    ->optionsCallback($cbClass, 'loadTypes')
+    ->optionsCallback($cbClass,'loadTypes')
     ->sql("varchar(20) NOT NULL default ''")
     ->filter()->search()
     ->eval()->mandatory()
@@ -128,7 +128,7 @@ $mandatory->eval()
 
 $class = new SelectField('class', $dca);
 $class->default('w50')
-    ->optionsCallback($cbClass, 'loadClassOptions')
+    ->optionsCallback($cbClass,'loadClassOptions')
     ->sql("varchar(10) NOT NULL default 'w50'")
     ->eval()
         ->class('clr w50');
@@ -206,7 +206,7 @@ $optionsKey = new TextField('key', $dca, $options);
 $optionsValue = new TextField('value', $dca, $options);
 
 $defaultSelect = new SelectField('defaultSelect', $dca);
-$defaultSelect->optionsCallback($cbClass, 'loadDefaultoptions')
+$defaultSelect->optionsCallback($cbClass,'loadDefaultoptions')
     ->sql("varchar(255) NOT NULL default ''")
     ->default('')
     ->label('default')
@@ -220,7 +220,7 @@ $defaultCheckbox->label('default')
         ->class('clr');
 
 $defaultMultiCheckbox = new MultiCheckboxField('defaultMultiCheckbox', $dca);
-$defaultMultiCheckbox->optionsCallback($cbClass, 'loadDefaultoptions')
+$defaultMultiCheckbox->optionsCallback($cbClass,'loadDefaultoptions')
     ->label('default')
     ->eval()
         ->class('clr');
@@ -249,10 +249,10 @@ $icon->eval()
     ->class('clr');
 
 $image = new ImageField('customIcon', $dca);
-$image->saveCallback($cbClass, 'changeFileBinToUuid');
+$image->saveCallback($cbClass,'changeFileBinToUuid');
 
 $frontendFilterCheckboxStyling = new SelectField('frontendFilterCheckboxStyling', $dca);
-$frontendFilterCheckboxStyling->optionsCallback($cbClass, 'loadFrontendFilterCheckboxStylingOptions')
+$frontendFilterCheckboxStyling->optionsCallback($cbClass,'loadFrontendFilterCheckboxStylingOptions')
     ->sql("varchar(255) NOT NULL default ''")
     ->default('')
     ->eval()
@@ -279,6 +279,6 @@ $foreignField->eval()
     ->allowHtml()
     ->class('w50');
 
-$importId = new SQLField("importId", $dca, "int(20) unsigned NOT NULL default '0'");
+$importId = new SQLField("importId", $dca,"int(20) unsigned NOT NULL default '0'");
 $importId->eval()->doNotCopy(true);
 

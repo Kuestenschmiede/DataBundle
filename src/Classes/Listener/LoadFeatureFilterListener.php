@@ -37,7 +37,12 @@ class LoadFeatureFilterListener
         $currentFilters = $event->getFilters();
         $strSelect = 'SELECT * FROM tl_c4g_data_custom_field WHERE published = "1" AND type="multicheckbox" AND frontendFilter =1 ';
         $customFields = $this->Database->execute($strSelect)->fetchAllAssoc();
-        if ((int) $modelProfile->filterTypeData != 0) {
+        $filterTypeData = 0;
+        try {
+            $filterTypeData = (int) $modelProfile->filterTypeData;
+        } catch (\Exception $e) {}
+
+        if ($filterTypeData != 0) {
             foreach ($customFields as $customField) {
                 $filterObject = new FeatureFilter();
                 $filterObject->setFieldName($customField['frontendName'] ?: $customField['name']);

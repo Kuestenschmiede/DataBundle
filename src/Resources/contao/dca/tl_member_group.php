@@ -26,7 +26,7 @@ $GLOBALS['TL_DCA']['tl_member_group']['fields']['addressName'] =
         'label'                   => &$GLOBALS['TL_LANG']['tl_member_group']['addressName'],
         'exclude'                 => true,
         'inputType'               => 'text',
-        'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50 clr'],
+        'eval'                    => ['maxlength'=>255,'tl_class'=>'w50 clr'],
         'sql'                     => "varchar(255) NOT NULL default ''"
     ];
 
@@ -35,7 +35,7 @@ $GLOBALS['TL_DCA']['tl_member_group']['fields']['addressStreet'] =
         'label'                   => &$GLOBALS['TL_LANG']['tl_member_group']['addressStreet'],
         'exclude'                 => true,
         'inputType'               => 'text',
-        'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50'],
+        'eval'                    => ['maxlength'=>255,'tl_class'=>'w50'],
         'sql'                     => "varchar(255) NOT NULL default ''"
     ];
 
@@ -44,7 +44,7 @@ $GLOBALS['TL_DCA']['tl_member_group']['fields']['addressStreetNumber'] =
         'label'                   => &$GLOBALS['TL_LANG']['tl_member_group']['addressStreetNumber'],
         'exclude'                 => true,
         'inputType'               => 'text',
-        'eval'                    => ['maxlength'=>25, 'tl_class'=>'w50'],
+        'eval'                    => ['maxlength'=>25,'tl_class'=>'w50'],
         'sql'                     => "varchar(25) NOT NULL default ''"
     ];
 
@@ -53,7 +53,7 @@ $GLOBALS['TL_DCA']['tl_member_group']['fields']['addressZip'] =
         'label'                   => &$GLOBALS['TL_LANG']['tl_member_group']['addressZip'],
         'exclude'                 => true,
         'inputType'               => 'text',
-        'eval'                    => ['maxlength'=>10, 'tl_class'=>'w50'],
+        'eval'                    => ['maxlength'=>10,'tl_class'=>'w50'],
         'sql'                     => "varchar(10) NOT NULL default ''"
     ];
 
@@ -62,7 +62,7 @@ $GLOBALS['TL_DCA']['tl_member_group']['fields']['addressCity'] =
         'label'                   => &$GLOBALS['TL_LANG']['tl_member_group']['addressCity'],
         'exclude'                 => true,
         'inputType'               => 'text',
-        'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50'],
+        'eval'                    => ['maxlength'=>255,'tl_class'=>'w50'],
         'sql'                     => "varchar(255) NOT NULL default ''"
     ];
 
@@ -71,7 +71,7 @@ $GLOBALS['TL_DCA']['tl_member_group']['fields']['addressState'] =
         'label'                   => &$GLOBALS['TL_LANG']['tl_member_group']['addressState'],
         'exclude'                 => true,
         'inputType'               => 'text',
-        'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50'],
+        'eval'                    => ['maxlength'=>255,'tl_class'=>'w50'],
         'sql'                     => "varchar(255) NOT NULL default ''"
     ];
 
@@ -80,7 +80,7 @@ $GLOBALS['TL_DCA']['tl_member_group']['fields']['addressCountry'] =
         'label'                   => &$GLOBALS['TL_LANG']['tl_member_group']['addressCountry'],
         'exclude'                 => true,
         'inputType'               => 'text',
-        'eval'                    => ['maxlength'=>255, 'tl_class'=>'w50'],
+        'eval'                    => ['maxlength'=>255,'tl_class'=>'w50'],
         'sql'                     => "varchar(255) NOT NULL default ''"
     ];
 
@@ -90,7 +90,7 @@ $GLOBALS['TL_DCA']['tl_member_group']['fields']['phone'] =
         'exclude'                 => true,
         'search'                  => true,
         'inputType'               => 'text',
-        'eval'                    => ['maxlength'=>64, 'rgxp'=>'phone', 'decodeEntities'=>true, 'tl_class'=>'w50 clr'],
+        'eval'                    => ['maxlength'=>64,'rgxp'=>'phone','decodeEntities'=>true,'tl_class'=>'w50 clr'],
         'sql'                     => "varchar(64) NOT NULL default ''"
     ];
 
@@ -100,7 +100,7 @@ $GLOBALS['TL_DCA']['tl_member_group']['fields']['mobile'] =
         'exclude'                 => true,
         'search'                  => true,
         'inputType'               => 'text',
-        'eval'                    => ['maxlength'=>64, 'rgxp'=>'phone', 'decodeEntities'=>true, 'tl_class'=>'w50'],
+        'eval'                    => ['maxlength'=>64,'rgxp'=>'phone','decodeEntities'=>true,'tl_class'=>'w50'],
         'sql'                     => "varchar(64) NOT NULL default ''"
     ];
 
@@ -110,6 +110,6 @@ $GLOBALS['TL_DCA']['tl_member_group']['fields']['email'] =
         'exclude'                 => true,
         'search'                  => true,
         'inputType'               => 'text',
-        'eval'                    => ['maxlength'=>255, 'rgxp'=>'email', 'decodeEntities'=>true, 'tl_class'=>'w50'],
+        'eval'                    => ['maxlength'=>255,'rgxp'=>'email','decodeEntities'=>true,'tl_class'=>'w50'],
         'sql'                     => "varchar(255) NOT NULL default ''"
     ];
